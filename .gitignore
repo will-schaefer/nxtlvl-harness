@@ -1,0 +1,12 @@
+# Secrets — loaded at runtime from 1Password; never commit raw keys
+.envrc
+
+# Local embeddings / Smart Connections index (large, machine-local)
+.smart-env/
+
+# macOS noise
+.DS_Store
+**/.DS_Store
+
+# Nested editor-config repos with their own git history — keep out of this bundle
+config/helix/
