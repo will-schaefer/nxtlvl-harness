@@ -61,6 +61,13 @@ Next.js full-stack · Python · Rust · knowledge-base · LLM-wiki · agentic en
 | **D · Agentic / Meta** (differentiated *and* dogfooded) | Agentic Engineering / Agent Orchestration · Meta/Harness | Building agents *with* the harness — dogfooding is automatic. Meta/Harness = nxtlvl building itself (the learning target). |
 | **E · Quality** (cross-cutting — never standalone; applies across A–D) | Code Quality & Review · Testing · Security | Review is a core workflow; Testing is a build-loop stage; Security backs the audit's no-secrets gate. |
 
+> **Build-now confident-core** ([ADR-012](../decisions/ADR-012-confident-core-capability-domains.md),
+> 2026-06-18): Python · TypeScript/JS · Rust (group A) + Frontend & UI · Backend/Architecture
+> (group B) are **pre-built now** — each ships the full §6 triad — rather than waiting for the
+> fallback signal. The membership test's *build-now* branch (`ADR-008:22`) authorizes them, and
+> the **bounded five-domain list is the new brake** (a 6th build-now domain is itself an ADR).
+> The other group-B domains (Integrations & APIs, DevOps & Infra) remain **reactive**.
+
 ### 2b. Domains deliberately *out* → dormant-in-ecc, reached only via the logged fallback
 
 Naming these **is** the scoping-down the intent insists on (`personal-harness.md:73-80`). Each
@@ -167,6 +174,10 @@ pattern lives; awareness pings = hooks; ask-vs-proceed posture = a rule.
 
 - Layer-1 domains are **filing buckets**, not commitments — most stay empty until a real task
   fills them.
+- **Exception — the confident-core** ([ADR-012](../decisions/ADR-012-confident-core-capability-domains.md)):
+  Python · TS/JS · Rust · Frontend & UI · Backend/Architecture are **build-now**, not reactive.
+  The bounded five-domain list *is* the brake; everything outside it (including Integrations &
+  APIs and DevOps & Infra) still needs the one-line intake entry.
 - A new component enters **only** via the written intake gate
   ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)): a one-line backlog entry
   naming *the task that required it* and *the existing thing that failed*. Fed by the fallback
