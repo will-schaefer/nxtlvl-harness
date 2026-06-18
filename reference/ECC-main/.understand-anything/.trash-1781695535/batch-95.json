@@ -1,0 +1,301 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/generating-python-installer/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/generating-python-installer/SKILL.md",
+      "summary": "Comprehensive skill guide for producing commercial-grade Windows installers from Python applications using Nuitka compilation and Inno Setup, with bilingual (English/Chinese) content covering build optimization, DLL analysis, and a 323 MB PySide2 reference case.",
+      "tags": ["documentation", "skill", "python", "deployment", "build-system"],
+      "complexity": "complex",
+      "languageNotes": "Bilingual content (English + Simplified Chinese) covering production-grade packaging with Nuitka; a rarity among ECC skills and indicates a specific operator audience."
+    },
+    {
+      "id": "document:skills/git-workflow/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/git-workflow/SKILL.md",
+      "summary": "Exhaustive git workflow reference skill covering branching strategies (GitHub Flow, trunk-based, GitFlow), conventional commit formatting, merge vs. rebase trade-offs, PR lifecycle, conflict resolution, semantic versioning, git hooks, and anti-patterns.",
+      "tags": ["documentation", "skill", "git", "version-control", "development"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/github-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/github-ops/SKILL.md",
+      "summary": "Skill for managing GitHub repository operations including issue triage, PR review, stale policy enforcement, CI/CD operations, release management, and security monitoring via the gh CLI.",
+      "tags": ["documentation", "skill", "github", "ci-cd", "development"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/golang-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/golang-patterns/SKILL.md",
+      "summary": "Idiomatic Go development patterns skill covering core principles (simplicity, zero value, accept interfaces/return structs), error handling, concurrency patterns (worker pools, context, errgroup), interface design, package organization, struct design (functional options), and performance best practices.",
+      "tags": ["documentation", "skill", "golang", "patterns", "concurrency"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/golang-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/golang-testing/SKILL.md",
+      "summary": "Go testing patterns skill covering TDD red-green-refactor cycle, table-driven tests, subtests, helper utilities, golden files, interface-based mocking, benchmarks, fuzz testing (Go 1.18+), coverage targets, HTTP handler testing, and CI/CD integration.",
+      "tags": ["documentation", "skill", "golang", "test", "tdd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/google-workspace-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/google-workspace-ops/SKILL.md",
+      "summary": "Skill for operating on Google Workspace assets (Docs, Sheets, Drive) with a structured find-inspect-edit-clean workflow emphasizing precision edits and avoiding data loss.",
+      "tags": ["documentation", "skill", "google-workspace", "productivity", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/healthcare-cdss-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/healthcare-cdss-patterns/SKILL.md",
+      "summary": "Clinical Decision Support System (CDSS) patterns skill covering drug interaction checking, dose validation, NEWS2 clinical scoring, alert severity UI behavior, and zero-tolerance testing requirements to prevent false negatives in patient-safety-critical code.",
+      "tags": ["documentation", "skill", "healthcare", "security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/healthcare-emr-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/healthcare-emr-patterns/SKILL.md",
+      "summary": "Electronic Medical Record (EMR) development patterns skill covering patient safety-first design, single-page encounter flow, smart template systems, medication safety patterns, locked encounter records, and accessible clinical UI patterns.",
+      "tags": ["documentation", "skill", "healthcare", "patterns", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/healthcare-eval-harness/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/healthcare-eval-harness/SKILL.md",
+      "summary": "Healthcare evaluation harness skill for patient safety verification, defining eval categories, pass/fail matrices for CRITICAL/HIGH/MEDIUM gates, and CI/CD integration patterns to catch regressions before deployment.",
+      "tags": ["documentation", "skill", "healthcare", "test", "ci-cd"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/healthcare-phi-compliance/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/healthcare-phi-compliance/SKILL.md",
+      "summary": "Healthcare PHI/PII compliance patterns skill covering data classification, row-level security access control, audit trail design, common data-leak vectors, database schema tagging, and pre-deployment compliance checklists.",
+      "tags": ["documentation", "skill", "healthcare", "security", "compliance"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/hermes-imports/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/hermes-imports/SKILL.md",
+      "summary": "Skill for safely importing external task and job data into the Hermes system, defining sanitization rules, conversion patterns, and output contract requirements for launch handoffs and quiet-hours operator jobs.",
+      "tags": ["documentation", "skill", "utility", "data-pipeline", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/hexagonal-architecture/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/hexagonal-architecture/SKILL.md",
+      "summary": "Hexagonal (ports-and-adapters) architecture skill covering core concepts, a six-step workflow for modeling boundaries and adapters, a TypeScript example with composition root, multi-language mapping, anti-patterns, migration playbook, and testing guidance per architectural boundary.",
+      "tags": ["documentation", "skill", "architecture", "patterns", "testing"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/hipaa-compliance/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/hipaa-compliance/SKILL.md",
+      "summary": "HIPAA compliance skill providing guardrails for product decisions and vendor/tooling choices involving protected health information, with examples and cross-references to related healthcare skills.",
+      "tags": ["documentation", "skill", "healthcare", "compliance", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/homelab-network-readiness/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/homelab-network-readiness/SKILL.md",
+      "summary": "Pre-flight readiness checklist skill for homelab network upgrades, covering safety rules, hardware inventory, VLAN and trust-zone planning, DNS filtering readiness, remote access readiness, and a sequenced change protocol to prevent lockouts.",
+      "tags": ["documentation", "skill", "homelab", "infrastructure", "networking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/homelab-network-setup/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/homelab-network-setup/SKILL.md",
+      "summary": "Homelab network setup skill covering IP planning, DHCP/DNS configuration, cabling and Wi-Fi recommendations, with beginner and VLAN-ready example scenarios.",
+      "tags": ["documentation", "skill", "homelab", "networking", "infrastructure"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/homelab-pihole-dns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/homelab-pihole-dns/SKILL.md",
+      "summary": "Pi-hole DNS installation and configuration skill for homelabs, covering Docker and bare-metal deployment, blocklist management, DNS-over-HTTPS upstream configuration, local DNS records, and network-wide ad/tracker blocking setup.",
+      "tags": ["documentation", "skill", "homelab", "networking", "infrastructure"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/homelab-vlan-segmentation/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/homelab-vlan-segmentation/SKILL.md",
+      "summary": "VLAN segmentation skill for homelabs providing design templates, firewall rules, and step-by-step configuration for UniFi, pfSense/OPNsense, and MikroTik hardware to isolate network trust zones.",
+      "tags": ["documentation", "skill", "homelab", "networking", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/homelab-wireguard-vpn/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/homelab-wireguard-vpn/SKILL.md",
+      "summary": "WireGuard VPN skill for homelab remote access covering Linux server setup, client configuration, split/full tunnel trade-offs, key generation, peer management, pfSense/OPNsense integration, and DDNS for dynamic home IPs.",
+      "tags": ["documentation", "skill", "homelab", "networking", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/hookify-rules/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/hookify-rules/SKILL.md",
+      "summary": "Skill documenting the Hookify rule file format and event system, covering frontmatter fields, multi-condition advanced format, bash/file/stop/prompt event types, regex pattern tips, and file organization for the ECC hook rule engine.",
+      "tags": ["documentation", "skill", "hooks", "configuration", "automation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/inherit-legacy-style/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/inherit-legacy-style/SKILL.md",
+      "summary": "Skill for reading and inheriting the code style of existing legacy codebases, with auto-detect mode selecting between full first-scan and incremental sniff branches, then enforcing the extracted style per turn.",
+      "tags": ["documentation", "skill", "code-quality", "utility", "patterns"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/intent-driven-development/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/intent-driven-development/SKILL.md",
+      "summary": "Intent-driven development skill guiding the agent through goal/risk establishment, context discovery, scope definition, acceptance criteria writing, and structured handoff, with depth levels from quick capture to full acceptance brief and pass/fail rubric.",
+      "tags": ["documentation", "skill", "workflow", "planning", "development"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/inventory-demand-planning/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/inventory-demand-planning/SKILL.md",
+      "summary": "Domain skill for inventory demand planning covering forecasting methods, forecast accuracy metrics, safety stock calculation, reorder logic, promotional planning, ABC/XYZ classification, decision frameworks, and escalation protocols for supply chain scenarios.",
+      "tags": ["documentation", "skill", "inventory", "planning", "data-pipeline"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/investor-materials/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/investor-materials/SKILL.md",
+      "summary": "Skill for creating investor-facing materials including pitch decks, one-pagers, financial models, and accelerator applications, with a golden rule emphasizing founder voice fidelity over polish and quality gate criteria.",
+      "tags": ["documentation", "skill", "startup", "business", "communication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/investor-outreach/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/investor-outreach/SKILL.md",
+      "summary": "Skill for crafting personalized investor outreach including cold emails, warm intro requests, follow-up cadences, and post-meeting updates, with strict voice-preservation rules and a quality gate checklist.",
+      "tags": ["documentation", "skill", "startup", "business", "communication"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/ios-icon-gen/scripts/generate_icons.swift",
+      "type": "file",
+      "name": "generate_icons.swift",
+      "filePath": "skills/ios-icon-gen/scripts/generate_icons.swift",
+      "summary": "Swift CLI script that generates 1x/2x/3x PNG icon assets from SF Symbols for iOS/macOS Xcode asset catalogs, writing Contents.json alongside each imageset and accepting symbol name, size, color, weight, and output directory as CLI arguments.",
+      "tags": ["script", "utility", "ios", "asset-generation", "cli"],
+      "complexity": "complex",
+      "languageNotes": "Uses macOS-only AppKit (NSImage, NSBitmapImageRep) — not cross-platform; must be run on a Mac with Swift installed. Demonstrates NSImage's symbol configuration API introduced in macOS 11."
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/generate_icons.swift:parseColor",
+      "type": "function",
+      "name": "parseColor",
+      "filePath": "skills/ios-icon-gen/scripts/generate_icons.swift",
+      "lineRange": [16, 28],
+      "summary": "Parses a hex color string (with or without leading #) into an NSColor, falling back to system gray on invalid input.",
+      "tags": ["utility", "color-parsing", "ios"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/generate_icons.swift:parseWeight",
+      "type": "function",
+      "name": "parseWeight",
+      "filePath": "skills/ios-icon-gen/scripts/generate_icons.swift",
+      "lineRange": [30, 43],
+      "summary": "Maps a font weight name string (e.g. 'semibold') to its NSFont.Weight enum value, defaulting to thin.",
+      "tags": ["utility", "ios", "mapping"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/generate_icons.swift:generateIcon",
+      "type": "function",
+      "name": "generateIcon",
+      "filePath": "skills/ios-icon-gen/scripts/generate_icons.swift",
+      "lineRange": [65, 156],
+      "summary": "Core icon generation function that renders an SF Symbol at 1x/2x/3x scale into tinted PNG files within a named .imageset directory and writes the Xcode Contents.json manifest.",
+      "tags": ["utility", "asset-generation", "ios", "file-output"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/generate_icons.swift:requireOptionValue",
+      "type": "function",
+      "name": "requireOptionValue",
+      "filePath": "skills/ios-icon-gen/scripts/generate_icons.swift",
+      "lineRange": [158, 169],
+      "summary": "CLI argument helper that validates a flag's next positional value is present and not another flag, exiting with an error message on failure.",
+      "tags": ["utility", "cli", "validation"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/ios-icon-gen/scripts/generate_icons.swift",
+      "target": "function:skills/ios-icon-gen/scripts/generate_icons.swift:parseColor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/generate_icons.swift",
+      "target": "function:skills/ios-icon-gen/scripts/generate_icons.swift:parseWeight",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/generate_icons.swift",
+      "target": "function:skills/ios-icon-gen/scripts/generate_icons.swift:generateIcon",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/generate_icons.swift",
+      "target": "function:skills/ios-icon-gen/scripts/generate_icons.swift:requireOptionValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

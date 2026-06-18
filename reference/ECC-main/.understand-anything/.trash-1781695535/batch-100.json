@@ -1,0 +1,279 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/prompt-optimizer/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/prompt-optimizer/SKILL.md",
+      "summary": "Defines the Prompt Optimizer skill that analyzes user prompts through a 5-phase pipeline (project detection, intent detection, scope assessment, ECC component matching, workflow recommendation) and emits an enhanced prompt with matched ECC components and rationale.",
+      "tags": ["documentation", "skill-definition", "prompt-engineering", "ecc-component"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/python-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/python-patterns/SKILL.md",
+      "summary": "Comprehensive Python development patterns reference covering type hints, error handling, context managers, comprehensions, dataclasses, decorators, concurrency, package organization, and performance with idiomatic code examples and anti-patterns.",
+      "tags": ["documentation", "skill-definition", "python", "best-practices"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/python-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/python-testing/SKILL.md",
+      "summary": "Comprehensive pytest-based Python testing patterns guide covering TDD philosophy, fixtures, parametrization, mocking, async testing, exception testing, file operations, test organization, and configuration with working code examples.",
+      "tags": ["documentation", "skill-definition", "python", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/pytorch-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/pytorch-patterns/SKILL.md",
+      "summary": "PyTorch development patterns reference covering device-agnostic code, reproducibility, model architecture with nn.Module, training and validation loops, data pipeline patterns, checkpointing, and performance optimization with mixed precision and torch.compile.",
+      "tags": ["documentation", "skill-definition", "python", "machine-learning"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/quality-nonconformance/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/quality-nonconformance/SKILL.md",
+      "summary": "Quality and non-conformance management skill covering NCR lifecycle, root cause analysis methods, CAPA systems, statistical process control, supplier quality management, regulatory frameworks, and escalation protocols for manufacturing and industrial contexts.",
+      "tags": ["documentation", "skill-definition", "quality-management", "domain-knowledge"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/quarkus-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/quarkus-patterns/SKILL.md",
+      "summary": "Quarkus Java development patterns reference covering service layers, CDI injection, Camel routes (RabbitMQ, file, direct), REST API structure with Panache repository, transactions, DTOs, exception mapping, async operations, caching, health checks, and Maven dependencies.",
+      "tags": ["documentation", "skill-definition", "java", "best-practices"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/quarkus-security/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/quarkus-security/SKILL.md",
+      "summary": "Quarkus security review skill covering JWT authentication, RBAC authorization, input validation, SQL injection prevention with Panache, password hashing, CORS configuration, secrets management with HashiCorp Vault, rate limiting, security headers, audit logging, and dependency scanning.",
+      "tags": ["documentation", "skill-definition", "security", "java"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/quarkus-tdd/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/quarkus-tdd/SKILL.md",
+      "summary": "Quarkus TDD workflow skill with comprehensive patterns for unit tests using @Nested organization, Camel route testing, event service testing, CompletableFuture testing, REST Assured API tests, integration tests with real databases, JaCoCo coverage configuration, and Maven setup.",
+      "tags": ["documentation", "skill-definition", "java", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/quarkus-verification/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/quarkus-verification/SKILL.md",
+      "summary": "Ten-phase Quarkus verification loop skill covering build, static analysis (Checkstyle/PMD/SpotBugs), test coverage, security scanning (OWASP), native compilation troubleshooting, K6 load testing, health checks, container image security, configuration validation, and a CI/CD GitHub Actions integration.",
+      "tags": ["documentation", "skill-definition", "java", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/ralphinho-rfc-pipeline/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ralphinho-rfc-pipeline/SKILL.md",
+      "summary": "Lightweight RFC pipeline skill defining stages for unit spec templates, complexity tiers, per-unit quality pipeline steps, merge queue rules, and recovery procedures for structured feature proposal workflows.",
+      "tags": ["documentation", "skill-definition", "workflow", "planning"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/react-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/react-patterns/SKILL.md",
+      "summary": "React development patterns skill covering hooks discipline, state location decisions, React Server Components, Suspense and error boundaries, form actions (React 19), data fetching decision matrix, composition recipes, re-render avoidance, accessibility, and routing with code examples.",
+      "tags": ["documentation", "skill-definition", "react", "best-practices"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/react-performance/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/react-performance/SKILL.md",
+      "summary": "Prioritized React performance optimization skill with eight tiers from critical (waterfall elimination, bundle splitting) through server-side, client-side data fetching, re-render avoidance, rendering performance, JavaScript optimization, and advanced patterns with Lighthouse/Web Vitals mapping.",
+      "tags": ["documentation", "skill-definition", "react", "performance-optimization"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/react-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/react-testing/SKILL.md",
+      "summary": "React testing skill covering Testing Library query priority, userEvent interaction, async patterns, MSW network mocking, provider wrapping helpers, custom hook testing with renderHook, accessibility assertions, snapshot test avoidance, coverage targets, and TDD workflow with examples.",
+      "tags": ["documentation", "skill-definition", "react", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/recsys-pipeline-architect/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/recsys-pipeline-architect/SKILL.md",
+      "summary": "Recommendation system pipeline architect skill defining a six-stage framework (retrieval, filtering, feature engineering, scoring, post-processing, serving) with trade-off surfaces for single vs. multi-action prediction, candidate isolation, and online vs. offline scoring.",
+      "tags": ["documentation", "skill-definition", "machine-learning", "architecture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/recursive-decision-ledger/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/recursive-decision-ledger/SKILL.md",
+      "summary": "Recursive Decision Ledger skill defining a decision tracking contract, rollout loop, coherence marking, promotion rules, and summary shape for managing iterative architectural decisions across agent sessions.",
+      "tags": ["documentation", "skill-definition", "decision-tracking", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/redis-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/redis-patterns/SKILL.md",
+      "summary": "Redis patterns reference skill covering data structure selection, cache-aside and write-through caching, rate limiting with fixed/sliding windows, distributed locks, pub/sub and Redis Streams, key naming conventions, TTL strategy, connection pooling, cluster, Sentinel, eviction policies, and stampede prevention.",
+      "tags": ["documentation", "skill-definition", "redis", "best-practices"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/regex-vs-llm-structured-text/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/regex-vs-llm-structured-text/SKILL.md",
+      "summary": "Hybrid parsing architecture skill for structured text that routes the majority of cases through a regex parser with confidence scoring and falls back to LLM validation only for edge cases, with decision frameworks, real-world metrics, and anti-patterns.",
+      "tags": ["documentation", "skill-definition", "architecture", "text-processing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/remotion-video-creation/SKILL.md",
+      "summary": "Minimal Remotion video creation skill specifying activation conditions and usage instructions for programmatic video generation with React and Remotion.",
+      "tags": ["documentation", "skill-definition", "video", "react"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/repo-scan/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/repo-scan/SKILL.md",
+      "summary": "Repo-scan skill for rapid codebase orientation that enumerates project structure, detects tech stack, identifies entry points, and maps key dependencies across configurable depth levels.",
+      "tags": ["documentation", "skill-definition", "tooling", "code-analysis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/research-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/research-ops/SKILL.md",
+      "summary": "Research Ops skill composing web search, fetch, and reasoning capabilities with a five-step workflow: classify the ask, take the lightest evidence path first, and report with explicit evidence boundaries, using guardrails against hallucination and fabrication.",
+      "tags": ["documentation", "skill-definition", "research", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/returns-reverse-logistics/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/returns-reverse-logistics/SKILL.md",
+      "summary": "Returns and reverse logistics domain skill covering returns policy logic, inspection grading, disposition decision trees, fraud detection scoring, vendor recovery ROI, warranty management, escalation protocols, and KPI tracking for e-commerce and retail operations.",
+      "tags": ["documentation", "skill-definition", "domain-knowledge", "ecommerce"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/rules-distill/scripts/scan-rules.sh",
+      "type": "file",
+      "name": "scan-rules.sh",
+      "filePath": "skills/rules-distill/scripts/scan-rules.sh",
+      "summary": "Shell script that enumerates Markdown rule files under a given directory (defaulting to ~/.claude/rules), extracts H2 heading indices from each file, and emits a JSON manifest used by the rules-distill skill inventory phase.",
+      "tags": ["script", "shell", "tooling", "json-output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/rules-distill/scripts/scan-skills.sh",
+      "type": "file",
+      "name": "scan-skills.sh",
+      "filePath": "skills/rules-distill/scripts/scan-skills.sh",
+      "summary": "Shell script that scans global (~/.claude/skills) and project-level skill directories for SKILL.md files, extracts frontmatter fields (name, description, mtime) via an awk parser, and emits a merged JSON skills inventory used by the rules-distill skill inventory phase.",
+      "tags": ["script", "shell", "tooling", "json-output"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/rules-distill/scripts/scan-skills.sh:extract_field",
+      "type": "function",
+      "name": "extract_field",
+      "filePath": "skills/rules-distill/scripts/scan-skills.sh",
+      "lineRange": [26, 43],
+      "summary": "Awk-based YAML frontmatter field extractor that parses single-line values (quoted or unquoted) between --- delimiters; does not support multi-line YAML blocks.",
+      "tags": ["utility", "parsing", "yaml", "awk"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/rules-distill/scripts/scan-skills.sh:scan_dir_to_json",
+      "type": "function",
+      "name": "scan_dir_to_json",
+      "filePath": "skills/rules-distill/scripts/scan-skills.sh",
+      "lineRange": [55, 87],
+      "summary": "Walks a skill directory with find, calls extract_field and get_mtime for each SKILL.md, assembles per-file JSON objects via jq into a temp directory, then merges them into a JSON array.",
+      "tags": ["utility", "json-output", "file-scanning", "shell"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/rules-distill/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/rules-distill/SKILL.md",
+      "summary": "Rules Distill skill that cross-reads the project's skills inventory and rules index to detect redundancy, conflicts, and gaps, then presents a verdict table for user-driven deduplication and consolidation using a three-phase pipeline of deterministic collection, LLM judgment, and user review.",
+      "tags": ["documentation", "skill-definition", "code-quality", "tooling"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/rust-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/rust-patterns/SKILL.md",
+      "summary": "Comprehensive Rust development patterns reference covering ownership/borrowing, Cow, Result/? error handling with thiserror/anyhow, Option combinators, enums, traits, generics, builder pattern, iterator chains, concurrency with Arc/Mutex and Tokio, safe unsafe usage guidelines, and module visibility.",
+      "tags": ["documentation", "skill-definition", "rust", "best-practices"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/rules-distill/scripts/scan-skills.sh",
+      "target": "function:skills/rules-distill/scripts/scan-skills.sh:extract_field",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/rules-distill/scripts/scan-skills.sh",
+      "target": "function:skills/rules-distill/scripts/scan-skills.sh:scan_dir_to_json",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:skills/rules-distill/SKILL.md",
+      "target": "file:skills/rules-distill/scripts/scan-rules.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/rules-distill/SKILL.md",
+      "target": "file:skills/rules-distill/scripts/scan-skills.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'function:pretooluse-visible-output.js:normalizeAdditionalContext' has no edges (orphan)",
+    "Node 'file:post-edit-console-warn.js' has no edges (orphan)",
+    "Node 'file:post-edit-typecheck.js' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 206,
+    "totalEdges": 222,
+    "totalLayers": 7,
+    "tourSteps": 9,
+    "nodeTypes": {
+      "file": 48,
+      "function": 158
+    },
+    "edgeTypes": {
+      "imports": 17,
+      "contains": 156,
+      "exports": 20,
+      "calls": 16,
+      "depends_on": 13
+    }
+  }
+}

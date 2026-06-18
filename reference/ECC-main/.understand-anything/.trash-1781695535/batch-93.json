@@ -1,0 +1,539 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/clickhouse-io/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/clickhouse-io/SKILL.md",
+      "summary": "Skill guide for working with ClickHouse analytics, covering table design patterns (MergeTree, ReplacingMergeTree, AggregatingMergeTree), query optimization, bulk/streaming inserts, materialized views, and ETL/CDC pipeline patterns.",
+      "tags": ["documentation", "database", "data-pipeline", "analytics"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/code-tour/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/code-tour/SKILL.md",
+      "summary": "Skill guide for generating structured codebase tours (.tour files), defining a five-step workflow (discover, infer reader, verify anchors, write tour, validate) with step types and SMIG writing rules.",
+      "tags": ["documentation", "onboarding", "code-navigation", "developer-experience"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/codebase-onboarding/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/codebase-onboarding/SKILL.md",
+      "summary": "Skill guide for onboarding to an unfamiliar codebase, using a four-phase process (reconnaissance, architecture mapping, convention detection, artifact generation) to produce an onboarding guide and starter CLAUDE.md.",
+      "tags": ["documentation", "onboarding", "developer-experience", "codebase-analysis"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/codehealth-mcp/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/codehealth-mcp/SKILL.md",
+      "summary": "Skill guide for integrating the CodeScene MCP server to assess code health scores (1–10 scale), run a feedback loop for maintainability improvements, and enforce boundaries on which standalone tools may be called.",
+      "tags": ["documentation", "code-quality", "mcp-integration", "developer-experience"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/coding-standards/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/coding-standards/SKILL.md",
+      "summary": "Comprehensive coding standards reference covering TypeScript/JavaScript naming, immutability, error handling, React patterns, REST API design, file organization, JSDoc, performance, testing structure (AAA), and code smell detection.",
+      "tags": ["documentation", "coding-standards", "best-practices", "style-guide"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/competitive-platform-analysis/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/competitive-platform-analysis/SKILL.md",
+      "summary": "Skill guide for conducting competitive platform analysis: establishing a client positioning brief, selecting competitors across taxonomy axes, scoring with a matrix, and producing a shortlist output.",
+      "tags": ["documentation", "competitive-analysis", "product-strategy", "research"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/competitive-report-structure/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/competitive-report-structure/SKILL.md",
+      "summary": "Skill guide defining the canonical eight-section structure for a competitive intelligence report, including framing principles, data presentation guidance, and decision-framework requirements.",
+      "tags": ["documentation", "competitive-analysis", "report-structure", "product-strategy"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/compose-multiplatform-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/compose-multiplatform-patterns/SKILL.md",
+      "summary": "Skill guide for Kotlin Compose Multiplatform UI patterns, covering ViewModel state management, event sink pattern, type-safe navigation, slot-based APIs, platform-specific expect/actual composables, and performance optimizations.",
+      "tags": ["documentation", "kotlin", "compose-multiplatform", "mobile"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/config-gc/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/config-gc/SKILL.md",
+      "summary": "Skill guide for garbage-collecting stale Claude Code configuration, scanning for orphaned hooks, unused skills, redundant rules, and bloated CLAUDE.md sections with safe-first removal workflow.",
+      "tags": ["documentation", "configuration", "maintenance", "claude-code"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/configure-ecc/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/configure-ecc/SKILL.md",
+      "summary": "Step-by-step ECC installation and configuration guide covering repository cloning, installation level selection, skill/rule installation by category, post-install verification, and optional optimization steps.",
+      "tags": ["documentation", "installation", "configuration", "ecc-harness"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/connections-optimizer/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/connections-optimizer/SKILL.md",
+      "summary": "Skill guide for reviewing and optimizing professional social network connection requests (X, LinkedIn) with safety defaults, three intensity modes (light-pass, default, aggressive), and a scoring model.",
+      "tags": ["documentation", "social-media", "networking", "content-review"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/content-engine/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/content-engine/SKILL.md",
+      "summary": "Skill guide for repurposing source material into platform-specific content (X, LinkedIn, short video, YouTube, newsletter) with strict source-first workflow, voice handling rules, and hard bans on fabrication.",
+      "tags": ["documentation", "content-creation", "social-media", "repurposing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/content-hash-cache-pattern/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/content-hash-cache-pattern/SKILL.md",
+      "summary": "Skill guide for implementing a content-hash-keyed file cache using Python frozen dataclasses and a service layer wrapper, with clear design decisions and when-to-use guidance.",
+      "tags": ["documentation", "caching", "python", "design-pattern"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/context-budget/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/context-budget/SKILL.md",
+      "summary": "Skill guide for auditing Claude Code context window usage, classifying file reads by value tier, detecting bloat patterns, and producing a context budget report with reclamation recommendations.",
+      "tags": ["documentation", "context-management", "claude-code", "optimization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/continuous-agent-loop/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/continuous-agent-loop/SKILL.md",
+      "summary": "Compact skill guide for selecting and combining continuous agent loop patterns (polling, event-driven, combined), with failure modes and recovery strategies.",
+      "tags": ["documentation", "agent-loop", "automation", "patterns"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:skills/continuous-learning-v2/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": "skills/continuous-learning-v2/config.json",
+      "summary": "Minimal configuration file for the continuous-learning-v2 skill, specifying the schema version and observer hook settings.",
+      "tags": ["configuration", "continuous-learning", "hooks"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "type": "file",
+      "name": "observe.sh",
+      "filePath": "skills/continuous-learning-v2/hooks/observe.sh",
+      "summary": "Hook entry point for the continuous-learning-v2 observer: resolves the Python command, handles Windows stub detection, manages observer process lifecycle (start/check/restart), and invokes instinct-cli.py with the captured Claude Code session event.",
+      "tags": ["script", "hooks", "continuous-learning", "event-driven"],
+      "complexity": "complex",
+      "languageNotes": "Uses shell functions with ALL_CAPS naming convention for internal lifecycle helpers; detects Windows app installer stubs to skip non-functional Python."
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/scripts/detect-project.sh",
+      "type": "file",
+      "name": "detect-project.sh",
+      "filePath": "skills/continuous-learning-v2/scripts/detect-project.sh",
+      "summary": "Shell script that detects the current git project identity, normalizes remote URLs, resolves the main worktree root, and updates the continuous-learning project registry for instinct scoping.",
+      "tags": ["script", "git", "project-detection", "continuous-learning"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "type": "file",
+      "name": "instinct-cli.py",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "summary": "Core CLI for the continuous-learning-v2 instinct management system, providing commands to import, export, evolve, promote, prune, and manage projects' accumulated instinct knowledge files with cross-project deduplication and promotion logic.",
+      "tags": ["entry-point", "cli", "continuous-learning", "knowledge-management"],
+      "complexity": "complex",
+      "languageNotes": "1900-line single-file Python CLI with no external dependencies beyond stdlib; uses file locking (fcntl) for concurrent-safe registry writes."
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/scripts/lib/homunculus-dir.sh",
+      "type": "file",
+      "name": "homunculus-dir.sh",
+      "filePath": "skills/continuous-learning-v2/scripts/lib/homunculus-dir.sh",
+      "summary": "Tiny shell library exporting a single function that resolves the homunculus (instinct store) directory from environment variables or XDG_DATA_HOME with a fallback to ~/.local/share.",
+      "tags": ["script", "utility", "continuous-learning", "directory-resolution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/scripts/migrate-homunculus.sh",
+      "type": "file",
+      "name": "migrate-homunculus.sh",
+      "filePath": "skills/continuous-learning-v2/scripts/migrate-homunculus.sh",
+      "summary": "Migration script that moves legacy homunculus data directories to the new XDG-compliant storage layout, preserving existing instinct files during the transition.",
+      "tags": ["script", "migration", "continuous-learning", "data-migration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+      "type": "file",
+      "name": "test_parse_instinct.py",
+      "filePath": "skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+      "summary": "Comprehensive test suite for instinct-cli.py covering instinct file parsing, path and URL validation, project detection, registry operations, instinct loading/merging, and all CLI commands (import, export, evolve, promote, projects, prune).",
+      "tags": ["test", "continuous-learning", "unit-test", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/continuous-learning-v2/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/continuous-learning-v2/SKILL.md",
+      "summary": "Skill guide for the continuous-learning-v2 system, explaining how it passively captures instincts from Claude Code sessions, stores them per-project, promotes high-confidence patterns to global scope, and uses the instinct-cli for management.",
+      "tags": ["documentation", "continuous-learning", "knowledge-management", "ecc-harness"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/cost-aware-llm-pipeline/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/cost-aware-llm-pipeline/SKILL.md",
+      "summary": "Skill guide for building cost-aware LLM pipelines, covering prompt caching strategies, model tiering (cheap vs expensive), token budget tracking, and batch processing patterns to minimize API costs.",
+      "tags": ["documentation", "llm", "cost-optimization", "pipeline"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/cost-tracking/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/cost-tracking/SKILL.md",
+      "summary": "Skill guide for tracking LLM API cost across sessions using token counting, model pricing lookup, and cumulative session cost reporting to surface cost spikes.",
+      "tags": ["documentation", "cost-tracking", "llm", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:detect_project",
+      "type": "function",
+      "name": "detect_project",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [284, 394],
+      "summary": "Detects the current git project identity by resolving repo root, normalizing remote URL, computing a stable project hash, handling legacy directory migrations, and calling _update_registry to persist the project record.",
+      "tags": ["project-detection", "git", "registry", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:parse_instinct_file",
+      "type": "function",
+      "name": "parse_instinct_file",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [471, 522],
+      "summary": "Parses a YAML-like instinct file format into a list of instinct dicts, extracting id, trigger, confidence, domain, actions, and free-form content fields.",
+      "tags": ["parser", "instinct", "serialization", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_import",
+      "type": "function",
+      "name": "cmd_import",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [834, 1016],
+      "summary": "Implements the 'import' CLI command: fetches instincts from a URL or local file, deduplicates against existing project instincts, interactively confirms with the user, and writes new instinct files to the appropriate project or global directory.",
+      "tags": ["cli-command", "import", "instinct", "deduplication"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_evolve",
+      "type": "function",
+      "name": "cmd_evolve",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1096, 1205],
+      "summary": "Implements the 'evolve' CLI command: collects pending observation instincts, uses an LLM to synthesize evolved skill and agent candidates, and writes the results to the evolved output directory.",
+      "tags": ["cli-command", "llm", "instinct-evolution", "knowledge-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_promote",
+      "type": "function",
+      "name": "cmd_promote",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1275, 1284],
+      "summary": "Entry point for the 'promote' CLI command, dispatching to either targeted single-instinct promotion or auto-promotion of high-confidence candidates.",
+      "tags": ["cli-command", "promotion", "instinct", "global-scope"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:_promote_auto",
+      "type": "function",
+      "name": "_promote_auto",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1342, 1413],
+      "summary": "Automatically promotes project-scoped instincts that meet the cross-project recurrence threshold into global scope, with dry-run and force-overwrite options.",
+      "tags": ["promotion", "instinct", "cross-project", "automation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_projects",
+      "type": "function",
+      "name": "cmd_projects",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1420, 1470],
+      "summary": "Implements the 'projects' CLI command to list, delete, gc, or merge known projects in the instinct registry.",
+      "tags": ["cli-command", "project-management", "registry", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:_generate_evolved",
+      "type": "function",
+      "name": "_generate_evolved",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1614, 1685],
+      "summary": "Drives the LLM call to synthesize evolved skill and agent markdown files from pending instinct candidates, writing results to the evolved directory.",
+      "tags": ["llm", "instinct-evolution", "generation", "knowledge-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [1834, 1910],
+      "summary": "CLI entry point that parses subcommands (status, import, export, evolve, promote, projects, prune) and dispatches to the appropriate command handler.",
+      "tags": ["entry-point", "cli", "command-dispatch", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:load_all_instincts",
+      "type": "function",
+      "name": "load_all_instincts",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [641, 673],
+      "summary": "Loads all instincts for a project from both project-scoped and global directories, merging and deduplicating by instinct ID.",
+      "tags": ["loader", "instinct", "aggregation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_status",
+      "type": "function",
+      "name": "cmd_status",
+      "filePath": "skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "lineRange": [692, 762],
+      "summary": "Implements the 'status' CLI command: displays current project info, instinct counts by domain, pending observation count, and legacy data warnings.",
+      "tags": ["cli-command", "status", "reporting", "utility"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:skills/continuous-learning-v2/SKILL.md",
+      "target": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/continuous-learning-v2/SKILL.md",
+      "target": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/configure-ecc/SKILL.md",
+      "target": "document:skills/config-gc/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/competitive-platform-analysis/SKILL.md",
+      "target": "document:skills/competitive-report-structure/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:skills/continuous-learning-v2/config.json",
+      "target": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "target": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "target": "file:skills/continuous-learning-v2/scripts/detect-project.sh",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/hooks/observe.sh",
+      "target": "file:skills/continuous-learning-v2/scripts/lib/homunculus-dir.sh",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/detect-project.sh",
+      "target": "file:skills/continuous-learning-v2/scripts/lib/homunculus-dir.sh",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/migrate-homunculus.sh",
+      "target": "file:skills/continuous-learning-v2/scripts/lib/homunculus-dir.sh",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/test_parse_instinct.py",
+      "target": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:detect_project",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:parse_instinct_file",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_import",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_evolve",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_promote",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:_promote_auto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_projects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:_generate_evolved",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:load_all_instincts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:cmd_status",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:detect_project",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:parse_instinct_file",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:load_all_instincts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/continuous-learning-v2/scripts/instinct-cli.py",
+      "target": "function:skills/continuous-learning-v2/scripts/instinct-cli.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "document:skills/cost-aware-llm-pipeline/SKILL.md",
+      "target": "document:skills/cost-tracking/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/codebase-onboarding/SKILL.md",
+      "target": "document:skills/code-tour/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

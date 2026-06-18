@@ -1,0 +1,881 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/auto-update.js",
+      "type": "file",
+      "name": "auto-update.js",
+      "filePath": "scripts/auto-update.js",
+      "summary": "CLI entry point that auto-discovers and re-runs install-apply for all ECC plugins that have an existing install state, enabling bulk in-place updates across multiple install targets.",
+      "tags": ["entry-point", "cli", "update", "automation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/catalog.js",
+      "type": "file",
+      "name": "catalog.js",
+      "filePath": "scripts/catalog.js",
+      "summary": "CLI tool for browsing the ECC install catalog — lists available install profiles and components, and displays details for a specific component by ID.",
+      "tags": ["entry-point", "cli", "catalog", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/codex/merge-mcp-config.js",
+      "type": "file",
+      "name": "merge-mcp-config.js",
+      "filePath": "scripts/codex/merge-mcp-config.js",
+      "summary": "Codex utility that idempotently merges ECC-managed MCP server entries into a TOML MCP config file, adding new entries and removing stale ones while preserving user-added sections.",
+      "tags": ["utility", "mcp-config", "config", "codex"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/consult.js",
+      "type": "file",
+      "name": "consult.js",
+      "filePath": "scripts/consult.js",
+      "summary": "CLI consultation engine that ranks ECC install components and profiles against a free-text query using TF-style token scoring, returning the best-matching install suggestions.",
+      "tags": ["entry-point", "cli", "search", "recommendation-engine"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/doctor.js",
+      "type": "file",
+      "name": "doctor.js",
+      "filePath": "scripts/doctor.js",
+      "summary": "CLI diagnostic tool that analyzes installed ECC state for drift, missing files, and integrity issues, reporting a human-readable or JSON health report.",
+      "tags": ["entry-point", "cli", "diagnostics", "health-check"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ecc.js",
+      "type": "file",
+      "name": "ecc.js",
+      "filePath": "scripts/ecc.js",
+      "summary": "Top-level ECC CLI dispatcher that maps subcommands (install, update, uninstall, doctor, etc.) to their respective scripts via child process execution.",
+      "tags": ["entry-point", "cli", "dispatcher", "command-router"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/install-apply.js",
+      "type": "file",
+      "name": "install-apply.js",
+      "filePath": "scripts/install-apply.js",
+      "summary": "CLI front-end for the install-apply phase: parses request arguments, resolves an install plan, and delegates execution to the install executor.",
+      "tags": ["entry-point", "cli", "install", "apply"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/install-plan.js",
+      "type": "file",
+      "name": "install-plan.js",
+      "filePath": "scripts/install-plan.js",
+      "summary": "CLI tool for previewing the install plan without applying it, showing which profiles, modules, and components would be installed for a given request.",
+      "tags": ["entry-point", "cli", "install", "planning"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/cursor-agent-names.js",
+      "type": "file",
+      "name": "cursor-agent-names.js",
+      "filePath": "scripts/lib/cursor-agent-names.js",
+      "summary": "Small utility providing filename and path conventions for Cursor agent definition files derived from a component ID.",
+      "tags": ["utility", "cursor", "naming-convention"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-executor.js",
+      "type": "file",
+      "name": "install-executor.js",
+      "filePath": "scripts/lib/install-executor.js",
+      "summary": "Core installation engine that builds and materializes install plans for all supported targets (Claude, Cursor, Antigravity), handling file copies, JSON merges, scaffold creation, and manifest-driven installs.",
+      "tags": ["service", "install", "core-engine", "file-operations"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/install-lifecycle.js",
+      "type": "file",
+      "name": "install-lifecycle.js",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "summary": "Lifecycle manager for ECC installations providing discovery, health analysis, repair, and uninstall operations over persisted install state records.",
+      "tags": ["service", "install", "lifecycle", "state-management"],
+      "complexity": "complex",
+      "languageNotes": "At 1226 lines and 37 functions this is the largest file in the batch; it is the authoritative source for install health semantics, repair logic, and uninstall teardown."
+    },
+    {
+      "id": "file:scripts/lib/install-manifests.js",
+      "type": "file",
+      "name": "install-manifests.js",
+      "filePath": "scripts/lib/install-manifests.js",
+      "summary": "Manifest loader and catalog resolver that reads the ECC install manifests, exposes install profiles/modules/components, and resolves a full install plan from a normalized request.",
+      "tags": ["service", "install", "manifest", "catalog"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/install-state.js",
+      "type": "file",
+      "name": "install-state.js",
+      "filePath": "scripts/lib/install-state.js",
+      "summary": "Persistence layer for ECC install state: creates, reads, validates, and writes the JSON install-state file that tracks what has been installed and where.",
+      "tags": ["service", "install", "state-management", "persistence"],
+      "complexity": "complex",
+      "languageNotes": "Contains a large hand-written fallback JSON schema validator (createFallbackValidator, lines 50-219) used when a compiled schema is unavailable."
+    },
+    {
+      "id": "file:scripts/lib/install/apply.js",
+      "type": "file",
+      "name": "apply.js",
+      "filePath": "scripts/lib/install/apply.js",
+      "summary": "Install-phase applier that materializes a resolved install plan by writing files, merging JSON, and wiring Claude hook paths with plugin-root placeholder substitution.",
+      "tags": ["service", "install", "apply", "file-operations"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install/config.js",
+      "type": "file",
+      "name": "config.js",
+      "filePath": "scripts/lib/install/config.js",
+      "summary": "Install configuration loader that resolves and validates the per-project `.ecc-install.json` config file, applying defaults and returning a parsed configuration object.",
+      "tags": ["config", "install", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install/request.js",
+      "type": "file",
+      "name": "request.js",
+      "filePath": "scripts/lib/install/request.js",
+      "summary": "Install request parser and normalizer that converts CLI arguments into a canonical install request structure with resolved profile, module, component, and target selections.",
+      "tags": ["utility", "install", "request-parsing", "normalization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install/runtime.js",
+      "type": "file",
+      "name": "runtime.js",
+      "filePath": "scripts/lib/install/runtime.js",
+      "summary": "Runtime bridge that creates an install plan from a normalized request by delegating to the install executor's plan-creation function.",
+      "tags": ["utility", "install", "runtime", "bridge"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/mcp-config.js",
+      "type": "file",
+      "name": "mcp-config.js",
+      "filePath": "scripts/lib/mcp-config.js",
+      "summary": "MCP configuration utilities for parsing disabled-server lists and filtering an MCP config object to remove disabled servers by name.",
+      "tags": ["utility", "mcp-config", "filtering"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/list-installed.js",
+      "type": "file",
+      "name": "list-installed.js",
+      "filePath": "scripts/list-installed.js",
+      "summary": "CLI tool that discovers and lists all ECC installations found across configured targets, displaying their install status in human-readable or JSON format.",
+      "tags": ["entry-point", "cli", "listing", "diagnostics"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/auto-update.js:runAutoUpdate",
+      "type": "function",
+      "name": "runAutoUpdate",
+      "filePath": "scripts/auto-update.js",
+      "lineRange": [162, 295],
+      "summary": "Discovers all installed ECC states, validates their repo roots, and sequentially re-applies each via the install-apply CLI, collecting per-record results.",
+      "tags": ["automation", "install", "update"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ecc.js:resolveCommand",
+      "type": "function",
+      "name": "resolveCommand",
+      "filePath": "scripts/ecc.js",
+      "lineRange": [152, 209],
+      "summary": "Maps a CLI subcommand name and arguments to a concrete script path and argument list for child-process execution.",
+      "tags": ["command-router", "cli", "dispatcher"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/ecc.js:runCommand",
+      "type": "function",
+      "name": "runCommand",
+      "filePath": "scripts/ecc.js",
+      "lineRange": [211, 249],
+      "summary": "Executes a resolved ECC subcommand as a child process, forwarding stdio and propagating the exit code.",
+      "tags": ["cli", "subprocess", "execution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/consult.js:rankComponents",
+      "type": "function",
+      "name": "rankComponents",
+      "filePath": "scripts/consult.js",
+      "lineRange": [319, 358],
+      "summary": "Scores all available install components against the query tokens and returns a ranked list with install command suggestions.",
+      "tags": ["search", "ranking", "recommendation-engine"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/consult.js:buildConsultation",
+      "type": "function",
+      "name": "buildConsultation",
+      "filePath": "scripts/consult.js",
+      "lineRange": [394, 428],
+      "summary": "Orchestrates the full consultation response by tokenizing the query, ranking components and profiles, and assembling the JSON payload.",
+      "tags": ["search", "orchestration", "recommendation-engine"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-executor.js:createManifestInstallPlan",
+      "type": "function",
+      "name": "createManifestInstallPlan",
+      "filePath": "scripts/lib/install-executor.js",
+      "lineRange": [711, 792],
+      "summary": "Builds a full file-operation install plan from a resolved manifest install request, handling component modules, JSON merges, and hook bootstrap registration.",
+      "tags": ["install", "planning", "core-engine"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-executor.js:planCursorLegacyInstall",
+      "type": "function",
+      "name": "planCursorLegacyInstall",
+      "filePath": "scripts/lib/install-executor.js",
+      "lineRange": [379, 471],
+      "summary": "Generates file copy and scaffold operations for a Cursor legacy install, including agent files and MCP config merging.",
+      "tags": ["install", "cursor", "legacy"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-executor.js:planAntigravityLegacyInstall",
+      "type": "function",
+      "name": "planAntigravityLegacyInstall",
+      "filePath": "scripts/lib/install-executor.js",
+      "lineRange": [473, 549],
+      "summary": "Generates file copy operations for an Antigravity legacy install target, resolving locale-specific content and module boundaries.",
+      "tags": ["install", "antigravity", "legacy"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-executor.js:createLegacyInstallPlan",
+      "type": "function",
+      "name": "createLegacyInstallPlan",
+      "filePath": "scripts/lib/install-executor.js",
+      "lineRange": [551, 618],
+      "summary": "Entry point for legacy install plan creation; dispatches to target-specific plan builders (Claude, Cursor, Antigravity) based on the install target.",
+      "tags": ["install", "planning", "legacy"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:executeUninstallOperation",
+      "type": "function",
+      "name": "executeUninstallOperation",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [363, 493],
+      "summary": "Executes a single uninstall operation — file deletion, JSON key removal, or hook deregistration — with state-aware rollback guards.",
+      "tags": ["install", "uninstall", "lifecycle"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:inspectManagedOperation",
+      "type": "function",
+      "name": "inspectManagedOperation",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [495, 620],
+      "summary": "Inspects a single managed install operation to determine its current health status (ok, drifted, missing, conflicted) by comparing on-disk state to recorded expectations.",
+      "tags": ["diagnostics", "health-check", "install"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:analyzeRecord",
+      "type": "function",
+      "name": "analyzeRecord",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [732, 896],
+      "summary": "Performs deep analysis of an install record by inspecting each managed operation and aggregating individual operation statuses into a record-level health summary.",
+      "tags": ["diagnostics", "health-check", "install"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:repairInstalledStates",
+      "type": "function",
+      "name": "repairInstalledStates",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [987, 1096],
+      "summary": "Discovers all installed states and executes repair plans for any that report drift or missing files, restoring them to expected content.",
+      "tags": ["repair", "install", "lifecycle"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:uninstallInstalledStates",
+      "type": "function",
+      "name": "uninstallInstalledStates",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [1122, 1217],
+      "summary": "Discovers and removes all installed ECC states across targets, executing uninstall operations and cleaning up empty parent directories.",
+      "tags": ["uninstall", "install", "lifecycle"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-lifecycle.js:buildDoctorReport",
+      "type": "function",
+      "name": "buildDoctorReport",
+      "filePath": "scripts/lib/install-lifecycle.js",
+      "lineRange": [898, 938],
+      "summary": "Assembles a full doctor report by discovering all installed states and analyzing each for health issues.",
+      "tags": ["diagnostics", "health-check", "install"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-manifests.js:resolveInstallPlan",
+      "type": "function",
+      "name": "resolveInstallPlan",
+      "filePath": "scripts/lib/install-manifests.js",
+      "lineRange": [500, 690],
+      "summary": "Resolves a normalized install request into a fully-expanded install plan by expanding profiles to modules, modules to components, and applying exclusion and locale rules.",
+      "tags": ["install", "planning", "manifest"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-manifests.js:loadInstallManifests",
+      "type": "function",
+      "name": "loadInstallManifests",
+      "filePath": "scripts/lib/install-manifests.js",
+      "lineRange": [262, 304],
+      "summary": "Reads and merges the ECC install manifest JSON files from the package source root, caching the result for subsequent calls.",
+      "tags": ["manifest", "loader", "caching"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-state.js:createFallbackValidator",
+      "type": "function",
+      "name": "createFallbackValidator",
+      "filePath": "scripts/lib/install-state.js",
+      "lineRange": [50, 219],
+      "summary": "Hand-written JSON schema validator for the install state document used as a fallback when a compiled AJV validator is unavailable.",
+      "tags": ["validation", "install", "schema"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-state.js:createInstallState",
+      "type": "function",
+      "name": "createInstallState",
+      "filePath": "scripts/lib/install-state.js",
+      "lineRange": [243, 293],
+      "summary": "Constructs a new install state record from source metadata and an executed install plan, recording all operations for future health checks.",
+      "tags": ["install", "state-management", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install/apply.js:applyInstallPlan",
+      "type": "function",
+      "name": "applyInstallPlan",
+      "filePath": "scripts/lib/install/apply.js",
+      "lineRange": [118, 170],
+      "summary": "Executes each operation in an install plan — copying files, merging JSON configs, and writing Claude hooks — materializing the installation on disk.",
+      "tags": ["install", "apply", "file-operations"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install/request.js:parseInstallArgs",
+      "type": "function",
+      "name": "parseInstallArgs",
+      "filePath": "scripts/lib/install/request.js",
+      "lineRange": [17, 85],
+      "summary": "Parses raw CLI arguments into a structured install request object, recognizing flags for target, profile, module, component, and locale selections.",
+      "tags": ["cli", "request-parsing", "install"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install/request.js:normalizeInstallRequest",
+      "type": "function",
+      "name": "normalizeInstallRequest",
+      "filePath": "scripts/lib/install/request.js",
+      "lineRange": [87, 151],
+      "summary": "Normalizes a parsed install request by resolving defaults, deduplicating selections, and validating the target and component IDs.",
+      "tags": ["install", "normalization", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install/runtime.js:createInstallPlanFromRequest",
+      "type": "function",
+      "name": "createInstallPlanFromRequest",
+      "filePath": "scripts/lib/install/runtime.js",
+      "lineRange": [9, 52],
+      "summary": "Bridges a normalized install request to the executor's manifest install plan builder, returning the complete plan object.",
+      "tags": ["install", "bridge", "planning"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/mcp-config.js:filterMcpConfig",
+      "type": "function",
+      "name": "filterMcpConfig",
+      "filePath": "scripts/lib/mcp-config.js",
+      "lineRange": [12, 51],
+      "summary": "Filters an MCP configuration object, removing server entries whose names appear in the disabled-servers set.",
+      "tags": ["mcp-config", "filtering", "utility"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/auto-update.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/auto-update.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/catalog.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/codex/merge-mcp-config.js",
+      "target": "file:scripts/lib/mcp-config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/consult.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/doctor.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/doctor.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/ecc.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-apply.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-apply.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-apply.js",
+      "target": "file:scripts/lib/install/config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-apply.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-apply.js",
+      "target": "file:scripts/lib/install/runtime.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-plan.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-plan.js",
+      "target": "file:scripts/lib/install/config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/install-plan.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/cursor-agent-names.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/install-targets/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/install/apply.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "file:scripts/lib/install-targets/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-manifests.js",
+      "target": "file:scripts/lib/install-targets/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install/apply.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install/apply.js",
+      "target": "file:scripts/lib/mcp-config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install/request.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install/runtime.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/list-installed.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/list-installed.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/auto-update.js",
+      "target": "function:scripts/auto-update.js:runAutoUpdate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ecc.js",
+      "target": "function:scripts/ecc.js:resolveCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ecc.js",
+      "target": "function:scripts/ecc.js:runCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/consult.js",
+      "target": "function:scripts/consult.js:rankComponents",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/consult.js",
+      "target": "function:scripts/consult.js:buildConsultation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "function:scripts/lib/install-executor.js:createManifestInstallPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "function:scripts/lib/install-executor.js:planCursorLegacyInstall",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "function:scripts/lib/install-executor.js:planAntigravityLegacyInstall",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "function:scripts/lib/install-executor.js:createLegacyInstallPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:executeUninstallOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:inspectManagedOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:analyzeRecord",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:repairInstalledStates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:uninstallInstalledStates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "function:scripts/lib/install-lifecycle.js:buildDoctorReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-manifests.js",
+      "target": "function:scripts/lib/install-manifests.js:resolveInstallPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-manifests.js",
+      "target": "function:scripts/lib/install-manifests.js:loadInstallManifests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-state.js",
+      "target": "function:scripts/lib/install-state.js:createFallbackValidator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-state.js",
+      "target": "function:scripts/lib/install-state.js:createInstallState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install/apply.js",
+      "target": "function:scripts/lib/install/apply.js:applyInstallPlan",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install/request.js",
+      "target": "function:scripts/lib/install/request.js:parseInstallArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install/request.js",
+      "target": "function:scripts/lib/install/request.js:normalizeInstallRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install/runtime.js",
+      "target": "function:scripts/lib/install/runtime.js:createInstallPlanFromRequest",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/mcp-config.js",
+      "target": "function:scripts/lib/mcp-config.js:filterMcpConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/auto-update.js",
+      "target": "file:tests/scripts/auto-update.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install-executor.js",
+      "target": "file:tests/lib/install-executor.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install-lifecycle.js",
+      "target": "file:tests/lib/install-lifecycle.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install-manifests.js",
+      "target": "file:tests/lib/install-manifests.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install-state.js",
+      "target": "file:tests/lib/install-state.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install/apply.js",
+      "target": "file:tests/scripts/install-apply.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install/config.js",
+      "target": "file:tests/lib/install-config.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/install/request.js",
+      "target": "file:tests/lib/install-request.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/mcp-config.js",
+      "target": "file:tests/lib/mcp-config.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

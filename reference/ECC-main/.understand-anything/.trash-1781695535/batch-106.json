@@ -1,0 +1,299 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/scripts/setup-package-manager.test.js",
+      "type": "file",
+      "name": "setup-package-manager.test.js",
+      "filePath": "tests/scripts/setup-package-manager.test.js",
+      "summary": "Integration test suite for the setup-package-manager script, verifying detection of npm/pnpm/yarn/bun package managers, config file writing, error handling for invalid inputs, and filesystem interaction with temporary directories.",
+      "tags": ["test", "integration-test", "package-manager", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/setup-package-manager.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/setup-package-manager.test.js",
+      "lineRange": [49, 395],
+      "summary": "Main test orchestration function that runs all package manager detection and configuration scenarios using a custom test harness, covering auto-detection, explicit selection, error cases, and file output.",
+      "tags": ["test", "orchestration", "package-manager"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/skill-create-output.test.js",
+      "type": "file",
+      "name": "skill-create-output.test.js",
+      "filePath": "tests/scripts/skill-create-output.test.js",
+      "summary": "Comprehensive unit test suite for the skill-create-output module, verifying all output formatter functions (header, footer, analysisResults, patterns, instincts, nextSteps, output, analyzePhase) including ANSI formatting, box-drawing character widths, and edge cases.",
+      "tags": ["test", "unit-test", "output-formatting", "ansi"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/skill-create-output.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/skill-create-output.test.js",
+      "lineRange": [50, 531],
+      "summary": "Exhaustive test runner covering all output formatting functions of the skill-create-output module, including terminal width handling, ANSI stripping, and box-drawing consistency.",
+      "tags": ["test", "orchestration", "output-formatting"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/skill-create-output.test.js:captureLog",
+      "type": "function",
+      "name": "captureLog",
+      "filePath": "tests/scripts/skill-create-output.test.js",
+      "lineRange": [38, 48],
+      "summary": "Test helper that intercepts console.log calls during a function execution and returns the captured output, used throughout the suite to assert on formatted log output.",
+      "tags": ["test", "utility", "helper"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/scripts/sync-ecc-to-codex.test.js",
+      "type": "file",
+      "name": "sync-ecc-to-codex.test.js",
+      "filePath": "tests/scripts/sync-ecc-to-codex.test.js",
+      "summary": "Unit test file for the sync-ecc-to-codex script, verifying the presence of required synchronization logic patterns in the script source, including runOrEcho usage and expected output behavior.",
+      "tags": ["test", "unit-test", "sync", "source-inspection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/scripts/trae-install.test.js",
+      "type": "file",
+      "name": "trae-install.test.js",
+      "filePath": "tests/scripts/trae-install.test.js",
+      "summary": "Integration test suite for the trae-install/uninstall scripts, validating manifest file updates, file creation, deduplication behavior, symlink handling, and cleanup across multiple temporary directory scenarios.",
+      "tags": ["test", "integration-test", "install", "manifest"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/trae-install.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/trae-install.test.js",
+      "lineRange": [70, 177],
+      "summary": "Main integration test runner for trae install/uninstall, covering manifest-entry addition, file creation, idempotency, and symlink-aware uninstall across isolated temp directories.",
+      "tags": ["test", "integration-test", "install"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/test_astraflow_provider.py",
+      "type": "file",
+      "name": "test_astraflow_provider.py",
+      "filePath": "tests/test_astraflow_provider.py",
+      "summary": "Pytest test module for the AstraflowProvider and AstraflowCNProvider LLM providers, covering endpoint selection, OpenAI-compatible payload generation, temperature forwarding, tool call parsing, and malformed argument handling.",
+      "tags": ["test", "llm-provider", "astraflow", "tool-calls"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_builder.py",
+      "type": "file",
+      "name": "test_builder.py",
+      "filePath": "tests/test_builder.py",
+      "summary": "Pytest test module for the PromptBuilder and adapt_messages_for_provider utilities, verifying message construction with and without system prompts, tool injection, config validation, and provider-specific message adaptation.",
+      "tags": ["test", "prompt-builder", "llm", "message-adaptation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:tests/test_builder.py:TestPromptBuilder",
+      "type": "class",
+      "name": "TestPromptBuilder",
+      "filePath": "tests/test_builder.py",
+      "lineRange": [7, 67],
+      "summary": "Test class covering PromptBuilder scenarios: building without/with system messages, adding system from keyword options or PromptConfig, error on conflicting config, and tool injection.",
+      "tags": ["test", "prompt-builder"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:tests/test_builder.py:TestAdaptMessagesForProvider",
+      "type": "class",
+      "name": "TestAdaptMessagesForProvider",
+      "filePath": "tests/test_builder.py",
+      "lineRange": [70, 84],
+      "summary": "Test class verifying that adapt_messages_for_provider correctly transforms message lists for Claude, OpenAI, and Ollama backends.",
+      "tags": ["test", "message-adaptation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_claude_provider.py",
+      "type": "file",
+      "name": "test_claude_provider.py",
+      "filePath": "tests/test_claude_provider.py",
+      "summary": "Pytest test module for the ClaudeProvider LLM provider, verifying that generate() correctly collects text blocks and one or more tool_use blocks from Anthropic API responses, and copies dict-based tool arguments.",
+      "tags": ["test", "llm-provider", "claude", "tool-calls"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_executor.py",
+      "type": "file",
+      "name": "test_executor.py",
+      "filePath": "tests/test_executor.py",
+      "summary": "Pytest test module for ToolRegistry and ToolExecutor components, verifying tool registration, retrieval, execution of known and unknown tools, and batch execution via execute_all.",
+      "tags": ["test", "tool-executor", "tool-registry"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:tests/test_executor.py:TestToolRegistry",
+      "type": "class",
+      "name": "TestToolRegistry",
+      "filePath": "tests/test_executor.py",
+      "lineRange": [6, 31],
+      "summary": "Tests for ToolRegistry covering registration, has/get/get_definition lookups, and list_tools enumeration.",
+      "tags": ["test", "tool-registry"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:tests/test_executor.py:TestToolExecutor",
+      "type": "class",
+      "name": "TestToolExecutor",
+      "filePath": "tests/test_executor.py",
+      "lineRange": [34, 86],
+      "summary": "Tests for ToolExecutor covering successful execution, graceful handling of unknown tools, and batch execution via execute_all.",
+      "tags": ["test", "tool-executor"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_invariant_runner.py",
+      "type": "file",
+      "name": "test_invariant_runner.py",
+      "filePath": "tests/test_invariant_runner.py",
+      "summary": "Parameterized pytest module testing the invariant runner's sandbox setup, verifying that dangerous shell commands are blocked after _setup_sandbox is called.",
+      "tags": ["test", "sandbox", "security", "invariant"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_provider_tools.py",
+      "type": "file",
+      "name": "test_provider_tools.py",
+      "filePath": "tests/test_provider_tools.py",
+      "summary": "Pytest test module verifying tool serialization for both OpenAI and Claude (Anthropic) providers, including chat completions format, Anthropic messages format, credential-free construction, empty response rejection, and missing-usage tolerance.",
+      "tags": ["test", "llm-provider", "tool-serialization", "openai", "claude"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/test_resolver.py",
+      "type": "file",
+      "name": "test_resolver.py",
+      "filePath": "tests/test_resolver.py",
+      "summary": "Pytest test module for the get_provider resolver function, covering resolution of all supported providers (Claude, OpenAI, Ollama, Astraflow, AstraflowCN) by name, enum, environment variable, and .llm.env file, including normalization and override precedence.",
+      "tags": ["test", "llm-resolver", "provider-selection", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:tests/test_resolver.py:TestGetProvider",
+      "type": "class",
+      "name": "TestGetProvider",
+      "filePath": "tests/test_resolver.py",
+      "lineRange": [6, 88],
+      "summary": "Test class for the get_provider resolver, covering all provider types, enum-based selection, env-var and .llm.env file interaction, normalization, and override precedence.",
+      "tags": ["test", "provider-resolver"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/test_templates.py",
+      "type": "file",
+      "name": "test_templates.py",
+      "filePath": "tests/test_templates.py",
+      "summary": "Pytest test module for the template registry (register_template, deregister_template, clear_templates, get_template), verifying registration, mutability, removal, and validation of empty inputs.",
+      "tags": ["test", "template-registry", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/test_types.py",
+      "type": "file",
+      "name": "test_types.py",
+      "filePath": "tests/test_types.py",
+      "summary": "Pytest test module comprehensively verifying all core LLM type dataclasses: Role, ProviderType, Message, ToolDefinition (including OpenAI and Anthropic serialization), ToolCall, ToolResult, LLMInput, LLMOutput, and ModelInfo.",
+      "tags": ["test", "type-definitions", "serialization", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:VERSION",
+      "type": "file",
+      "name": "VERSION",
+      "filePath": "VERSION",
+      "summary": "Single-line version file containing the current release version string for the ECC plugin.",
+      "tags": ["configuration", "versioning", "build-system"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/scripts/setup-package-manager.test.js",
+      "target": "function:tests/scripts/setup-package-manager.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/skill-create-output.test.js",
+      "target": "function:tests/scripts/skill-create-output.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/skill-create-output.test.js",
+      "target": "function:tests/scripts/skill-create-output.test.js:captureLog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/skill-create-output.test.js",
+      "target": "file:scripts/skill-create-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/skill-create-output.test.js",
+      "target": "file:scripts/skill-create-output.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/trae-install.test.js",
+      "target": "function:tests/scripts/trae-install.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_builder.py",
+      "target": "class:tests/test_builder.py:TestPromptBuilder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_builder.py",
+      "target": "class:tests/test_builder.py:TestAdaptMessagesForProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_executor.py",
+      "target": "class:tests/test_executor.py:TestToolRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_executor.py",
+      "target": "class:tests/test_executor.py:TestToolExecutor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/test_resolver.py",
+      "target": "class:tests/test_resolver.py:TestGetProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "nodes": [
+    {
+      "id": "file:integrations/aura/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "integrations/aura/__init__.py",
+      "summary": "Python package entry point for the Aura integration module, re-exporting the adapter's public symbols to the package surface.",
+      "tags": ["entry-point", "barrel", "integration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:integrations/aura/adapter.py",
+      "type": "file",
+      "name": "adapter.py",
+      "filePath": "integrations/aura/adapter.py",
+      "summary": "Core Aura trust-reputation adapter providing HTTP-based verdict lookup for agent DIDs and a gate function that raises AuraUntrusted when an agent fails the trust check.",
+      "tags": ["service", "api-handler", "security", "validation"],
+      "complexity": "moderate",
+      "languageNotes": "Uses dependency injection for the HTTP fetch function (_fetch param) to enable deterministic testing without network calls."
+    },
+    {
+      "id": "class:integrations/aura/adapter.py:AuraUntrusted",
+      "type": "class",
+      "name": "AuraUntrusted",
+      "filePath": "integrations/aura/adapter.py",
+      "lineRange": [54, 61],
+      "summary": "Exception class raised by before_settle when an agent DID fails the Aura trust verdict gate.",
+      "tags": ["security", "validation", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:integrations/aura/adapter.py:AuraVerdict",
+      "type": "class",
+      "name": "AuraVerdict",
+      "filePath": "integrations/aura/adapter.py",
+      "lineRange": [65, 125],
+      "summary": "Data class holding the trust verdict for an agent DID, including verdict category, confidence score, history flag, and raw payload; provides factory methods from_payload and unreachable.",
+      "tags": ["data-model", "service", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:integrations/aura/adapter.py:aura_verdict",
+      "type": "function",
+      "name": "aura_verdict",
+      "filePath": "integrations/aura/adapter.py",
+      "lineRange": [136, 166],
+      "summary": "Fetches and returns an AuraVerdict for a given DID by calling the Aura reputation API, handling network errors as unreachable verdicts.",
+      "tags": ["api-handler", "service", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:integrations/aura/adapter.py:before_settle",
+      "type": "function",
+      "name": "before_settle",
+      "filePath": "integrations/aura/adapter.py",
+      "lineRange": [169, 202],
+      "summary": "Gate function intended for use as a pre-settlement hook that raises AuraUntrusted when the agent's trust verdict does not meet the configured allow list, with fail-open/fail-closed behavior for unreachable endpoints.",
+      "tags": ["middleware", "security", "validation", "api-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:integrations/aura/tests/fixtures.py",
+      "type": "file",
+      "name": "fixtures.py",
+      "filePath": "integrations/aura/tests/fixtures.py",
+      "summary": "Test fixture factories for the Aura adapter tests, providing make_fetch (a DID-keyed stub fetch function) and raising_fetch (a fetch stub that raises a configurable exception).",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:integrations/aura/tests/fixtures.py:make_fetch",
+      "type": "function",
+      "name": "make_fetch",
+      "filePath": "integrations/aura/tests/fixtures.py",
+      "lineRange": [70, 85],
+      "summary": "Factory returning a stub HTTP fetch function keyed on DID query parameter, used to drive aura_verdict tests with controlled responses.",
+      "tags": ["test", "factory", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:integrations/aura/tests/fixtures.py:raising_fetch",
+      "type": "function",
+      "name": "raising_fetch",
+      "filePath": "integrations/aura/tests/fixtures.py",
+      "lineRange": [88, 94],
+      "summary": "Factory returning a fetch stub that unconditionally raises a given exception, used to simulate unreachable Aura endpoints in tests.",
+      "tags": ["test", "factory", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:integrations/aura/tests/test_adapter.py",
+      "type": "file",
+      "name": "test_adapter.py",
+      "filePath": "integrations/aura/tests/test_adapter.py",
+      "summary": "Pytest test suite for the Aura adapter covering verdict class contracts, gate allow/reject logic across all trust categories, fail-open/fail-closed unreachable behavior, and DID validation.",
+      "tags": ["test", "security", "validation"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:integrations/aura/__init__.py",
+      "target": "file:integrations/aura/adapter.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:integrations/aura/tests/test_adapter.py",
+      "target": "file:integrations/aura/adapter.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:integrations/aura/tests/test_adapter.py",
+      "target": "file:integrations/aura/tests/fixtures.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "class:integrations/aura/adapter.py:AuraUntrusted",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "class:integrations/aura/adapter.py:AuraVerdict",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "function:integrations/aura/adapter.py:aura_verdict",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "function:integrations/aura/adapter.py:before_settle",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "class:integrations/aura/adapter.py:AuraUntrusted",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "class:integrations/aura/adapter.py:AuraVerdict",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "function:integrations/aura/adapter.py:aura_verdict",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "function:integrations/aura/adapter.py:before_settle",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/tests/fixtures.py",
+      "target": "function:integrations/aura/tests/fixtures.py:make_fetch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/tests/fixtures.py",
+      "target": "function:integrations/aura/tests/fixtures.py:raising_fetch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:integrations/aura/tests/fixtures.py",
+      "target": "function:integrations/aura/tests/fixtures.py:make_fetch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/tests/fixtures.py",
+      "target": "function:integrations/aura/tests/fixtures.py:raising_fetch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:integrations/aura/adapter.py",
+      "target": "file:integrations/aura/tests/test_adapter.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

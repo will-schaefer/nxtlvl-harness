@@ -1,0 +1,3158 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "ECC — agent harness operating system (docs)",
+    "languages": [
+      "json",
+      "markdown",
+      "powershell",
+      "shell"
+    ],
+    "frameworks": [],
+    "description": "Documentation corpus for ECC (\"Every Commit Counts\"), the harness-native operator system for agentic work that runs across Codex, Claude Code, Cursor, OpenCode, Gemini, Zed, and GitHub Copilot. Contains the design specs, cross-harness architecture, setup and adaptation guides, release notes, fix postmortems, and policy material for a system shipping skills, agents, hooks, rules, MCP configurations, memory optimization, continuous learning, and security scanning.",
+    "analyzedAt": "2026-06-17T09:38:37Z",
+    "gitCommitHash": "2a5b5e78b82dc63ea6cf2627b88095bef53c7f7f"
+  },
+  "nodes": [
+    {
+      "id": "document:ANTIGRAVITY-GUIDE.md",
+      "type": "document",
+      "name": "ANTIGRAVITY-GUIDE.md",
+      "filePath": "ANTIGRAVITY-GUIDE.md",
+      "summary": "Setup and usage guide for the Antigravity harness adapter, covering install mapping, the .agent/ directory layout, the openai.yaml agent config, lifecycle management, and troubleshooting.",
+      "tags": [
+        "documentation",
+        "adapter",
+        "antigravity",
+        "installation",
+        "harness"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Documents the installer's source-path mapping (rules -> .agent/rules, commands -> .agent/workflows, agents -> .agent/skills) and the distinction between dot-prefixed .agents/ static layout and runtime .agent/."
+    },
+    {
+      "id": "document:ARCHITECTURE-IMPROVEMENTS.md",
+      "type": "document",
+      "name": "ARCHITECTURE-IMPROVEMENTS.md",
+      "filePath": "ARCHITECTURE-IMPROVEMENTS.md",
+      "summary": "Recommendations for hardening the ECC architecture across documentation single-source-of-truth, test discovery, schema validation in CI, cross-harness/i18n drift, and hook runtime consistency, closing with a priority summary table and quick wins.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "recommendations",
+        "quality",
+        "ci-cd"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:COMMAND-AGENT-MAP.md",
+      "type": "document",
+      "name": "COMMAND-AGENT-MAP.md",
+      "filePath": "COMMAND-AGENT-MAP.md",
+      "summary": "Discoverability map listing each slash command and the primary agent(s) or skills it invokes, plus direct-use agents, used to keep command-to-agent references consistent during refactors.",
+      "tags": [
+        "documentation",
+        "command-map",
+        "agents",
+        "reference",
+        "discoverability"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:COMMAND-REGISTRY.json",
+      "type": "config",
+      "name": "COMMAND-REGISTRY.json",
+      "filePath": "COMMAND-REGISTRY.json",
+      "summary": "Machine-readable catalog of ECC's full slash-command surface, listing each command with its agents/skills plus aggregate statistics, serving as the single source of truth behind the human-facing command map.",
+      "tags": [
+        "configuration",
+        "command-registry",
+        "catalog",
+        "schema",
+        "single-source-of-truth"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Versioned JSON registry (schemaVersion, totalCommands, commands[], statistics) consumed by tooling and synced against the human-readable COMMAND-AGENT-MAP."
+    },
+    {
+      "id": "document:ECC-2.0-GA-ROADMAP.md",
+      "type": "document",
+      "name": "ECC-2.0-GA-ROADMAP.md",
+      "filePath": "ECC-2.0-GA-ROADMAP.md",
+      "summary": "The master ECC 2.0 GA release roadmap tracking dated deltas, current evidence, operating rules, execution lanes, milestones, and engineering slices across GA publication, adapter compliance, observability, the self-improving loop, AgentShield, and ECC Tools.",
+      "tags": [
+        "documentation",
+        "roadmap",
+        "release-planning",
+        "ecc-2.0",
+        "milestones"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Large evidence-dense roadmap with append-only dated deltas and per-milestone status tables; the canonical backlog the reference architecture maps onto."
+    },
+    {
+      "id": "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "type": "document",
+      "name": "ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "filePath": "ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "summary": "Defines the ECC 2.0 target architecture shape and maps each reference-baseline component (worktree/session orchestration, HUD/observability, self-improving loop, AgentShield, ECC Tools, stale salvage) back to the GA roadmap backlog, with implementation ordering and non-goals.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "ecc-2.0",
+        "reference",
+        "design"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "type": "document",
+      "name": "ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "filePath": "ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "summary": "Discovery document for the harness-neutral session adapter boundary in ECC 2.0, analyzing the current substrate, the 1.x-to-2.0 gap, the canonical snapshot shape, and the first adapters (dmux-tmux, claude-history, codex-worktree, opencode) to support.",
+      "tags": [
+        "documentation",
+        "session-adapter",
+        "ecc-2.0",
+        "discovery",
+        "design"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:HERMES-OPENCLAW-MIGRATION.md",
+      "type": "document",
+      "name": "HERMES-OPENCLAW-MIGRATION.md",
+      "filePath": "HERMES-OPENCLAW-MIGRATION.md",
+      "summary": "Migration guide translating the Hermes/OpenClaw workspace model (scheduler, gateway, memory, skill, and tool layers) onto ECC equivalents, with a translation map, what already exists publicly, remaining backlog, and a recommended bring-up order.",
+      "tags": [
+        "documentation",
+        "migration",
+        "hermes",
+        "openclaw",
+        "workspace"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:HERMES-SETUP.md",
+      "type": "document",
+      "name": "HERMES-SETUP.md",
+      "filePath": "HERMES-SETUP.md",
+      "summary": "Setup guide for running Hermes on top of ECC, covering what ships publicly, the architecture and public workspace map, the recommended capability stack, locally-authed components, and a suggested bring-up order.",
+      "tags": [
+        "documentation",
+        "setup",
+        "hermes",
+        "workspace",
+        "capability-stack"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:JOYCODE-GUIDE.md",
+      "type": "document",
+      "name": "JOYCODE-GUIDE.md",
+      "filePath": "JOYCODE-GUIDE.md",
+      "summary": "Adapter guide for the JoyCode harness covering install, the .joycode/ installed layout with flattened namespaced rule filenames, and install-state-tracked uninstall that preserves user files.",
+      "tags": [
+        "documentation",
+        "adapter",
+        "joycode",
+        "installation",
+        "harness"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:MANUAL-ADAPTATION-GUIDE.md",
+      "type": "document",
+      "name": "MANUAL-ADAPTATION-GUIDE.md",
+      "filePath": "MANUAL-ADAPTATION-GUIDE.md",
+      "summary": "Guide for manually reproducing ECC behavior on non-native harnesses (e.g. Grok-style setups) via context packing, compression rules, and hand-reproduced commands and hooks, with a harness capability matrix and limitations.",
+      "tags": [
+        "documentation",
+        "adapter",
+        "manual-adaptation",
+        "context-packing",
+        "cross-harness"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:MCP-CONNECTOR-POLICY.md",
+      "type": "document",
+      "name": "MCP-CONNECTOR-POLICY.md",
+      "filePath": "MCP-CONNECTOR-POLICY.md",
+      "summary": "Policy stating ECC ships exactly one default MCP connector with everything else as opt-in skills or mcp-servers.json entries, documenting the current default set, the six connectors retired in the June 2026 audit, opt-out, and how to add a connector.",
+      "tags": [
+        "documentation",
+        "policy",
+        "mcp",
+        "connectors",
+        "configuration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "type": "document",
+      "name": "MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "filePath": "MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "summary": "Dated mega-plan of ready-to-run repo prompts spanning everything-claude-code (PR #399 review, roadmap issue extraction, ECC 2.0 discovery), agentshield, ECC-website, skill-creator-app, and the ECC workspace, with a local continuation section.",
+      "tags": [
+        "documentation",
+        "planning",
+        "prompts",
+        "multi-repo",
+        "dated-artifact"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "type": "document",
+      "name": "PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "filePath": "PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "summary": "Bundle of four ready-to-post GitHub issue drafts (titles, labels, bodies) prepared from the March 11-12 mega plan, including the canonical session adapter contract for the ECC 2.0 control plane.",
+      "tags": [
+        "documentation",
+        "planning",
+        "issue-bundle",
+        "github-issues",
+        "dated-artifact"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:PLAN-PRD-PATTERN.md",
+      "type": "document",
+      "name": "PLAN-PRD-PATTERN.md",
+      "filePath": "PLAN-PRD-PATTERN.md",
+      "summary": "Explains the markdown-staged planning flow where /plan-prd and /plan write plain .md staging files under .claude/, why PRD (why) and plan (how) are separate commands, usage flows, and why staging files beat in-context state.",
+      "tags": [
+        "documentation",
+        "planning",
+        "workflow",
+        "prd",
+        "commands"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:PR-399-REVIEW-2026-03-12.md",
+      "type": "document",
+      "name": "PR-399-REVIEW-2026-03-12.md",
+      "filePath": "PR-399-REVIEW-2026-03-12.md",
+      "summary": "Code review of PR #399 (5-layer automated session guard against self-loop observations) recording scope, medium-severity findings, a merge recommendation, and residual risk.",
+      "tags": [
+        "documentation",
+        "code-review",
+        "pull-request",
+        "dated-artifact",
+        "findings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:PR-QUEUE-TRIAGE-2026-03-13.md",
+      "type": "document",
+      "name": "PR-QUEUE-TRIAGE-2026-03-13.md",
+      "filePath": "PR-QUEUE-TRIAGE-2026-03-13.md",
+      "summary": "PR queue triage retrospectively reviewing the merged #399 and assessing open PRs (#292, #298, #336, #420) into mergeability buckets with a recommended merge order, plus a live-refresh section updating the queue read.",
+      "tags": [
+        "documentation",
+        "pr-triage",
+        "code-review",
+        "dated-artifact",
+        "queue"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:QWEN-GUIDE.md",
+      "type": "document",
+      "name": "QWEN-GUIDE.md",
+      "filePath": "QWEN-GUIDE.md",
+      "summary": "Adapter guide for the Qwen CLI harness covering install into ~/.qwen/, the installed layout with QWEN.md and install-state ownership tracking, updating, uninstalling, and scope.",
+      "tags": [
+        "documentation",
+        "adapter",
+        "qwen",
+        "installation",
+        "harness"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "type": "document",
+      "name": "SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "filePath": "SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "summary": "Deep architecture discovery for ECC 2.0 selective install, reviewing the current runtime path and reworking it into layered services (CLI surface, request normalizer, module resolver, target/operation planners, execution engine, install-state store, lifecycle), with canonical artifacts, migration map, and a phased implementation sequence.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "selective-install",
+        "ecc-2.0",
+        "design"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Specifies module/profile catalogs, target adapters, an install-state contract, and lifecycle commands (list-installed, uninstall, doctor, repair) as the modular replacement for the current install path."
+    },
+    {
+      "id": "document:SELECTIVE-INSTALL-DESIGN.md",
+      "type": "document",
+      "name": "SELECTIVE-INSTALL-DESIGN.md",
+      "filePath": "SELECTIVE-INSTALL-DESIGN.md",
+      "summary": "Product/UX design for ECC selective install defining the problem, goals/non-goals, UX principles, the component model (baseline, language/framework/capability packs), profiles, proposed CLI, config file shape and precedence, per-target behavior, feasibility phasing, and rollout.",
+      "tags": [
+        "documentation",
+        "design",
+        "selective-install",
+        "ecc-2.0",
+        "cli"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:SESSION-ADAPTER-CONTRACT.md",
+      "type": "document",
+      "name": "SESSION-ADAPTER-CONTRACT.md",
+      "filePath": "SESSION-ADAPTER-CONTRACT.md",
+      "summary": "Defines the canonical `ecc.session.v1` session-snapshot schema that adapters (dmux-tmux, claude-history) must emit and consumers read, covering required/optional fields, state semantics, versioning strategy, and recording-fallback behavior.",
+      "tags": [
+        "documentation",
+        "schema-definition",
+        "session",
+        "adapter",
+        "contract"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Specifies a versioned JSON contract with explicit additive-vs-breaking change rules for the ecc.session.v1 schema."
+    },
+    {
+      "id": "document:SKILL-DEVELOPMENT-GUIDE.md",
+      "type": "document",
+      "name": "SKILL-DEVELOPMENT-GUIDE.md",
+      "filePath": "SKILL-DEVELOPMENT-GUIDE.md",
+      "summary": "Comprehensive end-to-end guide for authoring ECC skills, covering skill architecture, SKILL.md format and frontmatter, content-writing techniques, common patterns, testing, and the fork-to-PR submission flow.",
+      "tags": [
+        "documentation",
+        "skill",
+        "authoring-guide",
+        "contributor-guide",
+        "reference"
+      ],
+      "complexity": "complex",
+      "languageNotes": "919-line guide structured with a table of contents, worked examples (rust-patterns, fastapi-patterns, refactoring-workflow), and copy-paste templates."
+    },
+    {
+      "id": "document:SKILL-PLACEMENT-POLICY.md",
+      "type": "document",
+      "name": "SKILL-PLACEMENT-POLICY.md",
+      "filePath": "SKILL-PLACEMENT-POLICY.md",
+      "summary": "Policy defining where curated, learned, imported, and evolved skills live on disk, their provenance metadata requirements, validator scope, and which skills are publishable vs local-only.",
+      "tags": [
+        "documentation",
+        "skill",
+        "policy",
+        "provenance",
+        "governance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:TROUBLESHOOTING.md",
+      "type": "document",
+      "name": "TROUBLESHOOTING.md",
+      "filePath": "TROUBLESHOOTING.md",
+      "summary": "Community-tested workarounds for upstream Claude Code bugs affecting ECC users — false hook-error labels, early compaction, MCP auth loss after compaction, hook hot-reload, and 529 overload responses.",
+      "tags": [
+        "documentation",
+        "troubleshooting",
+        "hooks",
+        "mcp",
+        "workarounds"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:capability-surface-selection.md",
+      "type": "document",
+      "name": "capability-surface-selection.md",
+      "filePath": "capability-surface-selection.md",
+      "summary": "Routing guide for deciding whether a capability belongs in a rule, skill, MCP server, or plain CLI/API workflow, with a decision order, per-surface guidance, and a cost/reliability bias toward the narrowest surface.",
+      "tags": [
+        "documentation",
+        "policy",
+        "architecture",
+        "decision-guide",
+        "capability-routing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:continuous-learning-v2-spec.md",
+      "type": "document",
+      "name": "continuous-learning-v2-spec.md",
+      "filePath": "continuous-learning-v2-spec.md",
+      "summary": "Stub spec capturing the v2 continuous-learning architecture (hook observation capture, background observer loop, instinct scoring, evolution into skills) and pointing to its implementation under skills/continuous-learning-v2 and scripts/hooks.",
+      "tags": [
+        "documentation",
+        "spec",
+        "continuous-learning",
+        "architecture",
+        "stub"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:hook-bug-workarounds.md",
+      "type": "document",
+      "name": "hook-bug-workarounds.md",
+      "filePath": "hook-bug-workarounds.md",
+      "summary": "Narrow high-signal checklist of the most reliable operational fixes for Claude Code hook/compaction/MCP bugs, distilled from the fuller TROUBLESHOOTING surface.",
+      "tags": [
+        "documentation",
+        "troubleshooting",
+        "hooks",
+        "workarounds",
+        "checklist"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:legacy-artifact-inventory.md",
+      "type": "document",
+      "name": "legacy-artifact-inventory.md",
+      "filePath": "legacy-artifact-inventory.md",
+      "summary": "Inventory classifying legacy repository and workspace artifacts (landed, milestone-tracked, salvage, archive) including the legacy command-shim archive and workspace-level legacy checkouts, with import rules and a release-gate rule.",
+      "tags": [
+        "documentation",
+        "inventory",
+        "legacy",
+        "governance",
+        "release"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skill-adaptation-policy.md",
+      "type": "document",
+      "name": "skill-adaptation-policy.md",
+      "filePath": "skill-adaptation-policy.md",
+      "summary": "Policy for adapting externally-sourced skill ideas into ECC-native surfaces — when to keep vs rename a skill, the narrowest-native-surface dependency rule, and pre-merge review questions.",
+      "tags": [
+        "documentation",
+        "skill",
+        "policy",
+        "adaptation",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:stale-pr-salvage-ledger.md",
+      "type": "document",
+      "name": "stale-pr-salvage-ledger.md",
+      "filePath": "stale-pr-salvage-ledger.md",
+      "summary": "Ledger recording stale/closed pull requests whose useful work was salvaged into main, already-present-or-superseded entries, owner-wide queue cleanup passes, skipped items, and a remaining manual-review backlog.",
+      "tags": [
+        "documentation",
+        "ledger",
+        "pull-request",
+        "salvage",
+        "maintenance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:token-optimization.md",
+      "type": "document",
+      "name": "token-optimization.md",
+      "filePath": "token-optimization.md",
+      "summary": "Practical guide to reducing token consumption and extending session quality via recommended settings, model selection, context management commands, MCP server hygiene, and agent-teams cost warnings.",
+      "tags": [
+        "documentation",
+        "token-optimization",
+        "cost",
+        "context-management",
+        "configuration"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "document",
+      "name": "agentshield-enterprise-research-roadmap.md",
+      "filePath": "architecture/agentshield-enterprise-research-roadmap.md",
+      "summary": "Planning roadmap that proposes turning AgentShield's scanner, policy gate, corpus, and reporting surface into a multi-harness enterprise security control plane, with eight enterprise gaps, a five-slice build order, non-goals, and acceptance gates.",
+      "tags": [
+        "documentation",
+        "security",
+        "roadmap",
+        "enterprise",
+        "architecture"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Long-form research artifact citing external runtimes (Orca, Superset, dmux, Claude HUD, Meta-Harness, Autocontext, Hermes) as design pressure rather than dependencies."
+    },
+    {
+      "id": "document:architecture/cross-harness.md",
+      "type": "document",
+      "name": "cross-harness.md",
+      "filePath": "architecture/cross-harness.md",
+      "summary": "Defines ECC as a reusable workflow layer that keeps durable assets (skills, rules, hooks, MCP config, sessions) in one repo and adapts them thinly at each harness edge, with a portability matrix and the rule to put durable behavior in ECC first.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "cross-harness",
+        "portability",
+        "adapter"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/discussion-response-playbook.md",
+      "type": "document",
+      "name": "discussion-response-playbook.md",
+      "filePath": "architecture/discussion-response-playbook.md",
+      "summary": "Operator guide that folds GitHub Discussions into the same operating queue as PRs, issues, and Linear work, with an audit loop, category routing table, reply templates, and outcome-recording rules.",
+      "tags": [
+        "documentation",
+        "operations",
+        "playbook",
+        "community",
+        "queue"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/evaluator-rag-prototype.md",
+      "type": "document",
+      "name": "evaluator-rag-prototype.md",
+      "filePath": "architecture/evaluator-rag-prototype.md",
+      "summary": "Specifies the smallest read-only artifact set for a self-improving harness loop: a five-artifact evaluator/RAG contract (scenario, trace, report, candidate playbook, verifier result), a phase model, corpus fixtures, ECC Tools mapping, and promotion rules.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "rag",
+        "evaluation",
+        "self-improving"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Defines a retrieval-then-verify contract that deliberately separates read-only retrieval from any mutating action until a verifier promotes a playbook."
+    },
+    {
+      "id": "document:architecture/harness-adapter-compliance.md",
+      "type": "document",
+      "name": "harness-adapter-compliance.md",
+      "filePath": "architecture/harness-adapter-compliance.md",
+      "summary": "Public onramp matrix turning the cross-harness architecture into a practical scorecard of compliance states (native, adapter-backed, instruction-backed, reference-only) per harness, with a verification-command onramp and a data-backed scorecard contract.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "cross-harness",
+        "compliance",
+        "scorecard"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Matrix is generated from scripts/lib/harness-adapter-compliance.js and verified by npm run harness:adapters -- --check, so the prose is a rendered view of a data source."
+    },
+    {
+      "id": "document:architecture/hud-status-session-control.md",
+      "type": "document",
+      "name": "hud-status-session-control.md",
+      "filePath": "architecture/hud-status-session-control.md",
+      "summary": "Defines the harness-neutral ecc.hud-status.v1 status payload and session-control vocabulary for local operator surfaces, HUDs, and handoffs, with stable top-level sections, a sync contract, and the current CLI implementations that project into it.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "observability",
+        "schema-definition",
+        "session-control"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Specifies a versioned payload contract (schema_version ecc.hud-status.v1) where producers must keep field names stable and emit null/unknown rather than inventing incompatible names."
+    },
+    {
+      "id": "document:architecture/observability-readiness.md",
+      "type": "document",
+      "name": "observability-readiness.md",
+      "filePath": "architecture/observability-readiness.md",
+      "summary": "Describes ECC 2.0's local, opt-in observability readiness gate that checks core signals (live status, HUD contract, session traces, harness baseline, tool activity, risk ledger, progress sync, release safety) are present without sending telemetry, plus an operator workflow.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "observability",
+        "monitoring",
+        "readiness"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/platform-value-loop.md",
+      "type": "document",
+      "name": "platform-value-loop.md",
+      "filePath": "architecture/platform-value-loop.md",
+      "summary": "Frames ECC's three-layer product direction (meta-harness, dedicated agent, control pane) and the OSS platform thesis, defining a product-integration contract and value loop by which external products contribute skill packs and gated APIs back into ECC.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "platform",
+        "product-strategy",
+        "value-loop"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/progress-sync-contract.md",
+      "type": "document",
+      "name": "progress-sync-contract.md",
+      "filePath": "architecture/progress-sync-contract.md",
+      "summary": "Defines the minimum evidence required before a status update can claim a lane is current across GitHub, Linear, local handoffs, the repo roadmap, and the work-items store, with flow lanes, merge-batch update rules, a realtime boundary, and a release gate.",
+      "tags": [
+        "documentation",
+        "architecture",
+        "progress-tracking",
+        "contract",
+        "release-gate"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:business/metrics-and-sponsorship.md",
+      "type": "document",
+      "name": "metrics-and-sponsorship.md",
+      "filePath": "business/metrics-and-sponsorship.md",
+      "summary": "Sponsor-call and partner-review playbook defining the four metric categories (distribution, adoption, product surface, reliability), live npm/GitHub metric-pull commands, tiered sponsorship packages ($200/$500/$1,000+ per month), and a 60-second talking track for positioning ECC as an agent-harness performance system.",
+      "tags": [
+        "documentation",
+        "business",
+        "metrics",
+        "sponsorship",
+        "go-to-market"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Prose playbook with embedded bash snippets (curl npm API, gh api) used as copy-paste metric-collection commands rather than executable project code."
+    },
+    {
+      "id": "document:business/social-launch-copy.md",
+      "type": "document",
+      "name": "social-launch-copy.md",
+      "filePath": "business/social-launch-copy.md",
+      "summary": "Launch-ready social media copy templates for the ECC v2.0.0-rc.1 release, covering X release-announcement and proof/metrics posts, two quote-tweet angles (eval discipline, deslop workflow), and a partner-friendly LinkedIn summary emphasizing the cross-harness operator system and public/private boundary.",
+      "tags": [
+        "documentation",
+        "business",
+        "marketing",
+        "launch",
+        "go-to-market"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:business/team-agent-orchestration-content-pack.md",
+      "type": "document",
+      "name": "team-agent-orchestration-content-pack.md",
+      "filePath": "business/team-agent-orchestration-content-pack.md",
+      "summary": "Content strategy pack framing ECC as an orchestration and control-plane layer for multi-agent teams, with five video concepts, three article angles, short posts, a distribution plan, and product implications around agent Kanban, dynamic workflows, MCP gateways, and shared skills.",
+      "tags": [
+        "documentation",
+        "business",
+        "content-strategy",
+        "positioning",
+        "go-to-market"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:fixes/HOOK-FIX-20260421-ADDENDUM.md",
+      "type": "document",
+      "name": "HOOK-FIX-20260421-ADDENDUM.md",
+      "filePath": "fixes/HOOK-FIX-20260421-ADDENDUM.md",
+      "summary": "Addendum postmortem (partly in Japanese) documenting the Claude Code v2.1.116 argv-duplication bug discovered during evening verification of the 2026-04-21 hook fix, with reproduction steps, CLI behavior analysis, and the workaround.",
+      "tags": [
+        "documentation",
+        "postmortem",
+        "hook",
+        "bugfix",
+        "continuous-learning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Bilingual prose (Japanese section headings mixed with English/technical terms) describing an upstream argv-dup defect."
+    },
+    {
+      "id": "document:fixes/HOOK-FIX-20260421.md",
+      "type": "document",
+      "name": "HOOK-FIX-20260421.md",
+      "filePath": "fixes/HOOK-FIX-20260421.md",
+      "summary": "Postmortem for the 2026-04-21 ECC hook fix, identifying two defects (UTF-8 BOM + CRLF line endings, and a double-wrapped bash.exe invocation) in settings.local.json and describing the corrective rewrite plus verification.",
+      "tags": [
+        "documentation",
+        "postmortem",
+        "hook",
+        "bugfix",
+        "settings"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:fixes/INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+      "type": "document",
+      "name": "INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+      "filePath": "fixes/INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+      "summary": "Documents the argv-dup workaround applied to install_hook_wrapper.ps1 (PR #1540), explaining the resulting command shape, usage, and PowerShell 5.1 compatibility considerations.",
+      "tags": [
+        "documentation",
+        "hook",
+        "bugfix",
+        "powershell",
+        "continuous-learning"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:fixes/PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+      "type": "document",
+      "name": "PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+      "filePath": "fixes/PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+      "summary": "Documents the argv-dup workaround applied to patch_settings_cl_v2_simple.ps1 (PR #1524), covering the resulting hook command shape, usage, PowerShell 5.1 compatibility, and verified dry-run cases.",
+      "tags": [
+        "documentation",
+        "hook",
+        "bugfix",
+        "powershell",
+        "settings"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:fixes/apply-hook-fix.sh",
+      "type": "file",
+      "name": "apply-hook-fix.sh",
+      "filePath": "fixes/apply-hook-fix.sh",
+      "summary": "Bash script that applies the ECC hook fix to ~/.claude/settings.local.json: backs up the original, then rewrites it as UTF-8 (no BOM) with LF endings routing PreToolUse/PostToolUse directly at observe-wrapper.sh with a pre/post positional argument.",
+      "tags": [
+        "script",
+        "hook",
+        "settings",
+        "bugfix",
+        "continuous-learning"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Top-level imperative bash with set -euo pipefail; no functions, emits JSON via printf."
+    },
+    {
+      "id": "file:fixes/install_hook_wrapper.ps1",
+      "type": "file",
+      "name": "install_hook_wrapper.ps1",
+      "filePath": "fixes/install_hook_wrapper.ps1",
+      "summary": "PowerShell installer that copies observe-wrapper.sh into the continuous-learning hooks dir with LF normalization, backs up settings.local.json, and rewrites existing PreToolUse/PostToolUse hook commands to invoke the wrapper via PATH-resolved bash (argv-dup workaround, PR #1540).",
+      "tags": [
+        "script",
+        "powershell",
+        "hook",
+        "settings",
+        "continuous-learning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Targets PowerShell 5.1+; uses ArrayList normalization to stop ConvertTo-Json collapsing single-element arrays, with a manual PSCustomObject->Hashtable fallback when -AsHashtable is unavailable."
+    },
+    {
+      "id": "file:fixes/patch_settings_cl_v2_simple.ps1",
+      "type": "file",
+      "name": "patch_settings_cl_v2_simple.ps1",
+      "filePath": "fixes/patch_settings_cl_v2_simple.ps1",
+      "summary": "PowerShell patcher that bootstraps or merges CL v2 hook entries into settings.local.json, registering distinct PreToolUse/PostToolUse commands that call observe-wrapper.sh via PATH-resolved bash with pre/post args (argv-dup safe, PR #1524).",
+      "tags": [
+        "script",
+        "powershell",
+        "hook",
+        "settings",
+        "continuous-learning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "ASCII-only for code-page-independent parsing; ArrayList normalization and a recursive PSCustomObject->Hashtable converter ensure PS 5.1 ConvertTo-Json preserves array shape."
+    },
+    {
+      "id": "function:fixes/install_hook_wrapper.ps1:ConvertTo-HashtableRecursive",
+      "type": "function",
+      "name": "ConvertTo-HashtableRecursive",
+      "filePath": "fixes/install_hook_wrapper.ps1",
+      "lineRange": [
+        45,
+        70
+      ],
+      "summary": "Recursively converts a PSCustomObject/array tree (as returned by ConvertFrom-Json on PS 5.1) into nested Hashtables and ArrayLists so merge logic works uniformly and single-element arrays survive serialization.",
+      "tags": [
+        "utility",
+        "powershell",
+        "serialization",
+        "compatibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:fixes/install_hook_wrapper.ps1:Read-SettingsAsHashtable",
+      "type": "function",
+      "name": "Read-SettingsAsHashtable",
+      "filePath": "fixes/install_hook_wrapper.ps1",
+      "lineRange": [
+        72,
+        82
+      ],
+      "summary": "Reads settings.local.json as UTF-8 and parses it into a Hashtable, preferring ConvertFrom-Json -AsHashtable (PS 7+) and falling back to the recursive converter on PowerShell 5.1.",
+      "tags": [
+        "utility",
+        "powershell",
+        "settings",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:fixes/patch_settings_cl_v2_simple.ps1:New-HookEntry",
+      "type": "function",
+      "name": "New-HookEntry",
+      "filePath": "fixes/patch_settings_cl_v2_simple.ps1",
+      "lineRange": [
+        41,
+        52
+      ],
+      "summary": "Builds a hook entry Hashtable (matcher plus an ArrayList-wrapped inner hooks list) for a given command string, using ArrayList so a single-element list is not collapsed into an object by PS 5.1 ConvertTo-Json.",
+      "tags": [
+        "factory",
+        "powershell",
+        "hook",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:fixes/patch_settings_cl_v2_simple.ps1:ConvertTo-HashtableRecursive",
+      "type": "function",
+      "name": "ConvertTo-HashtableRecursive",
+      "filePath": "fixes/patch_settings_cl_v2_simple.ps1",
+      "lineRange": [
+        57,
+        85
+      ],
+      "summary": "Recursively converts a PSCustomObject/array tree into nested Hashtables and ArrayLists so the merge logic operates uniformly across PS versions and ConvertTo-Json preserves single-element arrays on PowerShell 5.1.",
+      "tags": [
+        "utility",
+        "powershell",
+        "serialization",
+        "compatibility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/1.10.0/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/1.10.0/release-notes.md",
+      "summary": "Canonical ECC v1.10.0 release notes framing the version as a surface-sync and operator-lane release: it records the synced OSS counts (38 agents, 156 skills, 72 commands), the new operator/media skills, the ECC 2.0 alpha control-plane status, install surfaces, and the recommended upgrade path.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "changelog",
+        "versioning"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Structured markdown with six H2 sections (Positioning, What Changed, ECC 2.0 Status, Install Guidance, Recommended Upgrade Path) serving as the authoritative source the announcement and X thread restate."
+    },
+    {
+      "id": "document:releases/1.10.0/discussion-announcement.md",
+      "type": "document",
+      "name": "discussion-announcement.md",
+      "filePath": "releases/1.10.0/discussion-announcement.md",
+      "summary": "Long-form discussion/forum announcement for ECC v1.10.0, narrating the hard-sync release (140K stars, corrected plugin metadata) and the ECC 2.0 alpha control-plane in-tree under ecc2/ for a community audience.",
+      "tags": [
+        "documentation",
+        "announcement",
+        "release",
+        "marketing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.10.0/x-thread.md",
+      "type": "document",
+      "name": "x-thread.md",
+      "filePath": "releases/1.10.0/x-thread.md",
+      "summary": "Draft X/Twitter thread promoting ECC v1.10.0 in condensed social-media voice, highlighting the 140K-star milestone, the surface sync (38 agents, 156 skills, 72 commands), the operator/media lane, and the ecc2/ alpha control plane.",
+      "tags": [
+        "documentation",
+        "announcement",
+        "social-media",
+        "marketing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.8.0/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/1.8.0/release-notes.md",
+      "summary": "Canonical ECC v1.8.0 release notes positioning the project as an agent-harness performance system, listing key improvements (hook stabilization, expanded eval/loop surface, NanoClaw v2, cross-harness parity) and an upgrade checklist. Acts as the hub that links to attribution and sponsorship docs.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "changelog",
+        "entry-point"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Prose release artifact; internal markdown links act as the project-internal references for this release set."
+    },
+    {
+      "id": "document:releases/1.8.0/linkedin-post.md",
+      "type": "document",
+      "name": "linkedin-post.md",
+      "filePath": "releases/1.8.0/linkedin-post.md",
+      "summary": "LinkedIn announcement draft for ECC v1.8.0, reframing the release around system-level harness performance and highlighting hook reliability, eval-driven workflows, operator tooling, cross-platform support, and NanoClaw v2.",
+      "tags": [
+        "documentation",
+        "social-media",
+        "marketing",
+        "release-collateral"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.8.0/x-thread.md",
+      "type": "document",
+      "name": "x-thread.md",
+      "filePath": "releases/1.8.0/x-thread.md",
+      "summary": "Five-tweet X (Twitter) thread draft announcing ECC v1.8.0, covering harness performance, hook fixes, NanoClaw v2 capabilities, the /harness-audit entry point, and cross-harness parity.",
+      "tags": [
+        "documentation",
+        "social-media",
+        "marketing",
+        "release-collateral"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.8.0/x-quote-eval-skills.md",
+      "type": "document",
+      "name": "x-quote-eval-skills.md",
+      "filePath": "releases/1.8.0/x-quote-eval-skills.md",
+      "summary": "Short X quote-tweet draft emphasizing the v1.8.0 expansion of eval-harness patterns, pass@k guidance, and release-level verification loops so teams can measure reliability rather than guess it.",
+      "tags": [
+        "documentation",
+        "social-media",
+        "marketing",
+        "release-collateral"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.8.0/x-quote-plankton-deslop.md",
+      "type": "document",
+      "name": "x-quote-plankton-deslop.md",
+      "filePath": "releases/1.8.0/x-quote-plankton-deslop.md",
+      "summary": "Short X quote-tweet draft promoting the v1.8.0 quality-gate model: write-time quality enforcement, deterministic checks, and cleaner loop recovery so agents converge faster with less noise.",
+      "tags": [
+        "documentation",
+        "social-media",
+        "marketing",
+        "release-collateral"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.8.0/reference-attribution.md",
+      "type": "document",
+      "name": "reference-attribution.md",
+      "filePath": "releases/1.8.0/reference-attribution.md",
+      "summary": "Attribution and licensing notes for ECC v1.8.0, crediting research and workflow inspiration (plankton, ralphinho, infinite-agentic-loop, continuous-claude, public profiles) and stating a policy of no direct code copying and re-authored implementations.",
+      "tags": [
+        "documentation",
+        "attribution",
+        "licensing",
+        "security"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/article-outline.md",
+      "type": "document",
+      "name": "article-outline.md",
+      "filePath": "releases/2.0.0-rc.1/article-outline.md",
+      "summary": "Longform launch article outline for ECC v2.0.0-rc.1, structured in seven sections that argue ECC is a cross-harness operator substrate and Hermes is the operator shell.",
+      "tags": [
+        "documentation",
+        "release",
+        "marketing",
+        "article-outline",
+        "launch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/demo-prompts.md",
+      "type": "document",
+      "name": "demo-prompts.md",
+      "filePath": "releases/2.0.0-rc.1/demo-prompts.md",
+      "summary": "Three sanitized demo/proof-of-work prompts (ECC builds ECC, recording-to-assets, public launch push) abstracting private Hermes workflows into public examples for the rc.1 launch.",
+      "tags": [
+        "documentation",
+        "release",
+        "demo",
+        "prompts",
+        "marketing"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "type": "document",
+      "name": "ito-prediction-market-skill-pack.md",
+      "filePath": "releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "summary": "Public distribution note for the Itô prediction-market skill pack, defining included skills, gated non-advisory API access via ITO_API_KEY, and the growth loop kept separate from ECC Tools billing.",
+      "tags": [
+        "documentation",
+        "release",
+        "skill-pack",
+        "product-integration",
+        "boundary"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "type": "document",
+      "name": "launch-checklist.md",
+      "filePath": "releases/2.0.0-rc.1/launch-checklist.md",
+      "summary": "Operator launch checklist for ECC v2.0.0-rc.1 covering repo verification, release-surface gates, content publication, demo assets, and approval-gated messaging discipline.",
+      "tags": [
+        "documentation",
+        "release",
+        "checklist",
+        "launch",
+        "entry-point"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/linkedin-post.md",
+      "type": "document",
+      "name": "linkedin-post.md",
+      "filePath": "releases/2.0.0-rc.1/linkedin-post.md",
+      "summary": "LinkedIn launch announcement draft for ECC v2.0.0-rc.1, gated to require live GitHub/npm URLs and keep remaining plugin/video/billing URLs approval-gated.",
+      "tags": [
+        "documentation",
+        "release",
+        "social",
+        "marketing",
+        "launch"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "type": "document",
+      "name": "naming-and-publication-matrix.md",
+      "filePath": "releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "summary": "Naming, slug, and publication-path decision record freezing rc.1 identity as ECC (repo affaan-m/ECC, npm ecc-universal, plugin slug ecc) with the ITO-46 blocker register and per-surface evidence commands.",
+      "tags": [
+        "documentation",
+        "release",
+        "decision-record",
+        "naming",
+        "publication"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-15.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-15, tracking current status, the prompt-to-artifact checklist, top actions, and the next work order.",
+      "tags": [
+        "documentation",
+        "release",
+        "dashboard",
+        "operator-readiness",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-17.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-17, superseding the May 15 dashboard with refreshed status, checklist, top actions, and next work order.",
+      "tags": [
+        "documentation",
+        "release",
+        "dashboard",
+        "operator-readiness",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-18, superseding the May 17 dashboard with refreshed status, checklist, top actions, and next work order.",
+      "tags": [
+        "documentation",
+        "release",
+        "dashboard",
+        "operator-readiness",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-19, adding a growth baseline section and superseding the May 18 dashboard.",
+      "tags": [
+        "documentation",
+        "release",
+        "dashboard",
+        "operator-readiness",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-20.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "summary": "Current prompt-to-artifact operator readiness dashboard snapshot for 2026-05-20, showing PR/issue/discussion/platform/supply-chain gates current plus hypergrowth, video, Linear, and billing operating lanes.",
+      "tags": [
+        "documentation",
+        "release",
+        "dashboard",
+        "operator-readiness",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "type": "document",
+      "name": "owner-approval-packet-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "summary": "Final human decision sheet (snapshot 2026-05-19) for the rc.1 public launch, recording current evidence, a per-action decision register, final URL fill-ins, evidence commands, and do-not-approve conditions.",
+      "tags": [
+        "documentation",
+        "release",
+        "approval",
+        "decision-record",
+        "governance"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "type": "document",
+      "name": "owner-queue-cleanup-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "summary": "Owner-wide queue cleanup log for 2026-05-18 recording the commands run and the final PR and issue disposition that drove the queue to a clean state.",
+      "tags": [
+        "documentation",
+        "release",
+        "queue-cleanup",
+        "evidence",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "type": "document",
+      "name": "partner-sponsor-talks-pack.md",
+      "filePath": "releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "summary": "Approval-gated outbound copy pack for ECC v2.0.0-rc.1 covering positioning, offer ladder, partner/sponsor outbound, platform-partner DMs, consulting intros, talk/podcast pitches, and a GitHub Discussion announcement.",
+      "tags": [
+        "documentation",
+        "release",
+        "outbound",
+        "marketing",
+        "business-development"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "type": "document",
+      "name": "preview-pack-manifest.md",
+      "filePath": "releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "summary": "Central manifest indexing the reviewed rc.1 preview pack — every public launch artifact, its role, and its verification gate — plus skill boundaries, adapter direction, final verification commands, and publication blockers.",
+      "tags": [
+        "documentation",
+        "release",
+        "manifest",
+        "index",
+        "entry-point"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-12.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "summary": "Dated publication-evidence log for 2026-05-12 capturing source commit, registry/release state, npm dry run, plugin/harness evidence, clean-checkout plugin smoke, and remaining blockers.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence",
+        "publication",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-13-post-hardening.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "summary": "Post-hardening publication-evidence log for 2026-05-13 recording hardening landed since the prior evidence, required command evidence, supply-chain evidence, external advisory mapping, and remaining approval blockers.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence",
+        "publication",
+        "security"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-13.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "summary": "Dated publication-evidence log for 2026-05-13 capturing source commit, queue/release state, required command evidence, security-gate evidence, and blockers still requiring approval or external action.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence",
+        "publication",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-15.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "summary": "Comprehensive publication-evidence log for 2026-05-15 covering queue/discussion state, Linear roadmap, supply-chain evidence, preview-pack state, Codex marketplace evidence, and current publication blockers through PR #1941.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence",
+        "publication",
+        "supply-chain"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-16.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "summary": "Dated publication-evidence log for 2026-05-16 recording queue/discussion state, a merge-and-triage batch, release-gate commands, and current publication blockers for the May 16 mirror.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence",
+        "publication",
+        "snapshot"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-17.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "summary": "Dated release-readiness evidence log for May 17, 2026, capturing the source commit, clean PR/issue/discussion queues, a merge-and-triage batch (Japanese/Thai localization, Zed support, supply-chain IOC scanner), and release-gate command output for the v2.0.0-rc.1 candidate. Explicitly does not perform any publication action.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence-log",
+        "supply-chain",
+        "publication-gate"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Evidence-style markdown built almost entirely from command/result tables anchored to a specific git commit SHA."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "summary": "Dated release-readiness evidence log for May 18, 2026, recording the merge batch (workflow-security, metrics-bridge, uncloud skill), supply-chain/security evidence, the ITO-46 publication-path dry-run, Linear progress sync, and the standing publication blockers for v2.0.0-rc.1.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence-log",
+        "supply-chain",
+        "publication-gate"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Command-and-result evidence tables pinned to commit 4470e2e6 with extensive PR/commit SHA citations."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "summary": "The strongest dated release-readiness evidence log (May 19-20, 2026), covering the PR #1990-#2020 merge batch, canonical ECC identity gate, video-suite gate, Marketplace Pro selected-target billing readback, growth/outreach evidence, and remaining publication blockers for v2.0.0-rc.1.",
+      "tags": [
+        "documentation",
+        "release",
+        "evidence-log",
+        "billing",
+        "publication-gate"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Largest evidence file in the pack (207 lines); dense PR/commit/CI-run SHA tables across ECC, ECC-Tools, AgentShield, and JARVIS repos."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "document",
+      "name": "publication-readiness.md",
+      "filePath": "releases/2.0.0-rc.1/publication-readiness.md",
+      "summary": "The canonical publication gate for the v2.0.0-rc.1 release: a release-identity matrix, publication-gate table, required command evidence, do-not-publish conditions, and announcement order. Acts as the hub that every dated evidence log defers to.",
+      "tags": [
+        "documentation",
+        "release",
+        "publication-gate",
+        "checklist",
+        "entry-point"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Hub document with a large header block of cross-links to every dated evidence snapshot and operator dashboard in the release pack."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/quickstart.md",
+      "type": "document",
+      "name": "quickstart.md",
+      "filePath": "releases/2.0.0-rc.1/quickstart.md",
+      "summary": "Contributor-facing quickstart for verifying the v2.0.0-rc.1 release surface: clone, npm ci install, run the test and observability gates, distill a first sanitized skill, and switch the same skill source across Claude Code, Codex, and OpenCode harnesses.",
+      "tags": [
+        "documentation",
+        "quickstart",
+        "release",
+        "onboarding",
+        "entry-point"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+      "type": "document",
+      "name": "release-name-plugin-publication-checklist-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+      "summary": "Operator gate that freezes the rc.1 release identity (name ECC, npm package ecc-universal on the next dist-tag, Claude/Codex plugin slug ecc) and lists the required command checks and ordered publication steps for package and plugin distribution.",
+      "tags": [
+        "documentation",
+        "release",
+        "publication-gate",
+        "checklist",
+        "packaging"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Decision-plus-evidence checklist with a fixed-naming section, a required-gate command block, and a numbered publication-order table."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/2.0.0-rc.1/release-notes.md",
+      "summary": "The v2.0.0-rc.1 release notes positioning ECC as a cross-harness operating system for agentic work, summarizing what changed since v1.10.0 and the upgrade motion. Serves as the campaign anchor for all launch collateral in the release pack.",
+      "tags": [
+        "documentation",
+        "release",
+        "release-notes",
+        "entry-point",
+        "positioning"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+      "type": "document",
+      "name": "release-url-ledger-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+      "summary": "Dated release URL ledger (May 18, 2026) separating already-public links (repo, release pack, evidence snapshots, npm page) from approval-gated links (GitHub prerelease, npm rc package, plugin tag, billing) for announcement gating.",
+      "tags": [
+        "documentation",
+        "release",
+        "url-ledger",
+        "publication-gate",
+        "announcement"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "type": "document",
+      "name": "release-url-ledger-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "summary": "Dated release URL ledger refreshed May 26, 2026 after the live GitHub prerelease and npm next readbacks, separating live links from the still approval-gated plugin, video, billing, and outbound URLs. The current ledger referenced by the release notes and X thread.",
+      "tags": [
+        "documentation",
+        "release",
+        "url-ledger",
+        "publication-gate",
+        "announcement"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/telegram-handoff.md",
+      "type": "document",
+      "name": "telegram-handoff.md",
+      "filePath": "releases/2.0.0-rc.1/telegram-handoff.md",
+      "summary": "Short handoff prompt for sending to the Hermes operator shell via Telegram, pointing it at the public release pack files and tasking it to finalize the X thread, LinkedIn post, video scripts, and a recording checklist for the v2.0.0-rc.1 launch.",
+      "tags": [
+        "documentation",
+        "release",
+        "handoff",
+        "launch-collateral",
+        "operator"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/video-suite-production.md",
+      "type": "document",
+      "name": "video-suite-production.md",
+      "filePath": "releases/2.0.0-rc.1/video-suite-production.md",
+      "summary": "Production contract for the ECC 2.0 release video suite, defining the claim, env-var-gated private inputs, source inventory, deliverable specs, primary-launch EDL, publish-candidate outputs, browser capture plan, and a self-eval/black-frame QA gate before any upload.",
+      "tags": [
+        "documentation",
+        "release",
+        "video-production",
+        "launch-collateral",
+        "self-eval-gate"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Media-production manifest keeping raw footage and absolute paths out of the repo via environment-variable indirection and an EDL/timeline editing surface."
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/x-thread.md",
+      "type": "document",
+      "name": "x-thread.md",
+      "filePath": "releases/2.0.0-rc.1/x-thread.md",
+      "summary": "Drafted 15-post X (Twitter) thread announcing v2.0.0-rc.1, framing ECC as a meta-harness substrate with Hermes as the operator shell, covering the operator/security layers, the Ito skill-pack boundary, and the live-vs-gated launch URLs.",
+      "tags": [
+        "documentation",
+        "release",
+        "launch-collateral",
+        "social",
+        "announcement"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-anything tooling metadata: a .gitignore-style exclude list that scopes analysis to English source by ignoring the ~14 localized translation directories and editor cruft. Not ECC product content.",
+      "tags": [
+        "configuration",
+        "tooling-metadata",
+        "ignore-file"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses gitignore glob syntax (globs, # comments, ! negation, trailing / for dirs)."
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-anything tooling metadata: a minimal analysis config setting the output language to English. Not ECC product content.",
+      "tags": [
+        "configuration",
+        "tooling-metadata",
+        "json"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:drafts/release-1.10.1-announcement.md",
+      "type": "document",
+      "name": "release-1.10.1-announcement.md",
+      "filePath": "drafts/release-1.10.1-announcement.md",
+      "summary": "Draft announcement for ECC 1.10.1, a stabilization follow-up to 1.10.0 focused on install correctness, Windows/PowerShell recovery, Cursor project install repair, Claude Code hook compatibility, and naming clarification across the plugin/npm/GitHub surfaces.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "draft",
+        "stabilization",
+        "changelog"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:examples/product-capability-template.md",
+      "type": "document",
+      "name": "product-capability-template.md",
+      "filePath": "examples/product-capability-template.md",
+      "summary": "Reusable template for capturing a product capability as a durable contract, prompting authors to specify intent, constraints, actors/surfaces, state transitions, interface contract, data implications, and security before implementation begins.",
+      "tags": [
+        "documentation",
+        "template",
+        "product-spec",
+        "capability-contract",
+        "reusable"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:examples/project-guidelines-template.md",
+      "type": "document",
+      "name": "project-guidelines-template.md",
+      "filePath": "examples/project-guidelines-template.md",
+      "summary": "Reference template for a project-specific guidelines skill, modeled on the Zenith production app, covering architecture overview, file structure, Next.js/FastAPI/Claude code patterns, pytest and React Testing Library testing requirements, and Cloud Run deployment workflow.",
+      "tags": [
+        "documentation",
+        "template",
+        "project-guidelines",
+        "conventions",
+        "reusable"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Spans a full-stack reference: Next.js 15 App Router + TypeScript frontend, FastAPI + Pydantic backend, Supabase, and Claude structured-output integration."
+    },
+    {
+      "id": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "type": "document",
+      "name": "ecc-2-hypergrowth-release-command-center.md",
+      "filePath": "releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "summary": "Operator execution map for the ECC 2.0 public launch, defining the release claim, growth baseline and MRR targets, release gates, video suite, distribution plan, copy rules, build order, and owner-approval gates for the hypergrowth phase.",
+      "tags": [
+        "documentation",
+        "release-planning",
+        "go-to-market",
+        "operations",
+        "command-center"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/2.0.0/release-notes.md",
+      "summary": "GA release notes for ECC 2.0.0, the cross-harness agent operating system, highlighting 261 public skills, the control-pane substrate and MCP inventory, ~30 hardening PRs since rc.1 (notably the Node 21+ no-op hook fix), the Discord launch, and install/upgrade instructions.",
+      "tags": [
+        "documentation",
+        "release-notes",
+        "entry-point",
+        "changelog",
+        "ga-release"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:security/supply-chain-incident-response.md",
+      "type": "document",
+      "name": "supply-chain-incident-response.md",
+      "filePath": "security/supply-chain-incident-response.md",
+      "summary": "Operator runbook for npm/GitHub Actions/PyPI supply-chain incidents (TanStack compromise and Mini Shai-Hulud campaign), covering the current IOC set, ECC exposure-check commands, the durable supply-chain-watch workflow, immediate-response steps, GitHub Actions hardening rules, publication rules, and escalation criteria.",
+      "tags": [
+        "documentation",
+        "security",
+        "incident-response",
+        "supply-chain",
+        "runbook"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Encodes concrete IOCs (file paths, SHA-256 prefixes, persistence-hook locations) and CI-gate rules enforced by scripts/ci/validate-workflow-security.js."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "target": "document:ECC-2.0-GA-ROADMAP.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "target": "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "target": "document:ECC-2.0-GA-ROADMAP.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SELECTIVE-INSTALL-DESIGN.md",
+      "target": "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ANTIGRAVITY-GUIDE.md",
+      "target": "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ANTIGRAVITY-GUIDE.md",
+      "target": "document:SELECTIVE-INSTALL-DESIGN.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MANUAL-ADAPTATION-GUIDE.md",
+      "target": "document:ANTIGRAVITY-GUIDE.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:HERMES-SETUP.md",
+      "target": "document:HERMES-OPENCLAW-MIGRATION.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:HERMES-OPENCLAW-MIGRATION.md",
+      "target": "document:HERMES-SETUP.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:JOYCODE-GUIDE.md",
+      "target": "document:ANTIGRAVITY-GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:QWEN-GUIDE.md",
+      "target": "document:ANTIGRAVITY-GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:JOYCODE-GUIDE.md",
+      "target": "document:QWEN-GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MANUAL-ADAPTATION-GUIDE.md",
+      "target": "document:QWEN-GUIDE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:COMMAND-AGENT-MAP.md",
+      "target": "config:COMMAND-REGISTRY.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ARCHITECTURE-IMPROVEMENTS.md",
+      "target": "document:COMMAND-AGENT-MAP.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "target": "document:PR-399-REVIEW-2026-03-12.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "target": "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "target": "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "target": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+      "target": "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PR-QUEUE-TRIAGE-2026-03-13.md",
+      "target": "document:PR-399-REVIEW-2026-03-12.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PR-399-REVIEW-2026-03-12.md",
+      "target": "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:PLAN-PRD-PATTERN.md",
+      "target": "document:COMMAND-AGENT-MAP.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "target": "document:ECC-2.0-GA-ROADMAP.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+      "target": "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:MCP-CONNECTOR-POLICY.md",
+      "target": "document:ARCHITECTURE-IMPROVEMENTS.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:hook-bug-workarounds.md",
+      "target": "document:TROUBLESHOOTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TROUBLESHOOTING.md",
+      "target": "document:hook-bug-workarounds.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:TROUBLESHOOTING.md",
+      "target": "document:token-optimization.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:hook-bug-workarounds.md",
+      "target": "document:token-optimization.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:token-optimization.md",
+      "target": "document:TROUBLESHOOTING.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:legacy-artifact-inventory.md",
+      "target": "document:stale-pr-salvage-ledger.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:stale-pr-salvage-ledger.md",
+      "target": "document:hook-bug-workarounds.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SKILL-PLACEMENT-POLICY.md",
+      "target": "document:continuous-learning-v2-spec.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SKILL-DEVELOPMENT-GUIDE.md",
+      "target": "document:SKILL-PLACEMENT-POLICY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skill-adaptation-policy.md",
+      "target": "document:capability-surface-selection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:capability-surface-selection.md",
+      "target": "document:skill-adaptation-policy.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skill-adaptation-policy.md",
+      "target": "document:SKILL-PLACEMENT-POLICY.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:SKILL-DEVELOPMENT-GUIDE.md",
+      "target": "document:skill-adaptation-policy.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/cross-harness.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/cross-harness.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/harness-adapter-compliance.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/harness-adapter-compliance.md",
+      "target": "document:architecture/observability-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/hud-status-session-control.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/evaluator-rag-prototype.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/hud-status-session-control.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/progress-sync-contract.md",
+      "target": "document:architecture/hud-status-session-control.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/progress-sync-contract.md",
+      "target": "document:architecture/discussion-response-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/discussion-response-playbook.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/evaluator-rag-prototype.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/evaluator-rag-prototype.md",
+      "target": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/platform-value-loop.md",
+      "target": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/platform-value-loop.md",
+      "target": "document:architecture/evaluator-rag-prototype.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:business/metrics-and-sponsorship.md",
+      "target": "document:business/social-launch-copy.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:business/social-launch-copy.md",
+      "target": "document:business/metrics-and-sponsorship.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:business/team-agent-orchestration-content-pack.md",
+      "target": "document:business/social-launch-copy.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:business/team-agent-orchestration-content-pack.md",
+      "target": "document:business/metrics-and-sponsorship.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:fixes/install_hook_wrapper.ps1",
+      "target": "function:fixes/install_hook_wrapper.ps1:ConvertTo-HashtableRecursive",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:fixes/install_hook_wrapper.ps1",
+      "target": "function:fixes/install_hook_wrapper.ps1:Read-SettingsAsHashtable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:fixes/patch_settings_cl_v2_simple.ps1",
+      "target": "function:fixes/patch_settings_cl_v2_simple.ps1:New-HookEntry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:fixes/patch_settings_cl_v2_simple.ps1",
+      "target": "function:fixes/patch_settings_cl_v2_simple.ps1:ConvertTo-HashtableRecursive",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:fixes/install_hook_wrapper.ps1:Read-SettingsAsHashtable",
+      "target": "function:fixes/install_hook_wrapper.ps1:ConvertTo-HashtableRecursive",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:fixes/patch_settings_cl_v2_simple.ps1:ConvertTo-HashtableRecursive",
+      "target": "function:fixes/patch_settings_cl_v2_simple.ps1:New-HookEntry",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/HOOK-FIX-20260421.md",
+      "target": "file:fixes/apply-hook-fix.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+      "target": "file:fixes/install_hook_wrapper.ps1",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+      "target": "file:fixes/patch_settings_cl_v2_simple.ps1",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/HOOK-FIX-20260421-ADDENDUM.md",
+      "target": "document:fixes/HOOK-FIX-20260421.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+      "target": "document:fixes/HOOK-FIX-20260421-ADDENDUM.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:fixes/PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+      "target": "document:fixes/HOOK-FIX-20260421-ADDENDUM.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:fixes/install_hook_wrapper.ps1",
+      "target": "file:fixes/patch_settings_cl_v2_simple.ps1",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/1.10.0/release-notes.md",
+      "target": "document:releases/1.10.0/discussion-announcement.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.10.0/release-notes.md",
+      "target": "document:releases/1.10.0/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.10.0/discussion-announcement.md",
+      "target": "document:releases/1.10.0/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:releases/1.8.0/reference-attribution.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:releases/1.8.0/linkedin-post.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:releases/1.8.0/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:releases/1.8.0/x-quote-eval-skills.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:releases/1.8.0/x-quote-plankton-deslop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/linkedin-post.md",
+      "target": "document:releases/1.8.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/x-thread.md",
+      "target": "document:releases/1.8.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/x-quote-eval-skills.md",
+      "target": "document:releases/1.8.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.8.0/x-quote-plankton-deslop.md",
+      "target": "document:releases/1.8.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/article-outline.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/linkedin-post.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/demo-prompts.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/linkedin-post.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/article-outline.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/demo-prompts.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "target": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "target": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "target": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:releases/2.0.0-rc.1/quickstart.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/quickstart.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/quickstart.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "target": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/video-suite-production.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/telegram-handoff.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/telegram-handoff.md",
+      "target": "document:releases/2.0.0-rc.1/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/telegram-handoff.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/x-thread.md",
+      "target": "document:releases/2.0.0-rc.1/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/x-thread.md",
+      "target": "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/video-suite-production.md",
+      "target": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+      "target": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0/release-notes.md",
+      "target": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "target": "document:security/supply-chain-incident-response.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:drafts/release-1.10.1-announcement.md",
+      "target": "document:releases/2.0.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ECC-2.0-GA-ROADMAP.md",
+      "target": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:HERMES-SETUP.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:MANUAL-ADAPTATION-GUIDE.md",
+      "target": "document:TROUBLESHOOTING.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:SKILL-DEVELOPMENT-GUIDE.md",
+      "target": "document:examples/project-guidelines-template.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/1.8.0/release-notes.md",
+      "target": "document:business/metrics-and-sponsorship.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/publication-readiness.md",
+      "target": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/quickstart.md",
+      "target": "document:architecture/observability-readiness.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/quickstart.md",
+      "target": "document:HERMES-SETUP.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/quickstart.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:architecture/observability-readiness.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:HERMES-SETUP.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0-rc.1/release-notes.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "references",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:core-architecture",
+      "name": "Core Architecture & Design",
+      "description": "The ECC 2.0 reference architecture, GA roadmap, session-adapter and selective-install design, and the architecture/ contracts (cross-harness, observability, HUD status, progress-sync, RAG evaluator, platform value loop, AgentShield roadmap) that define the system's target shape.",
+      "nodeIds": [
+        "document:ECC-2.0-GA-ROADMAP.md",
+        "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+        "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+        "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+        "document:SELECTIVE-INSTALL-DESIGN.md",
+        "document:SESSION-ADAPTER-CONTRACT.md",
+        "document:capability-surface-selection.md",
+        "document:architecture/agentshield-enterprise-research-roadmap.md",
+        "document:architecture/cross-harness.md",
+        "document:architecture/discussion-response-playbook.md",
+        "document:architecture/evaluator-rag-prototype.md",
+        "document:architecture/harness-adapter-compliance.md",
+        "document:architecture/hud-status-session-control.md",
+        "document:architecture/observability-readiness.md",
+        "document:architecture/platform-value-loop.md",
+        "document:architecture/progress-sync-contract.md"
+      ]
+    },
+    {
+      "id": "layer:harness-adapters",
+      "name": "Harness Adapters & Setup",
+      "description": "Per-harness adaptation and setup guides — Antigravity, JoyCode, Qwen, and manual non-native adaptation, plus the Hermes operator-shell setup and OpenClaw migration that bring ECC up on each harness edge.",
+      "nodeIds": [
+        "document:ANTIGRAVITY-GUIDE.md",
+        "document:JOYCODE-GUIDE.md",
+        "document:QWEN-GUIDE.md",
+        "document:MANUAL-ADAPTATION-GUIDE.md",
+        "document:HERMES-SETUP.md",
+        "document:HERMES-OPENCLAW-MIGRATION.md"
+      ]
+    },
+    {
+      "id": "layer:skills-capability",
+      "name": "Skills & Capability System",
+      "description": "Authoring, placement, and adaptation policy for ECC skills, the continuous-learning v2 spec, and the command-to-agent surface map plus its machine-readable command registry.",
+      "nodeIds": [
+        "document:SKILL-DEVELOPMENT-GUIDE.md",
+        "document:SKILL-PLACEMENT-POLICY.md",
+        "document:skill-adaptation-policy.md",
+        "document:continuous-learning-v2-spec.md",
+        "document:COMMAND-AGENT-MAP.md",
+        "config:COMMAND-REGISTRY.json"
+      ]
+    },
+    {
+      "id": "layer:operations-maintenance",
+      "name": "Operations & Maintenance",
+      "description": "Operator runbooks and maintenance artifacts — troubleshooting and hook-bug workarounds, token optimization, the MCP connector policy, the fixes/ hook-fix postmortems and scripts, legacy/salvage ledgers, PR review and triage records, and supply-chain incident response.",
+      "nodeIds": [
+        "document:TROUBLESHOOTING.md",
+        "document:hook-bug-workarounds.md",
+        "document:token-optimization.md",
+        "document:MCP-CONNECTOR-POLICY.md",
+        "document:legacy-artifact-inventory.md",
+        "document:stale-pr-salvage-ledger.md",
+        "document:PR-399-REVIEW-2026-03-12.md",
+        "document:PR-QUEUE-TRIAGE-2026-03-13.md",
+        "document:fixes/HOOK-FIX-20260421-ADDENDUM.md",
+        "document:fixes/HOOK-FIX-20260421.md",
+        "document:fixes/INSTALL-HOOK-WRAPPER-FIX-20260422.md",
+        "document:fixes/PATCH-SETTINGS-SIMPLE-FIX-20260422.md",
+        "file:fixes/apply-hook-fix.sh",
+        "file:fixes/install_hook_wrapper.ps1",
+        "file:fixes/patch_settings_cl_v2_simple.ps1",
+        "document:security/supply-chain-incident-response.md"
+      ]
+    },
+    {
+      "id": "layer:planning-process",
+      "name": "Planning & Process",
+      "description": "Planning and process artifacts — the multi-repo mega-plan, phase-1 issue bundle, the PRD/plan staging pattern, architecture-hardening recommendations, and the reusable capability/project-guidelines templates.",
+      "nodeIds": [
+        "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+        "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+        "document:PLAN-PRD-PATTERN.md",
+        "document:ARCHITECTURE-IMPROVEMENTS.md",
+        "document:examples/product-capability-template.md",
+        "document:examples/project-guidelines-template.md"
+      ]
+    },
+    {
+      "id": "layer:release-management",
+      "name": "Release Management",
+      "description": "The full release corpus — v1.8.0, v1.10.0, v2.0.0-rc.1, and v2.0.0 GA notes, announcements, launch collateral, publication-readiness gates, dated evidence logs, operator-readiness dashboards, and the 1.10.1 stabilization draft.",
+      "nodeIds": [
+        "document:releases/1.10.0/release-notes.md",
+        "document:releases/1.10.0/discussion-announcement.md",
+        "document:releases/1.10.0/x-thread.md",
+        "document:releases/1.8.0/release-notes.md",
+        "document:releases/1.8.0/linkedin-post.md",
+        "document:releases/1.8.0/x-thread.md",
+        "document:releases/1.8.0/x-quote-eval-skills.md",
+        "document:releases/1.8.0/x-quote-plankton-deslop.md",
+        "document:releases/1.8.0/reference-attribution.md",
+        "document:releases/2.0.0-rc.1/article-outline.md",
+        "document:releases/2.0.0-rc.1/demo-prompts.md",
+        "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+        "document:releases/2.0.0-rc.1/launch-checklist.md",
+        "document:releases/2.0.0-rc.1/linkedin-post.md",
+        "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+        "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+        "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+        "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+        "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+        "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+        "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+        "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+        "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+        "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-17.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-18.md",
+        "document:releases/2.0.0-rc.1/publication-evidence-2026-05-19.md",
+        "document:releases/2.0.0-rc.1/publication-readiness.md",
+        "document:releases/2.0.0-rc.1/quickstart.md",
+        "document:releases/2.0.0-rc.1/release-name-plugin-publication-checklist-2026-05-18.md",
+        "document:releases/2.0.0-rc.1/release-notes.md",
+        "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-18.md",
+        "document:releases/2.0.0-rc.1/release-url-ledger-2026-05-19.md",
+        "document:releases/2.0.0-rc.1/telegram-handoff.md",
+        "document:releases/2.0.0-rc.1/video-suite-production.md",
+        "document:releases/2.0.0-rc.1/x-thread.md",
+        "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+        "document:releases/2.0.0/release-notes.md",
+        "document:drafts/release-1.10.1-announcement.md"
+      ]
+    },
+    {
+      "id": "layer:business-gtm",
+      "name": "Business & Go-to-Market",
+      "description": "Business and go-to-market playbooks — sponsorship metrics, social launch copy, and the team-agent-orchestration content strategy positioning ECC as a control-plane product.",
+      "nodeIds": [
+        "document:business/metrics-and-sponsorship.md",
+        "document:business/social-launch-copy.md",
+        "document:business/team-agent-orchestration-content-pack.md"
+      ]
+    },
+    {
+      "id": "layer:tooling-metadata",
+      "name": "Tooling Metadata",
+      "description": "Understand-anything tooling artifacts (analysis config and ignore file) that scope the documentation analysis itself and are not ECC product content.",
+      "nodeIds": [
+        "file:.understand-anything/.understandignore",
+        "config:.understand-anything/config.json"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "What ECC Is",
+      "description": "Start here to understand ECC's target shape before reading any detail. The reference architecture defines ECC 2.0 as a cross-harness agent operating system and maps each baseline component (worktree/session orchestration, HUD/observability, the self-improving loop, AgentShield, ECC Tools) onto the GA roadmap backlog. Reading these two together gives you both the 'what' (the architecture's intended form) and the 'how it gets built' (the dated, evidence-tracked roadmap), so every later doc has a place to hang.",
+      "nodeIds": [
+        "document:ECC-2.0-REFERENCE-ARCHITECTURE.md",
+        "document:ECC-2.0-GA-ROADMAP.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Get Running",
+      "description": "Now that you know what ECC aims to be, see how an operator actually brings it up. The rc.1 quickstart walks a contributor through clone, install, the test and observability gates, and distilling a first skill that switches across Claude Code, Codex, and OpenCode. HERMES-SETUP then layers the Hermes operator shell on top, showing what ships publicly and the recommended bring-up order. This is the fastest path from 'reading about ECC' to 'a working operator surface'.",
+      "nodeIds": [
+        "document:releases/2.0.0-rc.1/quickstart.md",
+        "document:HERMES-SETUP.md"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "The Cross-Harness Core",
+      "description": "This is ECC's central design idea and the most tightly-coupled cluster in the whole corpus. cross-harness.md defines ECC as a reusable workflow layer that keeps durable assets (skills, rules, hooks, MCP config, sessions) in one repo and adapts them thinly at each harness edge. harness-adapter-compliance.md turns that principle into a practical scorecard of compliance states (native, adapter-backed, instruction-backed, reference-only) per harness. Together they answer 'how does one system stay coherent across Codex, Claude Code, Cursor, OpenCode, and more?'",
+      "nodeIds": [
+        "document:architecture/cross-harness.md",
+        "document:architecture/harness-adapter-compliance.md"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "The Session Adapter Boundary",
+      "description": "Building on the cross-harness principle from Step 3, this step shows how a harness-neutral boundary is specified concretely. The discovery doc analyzes the 1.x-to-2.0 gap and names the first adapters to support (dmux-tmux, claude-history, codex-worktree, opencode). The session-adapter contract then pins the canonical `ecc.session.v1` snapshot schema that every adapter must emit and every consumer reads. This pairing is the template for how ECC turns a design principle into a versioned contract.",
+      "nodeIds": [
+        "document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md",
+        "document:SESSION-ADAPTER-CONTRACT.md"
+      ],
+      "languageLesson": "Schema versioning: the contract distinguishes additive changes (new optional fields, safe within ecc.session.v1) from breaking changes (which require a new version). This additive-vs-breaking discipline is what lets many independently-built adapters stay interoperable over time."
+    },
+    {
+      "order": 5,
+      "title": "Selective Install & Capability Routing",
+      "description": "ECC does not force every harness to take everything. The selective-install design (the product/UX view) and architecture (the layered-services view) define a component model — baseline plus language, framework, and capability packs — so an operator installs only what they need. capability-surface-selection.md then gives the decision rule for where any new behavior belongs: a rule, a skill, an MCP server, or a plain CLI/API workflow, biased toward the narrowest reliable surface. This is the governance backbone behind ECC's modularity.",
+      "nodeIds": [
+        "document:SELECTIVE-INSTALL-DESIGN.md",
+        "document:SELECTIVE-INSTALL-ARCHITECTURE.md",
+        "document:capability-surface-selection.md"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Adapting to a Harness",
+      "description": "With the cross-harness contract understood, see how it lands on real harnesses. The Antigravity, JoyCode, and Qwen guides each document a per-harness installer: source-path mapping, the installed directory layout, and install-state-tracked uninstall that preserves user files. The manual-adaptation guide covers the fallback path for non-native harnesses (e.g. Grok-style setups) via context packing and hand-reproduced commands. Read these as concrete instances of the 'thin adapter at each edge' rule from Step 3.",
+      "nodeIds": [
+        "document:ANTIGRAVITY-GUIDE.md",
+        "document:JOYCODE-GUIDE.md",
+        "document:QWEN-GUIDE.md",
+        "document:MANUAL-ADAPTATION-GUIDE.md"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "The Skills & Capability System",
+      "description": "Skills are how ECC packages reusable behavior. The skill-development guide is the end-to-end authoring reference (SKILL.md format, frontmatter, patterns, testing, fork-to-PR flow); the placement and adaptation policies govern where curated, learned, imported, and evolved skills live and how external ideas become ECC-native. continuous-learning-v2 closes the loop, capturing hook observations that score into instincts and eventually evolve into new skills. This is ECC's self-improving capability engine.",
+      "nodeIds": [
+        "document:SKILL-DEVELOPMENT-GUIDE.md",
+        "document:SKILL-PLACEMENT-POLICY.md",
+        "document:skill-adaptation-policy.md",
+        "document:continuous-learning-v2-spec.md"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "The Command Surface",
+      "description": "Skills and agents are exposed to users through slash commands. COMMAND-AGENT-MAP.md is the human-facing discoverability map of which command invokes which agent or skill, while COMMAND-REGISTRY.json is the machine-readable single source of truth behind it, with aggregate statistics. Seeing the prose map and its backing data file side by side illustrates a recurring ECC pattern: a rendered human view kept in sync with a structured data source.",
+      "nodeIds": [
+        "document:COMMAND-AGENT-MAP.md",
+        "config:COMMAND-REGISTRY.json"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "Observability & Operator Surface",
+      "description": "An operator needs to see what agents are doing. This cluster defines the local, opt-in observability story: the HUD-status contract specifies a harness-neutral `ecc.hud-status.v1` payload for status surfaces and handoffs; the progress-sync contract sets the minimum evidence before a status update may claim a lane is current across GitHub, Linear, and local handoffs; and observability-readiness is the gate that checks all these signals are present without sending any telemetry. Note how every surface here is, again, a versioned contract.",
+      "nodeIds": [
+        "document:architecture/observability-readiness.md",
+        "document:architecture/hud-status-session-control.md",
+        "document:architecture/progress-sync-contract.md"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Operations & Incident Response",
+      "description": "This is the operator's day-to-day survival kit. TROUBLESHOOTING and its distilled hook-bug-workarounds checklist capture community-tested fixes for upstream Claude Code bugs (false hook-error labels, early compaction, MCP auth loss); token-optimization keeps sessions cheap and long; and the supply-chain incident-response runbook turns real npm/PyPI/Actions compromise campaigns into IOC checks and hardening steps. Together they show ECC treating reliability and security as first-class operational concerns, not afterthoughts.",
+      "nodeIds": [
+        "document:TROUBLESHOOTING.md",
+        "document:hook-bug-workarounds.md",
+        "document:token-optimization.md",
+        "document:security/supply-chain-incident-response.md"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "Planning Patterns",
+      "description": "How does work get from idea to issue in ECC? PLAN-PRD-PATTERN explains the markdown-staged flow where /plan-prd (the why) and /plan (the how) write plain .md staging files, and argues why staging files beat in-context state. The mega-plan and phase-1 issue bundle are a worked example of that pattern at scale — ready-to-run repo prompts distilled into postable GitHub issues, including the session-adapter contract you met in Step 4. The capability and project-guidelines templates show the reusable scaffolding authors start from.",
+      "nodeIds": [
+        "document:PLAN-PRD-PATTERN.md",
+        "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md",
+        "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md",
+        "document:examples/product-capability-template.md"
+      ]
+    },
+    {
+      "order": 12,
+      "title": "Release & Go-to-Market",
+      "description": "The tour ends where ECC meets the world. The rc.1 release notes anchor the launch campaign, and publication-readiness is the canonical gate every dated evidence log defers to — a release-identity matrix, gate table, required-command evidence, and do-not-publish conditions. The GA release notes record the finished 2.0.0 story (261 public skills, the control-pane substrate), and the metrics-and-sponsorship playbook turns all of it into a partner-facing business pitch. This closes the loop from 'what ECC is' (Step 1) to 'why anyone should fund and adopt it'.",
+      "nodeIds": [
+        "document:releases/2.0.0-rc.1/release-notes.md",
+        "document:releases/2.0.0-rc.1/publication-readiness.md",
+        "document:releases/2.0.0/release-notes.md",
+        "document:business/metrics-and-sponsorship.md"
+      ]
+    }
+  ]
+}

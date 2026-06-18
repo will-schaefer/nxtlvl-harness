@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/remotion-video-creation/rules/3d.md",
+      "type": "document",
+      "name": "3d.md",
+      "filePath": "skills/remotion-video-creation/rules/3d.md",
+      "summary": "Reference guide for integrating Three.js and React Three Fiber into Remotion compositions, covering ThreeCanvas setup, frame-driven animation requirements, and Sequence usage inside 3D scenes.",
+      "tags": ["documentation", "remotion", "3d-graphics", "animation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/animations.md",
+      "type": "document",
+      "name": "animations.md",
+      "filePath": "skills/remotion-video-creation/rules/animations.md",
+      "summary": "Concise rule file defining how animations must be driven by useCurrentFrame() in Remotion, prohibiting CSS transitions and external timers to ensure deterministic rendering.",
+      "tags": ["documentation", "remotion", "animation", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/assets.md",
+      "type": "document",
+      "name": "assets.md",
+      "filePath": "skills/remotion-video-creation/rules/assets.md",
+      "summary": "Explains how to import and serve static assets in Remotion using the public folder, staticFile() helper, and remote URLs, with usage examples for media components.",
+      "tags": ["documentation", "remotion", "assets", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/audio.md",
+      "type": "document",
+      "name": "audio.md",
+      "filePath": "skills/remotion-video-creation/rules/audio.md",
+      "summary": "Comprehensive guide to audio in Remotion covering the Audio component, trimming, delay, volume curves, muting, playback speed, looping, and pitch control with code examples.",
+      "tags": ["documentation", "remotion", "audio", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/calculate-metadata.md",
+      "type": "document",
+      "name": "calculate-metadata.md",
+      "filePath": "skills/remotion-video-creation/rules/calculate-metadata.md",
+      "summary": "Documents the calculateMetadata API for dynamically setting composition duration, dimensions, and output filename based on video inputs or transformed props at render time.",
+      "tags": ["documentation", "remotion", "metadata", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/can-decode.md",
+      "type": "document",
+      "name": "can-decode.md",
+      "filePath": "skills/remotion-video-creation/rules/can-decode.md",
+      "summary": "Documents the canDecode() utility for checking browser codec support before rendering video, including usage patterns with Blob and URL sources.",
+      "tags": ["documentation", "remotion", "video", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/charts.md",
+      "type": "document",
+      "name": "charts.md",
+      "filePath": "skills/remotion-video-creation/rules/charts.md",
+      "summary": "Rule file covering chart animations in Remotion, requiring useCurrentFrame()-driven animations and showing patterns for staggered bar charts and pie chart SVG animations.",
+      "tags": ["documentation", "remotion", "charts", "animation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/compositions.md",
+      "type": "document",
+      "name": "compositions.md",
+      "filePath": "skills/remotion-video-creation/rules/compositions.md",
+      "summary": "Describes how to define Remotion compositions with default props, folders for organization, Stills for single-frame exports, and calculateMetadata for dynamic configuration.",
+      "tags": ["documentation", "remotion", "composition", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/display-captions.md",
+      "type": "document",
+      "name": "display-captions.md",
+      "filePath": "skills/remotion-video-creation/rules/display-captions.md",
+      "summary": "Guide for rendering timed captions in Remotion using Sequence-based pagination and word-level highlighting, with patterns for building caption page arrays from transcript data.",
+      "tags": ["documentation", "remotion", "captions", "animation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/extract-frames.md",
+      "type": "document",
+      "name": "extract-frames.md",
+      "filePath": "skills/remotion-video-creation/rules/extract-frames.md",
+      "summary": "Comprehensive reference for the extractFrames() API covering parameter options, basic usage, filmstrip creation, AbortSignal-based cancellation, and Promise.race timeout patterns.",
+      "tags": ["documentation", "remotion", "video", "api-reference", "configuration"],
+      "complexity": "moderate",
+      "languageNotes": "Largest file in batch at 229 lines; covers advanced async patterns including AbortSignal and Promise.race for timeout control."
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/fonts.md",
+      "type": "document",
+      "name": "fonts.md",
+      "filePath": "skills/remotion-video-creation/rules/fonts.md",
+      "summary": "Details two approaches to loading fonts in Remotion: Google Fonts via @remotion/google-fonts with load-waiting, and local fonts via @remotion/fonts with multi-weight support.",
+      "tags": ["documentation", "remotion", "fonts", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/get-audio-duration.md",
+      "type": "document",
+      "name": "get-audio-duration.md",
+      "filePath": "skills/remotion-video-creation/rules/get-audio-duration.md",
+      "summary": "Documents the Mediabunny-based getAudioDuration() function with usage patterns for remote URLs, local files, and Remotion staticFile() references.",
+      "tags": ["documentation", "remotion", "audio", "api-reference", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/get-video-dimensions.md",
+      "type": "document",
+      "name": "get-video-dimensions.md",
+      "filePath": "skills/remotion-video-creation/rules/get-video-dimensions.md",
+      "summary": "Documents the Mediabunny-based getVideoDimensions() function covering width/height extraction from remote URLs, local files, and Remotion staticFile() paths.",
+      "tags": ["documentation", "remotion", "video", "api-reference", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/get-video-duration.md",
+      "type": "document",
+      "name": "get-video-duration.md",
+      "filePath": "skills/remotion-video-creation/rules/get-video-duration.md",
+      "summary": "Documents the Mediabunny-based getVideoDuration() function with patterns for reading duration from remote URLs, local files, and Remotion staticFile() sources.",
+      "tags": ["documentation", "remotion", "video", "api-reference", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/gifs.md",
+      "type": "document",
+      "name": "gifs.md",
+      "filePath": "skills/remotion-video-creation/rules/gifs.md",
+      "summary": "Covers the @remotion/gif Gif component for animated GIFs in Remotion, including sizing, fit modes, playback speed, looping behavior, styling, and duration querying.",
+      "tags": ["documentation", "remotion", "animation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/images.md",
+      "type": "document",
+      "name": "images.md",
+      "filePath": "skills/remotion-video-creation/rules/images.md",
+      "summary": "Explains the Remotion Img component's usage, restrictions, sizing and positioning, dynamic path patterns, and how to retrieve image dimensions at runtime.",
+      "tags": ["documentation", "remotion", "images", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/import-srt-captions.md",
+      "type": "document",
+      "name": "import-srt-captions.md",
+      "filePath": "skills/remotion-video-creation/rules/import-srt-captions.md",
+      "summary": "Guides importing .srt subtitle files into Remotion using @remotion/captions parseSrt(), converting subtitle entries to a usable captions data structure for rendering.",
+      "tags": ["documentation", "remotion", "captions", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/lottie.md",
+      "type": "document",
+      "name": "lottie.md",
+      "filePath": "skills/remotion-video-creation/rules/lottie.md",
+      "summary": "Documents using Lottie animations inside Remotion via @remotion/lottie, covering the LottieAnimationData type, the Lottie component, and frame-driven playback control.",
+      "tags": ["documentation", "remotion", "animation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/measuring-dom-nodes.md",
+      "type": "document",
+      "name": "measuring-dom-nodes.md",
+      "filePath": "skills/remotion-video-creation/rules/measuring-dom-nodes.md",
+      "summary": "Short guide on using React refs and getBoundingClientRect() to measure DOM element dimensions within a Remotion composition for layout calculations.",
+      "tags": ["documentation", "remotion", "dom", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/measuring-text.md",
+      "type": "document",
+      "name": "measuring-text.md",
+      "filePath": "skills/remotion-video-creation/rules/measuring-text.md",
+      "summary": "Reference guide for @remotion/layout-utils text measurement APIs, covering measureText(), fitText(), and overflow checking with best practices for font loading and caching.",
+      "tags": ["documentation", "remotion", "text-layout", "api-reference", "configuration"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": []
+}

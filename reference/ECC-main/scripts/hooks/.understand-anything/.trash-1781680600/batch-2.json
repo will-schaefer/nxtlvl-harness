@@ -1,0 +1,388 @@
+{
+  "nodes": [
+    {
+      "id": "file:doc-file-warning.js",
+      "type": "file",
+      "name": "doc-file-warning.js",
+      "filePath": "doc-file-warning.js",
+      "summary": "PreToolUse (Write matcher) hook that warns when Claude attempts to write an ad-hoc documentation filename (NOTES/TODO/SCRATCH/etc.) outside structured directories. Observes only — always exits 0 and surfaces a non-blocking additionalContext warning.",
+      "tags": ["pretooluse-hook", "write-matcher", "non-blocking", "observe", "validation"],
+      "complexity": "moderate",
+      "languageNotes": "Dual-mode CommonJS hook: exports run(rawInput) for in-process execution via run-with-flags.js and also wires a stdin/spawnSync fallback. Uses a denylist regex to avoid false positives in markdown-heavy workflows."
+    },
+    {
+      "id": "function:doc-file-warning.js:isSuspiciousDocPath",
+      "type": "function",
+      "name": "isSuspiciousDocPath",
+      "filePath": "doc-file-warning.js",
+      "lineRange": [28, 42],
+      "summary": "Returns true only for known ad-hoc doc filenames (.md/.txt matching NOTES/TODO/SCRATCH/etc.) located outside structured directories like docs/, .claude/, skills/.",
+      "tags": ["predicate", "path-matching", "validation", "denylist"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:doc-file-warning.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "doc-file-warning.js",
+      "lineRange": [48, 71],
+      "summary": "Exportable hook entrypoint that parses the PreToolUse payload, checks the target file_path, and returns a non-blocking additionalContext warning when an ad-hoc doc filename is detected; always exitCode 0.",
+      "tags": ["hook-entrypoint", "non-blocking", "pretooluse-hook", "additional-context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pre-bash-git-push-reminder.js",
+      "type": "file",
+      "name": "pre-bash-git-push-reminder.js",
+      "filePath": "pre-bash-git-push-reminder.js",
+      "summary": "PreToolUse (Bash matcher) reminder hook that detects `git push` commands and injects a non-blocking review reminder into additionalContext. Never blocks — passes the command through and exits 0.",
+      "tags": ["pretooluse-hook", "bash-matcher", "non-blocking", "observe", "reminder"],
+      "complexity": "simple",
+      "languageNotes": "CommonJS hook with require.main guard: runs the stdin path only when invoked directly, while still exporting run() for the run-with-flags.js in-process wrapper."
+    },
+    {
+      "id": "function:pre-bash-git-push-reminder.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "pre-bash-git-push-reminder.js",
+      "lineRange": [8, 26],
+      "summary": "Parses the Bash tool input, and if the command matches a `git push` pattern returns an additionalContext review reminder; otherwise passes the raw payload through unchanged. Always non-blocking.",
+      "tags": ["hook-entrypoint", "bash-matcher", "non-blocking", "reminder", "additional-context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pre-bash-tmux-reminder.js",
+      "type": "file",
+      "name": "pre-bash-tmux-reminder.js",
+      "filePath": "pre-bash-tmux-reminder.js",
+      "summary": "PreToolUse (Bash matcher) reminder hook that suggests running long-lived commands (npm/pnpm/yarn install/test, cargo build, docker, pytest, etc.) inside tmux when not already in a tmux session. Observes only — non-blocking, exit 0.",
+      "tags": ["pretooluse-hook", "bash-matcher", "non-blocking", "observe", "reminder"],
+      "complexity": "simple",
+      "languageNotes": "Gates on process.platform and process.env.TMUX so it is silent on Windows or inside an existing tmux session. CommonJS with require.main guard plus exported run()."
+    },
+    {
+      "id": "function:pre-bash-tmux-reminder.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "pre-bash-tmux-reminder.js",
+      "lineRange": [8, 31],
+      "summary": "Parses the Bash tool input and, on non-Windows hosts outside a tmux session, returns a non-blocking tmux suggestion when the command matches long-running build/test patterns; otherwise passes through.",
+      "tags": ["hook-entrypoint", "bash-matcher", "non-blocking", "reminder", "additional-context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pre-write-doc-warn.js",
+      "type": "file",
+      "name": "pre-write-doc-warn.js",
+      "filePath": "pre-write-doc-warn.js",
+      "summary": "Backward-compatible thin entrypoint that simply requires doc-file-warning.js, preserving the legacy PreToolUse (Write) hook path for consumers still referencing this filename.",
+      "tags": ["pretooluse-hook", "write-matcher", "shim", "backward-compatibility", "non-blocking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pretooluse-visible-output.js",
+      "type": "file",
+      "name": "pretooluse-visible-output.js",
+      "filePath": "pretooluse-visible-output.js",
+      "summary": "Shared helper used by the PreToolUse reminder/warning hooks to normalize and combine additionalContext strings and serialize them into the hookSpecificOutput JSON envelope Claude Code expects. Output-shaping utility, never blocking on its own.",
+      "tags": ["utility", "shared-helper", "pretooluse-hook", "serialization", "additional-context"],
+      "complexity": "simple",
+      "languageNotes": "CommonJS module exporting three pure functions; centralizes the PreToolUse additionalContext envelope so individual hooks need not hand-roll the JSON shape."
+    },
+    {
+      "id": "function:pretooluse-visible-output.js:normalizeAdditionalContext",
+      "type": "function",
+      "name": "normalizeAdditionalContext",
+      "filePath": "pretooluse-visible-output.js",
+      "lineRange": [4, 13],
+      "summary": "Normalizes an additionalContext value (array or scalar) into a single trimmed, newline-joined string, dropping empty entries.",
+      "tags": ["utility", "normalization", "string-handling", "additional-context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:pretooluse-visible-output.js:buildPreToolUseAdditionalContext",
+      "type": "function",
+      "name": "buildPreToolUseAdditionalContext",
+      "filePath": "pretooluse-visible-output.js",
+      "lineRange": [25, 35],
+      "summary": "Serializes normalized additionalContext into the PreToolUse hookSpecificOutput JSON envelope (hookEventName: PreToolUse) that Claude Code surfaces; returns an empty string when there is no context.",
+      "tags": ["utility", "serialization", "pretooluse-hook", "additional-context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:run-with-flags.js",
+      "type": "file",
+      "name": "run-with-flags.js",
+      "filePath": "run-with-flags.js",
+      "summary": "Generic hook runner/wrapper that executes a target hook script only when enabled by ECC hook-profile flags (ECC_HOOK_PROFILE / ECC_DISABLED_HOOKS), preferring fast in-process require()+run() and falling back to spawnSync. Honors a dry-run mode and propagates the wrapped hook's exit code, so it can be a gate or an observer depending on the hook it wraps.",
+      "tags": ["hook-runner", "wrapper", "dispatcher", "profile-gating", "dry-run"],
+      "complexity": "complex",
+      "languageNotes": "Resolves CLAUDE_PLUGIN_ROOT and confines target scripts to the plugin root (startsWith check) to prevent path escape. Uses an explicit stdout-write-then-exit callback to avoid truncating large pass-through payloads past the ~64KB pipe buffer."
+    },
+    {
+      "id": "function:run-with-flags.js:readStdinRaw",
+      "type": "function",
+      "name": "readStdinRaw",
+      "filePath": "run-with-flags.js",
+      "lineRange": [19, 38],
+      "summary": "Reads the hook's stdin payload as a UTF-8 string with a 1MB cap, resolving a {raw, truncated} promise and never rejecting on stream error.",
+      "tags": ["io", "stdin", "async", "hook-runner"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:run-with-flags.js:exitWithStdout",
+      "type": "function",
+      "name": "exitWithStdout",
+      "filePath": "run-with-flags.js",
+      "lineRange": [55, 60],
+      "summary": "Writes the full stdout payload and exits only after the chunk flushes, preventing truncation of large pass-through JSON past the pipe buffer.",
+      "tags": ["io", "stdout", "process-exit", "hook-runner"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:run-with-flags.js:resolveHookResult",
+      "type": "function",
+      "name": "resolveHookResult",
+      "filePath": "run-with-flags.js",
+      "lineRange": [62, 81],
+      "summary": "Interprets the object returned by an in-process hook run(): writes stderr, derives the exit code, and builds the PreToolUse additionalContext envelope or stdout pass-through accordingly.",
+      "tags": ["hook-runner", "result-handling", "additional-context", "exit-code"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:run-with-flags.js:extractTargetContext",
+      "type": "function",
+      "name": "extractTargetContext",
+      "filePath": "run-with-flags.js",
+      "lineRange": [105, 123],
+      "summary": "Parses the incoming hook payload to extract human-readable target context (tool name, command, or file path) used for dry-run preview messages.",
+      "tags": ["hook-runner", "parsing", "dry-run", "context-extraction"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:run-with-flags.js:buildDryRunPreview",
+      "type": "function",
+      "name": "buildDryRunPreview",
+      "filePath": "run-with-flags.js",
+      "lineRange": [127, 142],
+      "summary": "Assembles a human-readable preview string describing which hook would run against which target and profiles, used when the wrapper is invoked in dry-run mode.",
+      "tags": ["hook-runner", "dry-run", "preview", "diagnostics"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:run-with-flags.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "run-with-flags.js",
+      "lineRange": [144, 257],
+      "summary": "Orchestrates the wrapper: reads stdin, checks profile/disabled gating and dry-run, resolves and path-confines the target script, runs it in-process via run() when available or falls back to spawnSync, then emits the resolved output and exit code.",
+      "tags": ["hook-runner", "orchestration", "profile-gating", "dispatcher", "entry-point"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:doc-file-warning.js",
+      "target": "file:pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:doc-file-warning.js",
+      "target": "function:doc-file-warning.js:isSuspiciousDocPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:doc-file-warning.js",
+      "target": "function:doc-file-warning.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:doc-file-warning.js",
+      "target": "function:doc-file-warning.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:doc-file-warning.js:run",
+      "target": "function:doc-file-warning.js:isSuspiciousDocPath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:doc-file-warning.js:run",
+      "target": "function:pretooluse-visible-output.js:buildPreToolUseAdditionalContext",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:pre-bash-git-push-reminder.js",
+      "target": "file:pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pre-bash-git-push-reminder.js",
+      "target": "function:pre-bash-git-push-reminder.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:pre-bash-git-push-reminder.js",
+      "target": "function:pre-bash-git-push-reminder.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pre-bash-git-push-reminder.js",
+      "target": "function:pretooluse-visible-output.js:buildPreToolUseAdditionalContext",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:pre-bash-tmux-reminder.js",
+      "target": "file:pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pre-bash-tmux-reminder.js",
+      "target": "function:pre-bash-tmux-reminder.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:pre-bash-tmux-reminder.js",
+      "target": "function:pre-bash-tmux-reminder.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:pre-bash-tmux-reminder.js",
+      "target": "function:pretooluse-visible-output.js:buildPreToolUseAdditionalContext",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:pre-write-doc-warn.js",
+      "target": "file:doc-file-warning.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:pre-write-doc-warn.js",
+      "target": "file:doc-file-warning.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "file:pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:readStdinRaw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:exitWithStdout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:resolveHookResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:extractTargetContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:buildDryRunPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:run-with-flags.js",
+      "target": "function:run-with-flags.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:run-with-flags.js:main",
+      "target": "function:run-with-flags.js:readStdinRaw",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:run-with-flags.js:main",
+      "target": "function:run-with-flags.js:buildDryRunPreview",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:run-with-flags.js:main",
+      "target": "function:run-with-flags.js:resolveHookResult",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:run-with-flags.js:main",
+      "target": "function:run-with-flags.js:exitWithStdout",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:run-with-flags.js:resolveHookResult",
+      "target": "function:pretooluse-visible-output.js:buildPreToolUseAdditionalContext",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:run-with-flags.js:buildDryRunPreview",
+      "target": "function:run-with-flags.js:extractTargetContext",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

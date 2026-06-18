@@ -1,0 +1,614 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "ecc-universal-schemas",
+    "languages": [
+      "json"
+    ],
+    "frameworks": [],
+    "description": "JSON Schema (draft-07) data contracts for ECC's installer and runtime control plane — the schemas/ folder of ECC, a cross-harness agent operating system.",
+    "analyzedAt": "2026-06-17T09:29:04Z",
+    "gitCommitHash": "2a5b5e78b82dc63ea6cf2627b88095bef53c7f7f"
+  },
+  "nodes": [
+    {
+      "id": "schema:ecc-install-config.schema.json",
+      "type": "schema",
+      "name": "ecc-install-config.schema.json",
+      "filePath": "ecc-install-config.schema.json",
+      "summary": "Defines the user-authored install configuration contract — the input to ECC's installer specifying target harness, profile, modules, and include/exclude component selectors. Sits at the entry of the install pipeline as the requested intent before resolution.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "install-config",
+        "json-schema"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Draft-07 schema with enum-constrained targets and regex-pattern component selectors (baseline|lang|framework|capability:slug)."
+    },
+    {
+      "id": "schema:hooks.schema.json",
+      "type": "schema",
+      "name": "hooks.schema.json",
+      "filePath": "hooks.schema.json",
+      "summary": "Defines the contract for Claude Code hooks configuration, validating event-keyed matcher entries and the three hook action types (command, http, prompt/agent). Describes runtime extension config the installer lays down for a target harness.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "hooks",
+        "runtime-extension",
+        "json-schema"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Top-level oneOf permits either an object keyed by hook event names or a bare array of matcher entries; hook items dispatched via oneOf over $defs."
+    },
+    {
+      "id": "schema:install-components.schema.json",
+      "type": "schema",
+      "name": "install-components.schema.json",
+      "filePath": "install-components.schema.json",
+      "summary": "Defines the install components contract — the catalog of user-facing installable units (baseline, language, framework, capability, agent, skill, locale) where each component maps to one or more underlying modules. The most granular layer of the install selection pipeline.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "install-components",
+        "catalog",
+        "json-schema"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Component id pattern enforces a family-prefixed slug; the family enum mirrors the id prefix set."
+    },
+    {
+      "id": "schema:install-modules.schema.json",
+      "type": "schema",
+      "name": "install-modules.schema.json",
+      "filePath": "install-modules.schema.json",
+      "summary": "Defines the install modules manifest — the mid-tier catalog of installable modules (rules, agents, commands, hooks, platform, skills, docs) carrying source paths, supported targets, dependencies, cost, and stability. Modules are the unit that components group and profiles select.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "install-modules",
+        "manifest",
+        "json-schema"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Strict additionalProperties:false with a fully-required property set; targets enum lists all supported harnesses."
+    },
+    {
+      "id": "schema:install-profiles.schema.json",
+      "type": "schema",
+      "name": "install-profiles.schema.json",
+      "filePath": "install-profiles.schema.json",
+      "summary": "Defines the install profiles contract — named presets (e.g. minimal, full) that each bundle a curated list of module ids. Profiles sit at the top of the install selection pipeline as coarse-grained, named entry points.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "install-profiles",
+        "presets",
+        "json-schema"
+      ],
+      "complexity": "simple",
+      "languageNotes": "Uses propertyNames pattern + additionalProperties subschema to model a slug-keyed map of profile objects."
+    },
+    {
+      "id": "schema:install-state.schema.json",
+      "type": "schema",
+      "name": "install-state.schema.json",
+      "filePath": "install-state.schema.json",
+      "summary": "Defines the persisted install-state record (schemaVersion ecc.install.v1) capturing the outcome of an install: the resolved target, the original request, module resolution, source provenance, and the concrete file operations applied. The durable manifest written after applying an install config.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "install-state",
+        "manifest",
+        "json-schema"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Records both the request (intent) and resolution (selected vs skipped modules) plus an operations log with strategy/ownership per file."
+    },
+    {
+      "id": "schema:package-manager.schema.json",
+      "type": "schema",
+      "name": "package-manager.schema.json",
+      "filePath": "package-manager.schema.json",
+      "summary": "Defines the package-manager preference contract — which JavaScript package manager (npm, pnpm, yarn, bun) ECC uses and when the preference was last set. A small runtime configuration consulted by the install/build flow when fetching dependencies.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "package-manager",
+        "json-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:plugin.schema.json",
+      "type": "schema",
+      "name": "plugin.schema.json",
+      "filePath": "plugin.schema.json",
+      "summary": "Defines the Claude plugin manifest contract — name, version, author, declared skills/commands/mcpServers, and a feature-count summary. Describes the plugin metadata the installer reads and lays down for a target harness.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "plugin-manifest",
+        "json-schema"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Uses oneOf for polymorphic author (string|object) and mcpServers (string|array|object); semver-constrained version pattern."
+    },
+    {
+      "id": "schema:provenance.schema.json",
+      "type": "schema",
+      "name": "provenance.schema.json",
+      "filePath": "provenance.schema.json",
+      "summary": "Defines the provenance contract for learned and imported skills — origin source, creation timestamp, confidence score (0-1), and author. Required alongside skills in ~/.claude/skills/learned/* and imported/*, attesting where a skill came from.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "provenance",
+        "skills",
+        "json-schema"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json",
+      "type": "schema",
+      "name": "state-store.schema.json",
+      "filePath": "state-store.schema.json",
+      "summary": "Defines the ECC runtime state store (ecc.state-store.v1) — the central persistence contract holding sessions, skill runs and versions, decisions, embedded install state, governance events, and work items. The control-plane database backing ECC's continuous-learning and governance loop.",
+      "tags": [
+        "configuration",
+        "schema-definition",
+        "state-store",
+        "control-plane",
+        "json-schema"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Top-level arrays each $ref a $def; reusable scalar aliases (nonEmptyString, nullableString, jsonValue) factor out common field shapes across entity defs."
+    },
+    {
+      "id": "schema:state-store.schema.json:session",
+      "type": "schema",
+      "name": "session",
+      "summary": "Sub-schema for a recorded ECC session: id, adapter/harness identity, lifecycle state, repo root, start/end timestamps, and a free-form snapshot blob.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "session",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:skillRun",
+      "type": "schema",
+      "name": "skillRun",
+      "summary": "Sub-schema for a single skill execution: skill id/version, owning session, task description, outcome and failure reason, tokens/duration, and user feedback — the telemetry unit of the continuous-learning loop.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "skill-run",
+        "telemetry",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:skillVersion",
+      "type": "schema",
+      "name": "skillVersion",
+      "summary": "Sub-schema tracking a versioned skill: skill id, version, content hash, amendment reason, and promotion/rollback timestamps — the version-control record for evolving skills.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "skill-version",
+        "versioning",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:decision",
+      "type": "schema",
+      "name": "decision",
+      "summary": "Sub-schema for a recorded decision (ADR-like): id, session, title, rationale, alternatives, supersedes link, status, and creation time — the governance record of architectural choices.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "decision",
+        "governance",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:installState",
+      "type": "schema",
+      "name": "installState",
+      "summary": "Sub-schema embedding install outcome inside the state store: target id/root, profile, resolved modules, file operations, install time, and source version — the in-store mirror of the standalone install-state manifest.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "install-state",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:governanceEvent",
+      "type": "schema",
+      "name": "governanceEvent",
+      "summary": "Sub-schema for a governance event: id, session, event type, free-form payload, and resolution metadata — the audit/escalation record in ECC's governance loop.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "governance-event",
+        "audit",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:state-store.schema.json:workItem",
+      "type": "schema",
+      "name": "workItem",
+      "summary": "Sub-schema for a tracked work item: id, source/sourceId, title, status, priority, url, owner, repo root, session link, and metadata — the external-task tracking record (issues/PRs) integrated into the store.",
+      "tags": [
+        "schema-definition",
+        "state-store",
+        "work-item",
+        "tracking",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:hooks.schema.json:commandHookItem",
+      "type": "schema",
+      "name": "commandHookItem",
+      "summary": "Sub-schema for a command-type hook action: a local command (string or string array) with optional async flag and timeout.",
+      "tags": [
+        "schema-definition",
+        "hooks",
+        "command-hook",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:hooks.schema.json:httpHookItem",
+      "type": "schema",
+      "name": "httpHookItem",
+      "summary": "Sub-schema for an http-type hook action: a target URL with optional headers, allowed environment variables, and timeout.",
+      "tags": [
+        "schema-definition",
+        "hooks",
+        "http-hook",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:hooks.schema.json:promptHookItem",
+      "type": "schema",
+      "name": "promptHookItem",
+      "summary": "Sub-schema for a prompt/agent-type hook action: a prompt string with optional model override and timeout, dispatching an LLM-driven hook.",
+      "tags": [
+        "schema-definition",
+        "hooks",
+        "prompt-hook",
+        "entity"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "schema:hooks.schema.json:matcherEntry",
+      "type": "schema",
+      "name": "matcherEntry",
+      "summary": "Sub-schema binding a matcher (string or object) to an array of hook items, with an optional description — the unit that maps a trigger condition to the hooks it fires.",
+      "tags": [
+        "schema-definition",
+        "hooks",
+        "matcher",
+        "entity"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:session",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:skillRun",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:skillVersion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:decision",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:installState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:governanceEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:state-store.schema.json:workItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:hooks.schema.json",
+      "target": "schema:hooks.schema.json:commandHookItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:hooks.schema.json",
+      "target": "schema:hooks.schema.json:httpHookItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:hooks.schema.json",
+      "target": "schema:hooks.schema.json:promptHookItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:hooks.schema.json",
+      "target": "schema:hooks.schema.json:matcherEntry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "schema:install-profiles.schema.json",
+      "target": "schema:install-modules.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:install-components.schema.json",
+      "target": "schema:install-modules.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:ecc-install-config.schema.json",
+      "target": "schema:install-profiles.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:ecc-install-config.schema.json",
+      "target": "schema:install-modules.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:ecc-install-config.schema.json",
+      "target": "schema:install-components.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:install-state.schema.json",
+      "target": "schema:ecc-install-config.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:install-state.schema.json",
+      "target": "schema:install-modules.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:state-store.schema.json",
+      "target": "schema:install-state.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:provenance.schema.json",
+      "target": "schema:state-store.schema.json:skillVersion",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:package-manager.schema.json",
+      "target": "schema:ecc-install-config.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "schema:plugin.schema.json",
+      "target": "schema:install-modules.schema.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:install-selection",
+      "name": "Install Selection",
+      "description": "The request and catalog side of the ECC installer: the user-authored config plus the profile, module, and component contracts that resolve what gets installed.",
+      "nodeIds": [
+        "schema:ecc-install-config.schema.json",
+        "schema:install-profiles.schema.json",
+        "schema:install-modules.schema.json",
+        "schema:install-components.schema.json"
+      ]
+    },
+    {
+      "id": "layer:install-outcome",
+      "name": "Install Outcome & Persistence",
+      "description": "Durable records and environment preferences produced after a config is applied: the persisted install-state manifest and the package-manager preference consulted by the install flow.",
+      "nodeIds": [
+        "schema:install-state.schema.json",
+        "schema:package-manager.schema.json"
+      ]
+    },
+    {
+      "id": "layer:control-plane",
+      "name": "Runtime Control Plane",
+      "description": "The central state-store contract and its entity definitions (sessions, skill runs/versions, decisions, governance events, work items) plus skill provenance — the continuous-learning and governance persistence layer.",
+      "nodeIds": [
+        "schema:state-store.schema.json",
+        "schema:state-store.schema.json:session",
+        "schema:state-store.schema.json:skillRun",
+        "schema:state-store.schema.json:skillVersion",
+        "schema:state-store.schema.json:decision",
+        "schema:state-store.schema.json:installState",
+        "schema:state-store.schema.json:governanceEvent",
+        "schema:state-store.schema.json:workItem",
+        "schema:provenance.schema.json"
+      ]
+    },
+    {
+      "id": "layer:harness-extension",
+      "name": "Harness Extension Config",
+      "description": "Contracts for the runtime artifacts the installer lays down into the target Claude harness: the hooks configuration with its action/matcher definitions and the plugin manifest.",
+      "nodeIds": [
+        "schema:hooks.schema.json",
+        "schema:hooks.schema.json:commandHookItem",
+        "schema:hooks.schema.json:httpHookItem",
+        "schema:hooks.schema.json:promptHookItem",
+        "schema:hooks.schema.json:matcherEntry",
+        "schema:plugin.schema.json"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "The Install Request",
+      "description": "Start here: this is the conceptual entry point of the whole system. These schemas have no executable main() — the story begins with the user-authored install configuration, the contract describing what someone wants installed (target harness, profile, modules, include/exclude selectors). It captures requested intent before any resolution happens, and every downstream schema exists to refine, satisfy, or record this request. Reading it first frames everything that follows as 'what happens to an install request.'",
+      "nodeIds": [
+        "schema:ecc-install-config.schema.json"
+      ],
+      "languageLesson": "JSON Schema draft-07 files declare a stable identity with $schema (the dialect) and $id (this document's canonical URI). $id is what lets other schemas point at this contract with $ref, so treat it as the schema's permanent address — like a package name, it should not casually change."
+    },
+    {
+      "order": 2,
+      "title": "Profiles: Coarse Presets",
+      "description": "Building on the install request from Step 1, the config can name a profile rather than hand-pick everything. This schema defines those named presets (e.g. minimal, full) — each bundles a curated set of module ids. It is the coarsest layer of the selection pipeline: one word ('full') expands into many modules. This is where opinionated defaults live, so newcomers can install sensibly without understanding every module.",
+      "nodeIds": [
+        "schema:install-profiles.schema.json"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "Modules: The Catalog Core",
+      "description": "This is the most depended-upon schema in the entire graph — the install request, profiles, components, the install-state record, and the plugin manifest all reference it. It is the mid-tier catalog of installable modules (rules, agents, commands, hooks, platform, skills, docs) with their source paths, targets, dependencies, cost, and stability. Profiles bundle these and components map onto them, making modules the common currency the whole installer speaks. Understand this schema and the selection pipeline snaps into focus.",
+      "nodeIds": [
+        "schema:install-modules.schema.json"
+      ],
+      "languageLesson": "Catalog schemas like this lean on $defs (draft-07's reusable definition block) plus internal $ref to avoid repeating shared shapes — e.g. a single 'moduleId' or 'sourcePath' definition referenced from many places. Defining a shape once and $ref-ing it keeps the catalog consistent and is the JSON-Schema equivalent of extracting a shared type."
+    },
+    {
+      "order": 4,
+      "title": "Components: User-Facing Units",
+      "description": "Completing the selection pipeline, this schema is the most granular layer — the user-facing installable units (baseline, language, framework, capability, agent, skill, locale) that each map down to the underlying modules from Step 3. Where profiles are coarse bundles, components are the fine-grained vocabulary a person actually browses and picks from. Together, Steps 1-4 form the full request/catalog arc the project calls the Install Selection layer: config selects profiles, profiles bundle modules, components map to modules.",
+      "nodeIds": [
+        "schema:install-components.schema.json"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Install State: The Outcome",
+      "description": "Once a request from Step 1 is resolved against the catalog and applied, the result is written here. This durable manifest (versioned ecc.install.v1) records the resolved target, the original request, how modules were resolved, source provenance, and the concrete file operations performed. It is the bridge between the selection pipeline and reality: it references both the original install-config and the modules catalog, closing the loop on 'what was actually done.' This and the package-manager preference form the project's Install Outcome & Persistence layer.",
+      "nodeIds": [
+        "schema:install-state.schema.json"
+      ],
+      "languageLesson": "Note the embedded version tag 'ecc.install.v1' inside the payload, distinct from the file's $id. Versioning the data shape (not just the schema document) lets a reader detect which generation of record it is holding — essential for any persisted manifest that must survive schema evolution. Bump the version only on breaking shape changes."
+    },
+    {
+      "order": 6,
+      "title": "Package-Manager Preference",
+      "description": "A small but real part of the outcome layer: this schema records which package manager (npm/pnpm/yarn/bun) the user prefers and when that choice was set. It relates back to the install-config because the install/build flow consults it when fetching dependencies. It is a good example of how ECC isolates a single cross-cutting preference into its own tiny, focused contract rather than burying it inside a larger schema.",
+      "nodeIds": [
+        "schema:package-manager.schema.json"
+      ],
+      "languageLesson": "An enum constrains a field to a fixed closed set — here the four package-manager names. Enums turn 'any string' into a validated, self-documenting choice list, so an invalid value is rejected at the contract boundary instead of failing deep inside the build."
+    },
+    {
+      "order": 7,
+      "title": "Runtime State Store",
+      "description": "Here the tour crosses from install-time into run-time. This is ECC's central control-plane database (versioned ecc.state-store.v1): sessions, skill runs and versions, decisions, governance events, work items — and notably the embedded install state from Step 5, so the runtime always knows how it was set up. It is the backbone behind continuous-learning and governance. Where the previous schemas described how the system gets built, this one describes how the running system remembers and governs itself.",
+      "nodeIds": [
+        "schema:state-store.schema.json"
+      ],
+      "languageLesson": "A large aggregate schema like this composes many sub-records under one root. Draft-07 uses 'properties' with 'required' to mark which keys must be present, and 'additionalProperties' to decide whether unexpected keys are allowed. Setting additionalProperties:false on a control-plane store is a deliberate strictness choice — it rejects malformed state rather than silently absorbing it."
+    },
+    {
+      "order": 8,
+      "title": "Skill Provenance",
+      "description": "Provenance attaches to the runtime control plane: it records where a learned or imported skill came from — origin source, creation time, confidence (0-1), and author. It is required alongside skills under ~/.claude/skills/learned/* and imported/*, and it links to the state-store's skillVersion records from Step 7. This is the trust-and-traceability piece of continuous learning: it lets the system say not just 'I have this skill' but 'here is where it came from and how confident I am in it.'",
+      "nodeIds": [
+        "schema:provenance.schema.json"
+      ],
+      "languageLesson": "The confidence field is a bounded number, expressed with minimum:0 and maximum:1. Numeric range constraints push validation into the contract so an out-of-band score (say 1.7) is rejected at the edge — cheaper and safer than discovering it during a ranking computation later."
+    },
+    {
+      "order": 9,
+      "title": "Plugin Manifest",
+      "description": "Now we reach the artifacts the installer lays down into the target harness — the Harness Extension Config layer. This is the Claude plugin manifest: name, version, author, declared skills/commands/mcpServers, and a feature-count summary. It references the modules catalog from Step 3 because the installer reads it and writes it out for the target harness. It is the public face of an installed bundle inside the harness, the metadata that tells the host what capabilities just arrived.",
+      "nodeIds": [
+        "schema:plugin.schema.json"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Hooks Configuration",
+      "description": "The capstone artifact: the Claude Code hooks configuration the installer lays down so the harness can extend its own behavior at runtime. It is event-keyed (matcher entries per event) and supports three distinct hook action types — command, http, and prompt/agent. Pair it with the plugin manifest from Step 9 and you have the complete picture: the selection pipeline (Steps 1-4) chooses what to install, the outcome layer (Steps 5-6) records and supports it, the control plane (Steps 7-8) governs it at runtime, and these final artifacts wire it into the host harness.",
+      "nodeIds": [
+        "schema:hooks.schema.json"
+      ],
+      "languageLesson": "The three hook action types are a textbook oneOf — a discriminated union where a value must validate against exactly one branch (command vs http vs prompt/agent). oneOf (as opposed to anyOf) enforces mutual exclusivity, so a single hook entry cannot accidentally be two action types at once; the differing required keys per branch act as the discriminator."
+    }
+  ]
+}

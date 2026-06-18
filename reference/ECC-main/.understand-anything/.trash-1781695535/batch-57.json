@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/fsharp/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/fsharp/coding-style.md",
+      "summary": "F# coding style guide covering naming conventions, discriminated unions, record types, immutability, function composition, async/Result error handling, and formatting rules for ECC harness F# projects.",
+      "tags": ["documentation", "configuration", "fsharp", "coding-standards", "style-guide"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/fsharp/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/fsharp/hooks.md",
+      "summary": "Concise ECC hook configuration guide for F# projects, specifying PostToolUse and Stop hook behaviors such as running tests after file edits and verifying compilation on session end.",
+      "tags": ["documentation", "configuration", "fsharp", "hooks", "ci-cd"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/fsharp/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/fsharp/patterns.md",
+      "summary": "F# design pattern reference covering Result and Option types for error handling, discriminated unions for domain modeling, computation expressions, module organization, and dependency injection patterns.",
+      "tags": ["documentation", "fsharp", "design-patterns", "functional-programming", "domain-modeling"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/fsharp/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/fsharp/security.md",
+      "summary": "F# security guidelines covering secret management via environment variables, parameterized SQL queries for injection prevention, input validation with Result types, and ASP.NET Core authentication/authorization patterns.",
+      "tags": ["documentation", "security", "fsharp", "input-validation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/fsharp/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/fsharp/testing.md",
+      "summary": "F# testing guide specifying Expecto as the primary test framework, module-based test organization, property-based testing with FsCheck, ASP.NET Core integration testing patterns, and coverage requirements.",
+      "tags": ["documentation", "test", "fsharp", "testing-standards", "property-based-testing"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/fsharp/hooks.md",
+      "target": "document:rules/fsharp/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/fsharp/hooks.md",
+      "target": "document:rules/fsharp/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/fsharp/patterns.md",
+      "target": "document:rules/fsharp/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/fsharp/security.md",
+      "target": "document:rules/fsharp/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/fsharp/testing.md",
+      "target": "document:rules/fsharp/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

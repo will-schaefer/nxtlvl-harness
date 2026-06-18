@@ -1,0 +1,671 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/github-coordination.js",
+      "type": "file",
+      "name": "github-coordination.js",
+      "filePath": "scripts/github-coordination.js",
+      "summary": "CLI entry point for the GitHub coordination workflow, parsing arguments and dispatching commands such as claim, sync, validate, publish, review, unblock, and decompose to the lib layer.",
+      "tags": ["entry-point", "cli", "api-handler", "github", "coordination"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/github-coordination.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/github-coordination.js",
+      "lineRange": [165, 186],
+      "summary": "Bootstraps the CLI: parses arguments, loads policy and state store, dispatches the requested command, formats output, and handles errors with process.exit.",
+      "tags": ["entry-point", "cli", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/github-coordination.js:dispatchCommand",
+      "type": "function",
+      "name": "dispatchCommand",
+      "filePath": "scripts/github-coordination.js",
+      "lineRange": [118, 153],
+      "summary": "Routes the parsed command name to the corresponding action function (applyClaim, applySync, applyValidate, etc.) and returns the result.",
+      "tags": ["api-handler", "routing", "coordination"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/github-coordination.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/github-coordination.js",
+      "lineRange": [82, 116],
+      "summary": "Parses CLI argv into a structured options object, handling boolean flags, value flags, and positional arguments.",
+      "tags": ["utility", "cli", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination.js",
+      "type": "file",
+      "name": "github-coordination.js",
+      "filePath": "scripts/lib/github-coordination.js",
+      "summary": "Barrel module that re-exports the complete public API of the github-coordination subsystem (actions, gh-api, parsing, policy, state, store) as a single import surface.",
+      "tags": ["barrel", "entry-point", "github", "coordination"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/actions.js",
+      "type": "file",
+      "name": "actions.js",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "summary": "Implements all coordination action handlers (claim, sync, validate, publish, review, decompose, unblock) that mutate GitHub issue state, labels, and local coordination records.",
+      "tags": ["api-handler", "coordination", "github", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyClaim",
+      "type": "function",
+      "name": "applyClaim",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [46, 81],
+      "summary": "Claims an epic issue for a given actor: validates inputs, builds coordination state, updates issue body and labels on GitHub, posts a comment, and persists to the local store.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applySync",
+      "type": "function",
+      "name": "applySync",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [83, 128],
+      "summary": "Syncs all epic issues in a repo: iterates open issues, reconciles coordination state and labels, updates issue bodies on GitHub, and upserts local store records.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyValidate",
+      "type": "function",
+      "name": "applyValidate",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [130, 174],
+      "summary": "Validates an epic's readiness by checking dependency closure, collecting validation results, updating state and labels accordingly.",
+      "tags": ["validation", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyPublish",
+      "type": "function",
+      "name": "applyPublish",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [176, 217],
+      "summary": "Publishes a validated epic update: runs validation, builds new state, updates issue body and labels, posts a comment, and persists to the store.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyReview",
+      "type": "function",
+      "name": "applyReview",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [219, 250],
+      "summary": "Handles review state transitions (requested, approved, blocked) on a GitHub epic issue by updating state, labels, body, and posting a comment.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyDecompose",
+      "type": "function",
+      "name": "applyDecompose",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [252, 291],
+      "summary": "Reconciles an epic's task breakdown from its issue body, detecting open/completed tasks and updating coordination state, labels, body, and posting a comment.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/actions.js:applyUnblock",
+      "type": "function",
+      "name": "applyUnblock",
+      "filePath": "scripts/lib/github-coordination/actions.js",
+      "lineRange": [293, 343],
+      "summary": "Sweeps all blocked epics, checks if their dependencies are now closed, and unblocks those that are ready by updating state, labels, body, and posting comments.",
+      "tags": ["api-handler", "coordination", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/gh-api.js",
+      "type": "file",
+      "name": "gh-api.js",
+      "filePath": "scripts/lib/github-coordination/gh-api.js",
+      "summary": "Low-level GitHub CLI wrapper providing functions to normalize repos/issues/labels, run gh commands synchronously, and perform get/list/edit/comment operations on issues.",
+      "tags": ["utility", "github", "api-handler", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/gh-api.js:runCommand",
+      "type": "function",
+      "name": "runCommand",
+      "filePath": "scripts/lib/github-coordination/gh-api.js",
+      "lineRange": [36, 53],
+      "summary": "Executes a shell command synchronously via spawnSync and throws on non-zero exit or stderr output.",
+      "tags": ["utility", "shell", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/gh-api.js:getIssue",
+      "type": "function",
+      "name": "getIssue",
+      "filePath": "scripts/lib/github-coordination/gh-api.js",
+      "lineRange": [82, 99],
+      "summary": "Fetches a single GitHub issue by repo and issue number via the gh CLI, returning a normalized issue object.",
+      "tags": ["utility", "github", "api-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/gh-api.js:editIssue",
+      "type": "function",
+      "name": "editIssue",
+      "filePath": "scripts/lib/github-coordination/gh-api.js",
+      "lineRange": [119, 150],
+      "summary": "Updates a GitHub issue's title, body, state, and/or labels via the gh CLI, only including arguments for fields that are provided.",
+      "tags": ["api-handler", "github", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/parsing.js",
+      "type": "file",
+      "name": "parsing.js",
+      "filePath": "scripts/lib/github-coordination/parsing.js",
+      "summary": "Provides parsing and rendering utilities for GitHub issue bodies: extracts coordination state blocks, task lists, and issue references, and renders or merges coordination state back into issue bodies.",
+      "tags": ["utility", "parsing", "serialization", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/parsing.js:extractCoordinationState",
+      "type": "function",
+      "name": "extractCoordinationState",
+      "filePath": "scripts/lib/github-coordination/parsing.js",
+      "lineRange": [13, 28],
+      "summary": "Extracts the embedded JSON coordination state block from a GitHub issue body using a regex-delimited marker pattern.",
+      "tags": ["parsing", "serialization", "github"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/parsing.js:extractTasks",
+      "type": "function",
+      "name": "extractTasks",
+      "filePath": "scripts/lib/github-coordination/parsing.js",
+      "lineRange": [41, 67],
+      "summary": "Parses Markdown checkbox task list items from an issue body, returning structured task objects with completion status and description.",
+      "tags": ["parsing", "github", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/parsing.js:mergeIssueBody",
+      "type": "function",
+      "name": "mergeIssueBody",
+      "filePath": "scripts/lib/github-coordination/parsing.js",
+      "lineRange": [102, 118],
+      "summary": "Merges updated coordination state into a GitHub issue body by replacing an existing state block or appending a new one.",
+      "tags": ["serialization", "parsing", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/policy.js",
+      "type": "file",
+      "name": "policy.js",
+      "filePath": "scripts/lib/github-coordination/policy.js",
+      "summary": "Defines the default coordination policy (labels, states, branches, actors, dependencies) and loads optional project-level config overrides from a JSON file.",
+      "tags": ["configuration", "policy", "coordination", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/policy.js:loadPolicy",
+      "type": "function",
+      "name": "loadPolicy",
+      "filePath": "scripts/lib/github-coordination/policy.js",
+      "lineRange": [50, 91],
+      "summary": "Loads and validates a coordination policy by merging defaults with optional project config read from a JSON file on disk.",
+      "tags": ["configuration", "policy", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/state.js",
+      "type": "file",
+      "name": "state.js",
+      "filePath": "scripts/lib/github-coordination/state.js",
+      "summary": "Manages coordination state lifecycle: initializing default state from issue data, applying action-driven state transitions, computing desired labels, syncing labels to GitHub, and building output summaries.",
+      "tags": ["service", "coordination", "state-management", "github"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/state.js:getCoordinationState",
+      "type": "function",
+      "name": "getCoordinationState",
+      "filePath": "scripts/lib/github-coordination/state.js",
+      "lineRange": [37, 60],
+      "summary": "Retrieves or initializes a coordination state object for an issue by parsing the embedded body block and falling back to defaults.",
+      "tags": ["service", "coordination", "state-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/state.js:buildIssueStateFromAction",
+      "type": "function",
+      "name": "buildIssueStateFromAction",
+      "filePath": "scripts/lib/github-coordination/state.js",
+      "lineRange": [62, 89],
+      "summary": "Produces a new coordination state object by applying an action (claim, sync, validate, etc.) to the current state, merging in action-specific fields.",
+      "tags": ["service", "coordination", "state-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/state.js:verifyDependenciesClosed",
+      "type": "function",
+      "name": "verifyDependenciesClosed",
+      "filePath": "scripts/lib/github-coordination/state.js",
+      "lineRange": [219, 236],
+      "summary": "Checks whether all dependency issue numbers for an epic are closed by fetching current issue states from GitHub.",
+      "tags": ["validation", "coordination", "github"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/github-coordination/store.js",
+      "type": "file",
+      "name": "store.js",
+      "filePath": "scripts/lib/github-coordination/store.js",
+      "summary": "Bridges the github-coordination module to the persistent state-store: opens the store, maps coordination state to work-item format, and upserts coordination records.",
+      "tags": ["service", "coordination", "persistence", "state-management"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/store.js:upsertCoordinationWorkItem",
+      "type": "function",
+      "name": "upsertCoordinationWorkItem",
+      "filePath": "scripts/lib/github-coordination/store.js",
+      "lineRange": [14, 48],
+      "summary": "Maps a GitHub issue and its coordination state to a work-item record and upserts it into the persistent state store.",
+      "tags": ["service", "persistence", "coordination"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/github-coordination/store.js:openStore",
+      "type": "function",
+      "name": "openStore",
+      "filePath": "scripts/lib/github-coordination/store.js",
+      "lineRange": [50, 59],
+      "summary": "Opens the coordination-specific SQLite state store using the configured or default home directory path.",
+      "tags": ["service", "persistence", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/lib/github-coordination.test.js",
+      "type": "file",
+      "name": "github-coordination.test.js",
+      "filePath": "tests/lib/github-coordination.test.js",
+      "summary": "Integration test suite for the github-coordination library, covering parsing, state management, label logic, and policy loading using a custom lightweight test runner.",
+      "tags": ["test", "coordination", "github", "integration"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/github-coordination.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/github-coordination.js:dispatchCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/github-coordination.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyClaim",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applySync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyValidate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyPublish",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyReview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyDecompose",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyUnblock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/gh-api.js",
+      "target": "function:scripts/lib/github-coordination/gh-api.js:runCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/gh-api.js",
+      "target": "function:scripts/lib/github-coordination/gh-api.js:getIssue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/gh-api.js",
+      "target": "function:scripts/lib/github-coordination/gh-api.js:editIssue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/parsing.js",
+      "target": "function:scripts/lib/github-coordination/parsing.js:extractCoordinationState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/parsing.js",
+      "target": "function:scripts/lib/github-coordination/parsing.js:extractTasks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/parsing.js",
+      "target": "function:scripts/lib/github-coordination/parsing.js:mergeIssueBody",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/policy.js",
+      "target": "function:scripts/lib/github-coordination/policy.js:loadPolicy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "function:scripts/lib/github-coordination/state.js:getCoordinationState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "function:scripts/lib/github-coordination/state.js:buildIssueStateFromAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "function:scripts/lib/github-coordination/state.js:verifyDependenciesClosed",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "function:scripts/lib/github-coordination/store.js:upsertCoordinationWorkItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "function:scripts/lib/github-coordination/store.js:openStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/actions.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/gh-api.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/parsing.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/policy.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:scripts/lib/github-coordination/store.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "file:scripts/lib/github-coordination/gh-api.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "file:scripts/lib/github-coordination/parsing.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "file:scripts/lib/github-coordination/policy.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "file:scripts/lib/github-coordination/state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/actions.js",
+      "target": "file:scripts/lib/github-coordination/store.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/parsing.js",
+      "target": "file:scripts/lib/github-coordination/policy.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "file:scripts/lib/github-coordination/gh-api.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "file:scripts/lib/github-coordination/parsing.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/state.js",
+      "target": "file:scripts/lib/github-coordination/policy.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "file:scripts/lib/github-coordination/gh-api.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "file:scripts/lib/github-coordination/policy.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "file:scripts/lib/github-coordination/state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/github-coordination.test.js",
+      "target": "file:scripts/lib/github-coordination.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/github-coordination.js",
+      "target": "file:tests/lib/github-coordination.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyClaim",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applySync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyValidate",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyPublish",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyReview",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyUnblock",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/github-coordination.js",
+      "target": "function:scripts/lib/github-coordination/actions.js:applyDecompose",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/github-coordination/store.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/common/agents.md",
+      "type": "document",
+      "name": "agents.md",
+      "filePath": "rules/common/agents.md",
+      "summary": "Language-agnostic rule document defining agent orchestration strategy for the ECC harness, covering available agents, when to invoke them immediately, parallel task execution patterns, and multi-perspective analysis.",
+      "tags": ["documentation", "configuration", "agent-orchestration", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/code-review.md",
+      "type": "document",
+      "name": "code-review.md",
+      "filePath": "rules/common/code-review.md",
+      "summary": "Comprehensive code review standards rule covering review triggers, checklists, security review triggers, severity levels, agent-assisted review workflow, and common issues to catch across security, quality, and performance categories.",
+      "tags": ["documentation", "code-review", "security", "rules"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/common/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/common/coding-style.md",
+      "summary": "Language-agnostic coding style rules enforcing immutability as a critical principle, KISS/DRY/YAGNI principles, file organization, error handling, input validation, naming conventions, and a code quality checklist for code smells.",
+      "tags": ["documentation", "coding-style", "best-practices", "rules"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/common/development-workflow.md",
+      "type": "document",
+      "name": "development-workflow.md",
+      "filePath": "rules/common/development-workflow.md",
+      "summary": "Rule document describing the standard feature implementation workflow, providing a step-by-step process from task intake through implementation to delivery for ECC-managed projects.",
+      "tags": ["documentation", "development-workflow", "process", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/git-workflow.md",
+      "type": "document",
+      "name": "git-workflow.md",
+      "filePath": "rules/common/git-workflow.md",
+      "summary": "Rule document specifying commit message format conventions and pull request workflow requirements used across all ECC-managed language environments.",
+      "tags": ["documentation", "git-workflow", "version-control", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/common/hooks.md",
+      "summary": "Rule document describing the ECC hooks system, covering available hook types, auto-accept permission policies, and TodoWrite best practices for maintaining structured task lists.",
+      "tags": ["documentation", "hooks", "automation", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/common/patterns.md",
+      "summary": "Rule document defining common design patterns recommended across all ECC-managed projects, including skeleton project setup conventions, the repository pattern, and standardized API response formatting.",
+      "tags": ["documentation", "design-patterns", "api-schema", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/performance.md",
+      "type": "document",
+      "name": "performance.md",
+      "filePath": "rules/common/performance.md",
+      "summary": "Rule document covering performance optimization strategies including model selection guidance, context window management techniques, extended thinking and plan mode usage, and build troubleshooting procedures.",
+      "tags": ["documentation", "performance-optimization", "configuration", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/common/security.md",
+      "summary": "Rule document specifying mandatory security checks, secret management practices, and security response protocols that must be applied across all ECC-managed codebases.",
+      "tags": ["documentation", "security", "best-practices", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/common/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/common/testing.md",
+      "summary": "Rule document mandating 80% minimum test coverage, test-driven development practices, failure troubleshooting steps, agent-assisted testing support, and the AAA (Arrange-Act-Assert) test structure pattern with naming conventions.",
+      "tags": ["documentation", "test", "test-driven-development", "rules"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

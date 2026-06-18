@@ -1,0 +1,337 @@
+{
+  "nodes": [
+    {
+      "id": "file:skills/openclaw-persona-forge/gacha.py",
+      "type": "file",
+      "name": "gacha.py",
+      "filePath": "skills/openclaw-persona-forge/gacha.py",
+      "summary": "Cryptographically-random gacha (draw) engine for the openclaw-persona-forge skill, selecting persona traits (archetypes, moods, domains, shadows, aesthetics) from weighted pools and printing a formatted persona card.",
+      "tags": ["utility", "entry-point", "service"],
+      "complexity": "complex",
+      "languageNotes": "Uses the `secrets` module for cryptographically-secure randomness rather than `random`, appropriate for unpredictable persona generation."
+    },
+    {
+      "id": "function:skills/openclaw-persona-forge/gacha.py:pick",
+      "type": "function",
+      "name": "pick",
+      "filePath": "skills/openclaw-persona-forge/gacha.py",
+      "lineRange": [176, 178],
+      "summary": "Selects a random element from a pool list using cryptographically-secure random index selection via secrets.randbelow.",
+      "tags": ["utility", "randomization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/openclaw-persona-forge/gacha.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "skills/openclaw-persona-forge/gacha.py",
+      "lineRange": [181, 220],
+      "summary": "Entry point that reads command-line arguments, draws persona trait components from pools, and prints the complete formatted persona card to stdout.",
+      "tags": ["entry-point", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/openclaw-persona-forge/gacha.sh",
+      "type": "file",
+      "name": "gacha.sh",
+      "filePath": "skills/openclaw-persona-forge/gacha.sh",
+      "summary": "Thin shell wrapper that invokes gacha.py with the current Python interpreter, passing through all arguments for use from the SKILL.md workflow.",
+      "tags": ["utility", "script"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/openclaw-persona-forge/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/openclaw-persona-forge/SKILL.md",
+      "summary": "Skill definition for the openclaw persona-forge (龙虾灵魂锻造炉), a six-step guided or gacha-mode workflow for generating distinctive AI agent personas with archetype, mood, domain, shadow, aesthetic, and name, outputting a structured YAML persona file.",
+      "tags": ["documentation", "configuration", "persona-generation"],
+      "complexity": "complex",
+      "languageNotes": "Mixed Chinese-English: section headings and core conceptual prose are in Chinese while usage and compatibility sections are in English, indicating the skill targets a bilingual audience."
+    },
+    {
+      "id": "document:skills/opensource-pipeline/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/opensource-pipeline/SKILL.md",
+      "summary": "Skill definition for a multi-agent open-source pipeline that forks a private project, sanitizes secrets and proprietary content via sub-agents, packages it with CI/CD scaffolding, and optionally publishes to GitHub.",
+      "tags": ["documentation", "ci-cd", "deployment"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/orch-add-feature/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-add-feature/SKILL.md",
+      "summary": "Skill definition for the orch-add-feature operation, a thin orchestrator wrapper that triggers the shared orch-pipeline engine specifically configured for adding a new feature to an existing codebase.",
+      "tags": ["documentation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/orch-build-mvp/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-build-mvp/SKILL.md",
+      "summary": "Skill definition for the orch-build-mvp operation, a thin orchestrator wrapper that triggers the shared orch-pipeline engine configured to build a minimum viable product from scratch.",
+      "tags": ["documentation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/orch-change-feature/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-change-feature/SKILL.md",
+      "summary": "Skill definition for the orch-change-feature operation, a thin orchestrator wrapper that triggers the shared orch-pipeline engine configured to modify or refactor an existing feature.",
+      "tags": ["documentation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/orch-fix-defect/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-fix-defect/SKILL.md",
+      "summary": "Skill definition for the orch-fix-defect operation, a thin orchestrator wrapper that triggers the shared orch-pipeline engine configured for diagnosing and fixing a reported defect.",
+      "tags": ["documentation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/orch-pipeline/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-pipeline/SKILL.md",
+      "summary": "Shared orchestrator pipeline engine skill that all orch-* operation skills delegate to, defining right-sizing classification, five execution phases, two approval gates, agent/command mapping, security-review triggers, and handoff artifact conventions.",
+      "tags": ["documentation", "orchestration", "pipeline"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/orch-refine-code/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/orch-refine-code/SKILL.md",
+      "summary": "Skill definition for the orch-refine-code operation, a thin orchestrator wrapper that triggers the shared orch-pipeline engine configured to refine, clean up, or improve existing code without changing behavior.",
+      "tags": ["documentation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/parallel-execution-optimizer/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/parallel-execution-optimizer/SKILL.md",
+      "summary": "Skill defining a pattern for parallelizing agent tasks across four lanes (Codebase, Tests, Docs, Config) with lane dependency rules, output shape requirements, and failure-mode handling to maximize throughput on multi-file changes.",
+      "tags": ["documentation", "orchestration", "performance-optimization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/perl-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/perl-patterns/SKILL.md",
+      "summary": "Comprehensive modern Perl development patterns reference covering v5.36+ pragmas, subroutine signatures, OO with Moo/Corinna, error handling, regex, data structures, file I/O, module organization, and tooling (perltidy, perlcritic, carton).",
+      "tags": ["documentation", "patterns", "best-practices"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/perl-security/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/perl-security/SKILL.md",
+      "summary": "Comprehensive Perl security patterns reference covering taint mode, input validation, ReDoS prevention, safe file operations, SQL injection via DBI placeholders, web XSS/CSRF/session hardening, output encoding, CPAN module vetting, and perlcritic security policies.",
+      "tags": ["documentation", "security", "patterns"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/perl-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/perl-testing/SKILL.md",
+      "summary": "Comprehensive Perl testing patterns reference covering TDD workflow, Test::More fundamentals, Test2::V0 modern framework, test organization with prove, fixtures, mocking with Test::MockModule, coverage with Devel::Cover, and integration testing best practices.",
+      "tags": ["documentation", "test", "patterns"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/plan-orchestrate/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/plan-orchestrate/SKILL.md",
+      "summary": "Skill for generating a structured /orchestrate command payload from a user task: detects ECC mode and language, decomposes steps, selects agents from the authoritative catalog, compresses task descriptions, and self-validates before emitting the final orchestration plan.",
+      "tags": ["documentation", "orchestration", "planning-and-task-breakdown"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/plankton-code-quality/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/plankton-code-quality/SKILL.md",
+      "summary": "Skill definition for the Plankton code-quality integration with ECC, describing its three-phase lint/format/fix architecture, config tamper-guard, package-manager enforcement, ECC hook-profile pairing, and configuration reference.",
+      "tags": ["documentation", "configuration", "code-quality"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/postgres-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/postgres-patterns/SKILL.md",
+      "summary": "PostgreSQL quick-reference skill covering index selection strategies, data type choices, common query patterns, anti-pattern detection queries, and a production-ready configuration template.",
+      "tags": ["documentation", "database", "patterns"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/prediction-market-oracle-research/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/prediction-market-oracle-research/SKILL.md",
+      "summary": "Skill defining a guardrailed research workflow for resolving prediction-market questions via primary sources, with structured output contract and integration patterns for Polymarket, Manifold, and similar platforms.",
+      "tags": ["documentation", "research", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/prediction-market-risk-review/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/prediction-market-risk-review/SKILL.md",
+      "summary": "Skill defining risk-review gates for prediction-market operations, checking advice boundary, venue/regulatory compliance, data quality, security, and privacy before allowing a trade or position to proceed.",
+      "tags": ["documentation", "security", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/prisma-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/prisma-patterns/SKILL.md",
+      "summary": "Comprehensive Prisma ORM patterns reference covering ID strategy, schema defaults, include vs select, transaction form selection, PrismaClient singleton, N+1 prevention, cursor pagination, soft delete, error handling, serverless connection pool, and an extensive anti-patterns catalogue.",
+      "tags": ["documentation", "database", "patterns"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/product-capability/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/product-capability/SKILL.md",
+      "summary": "Skill for translating a high-level product capability request into a structured, implementation-facing contract by restating the capability, resolving constraints, defining the interface, and mapping to execution tasks.",
+      "tags": ["documentation", "planning-and-task-breakdown", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/product-lens/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/product-lens/SKILL.md",
+      "summary": "Skill providing four product-thinking modes (diagnostic, founder review, user journey audit, feature prioritization) to evaluate what to build before committing to implementation.",
+      "tags": ["documentation", "planning-and-task-breakdown", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/production-audit/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/production-audit/SKILL.md",
+      "summary": "Skill for conducting a structured production readiness audit across security/auth, data integrity, payments/webhooks, operations, and UX, producing a scored findings report with risk ratings and remediation actions.",
+      "tags": ["documentation", "security", "monitoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/production-scheduling/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/production-scheduling/SKILL.md",
+      "summary": "Domain-knowledge skill for manufacturing production scheduling, covering scheduling fundamentals, changeover optimization, bottleneck management, disruption response, OEE metrics, ERP/MES integration patterns, decision frameworks, escalation protocols, and KPI tracking.",
+      "tags": ["documentation", "workflow", "monitoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/project-flow-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/project-flow-ops/SKILL.md",
+      "summary": "Skill for managing project flow across git and Linear, defining a four-step workflow: read public surface, classify work, decide whether Linear tracking is warranted, and keep both systems consistent.",
+      "tags": ["documentation", "workflow", "ci-cd"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/openclaw-persona-forge/gacha.py",
+      "target": "function:skills/openclaw-persona-forge/gacha.py:pick",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/openclaw-persona-forge/gacha.py",
+      "target": "function:skills/openclaw-persona-forge/gacha.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/openclaw-persona-forge/gacha.py",
+      "target": "function:skills/openclaw-persona-forge/gacha.py:pick",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/openclaw-persona-forge/gacha.py",
+      "target": "function:skills/openclaw-persona-forge/gacha.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/openclaw-persona-forge/gacha.sh",
+      "target": "file:skills/openclaw-persona-forge/gacha.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:skills/openclaw-persona-forge/SKILL.md",
+      "target": "file:skills/openclaw-persona-forge/gacha.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/openclaw-persona-forge/SKILL.md",
+      "target": "file:skills/openclaw-persona-forge/gacha.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/orch-add-feature/SKILL.md",
+      "target": "document:skills/orch-pipeline/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/orch-build-mvp/SKILL.md",
+      "target": "document:skills/orch-pipeline/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/orch-change-feature/SKILL.md",
+      "target": "document:skills/orch-pipeline/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/orch-fix-defect/SKILL.md",
+      "target": "document:skills/orch-pipeline/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/orch-refine-code/SKILL.md",
+      "target": "document:skills/orch-pipeline/SKILL.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,621 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/commands/command-frontmatter.test.js",
+      "type": "file",
+      "name": "command-frontmatter.test.js",
+      "filePath": "tests/commands/command-frontmatter.test.js",
+      "summary": "Tests that all command Markdown files in the commands directory contain valid YAML frontmatter with required fields and proper formatting.",
+      "tags": ["test", "validation", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/commands/command-frontmatter.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/commands/command-frontmatter.test.js",
+      "lineRange": [13, 23],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/commands/plan-command.test.js",
+      "type": "file",
+      "name": "plan-command.test.js",
+      "filePath": "tests/commands/plan-command.test.js",
+      "summary": "Tests the plan command Markdown file for correct structure, valid frontmatter, and required content sections.",
+      "tags": ["test", "command", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/commands/plan-command.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/commands/plan-command.test.js",
+      "lineRange": [13, 23],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/conftest.py",
+      "type": "file",
+      "name": "conftest.py",
+      "filePath": "tests/conftest.py",
+      "summary": "Minimal pytest configuration file that registers a custom marker to suppress warnings for unmarked tests.",
+      "tags": ["test", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/hooks/auto-tmux-dev.test.js",
+      "type": "file",
+      "name": "auto-tmux-dev.test.js",
+      "filePath": "tests/hooks/auto-tmux-dev.test.js",
+      "summary": "Tests the auto-tmux-dev hook by spawning the hook script with various session and tool inputs to verify it correctly injects tmux session information.",
+      "tags": ["test", "hook", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/auto-tmux-dev.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/auto-tmux-dev.test.js",
+      "lineRange": [15, 25],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/auto-tmux-dev.test.js:runScript",
+      "type": "function",
+      "name": "runScript",
+      "filePath": "tests/hooks/auto-tmux-dev.test.js",
+      "lineRange": [27, 38],
+      "summary": "Spawns the hook script as a child process with JSON input piped to stdin and returns the parsed output.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/auto-tmux-dev.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/auto-tmux-dev.test.js",
+      "lineRange": [40, 143],
+      "summary": "Main test suite that verifies auto-tmux-dev hook behavior across multiple scenarios including session injection, skip conditions, and output format.",
+      "tags": ["test", "hook"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/bash-hook-dispatcher.test.js",
+      "type": "file",
+      "name": "bash-hook-dispatcher.test.js",
+      "filePath": "tests/hooks/bash-hook-dispatcher.test.js",
+      "summary": "Tests the bash hook dispatcher to verify it correctly routes pre/post bash tool events to the appropriate hook handlers.",
+      "tags": ["test", "hook", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/bash-hook-dispatcher.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/bash-hook-dispatcher.test.js",
+      "lineRange": [14, 24],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/bash-hook-dispatcher.test.js:runScript",
+      "type": "function",
+      "name": "runScript",
+      "filePath": "tests/hooks/bash-hook-dispatcher.test.js",
+      "lineRange": [26, 36],
+      "summary": "Spawns the hook dispatcher script with JSON stdin and returns parsed hook output.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/bash-hook-dispatcher.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/bash-hook-dispatcher.test.js",
+      "lineRange": [42, 131],
+      "summary": "Main test suite that verifies routing logic for pre-bash and post-bash events, checking correct handler invocation per event type.",
+      "tags": ["test", "hook", "event-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/block-no-verify.test.js",
+      "type": "file",
+      "name": "block-no-verify.test.js",
+      "filePath": "tests/hooks/block-no-verify.test.js",
+      "summary": "Tests the block-no-verify hook to ensure it intercepts and blocks git commands that use the --no-verify flag, enforcing pre-commit hook compliance.",
+      "tags": ["test", "hook", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/block-no-verify.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/block-no-verify.test.js",
+      "lineRange": [11, 21],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/block-no-verify.test.js:runHook",
+      "type": "function",
+      "name": "runHook",
+      "filePath": "tests/hooks/block-no-verify.test.js",
+      "lineRange": [23, 42],
+      "summary": "Spawns the block-no-verify hook script with a simulated bash command input and returns exit code and parsed output.",
+      "tags": ["test", "utility", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/hooks/check-hook-enabled.test.js",
+      "type": "file",
+      "name": "check-hook-enabled.test.js",
+      "filePath": "tests/hooks/check-hook-enabled.test.js",
+      "summary": "Tests the check-hook-enabled utility to verify it correctly reads hook enable/disable state from ECC configuration.",
+      "tags": ["test", "hook", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/check-hook-enabled.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/check-hook-enabled.test.js",
+      "lineRange": [15, 25],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/check-hook-enabled.test.js:runScript",
+      "type": "function",
+      "name": "runScript",
+      "filePath": "tests/hooks/check-hook-enabled.test.js",
+      "lineRange": [27, 43],
+      "summary": "Invokes the check-hook-enabled script with a given hook name and environment, returning its stdout and exit code.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/check-hook-enabled.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/check-hook-enabled.test.js",
+      "lineRange": [45, 106],
+      "summary": "Main test suite verifying hook enabled/disabled detection across different config states and environment variable overrides.",
+      "tags": ["test", "hook", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/config-protection.test.js",
+      "type": "file",
+      "name": "config-protection.test.js",
+      "filePath": "tests/hooks/config-protection.test.js",
+      "summary": "Tests the config-protection hook to ensure it prevents unauthorized modifications to settings.json and .claude/settings files, including custom hook variations.",
+      "tags": ["test", "hook", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/config-protection.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/config-protection.test.js",
+      "lineRange": [13, 23],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/config-protection.test.js:runHook",
+      "type": "function",
+      "name": "runHook",
+      "filePath": "tests/hooks/config-protection.test.js",
+      "lineRange": [25, 44],
+      "summary": "Executes the config-protection hook script with a simulated file edit event and returns exit code and parsed output.",
+      "tags": ["test", "utility", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/config-protection.test.js:runCustomHook",
+      "type": "function",
+      "name": "runCustomHook",
+      "filePath": "tests/hooks/config-protection.test.js",
+      "lineRange": [46, 66],
+      "summary": "Executes a custom variant of the config-protection hook with per-test configuration overrides for extended protection scenarios.",
+      "tags": ["test", "utility", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/config-protection.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/config-protection.test.js",
+      "lineRange": [68, 320],
+      "summary": "Comprehensive test suite covering allowed/blocked file paths, nested settings paths, JSON diff detection, and custom protection patterns.",
+      "tags": ["test", "hook", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "type": "file",
+      "name": "continuous-learning-observe-runner.test.js",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "summary": "Tests the continuous-learning observe runner hook, verifying it invokes the observe script at session end and handles plugin root resolution and environment setup.",
+      "tags": ["test", "hook", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [20, 30],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:withTempPluginRoot",
+      "type": "function",
+      "name": "withTempPluginRoot",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [42, 55],
+      "summary": "Test fixture that creates a temporary plugin root directory, yields it to a callback, then cleans up.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:withEnv",
+      "type": "function",
+      "name": "withEnv",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [57, 79],
+      "summary": "Test helper that temporarily sets environment variables for the duration of a callback, then restores the original values.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:writeFakeObserveScript",
+      "type": "function",
+      "name": "writeFakeObserveScript",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [81, 95],
+      "summary": "Creates a fake observe script that records its invocation arguments to a temp file for assertion in tests.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:runWithFlags",
+      "type": "function",
+      "name": "runWithFlags",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [97, 109],
+      "summary": "Runs the observe runner hook through the run-with-flags wrapper, returning exit code and stdout for assertion.",
+      "tags": ["test", "utility", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/continuous-learning-observe-runner.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/continuous-learning-observe-runner.test.js",
+      "lineRange": [111, 192],
+      "summary": "Main test suite verifying observe runner invocation, plugin root detection, disabled hook skipping, and environment variable propagation.",
+      "tags": ["test", "hook", "middleware"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/cost-tracker.test.js",
+      "type": "file",
+      "name": "cost-tracker.test.js",
+      "filePath": "tests/hooks/cost-tracker.test.js",
+      "summary": "Tests the cost-tracker hook by writing synthetic transcript data to temp directories and verifying token/cost accumulation and session summary output.",
+      "tags": ["test", "hook", "monitoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/cost-tracker.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/cost-tracker.test.js",
+      "lineRange": [15, 25],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/cost-tracker.test.js:runScript",
+      "type": "function",
+      "name": "runScript",
+      "filePath": "tests/hooks/cost-tracker.test.js",
+      "lineRange": [46, 55],
+      "summary": "Spawns the cost-tracker hook with JSON stdin and custom HOME environment, returning parsed output for assertions.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/cost-tracker.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/cost-tracker.test.js",
+      "lineRange": [57, 307],
+      "summary": "Main test suite covering token cost calculation, multi-session accumulation, display thresholds, and cost summary formatting.",
+      "tags": ["test", "hook", "monitoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/cursor-block-no-verify.test.js",
+      "type": "file",
+      "name": "cursor-block-no-verify.test.js",
+      "filePath": "tests/hooks/cursor-block-no-verify.test.js",
+      "summary": "Tests the cursor-specific variant of the block-no-verify hook, verifying it intercepts --no-verify flags in Cursor IDE context.",
+      "tags": ["test", "hook", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/cursor-block-no-verify.test.js:runWrapper",
+      "type": "function",
+      "name": "runWrapper",
+      "filePath": "tests/hooks/cursor-block-no-verify.test.js",
+      "lineRange": [22, 37],
+      "summary": "Runs the cursor-block-no-verify hook with a given command string and returns exit code and stdout output.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/cursor-block-no-verify.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/cursor-block-no-verify.test.js",
+      "lineRange": [39, 49],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/hooks/design-quality-check.test.js",
+      "type": "file",
+      "name": "design-quality-check.test.js",
+      "filePath": "tests/hooks/design-quality-check.test.js",
+      "summary": "Tests the design-quality-check hook by importing it directly and verifying it flags quality issues in code diff or file content.",
+      "tags": ["test", "hook", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/design-quality-check.test.js:test",
+      "type": "function",
+      "name": "test",
+      "filePath": "tests/hooks/design-quality-check.test.js",
+      "lineRange": [14, 24],
+      "summary": "Lightweight test runner helper that executes a named test function and reports pass/fail to stdout.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/commands/command-frontmatter.test.js",
+      "target": "function:tests/commands/command-frontmatter.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/commands/plan-command.test.js",
+      "target": "function:tests/commands/plan-command.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/auto-tmux-dev.test.js",
+      "target": "function:tests/hooks/auto-tmux-dev.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/auto-tmux-dev.test.js",
+      "target": "function:tests/hooks/auto-tmux-dev.test.js:runScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/auto-tmux-dev.test.js",
+      "target": "function:tests/hooks/auto-tmux-dev.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/bash-hook-dispatcher.test.js",
+      "target": "function:tests/hooks/bash-hook-dispatcher.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/bash-hook-dispatcher.test.js",
+      "target": "function:tests/hooks/bash-hook-dispatcher.test.js:runScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/bash-hook-dispatcher.test.js",
+      "target": "function:tests/hooks/bash-hook-dispatcher.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/block-no-verify.test.js",
+      "target": "function:tests/hooks/block-no-verify.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/block-no-verify.test.js",
+      "target": "function:tests/hooks/block-no-verify.test.js:runHook",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/check-hook-enabled.test.js",
+      "target": "function:tests/hooks/check-hook-enabled.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/check-hook-enabled.test.js",
+      "target": "function:tests/hooks/check-hook-enabled.test.js:runScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/check-hook-enabled.test.js",
+      "target": "function:tests/hooks/check-hook-enabled.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/config-protection.test.js",
+      "target": "function:tests/hooks/config-protection.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/config-protection.test.js",
+      "target": "function:tests/hooks/config-protection.test.js:runHook",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/config-protection.test.js",
+      "target": "function:tests/hooks/config-protection.test.js:runCustomHook",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/config-protection.test.js",
+      "target": "function:tests/hooks/config-protection.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:withTempPluginRoot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:withEnv",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:writeFakeObserveScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:runWithFlags",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/continuous-learning-observe-runner.test.js",
+      "target": "function:tests/hooks/continuous-learning-observe-runner.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/cost-tracker.test.js",
+      "target": "function:tests/hooks/cost-tracker.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/cost-tracker.test.js",
+      "target": "function:tests/hooks/cost-tracker.test.js:runScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/cost-tracker.test.js",
+      "target": "function:tests/hooks/cost-tracker.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/cursor-block-no-verify.test.js",
+      "target": "function:tests/hooks/cursor-block-no-verify.test.js:runWrapper",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/cursor-block-no-verify.test.js",
+      "target": "function:tests/hooks/cursor-block-no-verify.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/design-quality-check.test.js",
+      "target": "function:tests/hooks/design-quality-check.test.js:test",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/design-quality-check.test.js",
+      "target": "file:scripts/hooks/design-quality-check.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/hooks/design-quality-check.test.js",
+      "target": "file:scripts/hooks/design-quality-check.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

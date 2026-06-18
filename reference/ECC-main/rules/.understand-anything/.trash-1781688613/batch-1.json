@@ -1,0 +1,109 @@
+{
+  "nodes": [
+    {
+      "id": "document:angular/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "angular/coding-style.md",
+      "summary": "Angular coding-style rules covering version awareness, file naming, standalone components, modern inject()-based dependency injection, signals (linkedSignal, resource, effect), templates, forms, component styles, and change detection.",
+      "tags": ["angular", "coding-style", "signals", "components", "dependency-injection"],
+      "complexity": "moderate",
+      "languageNotes": "Centers on modern Angular signal primitives (signal/computed/linkedSignal/resource/effect) and the inject() DI idiom over constructor injection."
+    },
+    {
+      "id": "document:angular/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "angular/hooks.md",
+      "summary": "Angular hooks rule defining the PostToolUse and Stop hook integrations that enforce Angular tooling automation in the ECC harness.",
+      "tags": ["angular", "hooks", "automation", "tooling"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:angular/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "angular/patterns.md",
+      "summary": "Angular architectural patterns covering smart/dumb component splits, the service layer, async data with resource, signal state, subscription cleanup, routing (guards, resolvers, view transitions), scoped DI, HTTP interceptors, RxJS operators, forms, rendering strategies, and accessibility.",
+      "tags": ["angular", "patterns", "architecture", "routing", "dependency-injection"],
+      "complexity": "complex",
+      "languageNotes": "Emphasizes functional route guards/resolvers, InjectionToken-based scoped providers, and viewProviders vs providers distinctions."
+    },
+    {
+      "id": "document:angular/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "angular/security.md",
+      "summary": "Angular security rule mandating XSS prevention, HTTP security, secret management, route guards, SSR security, and Content Security Policy practices.",
+      "tags": ["angular", "security", "xss", "csp", "ssr"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:angular/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "angular/testing.md",
+      "summary": "Angular testing rule covering the test runner, TestBed setup, signal inputs, component harnesses, router/async/HTTP/service testing, what to test, E2E testing, and coverage expectations.",
+      "tags": ["angular", "testing", "testbed", "component-harnesses", "e2e"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:angular/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/patterns.md",
+      "target": "document:angular/coding-style.md",
+      "type": "similar_to",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/security.md",
+      "target": "document:angular/patterns.md",
+      "type": "similar_to",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:angular/testing.md",
+      "target": "document:angular/patterns.md",
+      "type": "similar_to",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

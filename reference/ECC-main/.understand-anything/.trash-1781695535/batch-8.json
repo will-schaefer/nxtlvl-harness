@@ -1,0 +1,1043 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/lib/orchestration-session.js",
+      "type": "file",
+      "name": "orchestration-session.js",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "summary": "Core library for reading tmux orchestration session state: parses worker status files, lists tmux panes, and assembles a snapshot of a multi-worker coordination session. Used by the dmux-tmux adapter to build canonical session data.",
+      "tags": ["service", "orchestration", "utility", "session"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:buildSessionSnapshot",
+      "type": "function",
+      "name": "buildSessionSnapshot",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [226, 245],
+      "summary": "Assembles a session snapshot by combining worker file snapshots with live tmux pane data, returning session state, worker count, and per-worker details.",
+      "tags": ["orchestration", "session", "aggregation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:collectSessionSnapshot",
+      "type": "function",
+      "name": "collectSessionSnapshot",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [273, 287],
+      "summary": "Top-level entry point that resolves a target path or session name, collects tmux pane data, and returns a full session snapshot with repo root and target type metadata.",
+      "tags": ["orchestration", "entry-point", "session"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:listTmuxPanes",
+      "type": "function",
+      "name": "listTmuxPanes",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [157, 216],
+      "summary": "Queries tmux via spawnSync to list all panes in a named session, parsing pane title, command, PID, and activity timestamps from the tmux format string.",
+      "tags": ["orchestration", "tmux", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:loadWorkerSnapshots",
+      "type": "function",
+      "name": "loadWorkerSnapshots",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [131, 155],
+      "summary": "Reads all worker directories under a coordination directory and loads their status, task, and handoff text files into worker snapshot objects.",
+      "tags": ["orchestration", "file-io", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:parseWorkerStatus",
+      "type": "function",
+      "name": "parseWorkerStatus",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [58, 90],
+      "summary": "Parses a worker's status markdown document into a structured object with state, health, branch, worktree, and runtime fields.",
+      "tags": ["orchestration", "parsing", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/orchestration-session.js:resolveSnapshotTarget",
+      "type": "function",
+      "name": "resolveSnapshotTarget",
+      "filePath": "scripts/lib/orchestration-session.js",
+      "lineRange": [247, 271],
+      "summary": "Resolves a target path (plan JSON file or bare session name) into a canonical session name, coordination directory path, and target type.",
+      "tags": ["orchestration", "utility", "path-resolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "file",
+      "name": "canonical-session.js",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "summary": "Defines the canonical ECC session snapshot schema (ecc.session.v1), validation logic, normalization functions for each adapter type (dmux, claude-history, codex, opencode), and persistence to the state store or a fallback JSON recording file.",
+      "tags": ["data-model", "validation", "serialization", "session"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:validateCanonicalSnapshot",
+      "type": "function",
+      "name": "validateCanonicalSnapshot",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [162, 263],
+      "summary": "Validates a canonical session snapshot object against the ecc.session.v1 schema, throwing descriptive errors for any missing or incorrectly typed fields.",
+      "tags": ["validation", "session", "schema"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:persistCanonicalSnapshot",
+      "type": "function",
+      "name": "persistCanonicalSnapshot",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [388, 424],
+      "summary": "Persists a canonical session snapshot to the state store (when available) or writes a fallback JSON recording file, validating the snapshot before writing.",
+      "tags": ["session", "persistence", "state-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:normalizeDmuxSnapshot",
+      "type": "function",
+      "name": "normalizeDmuxSnapshot",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [426, 470],
+      "summary": "Transforms a raw dmux/tmux orchestration snapshot into the canonical ecc.session.v1 format, deriving worker health and aggregate counts.",
+      "tags": ["session", "normalization", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:normalizeClaudeHistorySession",
+      "type": "function",
+      "name": "normalizeClaudeHistorySession",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [480, 527],
+      "summary": "Transforms a Claude session history record into the canonical ecc.session.v1 format, mapping session metadata to the worker model.",
+      "tags": ["session", "normalization", "claude-history"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:normalizeCodexWorktreeSession",
+      "type": "function",
+      "name": "normalizeCodexWorktreeSession",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [529, 578],
+      "summary": "Transforms a Codex worktree rollout session object into the canonical ecc.session.v1 format with git branch and objective metadata.",
+      "tags": ["session", "normalization", "codex"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:normalizeOpencodeSession",
+      "type": "function",
+      "name": "normalizeOpencodeSession",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [580, 632],
+      "summary": "Transforms an Opencode session info object into the canonical ecc.session.v1 format with git branch, model, and objective metadata.",
+      "tags": ["session", "normalization", "opencode"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/canonical-session.js:loadStateStore",
+      "type": "function",
+      "name": "loadStateStore",
+      "filePath": "scripts/lib/session-adapters/canonical-session.js",
+      "lineRange": [332, 353],
+      "summary": "Loads a state store instance from the provided factory or options, returning null if unavailable, used to choose between state-store and fallback file persistence.",
+      "tags": ["state-management", "session", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/claude-history.js",
+      "type": "file",
+      "name": "claude-history.js",
+      "filePath": "scripts/lib/session-adapters/claude-history.js",
+      "summary": "Session adapter for reading Claude Code's own session history files (.tmp), supporting target resolution by explicit prefix, session alias, file path, and latest-session fallback.",
+      "tags": ["service", "adapter", "session", "claude-history"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/claude-history.js:createClaudeHistoryAdapter",
+      "type": "function",
+      "name": "createClaudeHistoryAdapter",
+      "filePath": "scripts/lib/session-adapters/claude-history.js",
+      "lineRange": [114, 154],
+      "summary": "Factory that returns a session adapter object with canOpen and open methods for resolving and normalizing Claude history session targets.",
+      "tags": ["factory", "adapter", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/claude-history.js:resolveSessionRecord",
+      "type": "function",
+      "name": "resolveSessionRecord",
+      "filePath": "scripts/lib/session-adapters/claude-history.js",
+      "lineRange": [57, 112],
+      "summary": "Resolves a session target string to a session record, supporting explicit prefix targets, session aliases, file paths, and latest-session fallback.",
+      "tags": ["session", "resolution", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "type": "file",
+      "name": "codex-worktree.js",
+      "filePath": "scripts/lib/session-adapters/codex-worktree.js",
+      "summary": "Session adapter for reading Codex agent worktree rollout files, parsing JSONL message streams to derive session objective, model, timestamps, and git branch metadata.",
+      "tags": ["service", "adapter", "session", "codex"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/codex-worktree.js:createCodexWorktreeAdapter",
+      "type": "function",
+      "name": "createCodexWorktreeAdapter",
+      "filePath": "scripts/lib/session-adapters/codex-worktree.js",
+      "lineRange": [304, 346],
+      "summary": "Factory that returns a session adapter for Codex worktree rollout files, with canOpen and open methods that parse rollout JSONL into canonical session snapshots.",
+      "tags": ["factory", "adapter", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/codex-worktree.js:parseCodexRollout",
+      "type": "function",
+      "name": "parseCodexRollout",
+      "filePath": "scripts/lib/session-adapters/codex-worktree.js",
+      "lineRange": [278, 302],
+      "summary": "Parses a Codex rollout JSONL file into a structured session record with objective, model, timestamps, and git branch information.",
+      "tags": ["parsing", "codex", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/codex-worktree.js:resolveRolloutPath",
+      "type": "function",
+      "name": "resolveRolloutPath",
+      "filePath": "scripts/lib/session-adapters/codex-worktree.js",
+      "lineRange": [102, 135],
+      "summary": "Resolves a target string to the absolute path of a Codex rollout file, handling explicit file targets, ID-based lookup, and latest-rollout fallback.",
+      "tags": ["codex", "path-resolution", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "type": "file",
+      "name": "dmux-tmux.js",
+      "filePath": "scripts/lib/session-adapters/dmux-tmux.js",
+      "summary": "Session adapter for tmux/dmux orchestration sessions, reading live pane state from tmux and persisting a canonical snapshot. Accepts plan JSON files or bare session names as targets.",
+      "tags": ["service", "adapter", "session", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/dmux-tmux.js:createDmuxTmuxAdapter",
+      "type": "function",
+      "name": "createDmuxTmuxAdapter",
+      "filePath": "scripts/lib/session-adapters/dmux-tmux.js",
+      "lineRange": [43, 84],
+      "summary": "Factory that returns a dmux-tmux adapter object with canOpen and open methods for collecting live tmux orchestration snapshots and normalizing them to the canonical format.",
+      "tags": ["factory", "adapter", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/opencode.js",
+      "type": "file",
+      "name": "opencode.js",
+      "filePath": "scripts/lib/session-adapters/opencode.js",
+      "summary": "Session adapter for Opencode agent sessions, reading session info JSON files from the Opencode storage directory to derive session metadata, model, objective, and git branch.",
+      "tags": ["service", "adapter", "session", "opencode"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/opencode.js:createOpencodeAdapter",
+      "type": "function",
+      "name": "createOpencodeAdapter",
+      "filePath": "scripts/lib/session-adapters/opencode.js",
+      "lineRange": [268, 310],
+      "summary": "Factory that returns an Opencode session adapter with canOpen and open methods for resolving and normalizing Opencode session info files to canonical snapshots.",
+      "tags": ["factory", "adapter", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/opencode.js:parseOpencodeSession",
+      "type": "function",
+      "name": "parseOpencodeSession",
+      "filePath": "scripts/lib/session-adapters/opencode.js",
+      "lineRange": [234, 266],
+      "summary": "Reads an Opencode session info file and its associated message files to derive a structured session record with model, objective, timestamps, and git branch.",
+      "tags": ["parsing", "opencode", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/opencode.js:resolveSessionInfoPath",
+      "type": "function",
+      "name": "resolveSessionInfoPath",
+      "filePath": "scripts/lib/session-adapters/opencode.js",
+      "lineRange": [122, 155],
+      "summary": "Resolves a target string to the absolute path of an Opencode session info file, supporting explicit file paths, ID-based lookup, and latest-session fallback.",
+      "tags": ["opencode", "path-resolution", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/session-adapters/registry.js",
+      "type": "file",
+      "name": "registry.js",
+      "filePath": "scripts/lib/session-adapters/registry.js",
+      "summary": "Session adapter registry that instantiates all built-in adapters (claude-history, dmux-tmux, codex-worktree, opencode), routes targets to the correct adapter, and exposes a unified inspectSessionTarget entry point.",
+      "tags": ["registry", "factory", "session", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/registry.js:createAdapterRegistry",
+      "type": "function",
+      "name": "createAdapterRegistry",
+      "filePath": "scripts/lib/session-adapters/registry.js",
+      "lineRange": [99, 136],
+      "summary": "Creates an adapter registry that can iterate all registered adapters to find one that can handle a given target, then open and snapshot it.",
+      "tags": ["registry", "factory", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-adapters/registry.js:normalizeStructuredTarget",
+      "type": "function",
+      "name": "normalizeStructuredTarget",
+      "filePath": "scripts/lib/session-adapters/registry.js",
+      "lineRange": [52, 97],
+      "summary": "Normalizes a target that may be a plain string or a structured object with type/value fields and optional context overrides, returning a canonical target/context pair.",
+      "tags": ["utility", "normalization", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/session-manager.js",
+      "type": "file",
+      "name": "session-manager.js",
+      "filePath": "scripts/lib/session-manager.js",
+      "summary": "Core session CRUD library for Claude Code sessions stored as .tmp markdown files; provides listing, searching by date or ID, reading metadata, writing, appending, and deleting session records.",
+      "tags": ["service", "session", "data-model", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:parseSessionFilename",
+      "type": "function",
+      "name": "parseSessionFilename",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [34, 61],
+      "summary": "Parses a session .tmp filename to extract date and short ID, with strict calendar validation to reject impossible dates like Feb 31.",
+      "tags": ["parsing", "session", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:getSessionCandidates",
+      "type": "function",
+      "name": "getSessionCandidates",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [72, 137],
+      "summary": "Scans session search directories for matching .tmp files, applying optional date and search filters, and returns parsed session candidate objects.",
+      "tags": ["session", "search", "file-io"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:parseSessionMetadata",
+      "type": "function",
+      "name": "parseSessionMetadata",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [225, 313],
+      "summary": "Parses the YAML-like metadata header embedded in a session .tmp file, extracting title, tags, model, context, and other structured fields.",
+      "tags": ["parsing", "session", "metadata"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:getMatchingSessionCandidates",
+      "type": "function",
+      "name": "getMatchingSessionCandidates",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [167, 209],
+      "summary": "Finds session candidates matching a given ID string, supporting exact match, prefix match, and date-scoped lookup across all session search directories.",
+      "tags": ["session", "search", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:getAllSessions",
+      "type": "function",
+      "name": "getAllSessions",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [356, 389],
+      "summary": "Returns all session records from all search directories, optionally filtered by date or search term, with full metadata parsed for each session.",
+      "tags": ["session", "listing", "api-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/session-manager.js:getSessionById",
+      "type": "function",
+      "name": "getSessionById",
+      "filePath": "scripts/lib/session-manager.js",
+      "lineRange": [397, 423],
+      "summary": "Looks up a single session by ID string, returning null when not found or throwing when multiple sessions match the same ambiguous ID.",
+      "tags": ["session", "lookup", "api-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/orchestration-status.js",
+      "type": "file",
+      "name": "orchestration-status.js",
+      "filePath": "scripts/orchestration-status.js",
+      "summary": "CLI script that accepts a tmux session name or plan JSON path and prints the canonical session snapshot as JSON, with an optional --write flag to save to a file.",
+      "tags": ["entry-point", "cli", "orchestration", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/lib/orchestration-session.test.js",
+      "type": "file",
+      "name": "orchestration-session.test.js",
+      "filePath": "tests/lib/orchestration-session.test.js",
+      "summary": "Test suite for the orchestration-session library, covering snapshot parsing and tmux pane list behavior.",
+      "tags": ["test", "orchestration", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/session-adapters-codex.test.js",
+      "type": "file",
+      "name": "session-adapters-codex.test.js",
+      "filePath": "tests/lib/session-adapters-codex.test.js",
+      "summary": "Test suite for the Codex worktree session adapter, verifying rollout file resolution, parsing, and canonical snapshot normalization.",
+      "tags": ["test", "codex", "session", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/session-adapters-opencode.test.js",
+      "type": "file",
+      "name": "session-adapters-opencode.test.js",
+      "filePath": "tests/lib/session-adapters-opencode.test.js",
+      "summary": "Test suite for the Opencode session adapter, verifying session info file resolution, parsing, and canonical snapshot normalization.",
+      "tags": ["test", "opencode", "session", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/session-adapters.test.js",
+      "type": "file",
+      "name": "session-adapters.test.js",
+      "filePath": "tests/lib/session-adapters.test.js",
+      "summary": "Comprehensive test suite for all session adapters (canonical, claude-history, dmux-tmux, registry), covering snapshot normalization, validation, and adapter routing.",
+      "tags": ["test", "session", "adapter", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/session-manager.test.js",
+      "type": "file",
+      "name": "session-manager.test.js",
+      "filePath": "tests/lib/session-manager.test.js",
+      "summary": "Very large test suite for the session-manager library covering all CRUD operations, filename parsing, metadata extraction, search, and edge cases across date formats and ID matching.",
+      "tags": ["test", "session", "data-model", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/session-inspect.test.js",
+      "type": "file",
+      "name": "session-inspect.test.js",
+      "filePath": "tests/scripts/session-inspect.test.js",
+      "summary": "Integration test suite for the session-inspect CLI script, exercising target routing through the adapter registry with various session target formats.",
+      "tags": ["test", "cli", "session", "integration"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:buildSessionSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:collectSessionSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:listTmuxPanes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:loadWorkerSnapshots",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:parseWorkerStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:resolveSnapshotTarget",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:buildSessionSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:collectSessionSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:listTmuxPanes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:loadWorkerSnapshots",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:parseWorkerStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "function:scripts/lib/orchestration-session.js:resolveSnapshotTarget",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:validateCanonicalSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:persistCanonicalSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeDmuxSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeClaudeHistorySession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeCodexWorktreeSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeOpencodeSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:loadStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:persistCanonicalSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeDmuxSnapshot",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeClaudeHistorySession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeCodexWorktreeSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "function:scripts/lib/session-adapters/canonical-session.js:normalizeOpencodeSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "file:scripts/lib/session-aliases.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "file:scripts/lib/session-manager.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "function:scripts/lib/session-adapters/claude-history.js:createClaudeHistoryAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "function:scripts/lib/session-adapters/claude-history.js:resolveSessionRecord",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "function:scripts/lib/session-adapters/claude-history.js:createClaudeHistoryAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "function:scripts/lib/session-adapters/codex-worktree.js:createCodexWorktreeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "function:scripts/lib/session-adapters/codex-worktree.js:parseCodexRollout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "function:scripts/lib/session-adapters/codex-worktree.js:resolveRolloutPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "function:scripts/lib/session-adapters/codex-worktree.js:createCodexWorktreeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "target": "file:scripts/lib/orchestration-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "target": "function:scripts/lib/session-adapters/dmux-tmux.js:createDmuxTmuxAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "target": "function:scripts/lib/session-adapters/dmux-tmux.js:createDmuxTmuxAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "function:scripts/lib/session-adapters/opencode.js:createOpencodeAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "function:scripts/lib/session-adapters/opencode.js:parseOpencodeSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "function:scripts/lib/session-adapters/opencode.js:resolveSessionInfoPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "function:scripts/lib/session-adapters/opencode.js:createOpencodeAdapter",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "file:scripts/lib/session-adapters/claude-history.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "file:scripts/lib/session-adapters/opencode.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "function:scripts/lib/session-adapters/registry.js:createAdapterRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "function:scripts/lib/session-adapters/registry.js:normalizeStructuredTarget",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "function:scripts/lib/session-adapters/registry.js:createAdapterRegistry",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:parseSessionFilename",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getSessionCandidates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:parseSessionMetadata",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getMatchingSessionCandidates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getAllSessions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getSessionById",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:parseSessionFilename",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getSessionCandidates",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:parseSessionMetadata",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getAllSessions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "function:scripts/lib/session-manager.js:getSessionById",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/orchestration-status.js",
+      "target": "file:scripts/lib/session-adapters/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/orchestration-session.test.js",
+      "target": "file:scripts/lib/orchestration-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/orchestration-session.js",
+      "target": "file:tests/lib/orchestration-session.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/session-adapters-codex.test.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters-codex.test.js",
+      "target": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters-codex.test.js",
+      "target": "file:scripts/lib/session-adapters/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/codex-worktree.js",
+      "target": "file:tests/lib/session-adapters-codex.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/session-adapters-opencode.test.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters-opencode.test.js",
+      "target": "file:scripts/lib/session-adapters/opencode.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters-opencode.test.js",
+      "target": "file:scripts/lib/session-adapters/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/opencode.js",
+      "target": "file:tests/lib/session-adapters-opencode.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/session-adapters.test.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters.test.js",
+      "target": "file:scripts/lib/session-adapters/claude-history.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters.test.js",
+      "target": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-adapters.test.js",
+      "target": "file:scripts/lib/session-adapters/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/canonical-session.js",
+      "target": "file:tests/lib/session-adapters.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/claude-history.js",
+      "target": "file:tests/lib/session-adapters.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/dmux-tmux.js",
+      "target": "file:tests/lib/session-adapters.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/session-adapters/registry.js",
+      "target": "file:tests/lib/session-adapters.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/session-manager.test.js",
+      "target": "file:scripts/lib/session-manager.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/session-manager.js",
+      "target": "file:tests/lib/session-manager.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/session-inspect.test.js",
+      "target": "file:scripts/lib/session-adapters/canonical-session.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

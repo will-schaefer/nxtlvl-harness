@@ -1,0 +1,113 @@
+{
+  "nodes": [
+    {
+      "id": "document:commands/rust-test.md",
+      "type": "document",
+      "name": "rust-test.md",
+      "filePath": "commands/rust-test.md",
+      "summary": "Defines the /rust-test slash command that drives a full Rust TDD workflow, covering the red-green-refactor cycle, unit/parameterized/async/property-based test patterns, coverage commands, and best practices for cargo test.",
+      "tags": ["documentation", "command", "test-driven-development", "rust", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/santa-loop.md",
+      "type": "document",
+      "name": "santa-loop.md",
+      "filePath": "commands/santa-loop.md",
+      "summary": "Defines the /santa-loop command that orchestrates a dual-reviewer code-quality gate (Claude agent + optional external model), running a NAUGHTY/NICE verdict loop that blocks pushes until all review criteria are satisfied.",
+      "tags": ["documentation", "command", "code-review", "quality-gate", "automation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/save-session.md",
+      "type": "document",
+      "name": "save-session.md",
+      "filePath": "commands/save-session.md",
+      "summary": "Defines the /save-session command that persists the current Claude Code session context to a structured Markdown file under a sessions/ folder, capturing goals, progress, key decisions, next steps, and open questions for later resumption.",
+      "tags": ["documentation", "command", "session-management", "context-engineering", "persistence"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/security-scan.md",
+      "type": "document",
+      "name": "security-scan.md",
+      "filePath": "commands/security-scan.md",
+      "summary": "Defines the /security-scan command that runs a deterministic security audit combining static-analysis tools (semgrep, bandit, npm audit) with an LLM review checklist, producing a structured SARIF-compatible output and a CI integration pattern.",
+      "tags": ["documentation", "command", "security", "static-analysis", "ci-cd"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/sessions.md",
+      "type": "document",
+      "name": "sessions.md",
+      "filePath": "commands/sessions.md",
+      "summary": "Defines the /sessions command with sub-actions (list, load, alias, remove-alias, info, list-aliases) for managing persisted session files, enabling named references and seamless context restoration across Claude Code sessions.",
+      "tags": ["documentation", "command", "session-management", "context-engineering", "workflow"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/setup-pm.md",
+      "type": "document",
+      "name": "setup-pm.md",
+      "filePath": "commands/setup-pm.md",
+      "summary": "Defines the /setup-pm command that detects and configures the correct package manager (npm, pnpm, yarn, bun) for the current project via a priority-ordered detection strategy, storing the result in global or project-level configuration.",
+      "tags": ["documentation", "command", "configuration", "package-manager", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/skill-create.md",
+      "type": "document",
+      "name": "skill-create.md",
+      "filePath": "commands/skill-create.md",
+      "summary": "Defines the /skill-create command that analyzes a project's git history and file patterns to auto-generate a SKILL.md workflow file and optional instincts, enabling teams to capture and share project-specific development conventions.",
+      "tags": ["documentation", "command", "skill-generation", "automation", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/skill-health.md",
+      "type": "document",
+      "name": "skill-health.md",
+      "filePath": "commands/skill-health.md",
+      "summary": "Defines the /skill-health command that renders a dashboard showing skill coverage, gaps, last-used timestamps, and actionable remediation advice across the installed skill library.",
+      "tags": ["documentation", "command", "skill-management", "monitoring", "dashboard"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/test-coverage.md",
+      "type": "document",
+      "name": "test-coverage.md",
+      "filePath": "commands/test-coverage.md",
+      "summary": "Defines the /test-coverage command that detects the project's test framework, analyzes existing coverage reports, generates missing tests for uncovered paths, and produces a coverage summary with focus-area recommendations.",
+      "tags": ["documentation", "command", "test-coverage", "quality", "automation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/update-codemaps.md",
+      "type": "document",
+      "name": "update-codemaps.md",
+      "filePath": "commands/update-codemaps.md",
+      "summary": "Defines the /update-codemaps command that scans the project structure, generates structured codemap files capturing directory layouts and key file purposes, diffs against previous codemaps to surface changes, and attaches metadata for freshness tracking.",
+      "tags": ["documentation", "command", "codebase-navigation", "metadata", "automation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/update-docs.md",
+      "type": "document",
+      "name": "update-docs.md",
+      "filePath": "commands/update-docs.md",
+      "summary": "Defines the /update-docs command that refreshes project documentation (script reference, environment docs, contributing guide, runbook) from source-of-truth files and flags stale sections for review.",
+      "tags": ["documentation", "command", "documentation-maintenance", "automation", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/vue-review.md",
+      "type": "document",
+      "name": "vue-review.md",
+      "filePath": "commands/vue-review.md",
+      "summary": "Defines the /vue-review command that performs a Vue.js-specific code review covering Composition API patterns, reactivity correctness, component architecture, performance, and accessibility, with severity-tiered findings (CRITICAL/HIGH/MEDIUM).",
+      "tags": ["documentation", "command", "code-review", "vue", "frontend"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": []
+}

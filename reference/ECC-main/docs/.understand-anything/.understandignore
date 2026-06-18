@@ -1,0 +1,25 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+# --- Scope: English source only ---
+# Exclude all localized translation directories. They are 1:1 translations of
+# the English docs; analyzing them bloats the graph with ~14 duplicate copies
+# of every concept for no comprehension gain.
+ja-JP/
+zh-CN/
+zh-TW/
+ko-KR/
+es/
+tr/
+pt-BR/
+de-DE/
+ru/
+th/
+ur/
+vi-VN/
+
+# Editor cruft
+.DS_Store

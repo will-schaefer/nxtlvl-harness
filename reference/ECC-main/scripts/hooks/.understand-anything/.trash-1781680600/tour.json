@@ -1,0 +1,59 @@
+[
+  {
+    "order": 1,
+    "title": "The Consolidated-Dispatcher Pattern",
+    "description": "Start at the architectural keystone. Instead of registering dozens of separate hooks in settings.json, ECC registers one thin entry point per Bash lifecycle event (pre-bash-dispatcher.js for PreToolUse, post-bash-dispatcher.js for PostToolUse) that reads stdin and delegates to a single central router, bash-hook-dispatcher.js. That router (the project's highest fan-out node, requiring 12 sibling checks) runs every check in registered order, honors per-hook profile gating, and merges all their results — block decisions, stderr, additionalContext — into one response. This is the single most important lesson for a lean hook layer: fan out internally so Claude Code only ever invokes one hook per event, which keeps config trivial and execution ordering explicit.",
+    "nodeIds": ["file:bash-hook-dispatcher.js", "file:pre-bash-dispatcher.js", "file:post-bash-dispatcher.js"]
+  },
+  {
+    "order": 2,
+    "title": "Enabling and Wrapping a Hook",
+    "description": "Before any individual check runs, ECC decides whether it should run at all. run-with-flags.js is a generic wrapper that executes a target hook only when enabled by the active profile (ECC_HOOK_PROFILE / ECC_DISABLED_HOOKS), preferring a fast in-process require()+run() and falling back to spawnSync — and it propagates the wrapped hook's exit code, so the same wrapper serves both gates and observers. check-hook-enabled.js is the tiny yes/no CLI that settings.json consults to gate execution, and plugin-hook-bootstrap.js normalizes the plugin root and environment before spawning the real hook. The lesson: a single runtime-gating layer lets you ship many hooks but turn any of them off per profile without editing config.",
+    "nodeIds": ["file:run-with-flags.js", "file:check-hook-enabled.js", "file:plugin-hook-bootstrap.js"],
+    "languageLesson": "run-with-flags prefers require()+run() over spawning a child process: loading the hook in-process avoids per-hook Node startup cost (tens of ms each), which matters when one dispatcher fans out to a dozen checks on every Bash call. Hooks opt in by exporting a run(rawInput) function."
+  },
+  {
+    "order": 3,
+    "title": "Blocking Gates — What Exit 2 Looks Like",
+    "description": "Now meet the hooks that actually deny actions. A blocking gate writes its reason to stderr and exits 2 — Claude Code treats that as a hard refusal. config-protection.js blocks edits to existing linter/formatter configs (so the agent fixes source instead of relaxing checks), gateguard-fact-force.js intercepts the first destructive op of a session and demands grounding facts before allowing a retry, and pre-bash-dev-server-block.js parses the command and refuses foreground dev-server launches that would hang the agent. Study these to see the deliberate shape of a block: detect a narrowly-defined condition, explain why, exit 2 — and nothing else. Everything not matching the condition passes through untouched.",
+    "nodeIds": ["file:config-protection.js", "file:gateguard-fact-force.js", "file:pre-bash-dev-server-block.js"],
+    "languageLesson": "The exit-2 contract: stdout is ignored for blocks, stderr carries the message back to the agent, and exit code 2 is the deny signal. Any other exit code (including 0) lets the action proceed — so a gate that crashes fails OPEN, which is the safe default for a hook layer."
+  },
+  {
+    "order": 4,
+    "title": "The Shared Output Envelope",
+    "description": "Not every concern warrants a block. The other half of the design is reaching the agent without stopping it. pretooluse-visible-output.js is the project's most-depended-upon helper (fan-in 5): it normalizes and combines additionalContext strings and serializes them into the hookSpecificOutput JSON envelope Claude Code expects, so a hook can surface a warning that the agent sees while the action still proceeds. Centralizing this envelope is why every nudge in ECC speaks with one voice and exits 0. The lesson: separate 'inform' from 'deny' at the plumbing level — a shared output helper for warnings, a bare exit 2 for blocks.",
+    "nodeIds": ["file:pretooluse-visible-output.js"]
+  },
+  {
+    "order": 5,
+    "title": "Observation & Telemetry — Fail-Open Observers",
+    "description": "This is the gate's opposite number: hooks that watch and record but never alter the tool result. ecc-metrics-bridge.js maintains a running per-session aggregate (cost, files touched, recent tool hashes) in a temp bridge file so downstream consumers avoid rescanning the transcript JSONL; ecc-context-monitor.js reads that bridge and injects warnings only when thresholds cross (context exhaustion, runaway cost, scope creep, tool loops); cost-tracker.js sums token usage at Stop; and observe-runner.js spawns the continuous-learning observe.sh for the current phase. All of them exit 0 unconditionally — observation must never break the agent. Note the bridge-file pattern: compute once, let many cheap readers share the result.",
+    "nodeIds": ["file:ecc-metrics-bridge.js", "file:ecc-context-monitor.js", "file:cost-tracker.js", "file:observe-runner.js"]
+  },
+  {
+    "order": 6,
+    "title": "Quality Batching — Defer Expensive Work",
+    "description": "Formatting and type-checking are too slow to run on every edit, but too valuable to skip. ECC's answer is a producer/consumer pair (a tightly-coupled cluster in the graph): post-edit-accumulator.js fires on each Edit/Write and simply appends the edited JS/TS path to a session-scoped temp file — near-zero latency — while stop-format-typecheck.js fires once at Stop, reads the accumulated list, and batch-formats and type-checks everything grouped by project and tsconfig root. The lesson for a lean hook layer: when work is expensive, accumulate cheaply during the response and pay the cost once per response at the Stop boundary, where a longer timeout is acceptable.",
+    "nodeIds": ["file:post-edit-accumulator.js", "file:stop-format-typecheck.js"],
+    "languageLesson": "Stop-event hooks get a far more generous timeout (here ~300s) than PreToolUse gates (which should stay under ~200ms with no network). Knowing which lifecycle event you are in tells you how much work you can afford — push anything heavy to Stop."
+  },
+  {
+    "order": 7,
+    "title": "Session Lifecycle & Context Injection",
+    "description": "Hooks also bracket the whole session. session-start.js injects bounded prior context on startup — it selects the most recent matching session summary, surfaces active instincts and learned skills, prunes expired files, and emits a character-limited additionalContext payload. session-end.js extracts a summary from the transcript and persists a per-session markdown file for cross-session continuity. pre-compact.js preserves state before Claude compacts context, and suggest-compact.js advises manual compaction using a tool-call counter plus the live context-size signal. Together they show how a hook layer can give the agent memory and steer it around the context window — entirely through fail-open observers.",
+    "nodeIds": ["file:session-start.js", "file:session-end.js", "file:pre-compact.js", "file:suggest-compact.js"]
+  },
+  {
+    "order": 8,
+    "title": "Security — Cross-Language Gating",
+    "description": "The security layer demonstrates how to plug a heavier, possibly cross-language analyzer into the same hook contract. insaits-security-monitor.py runs local anomaly detection on tool input (credential exposure, prompt injection, hallucination chains, 20+ types) and BLOCKS with exit 2 on critical findings while warning via stderr otherwise. Because run-with-flags spawns hooks via node, insaits-security-wrapper.js is a thin JS bridge that forwards stdin to the Python monitor and relays its exit code — including the block. mcp-health-check.js rounds this out by probing MCP server health before tool calls and reconnecting on failure. The lesson: a language-neutral stdin/exit-code contract lets you drop in a Python (or any) analyzer behind a one-line JS shim.",
+    "nodeIds": ["file:insaits-security-wrapper.js", "file:insaits-security-monitor.py", "file:mcp-health-check.js"]
+  },
+  {
+    "order": 9,
+    "title": "Synthesis — Gate vs. Observe",
+    "description": "Step back and the entire system resolves into one design axis. Blocking gates (block-no-verify.js, which refuses --no-verify commit bypasses via a custom tokenizer) are synchronous, fast, narrowly-scoped, and deliberately fail OPEN — exit 2 only on a confirmed match, exit 0 on anything else including their own errors. Async observers (session-activity-tracker.js, logging sanitized per-tool rows) are non-blocking telemetry that exit 0 unconditionally. Building your own lean hook layer means deciding, for each concern, which side of this axis it lives on, then wiring it behind one consolidated dispatcher and one runtime-gating wrapper. Gate sparingly and precisely; observe freely and never break the agent.",
+    "nodeIds": ["file:block-no-verify.js", "file:session-activity-tracker.js"]
+  }
+]

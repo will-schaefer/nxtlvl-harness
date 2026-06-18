@@ -1,0 +1,1147 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "2a5b5e78b82dc63ea6cf2627b88095bef53c7f7f",
+  "generatedAt": "2026-06-17T09:29:57.514Z",
+  "files": {
+    "angular/coding-style.md": {
+      "filePath": "angular/coding-style.md",
+      "contentHash": "07ff77e554dad197c179c0fbd6b70dcbedbe4e038e95e60da0475134a5be856c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 183,
+      "hasStructuralAnalysis": true
+    },
+    "angular/hooks.md": {
+      "filePath": "angular/hooks.md",
+      "contentHash": "321620abd2771d766149f5d38edc6b0f6a70fc49cdf4467bf3d81985668fa088",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "angular/patterns.md": {
+      "filePath": "angular/patterns.md",
+      "contentHash": "dfe588461b1d1b4d63826559c89a22dec3a61de606db5ce249b01c5cceb6b887",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 250,
+      "hasStructuralAnalysis": true
+    },
+    "angular/security.md": {
+      "filePath": "angular/security.md",
+      "contentHash": "95aa06285fa05dfac872ec631057361ec8864d69dbf7be933c8d72c16aea5155",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "angular/testing.md": {
+      "filePath": "angular/testing.md",
+      "contentHash": "db8e50e1a0eadf989399c69923ff939b857a82f2b7deedc6cfeef21f182ed0cb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 165,
+      "hasStructuralAnalysis": true
+    },
+    "arkts/coding-style.md": {
+      "filePath": "arkts/coding-style.md",
+      "contentHash": "6b7bd08dc321bc5acba53467918fe2ea8c24d8347ee41c91a2ad89969b2a071b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 154,
+      "hasStructuralAnalysis": true
+    },
+    "arkts/hooks.md": {
+      "filePath": "arkts/hooks.md",
+      "contentHash": "58bc4133ecdf5bd81fd32fb228206a552445cddb0e868228d829fd390a807b2c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 136,
+      "hasStructuralAnalysis": true
+    },
+    "arkts/patterns.md": {
+      "filePath": "arkts/patterns.md",
+      "contentHash": "0b475545842fcee0777c98dbace9bac552a71c581f9630648fe28e2d5d0e1394",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 237,
+      "hasStructuralAnalysis": true
+    },
+    "arkts/security.md": {
+      "filePath": "arkts/security.md",
+      "contentHash": "68c2c51e2741e9e25878e82bae0a6364c261c0d9d2ac0052c5580218355d7eee",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "arkts/testing.md": {
+      "filePath": "arkts/testing.md",
+      "contentHash": "bbb059fbb062231bc992d890c3ad4d772d61b8a7cba37b113ca74bfb07e4b3b9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 127,
+      "hasStructuralAnalysis": true
+    },
+    "common/agents.md": {
+      "filePath": "common/agents.md",
+      "contentHash": "c53bec2c059315b580874c8dfa8eab17eda22727551c361fdb956394b52775ad",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "common/code-review.md": {
+      "filePath": "common/code-review.md",
+      "contentHash": "55dadc2e085e0e234f974862080a4918b74d9dee820e85370c63bcdf0e0a4a6b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 125,
+      "hasStructuralAnalysis": true
+    },
+    "common/coding-style.md": {
+      "filePath": "common/coding-style.md",
+      "contentHash": "f16be09179b6d83bec63d3e109a8a9a95c8657985ae36e493b5d5decaf15ae1b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "common/development-workflow.md": {
+      "filePath": "common/development-workflow.md",
+      "contentHash": "54beaad49cd4cdde7ae6b8c730c4f7acf599d16f4b11e1cb7602ff1f0867c85d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "common/git-workflow.md": {
+      "filePath": "common/git-workflow.md",
+      "contentHash": "c8a1fac8bb9563406a1d04c6fd87737b4790d6699dfdde8a868248c8e261c18c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "common/hooks.md": {
+      "filePath": "common/hooks.md",
+      "contentHash": "b3bfb0ed86bfa71d29c076de5363656265218aa5fb8abd26edf285e652a2b234",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "common/patterns.md": {
+      "filePath": "common/patterns.md",
+      "contentHash": "8a32c0552c8b309e961ef3f68a56ae84b0b1d411c17f23675ec26b685dea5e9a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "common/performance.md": {
+      "filePath": "common/performance.md",
+      "contentHash": "851cde9e695213b22efb4a4f7952160550b6634a62e62c71deec80bf649da86e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    },
+    "common/security.md": {
+      "filePath": "common/security.md",
+      "contentHash": "58f0acc56331b8d554dd036b8a1d5b2305a908e3960ff1e2d7e55223d5918bc3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": true
+    },
+    "common/testing.md": {
+      "filePath": "common/testing.md",
+      "contentHash": "09314a247342c12698deb308c2d0ffcf80b58341274bb8f9bba63fa03ce33323",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "cpp/coding-style.md": {
+      "filePath": "cpp/coding-style.md",
+      "contentHash": "3d25db0df6aa37cd58117d927020102b4e991fb820b9a6ff193058f0652be611",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "cpp/hooks.md": {
+      "filePath": "cpp/hooks.md",
+      "contentHash": "51c511ea9706f53399649a52030484e14317b26f717488807a1faa2a2b9e0331",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "cpp/patterns.md": {
+      "filePath": "cpp/patterns.md",
+      "contentHash": "0d4ad5083495eb234e43f65ed6e097494c06cf6886774d870fa27e6f11ffb27c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "cpp/security.md": {
+      "filePath": "cpp/security.md",
+      "contentHash": "16ca65265e3202d59046a70bd925d8f882d7f8494152e4839f1e5b89a6c5a2cd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "cpp/testing.md": {
+      "filePath": "cpp/testing.md",
+      "contentHash": "07f8098577dbcf2bdefb24721ec571badd7c646fbe760cc2a2293455515da5dd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "csharp/coding-style.md": {
+      "filePath": "csharp/coding-style.md",
+      "contentHash": "355de4ecd0690f7dbaa78e2fe24c9b82a153247c9f23adfa6de5a49a812ae3ce",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 73,
+      "hasStructuralAnalysis": true
+    },
+    "csharp/hooks.md": {
+      "filePath": "csharp/hooks.md",
+      "contentHash": "9975e503eedc5a9a02a8ba8cee8fbee804210632db0ec00b2185ef225e3dfa82",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "csharp/patterns.md": {
+      "filePath": "csharp/patterns.md",
+      "contentHash": "05ed05365fd93ac93245244878229106eefb88164db43555d14d8bbd4999023f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "csharp/security.md": {
+      "filePath": "csharp/security.md",
+      "contentHash": "94b105e20d72ba2fbe457a42e9232001dd5dd338e816a091094b0d518280eb07",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "csharp/testing.md": {
+      "filePath": "csharp/testing.md",
+      "contentHash": "797db2f53f2dd34c2fb2732d9498d63b818473c6599e9124c46c668ab70226a6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "dart/coding-style.md": {
+      "filePath": "dart/coding-style.md",
+      "contentHash": "acf278be79dae9fdc323cf81059ec05fff32751617eef9bb5be3a2bdc9175f6b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 160,
+      "hasStructuralAnalysis": true
+    },
+    "dart/hooks.md": {
+      "filePath": "dart/hooks.md",
+      "contentHash": "8dbf2a2cbedb962fbfed379749baddcad9164779159411ae248a42c0ebc2e9fc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "dart/patterns.md": {
+      "filePath": "dart/patterns.md",
+      "contentHash": "6fc60f9f286b04f61462e2b9e469a12a715097e71e48c1194e222795fc29160e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 262,
+      "hasStructuralAnalysis": true
+    },
+    "dart/security.md": {
+      "filePath": "dart/security.md",
+      "contentHash": "7945724035a5fe77f9b89e15fe28b5b8c405b625a3d9fb27cfae7c590df1fa2a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 136,
+      "hasStructuralAnalysis": true
+    },
+    "dart/testing.md": {
+      "filePath": "dart/testing.md",
+      "contentHash": "b2d645c8e6da1958d913c82cf408013ada2ea14962126e1575566cea55465cf2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 216,
+      "hasStructuralAnalysis": true
+    },
+    "fsharp/coding-style.md": {
+      "filePath": "fsharp/coding-style.md",
+      "contentHash": "d1088a64bc2c3a46e9c00b17c8a8df4d94aba2a199881c21af7b004380d005ef",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": true
+    },
+    "fsharp/hooks.md": {
+      "filePath": "fsharp/hooks.md",
+      "contentHash": "c6b9cc1afef1f8556d13c6703a13662724b413b316bfbcc832be236a998596cf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 27,
+      "hasStructuralAnalysis": true
+    },
+    "fsharp/patterns.md": {
+      "filePath": "fsharp/patterns.md",
+      "contentHash": "a120871213cce220eb41ccf5699707ac1d711f387a8e3ccc6b1b7810701429b4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 112,
+      "hasStructuralAnalysis": true
+    },
+    "fsharp/security.md": {
+      "filePath": "fsharp/security.md",
+      "contentHash": "021f0fd447be83c7f8ad47e1bcbe28ac2f15fc8a2ff9a42199ac229bc8f405b3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "fsharp/testing.md": {
+      "filePath": "fsharp/testing.md",
+      "contentHash": "254b49f908e575a6216d7eac2b7b6a3234bb7ab3c32a8d263dc22f8e109f6616",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "golang/coding-style.md": {
+      "filePath": "golang/coding-style.md",
+      "contentHash": "c32f6a2715297a1637b35567bb2e65054b4b28064b4d91fad26ad688f758243d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    "golang/hooks.md": {
+      "filePath": "golang/hooks.md",
+      "contentHash": "518fe31d4baa4a10e2f5ae341ececb7063bbc794ef44c4cdefd7dcf75ab50cc3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "golang/patterns.md": {
+      "filePath": "golang/patterns.md",
+      "contentHash": "aca279088c39a43e8b1371d61abbb5da15206c5f52cce52443252d47ad5c5ddb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "golang/security.md": {
+      "filePath": "golang/security.md",
+      "contentHash": "72ff9516083e017b718f76e7a6f6838611fa3c02b810b3572fef7d605b38d033",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "golang/testing.md": {
+      "filePath": "golang/testing.md",
+      "contentHash": "b0fcde8be4ce98e34fe872cc2ecca63cab8c8cd87d5faa1e1667ee82f3707d74",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "java/coding-style.md": {
+      "filePath": "java/coding-style.md",
+      "contentHash": "4ce94d84b6d23615ae5843892bb434dcccd3173938cfffb2701a61c17d1e9a67",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "java/hooks.md": {
+      "filePath": "java/hooks.md",
+      "contentHash": "b3c2e5aa683bb14a804dc9a5b59c255e5de763d35abc94daac17c859cdb6fad7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "java/patterns.md": {
+      "filePath": "java/patterns.md",
+      "contentHash": "11f26e27624feecf828ac91dcb53389e08fa88ae6755dce5cf7d6ba84d36f9e2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 148,
+      "hasStructuralAnalysis": true
+    },
+    "java/security.md": {
+      "filePath": "java/security.md",
+      "contentHash": "e13c649b301a3d43d365a1a2ee5444b85043c2c8258543a52c52513fc86c732a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "java/testing.md": {
+      "filePath": "java/testing.md",
+      "contentHash": "0af52504a7c8258dbfe9cbeeec9fd88d18e0fa5492e5ed2900ff5a97e9051497",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 134,
+      "hasStructuralAnalysis": true
+    },
+    "kotlin/coding-style.md": {
+      "filePath": "kotlin/coding-style.md",
+      "contentHash": "63c86f8bb5366901f3233f2b71880c4e9c0bde794bf2276745f2d2f6706d99c2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 87,
+      "hasStructuralAnalysis": true
+    },
+    "kotlin/hooks.md": {
+      "filePath": "kotlin/hooks.md",
+      "contentHash": "f5f703d6395984d4bbbdef4df9ee7875879a77551d3cc75acdf8b1054d09142c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": true
+    },
+    "kotlin/patterns.md": {
+      "filePath": "kotlin/patterns.md",
+      "contentHash": "1c043217f0a9b7a5f013ce6dbfe0ef065d56ee6afcb30010f99ccdaf22349805",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 147,
+      "hasStructuralAnalysis": true
+    },
+    "kotlin/security.md": {
+      "filePath": "kotlin/security.md",
+      "contentHash": "f2cb2185afce33a401fc815fc28581eae21f5f75382cad2082b27557d9cd18ac",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 83,
+      "hasStructuralAnalysis": true
+    },
+    "kotlin/testing.md": {
+      "filePath": "kotlin/testing.md",
+      "contentHash": "441d35861a1297cabd698b7f3886c5f0bdc59727cb99fde135f8ecb06025f6e7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 129,
+      "hasStructuralAnalysis": true
+    },
+    "nuxt/coding-style.md": {
+      "filePath": "nuxt/coding-style.md",
+      "contentHash": "33dc74dddf4c7eddeb46c9c8c3ba2014cd432c5a82becbbf445caf999f272bb4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "nuxt/hooks.md": {
+      "filePath": "nuxt/hooks.md",
+      "contentHash": "ccfc501f38cc67d82d3aaf646f1aa97d7d09eee907e31679027c99abb3b18872",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "nuxt/patterns.md": {
+      "filePath": "nuxt/patterns.md",
+      "contentHash": "752177f220353824ae7c7a6eb9ecaa9e2638bb20233fcb8cb37d1bad0bbc79d2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "nuxt/security.md": {
+      "filePath": "nuxt/security.md",
+      "contentHash": "a8ef6f1cf0f5e059a05b06d904be9bab49ee9736be3a85444e12d278c3786f78",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "nuxt/testing.md": {
+      "filePath": "nuxt/testing.md",
+      "contentHash": "2c1c9fd0006083515eb8ace54007602f1091df0b0fa35ff5d231ba64109cecbc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": true
+    },
+    "perl/coding-style.md": {
+      "filePath": "perl/coding-style.md",
+      "contentHash": "4f134e0da0e332280e6c6803c5dec6edb38088c42f4bb6270c27e81f579a853a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "perl/hooks.md": {
+      "filePath": "perl/hooks.md",
+      "contentHash": "a71f48f8b6068436a5b47c4f32291208ebd5d6b311b2ad1d393c1a0ad96c764d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "perl/patterns.md": {
+      "filePath": "perl/patterns.md",
+      "contentHash": "55a86b5bca376dc511bd9b4fa2d0b29985f4d7576aae715d68b760afe0628169",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "perl/security.md": {
+      "filePath": "perl/security.md",
+      "contentHash": "c3d0311c2bd9b0fbe94d079e410561fa6a918180925f86c29dfadd06d32a00b5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 70,
+      "hasStructuralAnalysis": true
+    },
+    "perl/testing.md": {
+      "filePath": "perl/testing.md",
+      "contentHash": "4e8377928b5da585aebeaa278e3f293365d84df7819cb44d8efb1b5dc4631e68",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "php/coding-style.md": {
+      "filePath": "php/coding-style.md",
+      "contentHash": "e6492b2e6f90a957a2f4664f2e01640fcc5ff77a81ab44c9cee42f3590be8b59",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "php/hooks.md": {
+      "filePath": "php/hooks.md",
+      "contentHash": "624c6126b5c245aaf9af301f71f46a2b059baf94ef3de5c6bdb5dbf859ec0090",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": true
+    },
+    "php/patterns.md": {
+      "filePath": "php/patterns.md",
+      "contentHash": "f370b0af1e12d067fb4263ad829f62fedbc37e6e9aedf698d3939b6ee69cd1ea",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "php/security.md": {
+      "filePath": "php/security.md",
+      "contentHash": "c3ab3949fab80c9bde6d0f6925984dbd094e66b6a790c4cba29f6d74dd07d2b2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "php/testing.md": {
+      "filePath": "php/testing.md",
+      "contentHash": "027a2fb6619fd671060a6d8283ee6cae2898eee20f26557f75626fc2d18ffdf9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "python/coding-style.md": {
+      "filePath": "python/coding-style.md",
+      "contentHash": "f9d6d7a39c5f5ea809579fecac591f390fa9264c088c7e209d464d5244747003",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 43,
+      "hasStructuralAnalysis": true
+    },
+    "python/fastapi.md": {
+      "filePath": "python/fastapi.md",
+      "contentHash": "e796ecbe93c4d50de6ab34ab1d8fc35db5e6bac03144cbaef09939ae5c3b6e2a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "python/hooks.md": {
+      "filePath": "python/hooks.md",
+      "contentHash": "7ebd12233f6917905d5653a63afe2361450ed732fd965de55055ed5ffd3c14a7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "python/patterns.md": {
+      "filePath": "python/patterns.md",
+      "contentHash": "d9cab9b536321ea7efc6180668fd48820deaf571400db732f0ca17bdda92b7d0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "python/security.md": {
+      "filePath": "python/security.md",
+      "contentHash": "6bbbb6c800cdfef23c3f9a5055ce31096a7724b51f0d528935f6c32970639453",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "python/testing.md": {
+      "filePath": "python/testing.md",
+      "contentHash": "92655aa5047ee456501ad6605c428680bac6433965f89ce531fe79627004e8c6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "react/coding-style.md": {
+      "filePath": "react/coding-style.md",
+      "contentHash": "f799684887ae82e5ebd615a59fb9aff6207328513d13052f00e97e11ac8bb008",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 110,
+      "hasStructuralAnalysis": true
+    },
+    "react/hooks.md": {
+      "filePath": "react/hooks.md",
+      "contentHash": "64154bbbc881d4b6660376581babae009351ef38f7602ca2d26a640ed253d774",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 188,
+      "hasStructuralAnalysis": true
+    },
+    "react/patterns.md": {
+      "filePath": "react/patterns.md",
+      "contentHash": "36071a93eb6f4be12718f912eae4c31eb68006134a53cc1d76101944d582c2ea",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 195,
+      "hasStructuralAnalysis": true
+    },
+    "react/security.md": {
+      "filePath": "react/security.md",
+      "contentHash": "52bf239b4b12409417e723e32ff7e1172c39c42d13fa9625eda75a45bd446cec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 181,
+      "hasStructuralAnalysis": true
+    },
+    "react/testing.md": {
+      "filePath": "react/testing.md",
+      "contentHash": "ae5d05b9e4f706f73f741c3591e880b873da49a7efd02253a381960245bf655f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 209,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "f69f3a51f432379a2fc0f8a8f410699c59a085997769544efedc14966f974e20",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "ruby/coding-style.md": {
+      "filePath": "ruby/coding-style.md",
+      "contentHash": "8dfa64f79717a61637f94a8c1f29cbf03cb87b5c3cb4511f96a3f3ad3ca77ce1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "ruby/hooks.md": {
+      "filePath": "ruby/hooks.md",
+      "contentHash": "70d673bc40b8b1dc04d1b1a0530486506dce22712684561e3c750347a84f6b24",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "ruby/patterns.md": {
+      "filePath": "ruby/patterns.md",
+      "contentHash": "93060ad41a3f84daeceb05333e35fb84cf5982f39251f9f6d17fedb090988721",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 45,
+      "hasStructuralAnalysis": true
+    },
+    "ruby/security.md": {
+      "filePath": "ruby/security.md",
+      "contentHash": "15802886a80d1ab0d7da6c4c0233eca08ee0f3828d388e82a77a882fcbef6af5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "ruby/testing.md": {
+      "filePath": "ruby/testing.md",
+      "contentHash": "1719ae4872c19937c723b4f09b886536fef759dd9c58eab166f04b63a1c97573",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "rust/coding-style.md": {
+      "filePath": "rust/coding-style.md",
+      "contentHash": "01c056bef1bf3b7ca7cfc516986c1d05bcd341c620d2a09ce75acdc2ed539f5f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 152,
+      "hasStructuralAnalysis": true
+    },
+    "rust/hooks.md": {
+      "filePath": "rust/hooks.md",
+      "contentHash": "a7494896f1c8838f31cd72846f435e6388f91bf94e0d91eb226dd9b5b684ca55",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "rust/patterns.md": {
+      "filePath": "rust/patterns.md",
+      "contentHash": "08a09f7cf61991f4bdb69e388a9df546ea490c5c822aebcdd066e227cb06e16b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 169,
+      "hasStructuralAnalysis": true
+    },
+    "rust/security.md": {
+      "filePath": "rust/security.md",
+      "contentHash": "09c5225869c09fc605f8495ae2c3728093e3b652dcc0ab55a9186946f5c67995",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 142,
+      "hasStructuralAnalysis": true
+    },
+    "rust/testing.md": {
+      "filePath": "rust/testing.md",
+      "contentHash": "54987d858918a433aea954c272c519d7ccb113834013fb79cc77ef7e6d571c8e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 155,
+      "hasStructuralAnalysis": true
+    },
+    "swift/coding-style.md": {
+      "filePath": "swift/coding-style.md",
+      "contentHash": "187d44050ed492076640f504a3fe7eb132ddabad262099d698a5b703b89d2659",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "swift/hooks.md": {
+      "filePath": "swift/hooks.md",
+      "contentHash": "654da388192df405927c5e4cea2f588d01cd349ba7ba30a813a4aa7c3d3a4661",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "swift/patterns.md": {
+      "filePath": "swift/patterns.md",
+      "contentHash": "4381cb9fa1c1ec01a600a96d80e320385148728748fb702822f9ac1c3c079860",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "swift/security.md": {
+      "filePath": "swift/security.md",
+      "contentHash": "345a471220b7f448d991b9d28a0a047165aa7480a1ed758703d0c74041239b3a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "swift/testing.md": {
+      "filePath": "swift/testing.md",
+      "contentHash": "9a44133b6a8afd496a79bd4e8211985f44cb4a24f83c45b64160d26411e434e9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "typescript/coding-style.md": {
+      "filePath": "typescript/coding-style.md",
+      "contentHash": "cb6fbe555d700a65d466fc27377fbb66d6da0e2bcf4411656918f6a45402af1a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 200,
+      "hasStructuralAnalysis": true
+    },
+    "typescript/hooks.md": {
+      "filePath": "typescript/hooks.md",
+      "contentHash": "930bbe5d5a66e0022a55c87d5a17765d1633669620f9a3be6815f3ab4ddcd6b4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "typescript/patterns.md": {
+      "filePath": "typescript/patterns.md",
+      "contentHash": "20870f78aa32429fe13f35b415e9f6f8f7809e39c460cf8146d181b7306159fd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 53,
+      "hasStructuralAnalysis": true
+    },
+    "typescript/security.md": {
+      "filePath": "typescript/security.md",
+      "contentHash": "86b14a5a56f4e61750ab30ca50bd264f52f90f5358303f3028d41030a4c50f18",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 29,
+      "hasStructuralAnalysis": true
+    },
+    "typescript/testing.md": {
+      "filePath": "typescript/testing.md",
+      "contentHash": "92e3d02b4fff30899bc1a2af043d74941adbf3b2c0e972d2fcd2c68c9c2ea70b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": true
+    },
+    "vue/coding-style.md": {
+      "filePath": "vue/coding-style.md",
+      "contentHash": "c5b8b3068e8c758bc7d3ccd0172fdc3cb510da412b873f025541b3d7499b3737",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "vue/hooks.md": {
+      "filePath": "vue/hooks.md",
+      "contentHash": "f73294ea23030ded563f2907996f5bb53d9b297eb152d3e866be25ba00adaef8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "vue/patterns.md": {
+      "filePath": "vue/patterns.md",
+      "contentHash": "57ab797198376c01323c775674e5a5a25a50a254ff6724730bb733187a5ff1f5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 57,
+      "hasStructuralAnalysis": true
+    },
+    "vue/security.md": {
+      "filePath": "vue/security.md",
+      "contentHash": "4f2abdce6ac21dfd3afb9b4e847ac4496a7896c169cf42083bfdd7c360601ca6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "vue/testing.md": {
+      "filePath": "vue/testing.md",
+      "contentHash": "b02edf47b4088db53f96fd49c4e92aea14e4b27051f80bb5a4b49cb4060037ff",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 54,
+      "hasStructuralAnalysis": true
+    },
+    "web/coding-style.md": {
+      "filePath": "web/coding-style.md",
+      "contentHash": "e47145db59fa5e548431554d196244a0dd2955a01a1b463bd1a3938e4466fcc2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 97,
+      "hasStructuralAnalysis": true
+    },
+    "web/design-quality.md": {
+      "filePath": "web/design-quality.md",
+      "contentHash": "4e6749ea7ae23706adae570edfb689ef9493b48de2c36ac67ea8336ce1c72f87",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 64,
+      "hasStructuralAnalysis": true
+    },
+    "web/hooks.md": {
+      "filePath": "web/hooks.md",
+      "contentHash": "2471da2413001c278dd7e7b1365154e2b4a95167c92b3980d825542b7f3d9968",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 130,
+      "hasStructuralAnalysis": true
+    },
+    "web/patterns.md": {
+      "filePath": "web/patterns.md",
+      "contentHash": "8f24bfdf8385911aef74acbef346b37515c8cd788d9ee8fcd96b9007321e001b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "web/performance.md": {
+      "filePath": "web/performance.md",
+      "contentHash": "266cf25cea3f49cd66708422f3a414eb1e9e1639100d9b7959fc9d3e0f179926",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "web/security.md": {
+      "filePath": "web/security.md",
+      "contentHash": "510bbdef1a326374ac178670d981adbcb63db52f5e58028b52cd8b04540f960a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "web/testing.md": {
+      "filePath": "web/testing.md",
+      "contentHash": "074a2fc27ed57760e2b1eb61f78fffe8cbbfa39933e5ddeba7f29fc4bb6165a3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 56,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

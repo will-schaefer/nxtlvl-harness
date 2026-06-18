@@ -1,0 +1,593 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/lib/install-targets/antigravity-project.js",
+      "type": "file",
+      "name": "antigravity-project.js",
+      "filePath": "scripts/lib/install-targets/antigravity-project.js",
+      "summary": "Implements the ECC install-target adapter for the Antigravity AI coding tool, defining which source paths are supported and planning flat-rule file copy operations into the Antigravity project directory.",
+      "tags": ["service", "install-target", "adapter", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/claude-home.js",
+      "type": "file",
+      "name": "claude-home.js",
+      "filePath": "scripts/lib/install-targets/claude-home.js",
+      "summary": "Implements the install-target adapter for Claude's home (~/.claude) installation scope, computing destination paths for skills, agents, rules, and commands with remapping logic for platform-specific source prefixes.",
+      "tags": ["service", "install-target", "adapter", "path-mapping"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/claude-project.js",
+      "type": "file",
+      "name": "claude-project.js",
+      "filePath": "scripts/lib/install-targets/claude-project.js",
+      "summary": "Implements the install-target adapter for Claude project-scoped installation (./.claude/), remapping ECC source paths to the project-local Claude config directory with foreign-platform path filtering.",
+      "tags": ["service", "install-target", "adapter", "path-mapping"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/codebuddy-project.js",
+      "type": "file",
+      "name": "codebuddy-project.js",
+      "filePath": "scripts/lib/install-targets/codebuddy-project.js",
+      "summary": "Implements a thin install-target adapter for the CodeBuddy IDE, planning flat-rule copy operations and a scaffold operation into the CodeBuddy project rules directory.",
+      "tags": ["service", "install-target", "adapter", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/codex-home.js",
+      "type": "file",
+      "name": "codex-home.js",
+      "filePath": "scripts/lib/install-targets/codex-home.js",
+      "summary": "Minimal stub adapter for the OpenAI Codex home installation target, delegating all behavior to the shared helpers module.",
+      "tags": ["install-target", "adapter", "stub"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/cursor-project.js",
+      "type": "file",
+      "name": "cursor-project.js",
+      "filePath": "scripts/lib/install-targets/cursor-project.js",
+      "summary": "Implements the most complex install-target adapter for the Cursor IDE, handling JSON rule merging, unique-operation deduplication, flat-file and flat-rule operations, and agent name assignment in the .cursor/rules directory.",
+      "tags": ["service", "install-target", "adapter", "cursor-ide"],
+      "complexity": "complex",
+      "languageNotes": "Cursor rules require JSON merging and deduplication by destination path — the adapter sorts entries by priority to ensure deterministic outputs."
+    },
+    {
+      "id": "file:scripts/lib/install-targets/gemini-project.js",
+      "type": "file",
+      "name": "gemini-project.js",
+      "filePath": "scripts/lib/install-targets/gemini-project.js",
+      "summary": "Minimal stub adapter for the Google Gemini project installation target, delegating all behavior to the shared helpers module.",
+      "tags": ["install-target", "adapter", "stub"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/helpers.js",
+      "type": "file",
+      "name": "helpers.js",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "summary": "Core shared utility library for all install-target adapters, providing path normalization, foreign-platform filtering, managed-operation factories, flat-rule/file copy logic, validation, and the `createInstallTargetAdapter` factory that wires all adapter callbacks into a frozen object.",
+      "tags": ["utility", "factory", "install-target", "service"],
+      "complexity": "complex",
+      "languageNotes": "Uses Object.freeze on the returned adapter to prevent accidental mutation after creation; all adapters are built via this single factory pattern."
+    },
+    {
+      "id": "file:scripts/lib/install-targets/joycode-project.js",
+      "type": "file",
+      "name": "joycode-project.js",
+      "filePath": "scripts/lib/install-targets/joycode-project.js",
+      "summary": "Implements a thin install-target adapter for the JoyCode editor, planning flat-rule copy operations and a scaffold operation into the JoyCode project rules directory.",
+      "tags": ["service", "install-target", "adapter", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/opencode-home.js",
+      "type": "file",
+      "name": "opencode-home.js",
+      "filePath": "scripts/lib/install-targets/opencode-home.js",
+      "summary": "Implements the install-target adapter for OpenCode home installation, including validation that required compiled artefacts (binary and SSE handler) exist before proceeding with the scaffold.",
+      "tags": ["service", "install-target", "adapter", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/qwen-home.js",
+      "type": "file",
+      "name": "qwen-home.js",
+      "filePath": "scripts/lib/install-targets/qwen-home.js",
+      "summary": "Minimal stub adapter for the Qwen AI home installation target, delegating all behavior to the shared helpers module.",
+      "tags": ["install-target", "adapter", "stub"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/registry.js",
+      "type": "file",
+      "name": "registry.js",
+      "filePath": "scripts/lib/install-targets/registry.js",
+      "summary": "Central registry for all install-target adapters, exporting `listInstallTargetAdapters`, `getInstallTargetAdapter`, and `planInstallTargetScaffold` — the orchestration entry point that validates input, resolves the right adapter, and returns the full operation plan.",
+      "tags": ["registry", "entry-point", "service", "install-target"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/install-targets/zed-project.js",
+      "type": "file",
+      "name": "zed-project.js",
+      "filePath": "scripts/lib/install-targets/zed-project.js",
+      "summary": "Implements a thin install-target adapter for the Zed editor, planning flat-rule copy operations and a scaffold operation into the Zed project rules directory.",
+      "tags": ["service", "install-target", "adapter", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/claude-home.js:getClaudeManagedDestinationPath",
+      "type": "function",
+      "name": "getClaudeManagedDestinationPath",
+      "filePath": "scripts/lib/install-targets/claude-home.js",
+      "lineRange": [12, 47],
+      "summary": "Computes the destination path for a given ECC source file within the Claude home directory, remapping skills, agents, rules, and command prefixes to their Claude-specific locations under ~/.claude.",
+      "tags": ["utility", "path-mapping", "install-target"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/claude-project.js:getClaudeManagedDestinationPath",
+      "type": "function",
+      "name": "getClaudeManagedDestinationPath",
+      "filePath": "scripts/lib/install-targets/claude-project.js",
+      "lineRange": [12, 47],
+      "summary": "Computes the destination path for a given ECC source file within the Claude project directory (./.claude/), remapping source prefixes to their project-local Claude config locations.",
+      "tags": ["utility", "path-mapping", "install-target"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/cursor-project.js:readJsonObject",
+      "type": "function",
+      "name": "readJsonObject",
+      "filePath": "scripts/lib/install-targets/cursor-project.js",
+      "lineRange": [23, 36],
+      "summary": "Reads and parses a JSON file from disk, returning a plain object; throws a descriptive error if the file is missing, unreadable, or does not contain an object (e.g., is an array).",
+      "tags": ["utility", "file-io", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/cursor-project.js:createJsonMergeOperation",
+      "type": "function",
+      "name": "createJsonMergeOperation",
+      "filePath": "scripts/lib/install-targets/cursor-project.js",
+      "lineRange": [38, 54],
+      "summary": "Constructs a managed operation object that merges a source JSON file into a Cursor IDE settings file, reading both current and source JSON to produce a merged payload.",
+      "tags": ["factory", "install-target", "cursor-ide", "json-merge"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:isForeignPlatformPath",
+      "type": "function",
+      "name": "isForeignPlatformPath",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [24, 34],
+      "summary": "Returns true if a source-relative path begins with a platform-specific prefix that belongs to a different target than the one being installed, enabling per-target path filtering.",
+      "tags": ["utility", "validation", "install-target"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:resolveBaseRoot",
+      "type": "function",
+      "name": "resolveBaseRoot",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [36, 50],
+      "summary": "Resolves the base filesystem root for a given installation scope ('home' resolves to the user's home directory, 'project' resolves to the current working directory).",
+      "tags": ["utility", "path-resolution", "install-target"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:listRelativeFiles",
+      "type": "function",
+      "name": "listRelativeFiles",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [61, 83],
+      "summary": "Recursively lists all files under a directory, returning normalized relative paths sorted alphabetically — used to enumerate source assets for flat copy operations.",
+      "tags": ["utility", "file-system", "recursion"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:createManagedOperation",
+      "type": "function",
+      "name": "createManagedOperation",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [85, 105],
+      "summary": "Factory that constructs a managed file-operation descriptor object with source, destination, strategy, and metadata fields — the fundamental building block for all install operation plans.",
+      "tags": ["factory", "install-target", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:defaultValidateAdapterInput",
+      "type": "function",
+      "name": "defaultValidateAdapterInput",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [107, 129],
+      "summary": "Validates adapter input by checking for required fields (repoRoot, installRoot) and verifying that the install root does not point to the user's home directory to prevent accidental overwrite.",
+      "tags": ["validation", "install-target", "safety"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:createRemappedOperation",
+      "type": "function",
+      "name": "createRemappedOperation",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [131, 142],
+      "summary": "Creates a managed operation for a source file remapped to a non-default destination path, supporting path override while preserving module metadata.",
+      "tags": ["factory", "install-target", "path-mapping"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:createNamespacedFlatRuleOperations",
+      "type": "function",
+      "name": "createNamespacedFlatRuleOperations",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [144, 185],
+      "summary": "Enumerates a source rules directory and creates managed copy operations that preserve a namespace prefix in the destination filename, handling both directory recursion and single-file cases.",
+      "tags": ["factory", "file-system", "install-target"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:createFlatFileOperations",
+      "type": "function",
+      "name": "createFlatFileOperations",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [187, 246],
+      "summary": "Enumerates a source directory and creates managed copy operations for every file, applying an optional destination name transform and flattening the output structure.",
+      "tags": ["factory", "file-system", "install-target"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/helpers.js:createInstallTargetAdapter",
+      "type": "function",
+      "name": "createInstallTargetAdapter",
+      "filePath": "scripts/lib/install-targets/helpers.js",
+      "lineRange": [252, 348],
+      "summary": "Main factory function that assembles a frozen install-target adapter object from a config, wiring together resolveRoot, resolveDestinationPath, createScaffoldOperation, planOperations, validate, and other callbacks into a unified adapter interface.",
+      "tags": ["factory", "install-target", "service", "singleton"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/opencode-home.js:defaultValidateOpencodeHome",
+      "type": "function",
+      "name": "defaultValidateOpencodeHome",
+      "filePath": "scripts/lib/install-targets/opencode-home.js",
+      "lineRange": [36, 80],
+      "summary": "Validates that required OpenCode compiled artefacts (binaries and SSE handlers) exist at expected paths under the repo root before allowing installation to proceed.",
+      "tags": ["validation", "install-target", "safety"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/opencode-home.js:isExpectedType",
+      "type": "function",
+      "name": "isExpectedType",
+      "filePath": "scripts/lib/install-targets/opencode-home.js",
+      "lineRange": [23, 34],
+      "summary": "Checks whether a filesystem path exists and matches an expected type (file or directory), returning false for missing paths rather than throwing.",
+      "tags": ["utility", "validation", "file-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/install-targets/registry.js:planInstallTargetScaffold",
+      "type": "function",
+      "name": "planInstallTargetScaffold",
+      "filePath": "scripts/lib/install-targets/registry.js",
+      "lineRange": [41, 72],
+      "summary": "Orchestrates the full installation plan for a target: resolves the adapter, validates the input (surfacing blocking errors), then delegates to the adapter's planOperations to produce the complete set of file operations.",
+      "tags": ["service", "install-target", "orchestration"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/lib/install-targets/antigravity-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/claude-home.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/claude-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/codebuddy-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/codex-home.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/cursor-project.js",
+      "target": "file:scripts/lib/cursor-agent-names.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/cursor-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/gemini-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/joycode-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/opencode-home.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/qwen-home.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/antigravity-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/claude-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/claude-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/codebuddy-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/codex-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/cursor-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/gemini-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/joycode-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/opencode-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/qwen-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "file:scripts/lib/install-targets/zed-project.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/zed-project.js",
+      "target": "file:scripts/lib/install-targets/helpers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/install-targets/claude-home.js",
+      "target": "function:scripts/lib/install-targets/claude-home.js:getClaudeManagedDestinationPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/claude-project.js",
+      "target": "function:scripts/lib/install-targets/claude-project.js:getClaudeManagedDestinationPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/cursor-project.js",
+      "target": "function:scripts/lib/install-targets/cursor-project.js:readJsonObject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/cursor-project.js",
+      "target": "function:scripts/lib/install-targets/cursor-project.js:createJsonMergeOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:isForeignPlatformPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:resolveBaseRoot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:listRelativeFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:createManagedOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:defaultValidateAdapterInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:createRemappedOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:createNamespacedFlatRuleOperations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:createFlatFileOperations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/helpers.js",
+      "target": "function:scripts/lib/install-targets/helpers.js:createInstallTargetAdapter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/opencode-home.js",
+      "target": "function:scripts/lib/install-targets/opencode-home.js:isExpectedType",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/opencode-home.js",
+      "target": "function:scripts/lib/install-targets/opencode-home.js:defaultValidateOpencodeHome",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/install-targets/registry.js",
+      "target": "function:scripts/lib/install-targets/registry.js:planInstallTargetScaffold",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:scripts/lib/install-targets/cursor-project.js:createJsonMergeOperation",
+      "target": "function:scripts/lib/install-targets/helpers.js:createManagedOperation",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/lib/install-targets/claude-home.js:getClaudeManagedDestinationPath",
+      "target": "function:scripts/lib/install-targets/helpers.js:isForeignPlatformPath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/lib/install-targets/claude-project.js:getClaudeManagedDestinationPath",
+      "target": "function:scripts/lib/install-targets/helpers.js:isForeignPlatformPath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/lib/install-targets/opencode-home.js:defaultValidateOpencodeHome",
+      "target": "function:scripts/lib/install-targets/opencode-home.js:isExpectedType",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/lib/install-targets/registry.js:planInstallTargetScaffold",
+      "target": "function:scripts/lib/install-targets/helpers.js:createInstallTargetAdapter",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

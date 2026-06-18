@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    {
+      "id": "document:commands/flutter-build.md",
+      "type": "document",
+      "name": "flutter-build.md",
+      "filePath": "commands/flutter-build.md",
+      "summary": "Slash command guide for building and fixing Flutter applications, covering diagnostic commands, iterative error-fix loops, common Flutter build errors, and stop conditions for agentic sessions.",
+      "tags": ["documentation", "flutter", "build-system", "command", "mobile"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/flutter-review.md",
+      "type": "document",
+      "name": "flutter-review.md",
+      "filePath": "commands/flutter-review.md",
+      "summary": "Slash command guide for conducting Flutter code reviews, specifying review areas such as widget structure, state management, and performance, with approval criteria and example sessions.",
+      "tags": ["documentation", "flutter", "code-review", "command", "mobile"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/flutter-test.md",
+      "type": "document",
+      "name": "flutter-test.md",
+      "filePath": "commands/flutter-test.md",
+      "summary": "Slash command guide for running Flutter test suites, covering unit, widget, and integration test commands, common test failure patterns, and example agentic sessions.",
+      "tags": ["documentation", "flutter", "test", "command", "mobile"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/gan-build.md",
+      "type": "document",
+      "name": "gan-build.md",
+      "filePath": "commands/gan-build.md",
+      "summary": "Slash command implementing a GAN-style (Generative Adversarial Network-inspired) multi-agent build harness where a Planner sets goals, a Generator produces code, and an Evaluator critiques quality in iterative loops.",
+      "tags": ["documentation", "multi-agent", "build-system", "command", "gan"],
+      "complexity": "moderate",
+      "languageNotes": "Applies adversarial machine-learning metaphor (generator/evaluator loop) to agentic code generation workflows."
+    },
+    {
+      "id": "document:commands/gan-design.md",
+      "type": "document",
+      "name": "gan-design.md",
+      "filePath": "commands/gan-design.md",
+      "summary": "Slash command for a GAN-style design harness, adapting the generator-evaluator loop for UI/UX design artifacts with a design-specific evaluation rubric distinct from code builds.",
+      "tags": ["documentation", "multi-agent", "design", "command", "gan"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/go-build.md",
+      "type": "document",
+      "name": "go-build.md",
+      "filePath": "commands/go-build.md",
+      "summary": "Slash command guide for building and fixing Go applications, providing diagnostic commands, iterative error-count-driven fix loops, common Go compiler errors, and stop conditions.",
+      "tags": ["documentation", "golang", "build-system", "command", "backend"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/go-review.md",
+      "type": "document",
+      "name": "go-review.md",
+      "filePath": "commands/go-review.md",
+      "summary": "Slash command guide for Go code reviews, categorizing findings as CRITICAL/HIGH/MEDIUM severity, running automated checks (go vet, staticcheck), and specifying approval criteria.",
+      "tags": ["documentation", "golang", "code-review", "command", "backend"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/go-test.md",
+      "type": "document",
+      "name": "go-test.md",
+      "filePath": "commands/go-test.md",
+      "summary": "Slash command guide for Go test-driven development, covering the full TDD red-green-refactor cycle, table-driven tests, parallel tests, coverage targets, and example agentic sessions.",
+      "tags": ["documentation", "golang", "test", "tdd", "command"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/gradle-build.md",
+      "type": "document",
+      "name": "gradle-build.md",
+      "filePath": "commands/gradle-build.md",
+      "summary": "Slash command guide for fixing Gradle build failures, including configuration detection, error parsing/grouping, iterative fix loops with guardrails, and common Kotlin Multiplatform fixes.",
+      "tags": ["documentation", "gradle", "build-system", "command", "jvm"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/harness-audit.md",
+      "type": "document",
+      "name": "harness-audit.md",
+      "filePath": "commands/harness-audit.md",
+      "summary": "Slash command for auditing the ECC harness configuration, running deterministic checks on plugin structure, rules, hooks, and output contracts, with a structured checklist and example results.",
+      "tags": ["documentation", "harness", "audit", "command", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/hookify-configure.md",
+      "type": "document",
+      "name": "hookify-configure.md",
+      "filePath": "commands/hookify-configure.md",
+      "summary": "Minimal slash command for configuring ECC hook rules, providing a short step-by-step workflow for updating hook configuration files.",
+      "tags": ["documentation", "hooks", "configuration", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/hookify-help.md",
+      "type": "document",
+      "name": "hookify-help.md",
+      "filePath": "commands/hookify-help.md",
+      "summary": "Slash command reference for the ECC hook system, explaining event types, rule file format, available hookify sub-commands, and pattern tips for users.",
+      "tags": ["documentation", "hooks", "reference", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/hookify-list.md",
+      "type": "document",
+      "name": "hookify-list.md",
+      "filePath": "commands/hookify-list.md",
+      "summary": "Minimal slash command for listing currently configured ECC hook rules, providing a short step-by-step workflow to enumerate active hooks.",
+      "tags": ["documentation", "hooks", "configuration", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/hookify.md",
+      "type": "document",
+      "name": "hookify.md",
+      "filePath": "commands/hookify.md",
+      "summary": "Primary slash command for the ECC hookify system, guiding the agent through gathering behavior information, presenting findings, generating rule files, and confirming the hook configuration with the user.",
+      "tags": ["documentation", "hooks", "configuration", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/instinct-export.md",
+      "type": "document",
+      "name": "instinct-export.md",
+      "filePath": "commands/instinct-export.md",
+      "summary": "Slash command for exporting learned ECC instinct patterns to a portable file format, specifying the output schema and available export flags.",
+      "tags": ["documentation", "instinct", "export", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/instinct-import.md",
+      "type": "document",
+      "name": "instinct-import.md",
+      "filePath": "commands/instinct-import.md",
+      "summary": "Slash command for importing ECC instinct patterns from external files, detailing the import process, merge behavior for conflicts, source tracking, and available flags.",
+      "tags": ["documentation", "instinct", "import", "command"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/instinct-status.md",
+      "type": "document",
+      "name": "instinct-status.md",
+      "filePath": "commands/instinct-status.md",
+      "summary": "Slash command for displaying the current status of the ECC instinct system, showing learned patterns, their last-used timestamps, and confidence scores.",
+      "tags": ["documentation", "instinct", "status", "command"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/jira.md",
+      "type": "document",
+      "name": "jira.md",
+      "filePath": "commands/jira.md",
+      "summary": "Slash command for Jira integration, enabling ticket retrieval, comment posting, status transitions, and JQL-based search from within Claude Code sessions, with prerequisite setup instructions.",
+      "tags": ["documentation", "jira", "integration", "command"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/kotlin-build.md",
+      "type": "document",
+      "name": "kotlin-build.md",
+      "filePath": "commands/kotlin-build.md",
+      "summary": "Slash command guide for building and fixing Kotlin applications, with error-count-driven fix loops, Kotlin-specific compiler error patterns, and stop conditions for agentic sessions.",
+      "tags": ["documentation", "kotlin", "build-system", "command", "jvm"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/kotlin-review.md",
+      "type": "document",
+      "name": "kotlin-review.md",
+      "filePath": "commands/kotlin-review.md",
+      "summary": "Slash command guide for Kotlin code reviews, categorizing findings by CRITICAL/HIGH/MEDIUM severity, running automated checks (ktlint, detekt), and providing approval criteria with example sessions.",
+      "tags": ["documentation", "kotlin", "code-review", "command", "jvm"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": []
+}

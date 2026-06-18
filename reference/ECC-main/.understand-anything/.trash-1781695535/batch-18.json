@@ -1,0 +1,380 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/lib/skill-improvement/amendify.js",
+      "type": "file",
+      "name": "amendify.js",
+      "filePath": "scripts/lib/skill-improvement/amendify.js",
+      "summary": "Generates structured skill amendment proposals by combining health report data with patch previews, producing a timestamped proposal object ready for SKILL.md updates.",
+      "tags": ["utility", "skill-improvement", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/amendify.js:summarizePatchPreview",
+      "type": "function",
+      "name": "summarizePatchPreview",
+      "filePath": "scripts/lib/skill-improvement/amendify.js",
+      "lineRange": [11, 32],
+      "summary": "Formats a human-readable patch preview summary from a skill health report, listing error patterns, task patterns, and feedback patterns.",
+      "tags": ["utility", "formatting", "skill-improvement"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/amendify.js:proposeSkillAmendment",
+      "type": "function",
+      "name": "proposeSkillAmendment",
+      "filePath": "scripts/lib/skill-improvement/amendify.js",
+      "lineRange": [34, 84],
+      "summary": "Builds a complete amendment proposal for a given skill ID by analyzing observation records and generating structured patch metadata including a preview, ID, and timestamp.",
+      "tags": ["utility", "skill-improvement", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/skill-improvement/evaluate.js",
+      "type": "file",
+      "name": "evaluate.js",
+      "filePath": "scripts/lib/skill-improvement/evaluate.js",
+      "summary": "Computes a skill evaluation scaffold comparing baseline versus amended run outcomes, summarizing success rates and surfacing improvement signals.",
+      "tags": ["utility", "skill-improvement", "evaluation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/evaluate.js:buildSkillEvaluationScaffold",
+      "type": "function",
+      "name": "buildSkillEvaluationScaffold",
+      "filePath": "scripts/lib/skill-improvement/evaluate.js",
+      "lineRange": [21, 54],
+      "summary": "Constructs a structured evaluation comparing baseline and amended run records for a skill, including success rates and a final improvement verdict.",
+      "tags": ["evaluation", "skill-improvement", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/skill-improvement/health.js",
+      "type": "file",
+      "name": "health.js",
+      "filePath": "scripts/lib/skill-improvement/health.js",
+      "summary": "Aggregates skill observation records into a comprehensive health report per skill, tracking success rates, recurring errors, task patterns, feedback patterns, and variant runs.",
+      "tags": ["utility", "skill-improvement", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/health.js:buildSkillHealthReport",
+      "type": "function",
+      "name": "buildSkillHealthReport",
+      "filePath": "scripts/lib/skill-improvement/health.js",
+      "lineRange": [46, 113],
+      "summary": "Core health aggregation function that groups observation records by skill ID, computes success/failure rates, ranks recurring errors and tasks, and derives a status for each skill.",
+      "tags": ["skill-improvement", "aggregation", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/health.js:summarizeVariantRuns",
+      "type": "function",
+      "name": "summarizeVariantRuns",
+      "filePath": "scripts/lib/skill-improvement/health.js",
+      "lineRange": [15, 31],
+      "summary": "Reduces observation records into per-variant run counts and success rates for quick comparison of baseline vs. amended outcomes.",
+      "tags": ["utility", "skill-improvement", "aggregation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/health.js:deriveSkillStatus",
+      "type": "function",
+      "name": "deriveSkillStatus",
+      "filePath": "scripts/lib/skill-improvement/health.js",
+      "lineRange": [33, 44],
+      "summary": "Assigns a health status label (healthy, degraded, failing) to a skill based on its aggregated summary metrics.",
+      "tags": ["utility", "skill-improvement", "evaluation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/skill-improvement/observations.js",
+      "type": "file",
+      "name": "observations.js",
+      "filePath": "scripts/lib/skill-improvement/observations.js",
+      "summary": "Provides I/O primitives for skill telemetry observations — creating, appending, and reading NDJSON observation records from the project's telemetry directory.",
+      "tags": ["utility", "skill-improvement", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/observations.js:createSkillObservation",
+      "type": "function",
+      "name": "createSkillObservation",
+      "filePath": "scripts/lib/skill-improvement/observations.js",
+      "lineRange": [33, 72],
+      "summary": "Validates and constructs a normalized skill observation record from raw input, enforcing required string fields and coercing optional fields.",
+      "tags": ["utility", "validation", "skill-improvement"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/observations.js:appendSkillObservation",
+      "type": "function",
+      "name": "appendSkillObservation",
+      "filePath": "scripts/lib/skill-improvement/observations.js",
+      "lineRange": [74, 79],
+      "summary": "Appends a serialized skill observation as a NDJSON line to the telemetry observations file, creating the directory if needed.",
+      "tags": ["utility", "file-io", "skill-improvement"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-improvement/observations.js:readSkillObservations",
+      "type": "function",
+      "name": "readSkillObservations",
+      "filePath": "scripts/lib/skill-improvement/observations.js",
+      "lineRange": [81, 98],
+      "summary": "Reads and parses the NDJSON observations file, filtering out malformed lines and returning a clean array of observation records.",
+      "tags": ["utility", "file-io", "skill-improvement"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/session-inspect.js",
+      "type": "file",
+      "name": "session-inspect.js",
+      "filePath": "scripts/session-inspect.js",
+      "summary": "CLI entry point that dispatches session and skill inspection tasks — supporting Claude session history, dmux plan files, and the skills:health/amendify/evaluate sub-commands via the session adapter registry.",
+      "tags": ["entry-point", "cli", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/session-inspect.js:inspectSkillLoopTarget",
+      "type": "function",
+      "name": "inspectSkillLoopTarget",
+      "filePath": "scripts/session-inspect.js",
+      "lineRange": [66, 98],
+      "summary": "Dispatches skill-specific sub-commands (health, amendify, evaluate) by reading observations and invoking the appropriate skill-improvement library function.",
+      "tags": ["cli", "dispatcher", "skill-improvement"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/session-inspect.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/session-inspect.js",
+      "lineRange": [100, 136],
+      "summary": "Main async CLI driver that parses arguments, routes to skill loop or session targets, and optionally writes JSON output to a file.",
+      "tags": ["entry-point", "cli", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/skill-improvement.test.js",
+      "type": "file",
+      "name": "skill-improvement.test.js",
+      "filePath": "tests/lib/skill-improvement.test.js",
+      "summary": "Integration test suite for the skill-improvement library, covering observations I/O, health report aggregation, amendment proposal generation, and evaluation scaffold construction.",
+      "tags": ["test", "skill-improvement", "integration"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/lib/skill-improvement/amendify.js",
+      "target": "function:scripts/lib/skill-improvement/amendify.js:summarizePatchPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/amendify.js",
+      "target": "function:scripts/lib/skill-improvement/amendify.js:proposeSkillAmendment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/evaluate.js",
+      "target": "function:scripts/lib/skill-improvement/evaluate.js:buildSkillEvaluationScaffold",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/health.js",
+      "target": "function:scripts/lib/skill-improvement/health.js:buildSkillHealthReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/health.js",
+      "target": "function:scripts/lib/skill-improvement/health.js:summarizeVariantRuns",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/health.js",
+      "target": "function:scripts/lib/skill-improvement/health.js:deriveSkillStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/observations.js",
+      "target": "function:scripts/lib/skill-improvement/observations.js:createSkillObservation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/observations.js",
+      "target": "function:scripts/lib/skill-improvement/observations.js:appendSkillObservation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/observations.js",
+      "target": "function:scripts/lib/skill-improvement/observations.js:readSkillObservations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/session-inspect.js:inspectSkillLoopTarget",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/session-inspect.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/amendify.js",
+      "target": "file:scripts/lib/skill-improvement/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "file:scripts/lib/session-adapters/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "file:scripts/lib/skill-improvement/amendify.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "file:scripts/lib/skill-improvement/evaluate.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "file:scripts/lib/skill-improvement/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "file:scripts/lib/skill-improvement/observations.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-improvement.test.js",
+      "target": "file:scripts/lib/skill-improvement/amendify.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-improvement.test.js",
+      "target": "file:scripts/lib/skill-improvement/evaluate.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-improvement.test.js",
+      "target": "file:scripts/lib/skill-improvement/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-improvement.test.js",
+      "target": "file:scripts/lib/skill-improvement/observations.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/amendify.js",
+      "target": "function:scripts/lib/skill-improvement/health.js:buildSkillHealthReport",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/lib/skill-improvement/observations.js:readSkillObservations",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/lib/skill-improvement/health.js:buildSkillHealthReport",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/lib/skill-improvement/amendify.js:proposeSkillAmendment",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/session-inspect.js",
+      "target": "function:scripts/lib/skill-improvement/evaluate.js:buildSkillEvaluationScaffold",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/amendify.js",
+      "target": "file:tests/lib/skill-improvement.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/evaluate.js",
+      "target": "file:tests/lib/skill-improvement.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/health.js",
+      "target": "file:tests/lib/skill-improvement.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-improvement/observations.js",
+      "target": "file:tests/lib/skill-improvement.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

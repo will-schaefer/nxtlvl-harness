@@ -1,0 +1,63 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/lead-intelligence/agents/enrichment-agent.md",
+      "type": "document",
+      "name": "enrichment-agent.md",
+      "filePath": "skills/lead-intelligence/agents/enrichment-agent.md",
+      "summary": "Defines the Enrichment Agent subagent spec for the lead-intelligence skill, instructing it to pull comprehensive person, company, and activity data from Exa, X API, GitHub, and the web for qualified prospects and output a structured enriched profile with personalization hooks.",
+      "tags": ["documentation", "agent-spec", "lead-intelligence", "data-enrichment", "outreach"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/lead-intelligence/agents/mutual-mapper.md",
+      "type": "document",
+      "name": "mutual-mapper.md",
+      "filePath": "skills/lead-intelligence/agents/mutual-mapper.md",
+      "summary": "Defines the Mutual Mapper Agent subagent spec, which analyzes the user's X social graph against scored prospects to identify warm introduction paths, classifies them by warmth type, and ranks mutual connections by their introduction potential using a weighted scoring table.",
+      "tags": ["documentation", "agent-spec", "lead-intelligence", "social-graph", "outreach"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/lead-intelligence/agents/outreach-drafter.md",
+      "type": "document",
+      "name": "outreach-drafter.md",
+      "filePath": "skills/lead-intelligence/agents/outreach-drafter.md",
+      "summary": "Defines the Outreach Drafter Agent subagent spec for generating personalized, anti-spam outreach messages (warm intro requests, cold emails, X DMs, and follow-up sequences) from enriched lead data, with explicit writing rules prohibiting AI filler language and enforcing brevity.",
+      "tags": ["documentation", "agent-spec", "lead-intelligence", "outreach", "copywriting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/lead-intelligence/agents/signal-scorer.md",
+      "type": "document",
+      "name": "signal-scorer.md",
+      "filePath": "skills/lead-intelligence/agents/signal-scorer.md",
+      "summary": "Defines the Signal Scorer Agent subagent spec for searching and ranking high-value prospects across X, Exa, and LinkedIn using a weighted rubric covering role alignment, industry match, recent activity, influence, location, and engagement overlap.",
+      "tags": ["documentation", "agent-spec", "lead-intelligence", "scoring", "prospect-discovery"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:skills/lead-intelligence/agents/enrichment-agent.md",
+      "target": "document:skills/lead-intelligence/agents/outreach-drafter.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/lead-intelligence/agents/signal-scorer.md",
+      "target": "document:skills/lead-intelligence/agents/enrichment-agent.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/lead-intelligence/agents/mutual-mapper.md",
+      "target": "document:skills/lead-intelligence/agents/outreach-drafter.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

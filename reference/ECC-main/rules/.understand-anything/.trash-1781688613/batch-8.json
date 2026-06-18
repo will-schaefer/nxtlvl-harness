@@ -1,0 +1,87 @@
+{
+  "nodes": [
+    {
+      "id": "document:golang/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "golang/coding-style.md",
+      "summary": "Go-specific coding-style rules layered over common/coding-style.md, mandating gofmt/goimports and the 'accept interfaces, return structs' design override plus %w error wrapping. Overrides the common immutability/style defaults with Go idioms (small 1-3 method interfaces, struct returns) rather than the language-agnostic baseline.",
+      "tags": ["golang", "coding-style", "error-handling", "formatting", "override"],
+      "complexity": "simple",
+      "languageNotes": "Deliberate override example: Go favors returning concrete structs and accepting small interfaces, diverging from the common rule set's generic immutability/style guidance."
+    },
+    {
+      "id": "document:golang/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "golang/hooks.md",
+      "summary": "Go-specific PostToolUse hook rules extending common/hooks.md, wiring gofmt/goimports auto-format, go vet, and staticcheck to run after editing .go files.",
+      "tags": ["golang", "hooks", "post-tool-use", "static-analysis", "formatting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:golang/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "golang/patterns.md",
+      "summary": "Go design-pattern rules extending common/patterns.md, covering functional options, consumer-defined small interfaces, and constructor-based dependency injection with code examples.",
+      "tags": ["golang", "patterns", "functional-options", "dependency-injection", "interfaces"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:golang/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "golang/security.md",
+      "summary": "Go security rules extending common/security.md, covering env-var secret management, gosec static scanning, and context.Context timeout enforcement.",
+      "tags": ["golang", "security", "secret-management", "static-analysis", "context"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:golang/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "golang/testing.md",
+      "summary": "Go testing rules extending common/testing.md, prescribing table-driven go test, mandatory -race detection, and -cover coverage reporting.",
+      "tags": ["golang", "testing", "table-driven", "race-detection", "coverage"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:golang/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:golang/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:golang/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:golang/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:golang/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

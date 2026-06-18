@@ -1,0 +1,102 @@
+{
+  "nodes": [
+    {
+      "id": "file:.understand-anything/.understandignore",
+      "type": "file",
+      "name": ".understandignore",
+      "filePath": ".understand-anything/.understandignore",
+      "summary": "Understand-anything tooling metadata: a .gitignore-style exclude list that scopes analysis to English source by ignoring the ~14 localized translation directories and editor cruft. Not ECC product content.",
+      "tags": ["configuration", "tooling-metadata", "ignore-file"],
+      "complexity": "simple",
+      "languageNotes": "Uses gitignore glob syntax (globs, # comments, ! negation, trailing / for dirs)."
+    },
+    {
+      "id": "config:.understand-anything/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".understand-anything/config.json",
+      "summary": "Understand-anything tooling metadata: a minimal analysis config setting the output language to English. Not ECC product content.",
+      "tags": ["configuration", "tooling-metadata", "json"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:drafts/release-1.10.1-announcement.md",
+      "type": "document",
+      "name": "release-1.10.1-announcement.md",
+      "filePath": "drafts/release-1.10.1-announcement.md",
+      "summary": "Draft announcement for ECC 1.10.1, a stabilization follow-up to 1.10.0 focused on install correctness, Windows/PowerShell recovery, Cursor project install repair, Claude Code hook compatibility, and naming clarification across the plugin/npm/GitHub surfaces.",
+      "tags": ["documentation", "release-notes", "draft", "stabilization", "changelog"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:examples/product-capability-template.md",
+      "type": "document",
+      "name": "product-capability-template.md",
+      "filePath": "examples/product-capability-template.md",
+      "summary": "Reusable template for capturing a product capability as a durable contract, prompting authors to specify intent, constraints, actors/surfaces, state transitions, interface contract, data implications, and security before implementation begins.",
+      "tags": ["documentation", "template", "product-spec", "capability-contract", "reusable"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:examples/project-guidelines-template.md",
+      "type": "document",
+      "name": "project-guidelines-template.md",
+      "filePath": "examples/project-guidelines-template.md",
+      "summary": "Reference template for a project-specific guidelines skill, modeled on the Zenith production app, covering architecture overview, file structure, Next.js/FastAPI/Claude code patterns, pytest and React Testing Library testing requirements, and Cloud Run deployment workflow.",
+      "tags": ["documentation", "template", "project-guidelines", "conventions", "reusable"],
+      "complexity": "complex",
+      "languageNotes": "Spans a full-stack reference: Next.js 15 App Router + TypeScript frontend, FastAPI + Pydantic backend, Supabase, and Claude structured-output integration."
+    },
+    {
+      "id": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "type": "document",
+      "name": "ecc-2-hypergrowth-release-command-center.md",
+      "filePath": "releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "summary": "Operator execution map for the ECC 2.0 public launch, defining the release claim, growth baseline and MRR targets, release gates, video suite, distribution plan, copy rules, build order, and owner-approval gates for the hypergrowth phase.",
+      "tags": ["documentation", "release-planning", "go-to-market", "operations", "command-center"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/2.0.0/release-notes.md",
+      "summary": "GA release notes for ECC 2.0.0, the cross-harness agent operating system, highlighting 261 public skills, the control-pane substrate and MCP inventory, ~30 hardening PRs since rc.1 (notably the Node 21+ no-op hook fix), the Discord launch, and install/upgrade instructions.",
+      "tags": ["documentation", "release-notes", "entry-point", "changelog", "ga-release"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:security/supply-chain-incident-response.md",
+      "type": "document",
+      "name": "supply-chain-incident-response.md",
+      "filePath": "security/supply-chain-incident-response.md",
+      "summary": "Operator runbook for npm/GitHub Actions/PyPI supply-chain incidents (TanStack compromise and Mini Shai-Hulud campaign), covering the current IOC set, ECC exposure-check commands, the durable supply-chain-watch workflow, immediate-response steps, GitHub Actions hardening rules, publication rules, and escalation criteria.",
+      "tags": ["documentation", "security", "incident-response", "supply-chain", "runbook"],
+      "complexity": "complex",
+      "languageNotes": "Encodes concrete IOCs (file paths, SHA-256 prefixes, persistence-hook locations) and CI-gate rules enforced by scripts/ci/validate-workflow-security.js."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:releases/2.0.0/release-notes.md",
+      "target": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/2.0.0/ecc-2-hypergrowth-release-command-center.md",
+      "target": "document:security/supply-chain-incident-response.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:drafts/release-1.10.1-announcement.md",
+      "target": "document:releases/2.0.0/release-notes.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

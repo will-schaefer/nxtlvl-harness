@@ -1,0 +1,960 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/lib/skill-evolution/index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "scripts/lib/skill-evolution/index.js",
+      "summary": "Barrel entry point for the skill-evolution module, re-exporting all sub-modules: dashboard, health, provenance, tracker, and versioning.",
+      "tags": ["entry-point", "barrel", "skill-evolution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/skill-evolution/provenance.js",
+      "type": "file",
+      "name": "provenance.js",
+      "filePath": "scripts/lib/skill-evolution/provenance.js",
+      "summary": "Provides skill provenance tracking: resolves skill root directories, classifies skill paths by source, validates provenance records, and reads/writes provenance metadata for each installed skill.",
+      "tags": ["skill-evolution", "provenance", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/skill-evolution/tracker.js",
+      "type": "file",
+      "name": "tracker.js",
+      "filePath": "scripts/lib/skill-evolution/tracker.js",
+      "summary": "Records and retrieves skill execution history by writing normalized execution records to JSONL files, enabling usage tracking for the skill evolution system.",
+      "tags": ["skill-evolution", "tracking", "execution-history", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/skill-evolution/versioning.js",
+      "type": "file",
+      "name": "versioning.js",
+      "filePath": "scripts/lib/skill-evolution/versioning.js",
+      "summary": "Manages skill versioning lifecycle: creates snapshots of skill files, reads evolution logs, lists version history, and supports rolling back skills to a previous version.",
+      "tags": ["skill-evolution", "versioning", "rollback", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/transcript-context.js",
+      "type": "file",
+      "name": "transcript-context.js",
+      "filePath": "scripts/lib/transcript-context.js",
+      "summary": "Reads Claude conversation transcript files to extract token usage, resolve context-window size, and compute context-bucket thresholds used by hooks such as the suggest-compact hook.",
+      "tags": ["context-management", "transcript", "token-tracking", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/lib/utils.js",
+      "type": "file",
+      "name": "utils.js",
+      "filePath": "scripts/lib/utils.js",
+      "summary": "Core shared utility library providing path resolution, file I/O, git helpers, stdin JSON parsing, process execution, and logging used throughout all ECC scripts and hooks.",
+      "tags": ["utility", "shared", "file-io", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/setup-package-manager.js",
+      "type": "file",
+      "name": "setup-package-manager.js",
+      "filePath": "scripts/setup-package-manager.js",
+      "summary": "CLI script that detects, lists, and configures the ECC package manager at the global or project scope, guiding users through choosing between available package sources.",
+      "tags": ["cli", "package-manager", "configuration", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/skills-health.js",
+      "type": "file",
+      "name": "skills-health.js",
+      "filePath": "scripts/skills-health.js",
+      "summary": "CLI entry point for skill health reporting; delegates to the skill-evolution dashboard and health modules to display diagnostics and evolution status for installed skills.",
+      "tags": ["cli", "skill-evolution", "health-check", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/hooks/hooks.test.js",
+      "type": "file",
+      "name": "hooks.test.js",
+      "filePath": "tests/hooks/hooks.test.js",
+      "summary": "Comprehensive integration test suite for all ECC hooks (session-start, session-end, pre-compact, post-edit, cost-tracker, etc.), executing hooks as subprocesses and asserting their side effects against the filesystem and stdout.",
+      "tags": ["test", "hooks", "integration-test", "session-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/session-end.test.js",
+      "type": "file",
+      "name": "session-end.test.js",
+      "filePath": "tests/hooks/session-end.test.js",
+      "summary": "Unit/integration tests for the session-end hook, verifying that session summary records are correctly written and formatted when a session terminates.",
+      "tags": ["test", "hooks", "session-management"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/lib/agent-data-home.test.js",
+      "type": "file",
+      "name": "agent-data-home.test.js",
+      "filePath": "tests/lib/agent-data-home.test.js",
+      "summary": "Tests the agent-data-home path resolution library, verifying correct directory lookup under various environment variable and working directory configurations.",
+      "tags": ["test", "path-resolution", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/observer-sessions.test.js",
+      "type": "file",
+      "name": "observer-sessions.test.js",
+      "filePath": "tests/lib/observer-sessions.test.js",
+      "summary": "Tests the observer-sessions library, which tracks cross-session observation relationships (parent/child session linking), covering Git-based project detection and session record I/O.",
+      "tags": ["test", "session-management", "observer-pattern"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/package-manager.test.js",
+      "type": "file",
+      "name": "package-manager.test.js",
+      "filePath": "tests/lib/package-manager.test.js",
+      "summary": "Extensive test suite for the ECC package manager library covering package source detection, installation, listing, and global/project-level configuration across isolated home directories.",
+      "tags": ["test", "package-manager", "integration-test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/project-detect.test.js",
+      "type": "file",
+      "name": "project-detect.test.js",
+      "filePath": "tests/lib/project-detect.test.js",
+      "summary": "Tests the project-detect library, verifying correct identification of project roots from various directory layouts including Git repos, monorepos, and non-project directories.",
+      "tags": ["test", "project-detection", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/session-aliases.test.js",
+      "type": "file",
+      "name": "session-aliases.test.js",
+      "filePath": "tests/lib/session-aliases.test.js",
+      "summary": "Large test suite for the session-aliases library, covering alias creation, lookup, deletion, and persistence across isolated session environments.",
+      "tags": ["test", "session-management", "aliases"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/skill-dashboard.test.js",
+      "type": "file",
+      "name": "skill-dashboard.test.js",
+      "filePath": "tests/lib/skill-dashboard.test.js",
+      "summary": "Tests the skill dashboard UI generator, verifying that skills are correctly rendered with their provenance, version, and execution history into a structured display.",
+      "tags": ["test", "skill-evolution", "dashboard"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/skill-evolution.test.js",
+      "type": "file",
+      "name": "skill-evolution.test.js",
+      "filePath": "tests/lib/skill-evolution.test.js",
+      "summary": "Tests for the skill-evolution system as a whole, covering provenance recording, execution tracking, versioning, and health checks across a set of synthetic test skills.",
+      "tags": ["test", "skill-evolution", "integration-test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/transcript-context.test.js",
+      "type": "file",
+      "name": "transcript-context.test.js",
+      "filePath": "tests/lib/transcript-context.test.js",
+      "summary": "Tests the transcript-context library, covering token extraction from JSONL transcripts, context threshold computation, and context-bucket binning logic.",
+      "tags": ["test", "context-management", "transcript"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/utils.test.js",
+      "type": "file",
+      "name": "utils.test.js",
+      "filePath": "tests/lib/utils.test.js",
+      "summary": "Comprehensive test suite for the core utils library, covering all path helpers, file I/O utilities, git helpers, stdin parsing, command execution, and string utilities.",
+      "tags": ["test", "utility", "integration-test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/provenance.js:classifySkillPath",
+      "type": "function",
+      "name": "classifySkillPath",
+      "filePath": "scripts/lib/skill-evolution/provenance.js",
+      "lineRange": [61, 78],
+      "summary": "Classifies a skill path as belonging to the project root, user home, or an external source, used for provenance attribution.",
+      "tags": ["skill-evolution", "provenance", "classification"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/provenance.js:validateProvenance",
+      "type": "function",
+      "name": "validateProvenance",
+      "filePath": "scripts/lib/skill-evolution/provenance.js",
+      "lineRange": [98, 131],
+      "summary": "Validates a provenance record object's required fields and timestamp format, throwing on invalid data.",
+      "tags": ["validation", "provenance", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/provenance.js:readProvenance",
+      "type": "function",
+      "name": "readProvenance",
+      "filePath": "scripts/lib/skill-evolution/provenance.js",
+      "lineRange": [140, 156],
+      "summary": "Reads and parses the provenance JSON file for a given skill directory, returning null if not found.",
+      "tags": ["provenance", "file-io", "skill-evolution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/provenance.js:writeProvenance",
+      "type": "function",
+      "name": "writeProvenance",
+      "filePath": "scripts/lib/skill-evolution/provenance.js",
+      "lineRange": [158, 175],
+      "summary": "Serializes and writes a provenance record to the skill's provenance JSON file, validating before write.",
+      "tags": ["provenance", "file-io", "skill-evolution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/tracker.js:normalizeExecutionRecord",
+      "type": "function",
+      "name": "normalizeExecutionRecord",
+      "filePath": "scripts/lib/skill-evolution/tracker.js",
+      "lineRange": [37, 84],
+      "summary": "Normalizes raw execution data into a canonical execution record shape, coercing numeric fields and defaulting missing values.",
+      "tags": ["tracking", "normalization", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/tracker.js:recordSkillExecution",
+      "type": "function",
+      "name": "recordSkillExecution",
+      "filePath": "scripts/lib/skill-evolution/tracker.js",
+      "lineRange": [105, 129],
+      "summary": "Appends a normalized execution record to the skill's JSONL runs file, creating the file and its parent directories if needed.",
+      "tags": ["tracking", "file-io", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/tracker.js:readSkillExecutionRecords",
+      "type": "function",
+      "name": "readSkillExecutionRecords",
+      "filePath": "scripts/lib/skill-evolution/tracker.js",
+      "lineRange": [131, 137],
+      "summary": "Reads all execution records for a given skill from its JSONL runs file.",
+      "tags": ["tracking", "file-io", "skill-evolution"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/versioning.js:ensureSkillVersioning",
+      "type": "function",
+      "name": "ensureSkillVersioning",
+      "filePath": "scripts/lib/skill-evolution/versioning.js",
+      "lineRange": [58, 78],
+      "summary": "Initializes versioning for a skill by creating the versions directory and taking the first version snapshot if one does not already exist.",
+      "tags": ["versioning", "initialization", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/versioning.js:listVersions",
+      "type": "function",
+      "name": "listVersions",
+      "filePath": "scripts/lib/skill-evolution/versioning.js",
+      "lineRange": [89, 113],
+      "summary": "Lists all saved versions of a skill sorted by version number, reading each version's metadata.",
+      "tags": ["versioning", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/versioning.js:createVersion",
+      "type": "function",
+      "name": "createVersion",
+      "filePath": "scripts/lib/skill-evolution/versioning.js",
+      "lineRange": [158, 183],
+      "summary": "Creates a new versioned snapshot of a skill's content, incrementing the version counter and appending an evolution log entry.",
+      "tags": ["versioning", "snapshot", "skill-evolution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/skill-evolution/versioning.js:rollbackTo",
+      "type": "function",
+      "name": "rollbackTo",
+      "filePath": "scripts/lib/skill-evolution/versioning.js",
+      "lineRange": [185, 221],
+      "summary": "Restores a skill to a specified previous version by overwriting the current skill file with the snapshot content and recording the rollback in the evolution log.",
+      "tags": ["versioning", "rollback", "skill-evolution"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/transcript-context.js:readLatestContextTokens",
+      "type": "function",
+      "name": "readLatestContextTokens",
+      "filePath": "scripts/lib/transcript-context.js",
+      "lineRange": [96, 135],
+      "summary": "Scans the tail of the most recent transcript JSONL file to find the latest token usage entry, returning both usage and context-window fields.",
+      "tags": ["context-management", "transcript", "token-tracking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/transcript-context.js:resolveContextWindowTokens",
+      "type": "function",
+      "name": "resolveContextWindowTokens",
+      "filePath": "scripts/lib/transcript-context.js",
+      "lineRange": [143, 153],
+      "summary": "Resolves the total context window size for the current session from transcript data or environment overrides.",
+      "tags": ["context-management", "token-tracking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/transcript-context.js:resolveContextThreshold",
+      "type": "function",
+      "name": "resolveContextThreshold",
+      "filePath": "scripts/lib/transcript-context.js",
+      "lineRange": [160, 175],
+      "summary": "Computes the alert threshold token count from environment variables or a default fraction of the context window size.",
+      "tags": ["context-management", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/transcript-context.js:computeContextBucket",
+      "type": "function",
+      "name": "computeContextBucket",
+      "filePath": "scripts/lib/transcript-context.js",
+      "lineRange": [195, 202],
+      "summary": "Bins a token usage value into a named context-fullness bucket (e.g., low/medium/high/critical) for reporting and hook triggers.",
+      "tags": ["context-management", "classification"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:findFiles",
+      "type": "function",
+      "name": "findFiles",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [215, 272],
+      "summary": "Recursively searches directories for files matching given glob patterns with optional exclusions, returning sorted absolute paths.",
+      "tags": ["utility", "file-io", "glob"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:readStdinJson",
+      "type": "function",
+      "name": "readStdinJson",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [281, 333],
+      "summary": "Reads and parses JSON from stdin with timeout and error handling, used by hooks to receive event data from the Claude Code harness.",
+      "tags": ["utility", "stdin", "hook"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:runCommand",
+      "type": "function",
+      "name": "runCommand",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [414, 439],
+      "summary": "Executes a shell command with environment overrides and returns stdout, stderr, and exit code, wrapping Node's child_process.spawnSync.",
+      "tags": ["utility", "process-execution"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:getGitModifiedFiles",
+      "type": "function",
+      "name": "getGitModifiedFiles",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [454, 479],
+      "summary": "Returns a list of files modified in the git working tree, optionally filtered by status flags (staged, unstaged, untracked).",
+      "tags": ["utility", "git"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:sanitizeSessionId",
+      "type": "function",
+      "name": "sanitizeSessionId",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [157, 180],
+      "summary": "Sanitizes a raw session ID string to a safe filesystem-compatible format, stripping disallowed characters.",
+      "tags": ["utility", "session-management", "sanitization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/utils.js:replaceInFile",
+      "type": "function",
+      "name": "replaceInFile",
+      "filePath": "scripts/lib/utils.js",
+      "lineRange": [492, 509],
+      "summary": "Performs in-place string replacement in a file, reading, modifying, and writing the file contents.",
+      "tags": ["utility", "file-io"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/setup-package-manager.js:detectAndShow",
+      "type": "function",
+      "name": "detectAndShow",
+      "filePath": "scripts/setup-package-manager.js",
+      "lineRange": [60, 93],
+      "summary": "Auto-detects the current ECC package manager configuration and displays a summary of active settings for both global and project scopes.",
+      "tags": ["cli", "package-manager", "detection"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-package-manager.js:setGlobal",
+      "type": "function",
+      "name": "setGlobal",
+      "filePath": "scripts/setup-package-manager.js",
+      "lineRange": [115, 136],
+      "summary": "Sets the global-scope ECC package manager by writing the configuration to the user's global Claude settings.",
+      "tags": ["cli", "package-manager", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/setup-package-manager.js:setProject",
+      "type": "function",
+      "name": "setProject",
+      "filePath": "scripts/setup-package-manager.js",
+      "lineRange": [138, 154],
+      "summary": "Sets the project-scoped ECC package manager by writing the configuration to the project's local Claude settings.",
+      "tags": ["cli", "package-manager", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/skills-health.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/skills-health.js",
+      "lineRange": [110, 130],
+      "summary": "Main entry point for the skills-health CLI, parsing arguments and delegating to health or dashboard report generation.",
+      "tags": ["cli", "skill-evolution", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/hooks/hooks.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/hooks.test.js",
+      "lineRange": [344, 6162],
+      "summary": "Master test runner containing all ECC hook integration tests organized into suites for session lifecycle, cost-tracking, suggest-compact, and post-edit behaviors.",
+      "tags": ["test", "hooks", "integration-test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/hooks.test.js:runScript",
+      "type": "function",
+      "name": "runScript",
+      "filePath": "tests/hooks/hooks.test.js",
+      "lineRange": [152, 176],
+      "summary": "Test helper that executes an ECC hook script as a subprocess with injected stdin JSON, returning its output and exit code.",
+      "tags": ["test", "utility", "hooks"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/package-manager.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/package-manager.test.js",
+      "lineRange": [68, 1696],
+      "summary": "Master test runner for the package-manager library, covering package source selection, installation paths, and configuration mutations across isolated test homes.",
+      "tags": ["test", "package-manager", "integration-test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/session-aliases.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/session-aliases.test.js",
+      "lineRange": [50, 1828],
+      "summary": "Master test runner for the session-aliases library, exercising alias CRUD operations and persistence under various session isolation conditions.",
+      "tags": ["test", "session-management", "aliases"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/utils.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/utils.test.js",
+      "lineRange": [29, 2730],
+      "summary": "Comprehensive master test runner for the utils library, covering all helper functions including path resolution, file I/O, git utilities, and string manipulation.",
+      "tags": ["test", "utility", "integration-test"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:scripts/lib/skill-evolution/dashboard.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:scripts/lib/skill-evolution/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:scripts/lib/skill-evolution/provenance.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:scripts/lib/skill-evolution/tracker.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:scripts/lib/skill-evolution/versioning.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/tracker.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "file:scripts/lib/agent-data-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/setup-package-manager.js",
+      "target": "file:scripts/lib/package-manager.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/skills-health.js",
+      "target": "file:scripts/lib/skill-evolution/dashboard.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/skills-health.js",
+      "target": "file:scripts/lib/skill-evolution/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/hooks/hooks.test.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/hooks/session-end.test.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/agent-data-home.test.js",
+      "target": "file:scripts/lib/agent-data-home.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/observer-sessions.test.js",
+      "target": "file:scripts/lib/observer-sessions.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/package-manager.test.js",
+      "target": "file:scripts/lib/package-manager.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/package-manager.test.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/project-detect.test.js",
+      "target": "file:scripts/lib/project-detect.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/session-aliases.test.js",
+      "target": "file:scripts/lib/session-aliases.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-dashboard.test.js",
+      "target": "file:scripts/lib/skill-evolution/dashboard.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-dashboard.test.js",
+      "target": "file:scripts/lib/skill-evolution/provenance.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-dashboard.test.js",
+      "target": "file:scripts/lib/skill-evolution/versioning.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-dashboard.test.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-evolution.test.js",
+      "target": "file:scripts/lib/skill-evolution/health.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-evolution.test.js",
+      "target": "file:scripts/lib/skill-evolution/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-evolution.test.js",
+      "target": "file:scripts/lib/skill-evolution/provenance.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-evolution.test.js",
+      "target": "file:scripts/lib/skill-evolution/tracker.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/skill-evolution.test.js",
+      "target": "file:scripts/lib/skill-evolution/versioning.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/transcript-context.test.js",
+      "target": "file:scripts/lib/transcript-context.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/utils.test.js",
+      "target": "file:scripts/lib/utils.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "function:scripts/lib/skill-evolution/provenance.js:classifySkillPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "function:scripts/lib/skill-evolution/provenance.js:validateProvenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "function:scripts/lib/skill-evolution/provenance.js:readProvenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "function:scripts/lib/skill-evolution/provenance.js:writeProvenance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/tracker.js",
+      "target": "function:scripts/lib/skill-evolution/tracker.js:normalizeExecutionRecord",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/tracker.js",
+      "target": "function:scripts/lib/skill-evolution/tracker.js:recordSkillExecution",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/tracker.js",
+      "target": "function:scripts/lib/skill-evolution/tracker.js:readSkillExecutionRecords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "function:scripts/lib/skill-evolution/versioning.js:ensureSkillVersioning",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "function:scripts/lib/skill-evolution/versioning.js:listVersions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "function:scripts/lib/skill-evolution/versioning.js:createVersion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "function:scripts/lib/skill-evolution/versioning.js:rollbackTo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/transcript-context.js",
+      "target": "function:scripts/lib/transcript-context.js:readLatestContextTokens",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/transcript-context.js",
+      "target": "function:scripts/lib/transcript-context.js:resolveContextWindowTokens",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/transcript-context.js",
+      "target": "function:scripts/lib/transcript-context.js:resolveContextThreshold",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/transcript-context.js",
+      "target": "function:scripts/lib/transcript-context.js:computeContextBucket",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:findFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:readStdinJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:runCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:getGitModifiedFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:sanitizeSessionId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "function:scripts/lib/utils.js:replaceInFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/setup-package-manager.js",
+      "target": "function:scripts/setup-package-manager.js:detectAndShow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/setup-package-manager.js",
+      "target": "function:scripts/setup-package-manager.js:setGlobal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/setup-package-manager.js",
+      "target": "function:scripts/setup-package-manager.js:setProject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/skills-health.js",
+      "target": "function:scripts/skills-health.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/hooks.test.js",
+      "target": "function:tests/hooks/hooks.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/hooks.test.js",
+      "target": "function:tests/hooks/hooks.test.js:runScript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/package-manager.test.js",
+      "target": "function:tests/lib/package-manager.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/session-aliases.test.js",
+      "target": "function:tests/lib/session-aliases.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/utils.test.js",
+      "target": "function:tests/lib/utils.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/utils.js",
+      "target": "file:tests/lib/utils.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/transcript-context.js",
+      "target": "file:tests/lib/transcript-context.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/index.js",
+      "target": "file:tests/lib/skill-evolution.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "file:tests/lib/skill-evolution.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/tracker.js",
+      "target": "file:tests/lib/skill-evolution.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "file:tests/lib/skill-evolution.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/provenance.js",
+      "target": "file:tests/lib/skill-dashboard.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/skill-evolution/versioning.js",
+      "target": "file:tests/lib/skill-dashboard.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

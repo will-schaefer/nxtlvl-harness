@@ -1,0 +1,99 @@
+[
+  {
+    "id": "layer:dispatch",
+    "name": "Dispatch & Fan-out",
+    "description": "Consolidated routers, the run-with-flags wrapper, profile gating, and bootstrap adapters that read stdin and fan each Claude Code lifecycle event out to the individual hook checks.",
+    "nodeIds": [
+      "file:bash-hook-dispatcher.js",
+      "file:pre-bash-dispatcher.js",
+      "file:post-bash-dispatcher.js",
+      "file:run-with-flags.js",
+      "file:run-with-flags-shell.sh",
+      "file:plugin-hook-bootstrap.js",
+      "file:check-hook-enabled.js",
+      "file:observe-runner.js",
+      "file:session-start-bootstrap.js"
+    ]
+  },
+  {
+    "id": "layer:blocking-gates",
+    "name": "Blocking Gates",
+    "description": "PreToolUse/Stop hooks that can exit 2 and deny an action — blocking --no-verify bypasses, fact-forcing destructive ops, protecting linter/formatter configs, blocking foreground dev-server commands, and failing low-quality commits.",
+    "nodeIds": [
+      "file:block-no-verify.js",
+      "file:gateguard-fact-force.js",
+      "file:pre-bash-commit-quality.js",
+      "file:pre-bash-dev-server-block.js",
+      "file:config-protection.js"
+    ]
+  },
+  {
+    "id": "layer:observation-telemetry",
+    "name": "Observation & Telemetry",
+    "description": "Non-blocking PostToolUse/Stop hooks that aggregate session metrics, track cost and context usage, render the statusline, audit-log commands and PRs/builds, and extract reusable patterns — pure observation that never alters tool results.",
+    "nodeIds": [
+      "file:post-bash-build-complete.js",
+      "file:post-bash-command-log.js",
+      "file:post-bash-pr-created.js",
+      "file:cost-tracker.js",
+      "file:ecc-context-monitor.js",
+      "file:ecc-metrics-bridge.js",
+      "file:ecc-statusline.js",
+      "file:evaluate-session.js",
+      "file:session-activity-tracker.js"
+    ]
+  },
+  {
+    "id": "layer:quality-formatting",
+    "name": "Quality & Formatting",
+    "description": "PostToolUse/Stop hooks that lint, format, type-check, and flag console.log or generic-template drift on edited files, warning the agent (with the Stop format/typecheck step able to gate).",
+    "nodeIds": [
+      "file:quality-gate.js",
+      "file:design-quality-check.js",
+      "file:check-console-log.js",
+      "file:post-edit-accumulator.js",
+      "file:post-edit-format.js",
+      "file:post-edit-typecheck.js",
+      "file:post-edit-console-warn.js",
+      "file:stop-format-typecheck.js"
+    ]
+  },
+  {
+    "id": "layer:session-lifecycle",
+    "name": "Session Lifecycle & Context",
+    "description": "SessionStart/SessionEnd/Stop/PreCompact hooks that inject startup context, persist and clean up session state, manage and suggest compaction, and wire the Cursor session environment.",
+    "nodeIds": [
+      "file:session-start.js",
+      "file:session-end.js",
+      "file:session-end-marker.js",
+      "file:pre-compact.js",
+      "file:suggest-compact.js",
+      "file:cursor-session-env.js"
+    ]
+  },
+  {
+    "id": "layer:security",
+    "name": "Security",
+    "description": "Security-focused hooks: the Insaits security monitor with its bridge wrapper, governance-event capture for secrets and policy violations, and the MCP health check.",
+    "nodeIds": [
+      "file:insaits-security-monitor.py",
+      "file:insaits-security-wrapper.js",
+      "file:governance-capture.js",
+      "file:mcp-health-check.js"
+    ]
+  },
+  {
+    "id": "layer:nudges-shared-output",
+    "name": "Nudges & Shared Output",
+    "description": "Non-blocking reminders (git push, tmux), transparent dev-server tmux rewriting, ad-hoc doc-file warnings, desktop notifications, and the shared additionalContext output helper used across the PreToolUse nudges.",
+    "nodeIds": [
+      "file:pre-bash-git-push-reminder.js",
+      "file:pre-bash-tmux-reminder.js",
+      "file:auto-tmux-dev.js",
+      "file:doc-file-warning.js",
+      "file:pre-write-doc-warn.js",
+      "file:desktop-notify.js",
+      "file:pretooluse-visible-output.js"
+    ]
+  }
+]

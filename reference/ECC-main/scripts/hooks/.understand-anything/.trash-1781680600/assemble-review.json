@@ -1,0 +1,17 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 0,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Clean assembly: 206 raw batch nodes -> 206 assembled, 222 raw edges -> 222 assembled (Input == Output). No dedup losses, no dropped nodes, no dropped dangling edges.",
+    "Node integrity: 0 nodes missing id, 0 unknown types (48 file + 158 function), 0 unknown complexity values (84 moderate / 68 simple / 54 complex), 0 duplicate ids, all id prefixes canonical.",
+    "Edge integrity: 0 dangling edges, 0 duplicate edges. Edge types: 156 contains, 20 exports, 17 imports, 16 calls, 13 depends_on.",
+    "Raw batch files were already clean: all 158 function nodes used canonical 'function:' prefix (0 'func:'), 0 double/project prefixes. The report's 'func: -> function:' line is a generic capability description; for this run the Fixed section was effectively a no-op and there was no Could-not-fix section.",
+    "importMap cross-batch verification: all 49 importMap entries checked. Every in-scope file->file import already has a corresponding 'imports' edge (0 missing). 0 speculative import edges present (none unbacked by importMap). The merge script's 'Recovered 0 imports edges' is correct - nothing was missing, not a failure.",
+    "Domain-note concerns all satisfied: (a) dispatcher fan-out present - bash-hook-dispatcher.js -> all 10 siblings, plus pre/post-bash-dispatcher.js -> bash-hook-dispatcher.js; (b) shared-helper edges to pretooluse-visible-output.js present from doc-file-warning, pre-bash-git-push-reminder, pre-bash-tmux-reminder, run-with-flags, bash-hook-dispatcher; (c) cross-batch depends_on resolved (ecc-context-monitor -> ecc-metrics-bridge, ecc-statusline -> ecc-metrics-bridge, insaits-security-wrapper -> insaits-security-monitor.py, post-edit-accumulator <-> stop-format-typecheck, session-start-bootstrap -> session-start, run-with-flags-shell.sh -> check-hook-enabled).",
+    "Out-of-scope ../lib/* imports correctly produced no in-scope nodes/edges, as expected per domain note; not flagged."
+  ]
+}

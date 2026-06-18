@@ -1,0 +1,983 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 114,
+  "totalBatches": 22,
+  "exportsByPath": {},
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "angular/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 182,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "angular/hooks.md",
+          "language": "markdown",
+          "sizeLines": 25,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "angular/patterns.md",
+          "language": "markdown",
+          "sizeLines": 249,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "angular/security.md",
+          "language": "markdown",
+          "sizeLines": 87,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "angular/testing.md",
+          "language": "markdown",
+          "sizeLines": 164,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "angular/coding-style.md": [],
+        "angular/hooks.md": [],
+        "angular/patterns.md": [],
+        "angular/security.md": [],
+        "angular/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "arkts/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 153,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "arkts/hooks.md",
+          "language": "markdown",
+          "sizeLines": 135,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "arkts/patterns.md",
+          "language": "markdown",
+          "sizeLines": 236,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "arkts/security.md",
+          "language": "markdown",
+          "sizeLines": 141,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "arkts/testing.md",
+          "language": "markdown",
+          "sizeLines": 126,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "arkts/coding-style.md": [],
+        "arkts/hooks.md": [],
+        "arkts/patterns.md": [],
+        "arkts/security.md": [],
+        "arkts/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "common/agents.md",
+          "language": "markdown",
+          "sizeLines": 51,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/code-review.md",
+          "language": "markdown",
+          "sizeLines": 124,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 90,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/development-workflow.md",
+          "language": "markdown",
+          "sizeLines": 44,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/git-workflow.md",
+          "language": "markdown",
+          "sizeLines": 24,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/hooks.md",
+          "language": "markdown",
+          "sizeLines": 30,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/patterns.md",
+          "language": "markdown",
+          "sizeLines": 31,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/performance.md",
+          "language": "markdown",
+          "sizeLines": 55,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/security.md",
+          "language": "markdown",
+          "sizeLines": 29,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "common/testing.md",
+          "language": "markdown",
+          "sizeLines": 57,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "common/agents.md": [],
+        "common/code-review.md": [],
+        "common/coding-style.md": [],
+        "common/development-workflow.md": [],
+        "common/git-workflow.md": [],
+        "common/hooks.md": [],
+        "common/patterns.md": [],
+        "common/performance.md": [],
+        "common/security.md": [],
+        "common/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "cpp/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 44,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "cpp/hooks.md",
+          "language": "markdown",
+          "sizeLines": 39,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "cpp/patterns.md",
+          "language": "markdown",
+          "sizeLines": 51,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "cpp/security.md",
+          "language": "markdown",
+          "sizeLines": 51,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "cpp/testing.md",
+          "language": "markdown",
+          "sizeLines": 44,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "cpp/coding-style.md": [],
+        "cpp/hooks.md": [],
+        "cpp/patterns.md": [],
+        "cpp/security.md": [],
+        "cpp/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": "csharp/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 72,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "csharp/hooks.md",
+          "language": "markdown",
+          "sizeLines": 25,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "csharp/patterns.md",
+          "language": "markdown",
+          "sizeLines": 50,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "csharp/security.md",
+          "language": "markdown",
+          "sizeLines": 58,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "csharp/testing.md",
+          "language": "markdown",
+          "sizeLines": 46,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "csharp/coding-style.md": [],
+        "csharp/hooks.md": [],
+        "csharp/patterns.md": [],
+        "csharp/security.md": [],
+        "csharp/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 6,
+      "files": [
+        {
+          "path": "dart/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 159,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "dart/hooks.md",
+          "language": "markdown",
+          "sizeLines": 66,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "dart/patterns.md",
+          "language": "markdown",
+          "sizeLines": 261,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "dart/security.md",
+          "language": "markdown",
+          "sizeLines": 135,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "dart/testing.md",
+          "language": "markdown",
+          "sizeLines": 215,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "dart/coding-style.md": [],
+        "dart/hooks.md": [],
+        "dart/patterns.md": [],
+        "dart/security.md": [],
+        "dart/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 7,
+      "files": [
+        {
+          "path": "fsharp/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 112,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "fsharp/hooks.md",
+          "language": "markdown",
+          "sizeLines": 26,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "fsharp/patterns.md",
+          "language": "markdown",
+          "sizeLines": 111,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "fsharp/security.md",
+          "language": "markdown",
+          "sizeLines": 76,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "fsharp/testing.md",
+          "language": "markdown",
+          "sizeLines": 62,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "fsharp/coding-style.md": [],
+        "fsharp/hooks.md": [],
+        "fsharp/patterns.md": [],
+        "fsharp/security.md": [],
+        "fsharp/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 8,
+      "files": [
+        {
+          "path": "golang/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 32,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "golang/hooks.md",
+          "language": "markdown",
+          "sizeLines": 17,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "golang/patterns.md",
+          "language": "markdown",
+          "sizeLines": 45,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "golang/security.md",
+          "language": "markdown",
+          "sizeLines": 34,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "golang/testing.md",
+          "language": "markdown",
+          "sizeLines": 31,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "golang/coding-style.md": [],
+        "golang/hooks.md": [],
+        "golang/patterns.md": [],
+        "golang/security.md": [],
+        "golang/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 9,
+      "files": [
+        {
+          "path": "java/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 114,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "java/hooks.md",
+          "language": "markdown",
+          "sizeLines": 18,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "java/patterns.md",
+          "language": "markdown",
+          "sizeLines": 147,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "java/security.md",
+          "language": "markdown",
+          "sizeLines": 101,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "java/testing.md",
+          "language": "markdown",
+          "sizeLines": 133,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "java/coding-style.md": [],
+        "java/hooks.md": [],
+        "java/patterns.md": [],
+        "java/security.md": [],
+        "java/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 10,
+      "files": [
+        {
+          "path": "kotlin/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 86,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "kotlin/hooks.md",
+          "language": "markdown",
+          "sizeLines": 17,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "kotlin/patterns.md",
+          "language": "markdown",
+          "sizeLines": 146,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "kotlin/security.md",
+          "language": "markdown",
+          "sizeLines": 82,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "kotlin/testing.md",
+          "language": "markdown",
+          "sizeLines": 128,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "kotlin/coding-style.md": [],
+        "kotlin/hooks.md": [],
+        "kotlin/patterns.md": [],
+        "kotlin/security.md": [],
+        "kotlin/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 11,
+      "files": [
+        {
+          "path": "nuxt/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 47,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "nuxt/hooks.md",
+          "language": "markdown",
+          "sizeLines": 39,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "nuxt/patterns.md",
+          "language": "markdown",
+          "sizeLines": 54,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "nuxt/security.md",
+          "language": "markdown",
+          "sizeLines": 48,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "nuxt/testing.md",
+          "language": "markdown",
+          "sizeLines": 49,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "nuxt/coding-style.md": [],
+        "nuxt/hooks.md": [],
+        "nuxt/patterns.md": [],
+        "nuxt/security.md": [],
+        "nuxt/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 12,
+      "files": [
+        {
+          "path": "perl/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 46,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "perl/hooks.md",
+          "language": "markdown",
+          "sizeLines": 22,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "perl/patterns.md",
+          "language": "markdown",
+          "sizeLines": 76,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "perl/security.md",
+          "language": "markdown",
+          "sizeLines": 69,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "perl/testing.md",
+          "language": "markdown",
+          "sizeLines": 54,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "perl/coding-style.md": [],
+        "perl/hooks.md": [],
+        "perl/patterns.md": [],
+        "perl/security.md": [],
+        "perl/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 13,
+      "files": [
+        {
+          "path": "php/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 40,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "php/hooks.md",
+          "language": "markdown",
+          "sizeLines": 24,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "php/patterns.md",
+          "language": "markdown",
+          "sizeLines": 33,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "php/security.md",
+          "language": "markdown",
+          "sizeLines": 37,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "php/testing.md",
+          "language": "markdown",
+          "sizeLines": 39,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "php/coding-style.md": [],
+        "php/hooks.md": [],
+        "php/patterns.md": [],
+        "php/security.md": [],
+        "php/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 14,
+      "files": [
+        {
+          "path": "python/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 42,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "python/fastapi.md",
+          "language": "markdown",
+          "sizeLines": 58,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "python/hooks.md",
+          "language": "markdown",
+          "sizeLines": 19,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "python/patterns.md",
+          "language": "markdown",
+          "sizeLines": 39,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "python/security.md",
+          "language": "markdown",
+          "sizeLines": 30,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "python/testing.md",
+          "language": "markdown",
+          "sizeLines": 38,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "python/coding-style.md": [],
+        "python/fastapi.md": [],
+        "python/hooks.md": [],
+        "python/patterns.md": [],
+        "python/security.md": [],
+        "python/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 15,
+      "files": [
+        {
+          "path": "react/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 109,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "react/hooks.md",
+          "language": "markdown",
+          "sizeLines": 187,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "react/patterns.md",
+          "language": "markdown",
+          "sizeLines": 194,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "react/security.md",
+          "language": "markdown",
+          "sizeLines": 180,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "react/testing.md",
+          "language": "markdown",
+          "sizeLines": 208,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "react/coding-style.md": [],
+        "react/hooks.md": [],
+        "react/patterns.md": [],
+        "react/security.md": [],
+        "react/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 16,
+      "files": [
+        {
+          "path": "ruby/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 46,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ruby/hooks.md",
+          "language": "markdown",
+          "sizeLines": 37,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ruby/patterns.md",
+          "language": "markdown",
+          "sizeLines": 44,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ruby/security.md",
+          "language": "markdown",
+          "sizeLines": 51,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ruby/testing.md",
+          "language": "markdown",
+          "sizeLines": 51,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "ruby/coding-style.md": [],
+        "ruby/hooks.md": [],
+        "ruby/patterns.md": [],
+        "ruby/security.md": [],
+        "ruby/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 17,
+      "files": [
+        {
+          "path": "rust/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 151,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "rust/hooks.md",
+          "language": "markdown",
+          "sizeLines": 16,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "rust/patterns.md",
+          "language": "markdown",
+          "sizeLines": 168,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "rust/security.md",
+          "language": "markdown",
+          "sizeLines": 141,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "rust/testing.md",
+          "language": "markdown",
+          "sizeLines": 154,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "rust/coding-style.md": [],
+        "rust/hooks.md": [],
+        "rust/patterns.md": [],
+        "rust/security.md": [],
+        "rust/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 18,
+      "files": [
+        {
+          "path": "swift/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 47,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "swift/hooks.md",
+          "language": "markdown",
+          "sizeLines": 20,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "swift/patterns.md",
+          "language": "markdown",
+          "sizeLines": 66,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "swift/security.md",
+          "language": "markdown",
+          "sizeLines": 33,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "swift/testing.md",
+          "language": "markdown",
+          "sizeLines": 45,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "swift/coding-style.md": [],
+        "swift/hooks.md": [],
+        "swift/patterns.md": [],
+        "swift/security.md": [],
+        "swift/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 19,
+      "files": [
+        {
+          "path": "typescript/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 199,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "typescript/hooks.md",
+          "language": "markdown",
+          "sizeLines": 22,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "typescript/patterns.md",
+          "language": "markdown",
+          "sizeLines": 52,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "typescript/security.md",
+          "language": "markdown",
+          "sizeLines": 28,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "typescript/testing.md",
+          "language": "markdown",
+          "sizeLines": 18,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "typescript/coding-style.md": [],
+        "typescript/hooks.md": [],
+        "typescript/patterns.md": [],
+        "typescript/security.md": [],
+        "typescript/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 20,
+      "files": [
+        {
+          "path": "vue/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 54,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "vue/hooks.md",
+          "language": "markdown",
+          "sizeLines": 45,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "vue/patterns.md",
+          "language": "markdown",
+          "sizeLines": 56,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "vue/security.md",
+          "language": "markdown",
+          "sizeLines": 46,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "vue/testing.md",
+          "language": "markdown",
+          "sizeLines": 53,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "vue/coding-style.md": [],
+        "vue/hooks.md": [],
+        "vue/patterns.md": [],
+        "vue/security.md": [],
+        "vue/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 21,
+      "files": [
+        {
+          "path": "web/coding-style.md",
+          "language": "markdown",
+          "sizeLines": 96,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/design-quality.md",
+          "language": "markdown",
+          "sizeLines": 63,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/hooks.md",
+          "language": "markdown",
+          "sizeLines": 129,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/patterns.md",
+          "language": "markdown",
+          "sizeLines": 79,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/performance.md",
+          "language": "markdown",
+          "sizeLines": 64,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/security.md",
+          "language": "markdown",
+          "sizeLines": 57,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "web/testing.md",
+          "language": "markdown",
+          "sizeLines": 55,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "web/coding-style.md": [],
+        "web/design-quality.md": [],
+        "web/hooks.md": [],
+        "web/patterns.md": [],
+        "web/performance.md": [],
+        "web/security.md": [],
+        "web/testing.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 22,
+      "files": [
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 141,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "README.md": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

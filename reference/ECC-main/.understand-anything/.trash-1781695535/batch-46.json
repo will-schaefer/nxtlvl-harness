@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "document:examples/evaluator-rag-prototype/deep-analyzer-evidence/candidate-playbook.md",
+      "type": "document",
+      "name": "candidate-playbook.md",
+      "filePath": "examples/evaluator-rag-prototype/deep-analyzer-evidence/candidate-playbook.md",
+      "summary": "Operational playbook for the 'corpus-backed-analyzer-change' candidate, specifying accepted and rejected paths for promoting deep-analyzer changes and the minimum validation commands required.",
+      "tags": ["documentation", "evaluator-rag", "quality-gate", "deep-analysis"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/report.json",
+      "type": "config",
+      "name": "report.json",
+      "filePath": "examples/evaluator-rag-prototype/deep-analyzer-evidence/report.json",
+      "summary": "Evaluator-RAG prototype report for the deep-analyzer-evidence scenario, recording prototype_passed status with per-dimension scores and findings about corpus and expected-output requirements.",
+      "tags": ["evaluator-rag", "prototype", "quality-gate", "evaluation-result"],
+      "complexity": "simple",
+      "languageNotes": "Uses the ecc.evaluator-rag.report.v1 schema; result is read-only and scoped to prototype validation."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "type": "config",
+      "name": "scenario.json",
+      "filePath": "examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "summary": "Evaluator-RAG scenario definition requiring that deep-analyzer behavior changes retrieve maintained corpus evidence and expected-output comparisons before promotion, with explicit forbidden actions and acceptance gates.",
+      "tags": ["evaluator-rag", "scenario-definition", "quality-gate", "deep-analysis"],
+      "complexity": "moderate",
+      "languageNotes": "Uses ecc.evaluator-rag.scenario.v1 schema with mode read_only_prototype; sources reference sibling ECC-Tools repo paths."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/trace.json",
+      "type": "config",
+      "name": "trace.json",
+      "filePath": "examples/evaluator-rag-prototype/deep-analyzer-evidence/trace.json",
+      "summary": "Execution trace for the deep-analyzer-evidence prototype run, recording observation, retrieval, proposal, verification, and promotion phases with evidence artifacts referenced at each step.",
+      "tags": ["evaluator-rag", "execution-trace", "prototype", "deep-analysis"],
+      "complexity": "simple",
+      "languageNotes": "Uses ecc.evaluator-rag.trace.v1 schema; each phase entry references sibling ECC-Tools source paths as evidence."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/verifier-result.json",
+      "type": "config",
+      "name": "verifier-result.json",
+      "filePath": "examples/evaluator-rag-prototype/deep-analyzer-evidence/verifier-result.json",
+      "summary": "Verifier decision record scoring two candidates: corpus-backed-analyzer-change (accepted, 0.92) and threshold-only-analyzer-rewrite (rejected, 0.13), with rationale and rollback guidance for each.",
+      "tags": ["evaluator-rag", "verification", "quality-gate", "deep-analysis"],
+      "complexity": "simple",
+      "languageNotes": "Uses ecc.evaluator-rag.verifier.v1 schema; promoted_candidate_id canonically selects the accepted playbook."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:examples/evaluator-rag-prototype/deep-analyzer-evidence/candidate-playbook.md",
+      "target": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/report.json",
+      "target": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/trace.json",
+      "target": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/verifier-result.json",
+      "target": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/scenario.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/trace.json",
+      "target": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/verifier-result.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/deep-analyzer-evidence/report.json",
+      "target": "document:examples/evaluator-rag-prototype/deep-analyzer-evidence/candidate-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

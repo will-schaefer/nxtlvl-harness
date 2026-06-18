@@ -1,0 +1,437 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/hooks/pre-bash-dev-server-block.test.js",
+      "type": "file",
+      "name": "pre-bash-dev-server-block.test.js",
+      "filePath": "tests/hooks/pre-bash-dev-server-block.test.js",
+      "summary": "Test suite for the pre-bash dev-server-block hook, verifying that commands which would start dev servers (e.g., npm run dev) are blocked or allowed according to hook rules.",
+      "tags": ["test", "hook", "security", "pre-bash"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/pre-bash-dev-server-block.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/pre-bash-dev-server-block.test.js",
+      "lineRange": [35, 245],
+      "summary": "Main test runner that enumerates all scenarios for dev-server-blocking hook, spawning the hook script with various commands and asserting blocking/pass-through behavior.",
+      "tags": ["test", "hook", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/pre-bash-reminders.test.js",
+      "type": "file",
+      "name": "pre-bash-reminders.test.js",
+      "filePath": "tests/hooks/pre-bash-reminders.test.js",
+      "summary": "Tests for the pre-bash reminders hook, checking that reminder messages are injected into hook stdout for specific bash command patterns.",
+      "tags": ["test", "hook", "pre-bash"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/pre-bash-reminders.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/pre-bash-reminders.test.js",
+      "lineRange": [42, 115],
+      "summary": "Exercises the reminders hook by running it with various commands and asserting the expected reminder text appears in output.",
+      "tags": ["test", "hook"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/hooks/run-with-flags-truncation.test.js",
+      "type": "file",
+      "name": "run-with-flags-truncation.test.js",
+      "filePath": "tests/hooks/run-with-flags-truncation.test.js",
+      "summary": "Tests the payload-truncation behavior of the run-with-flags hook wrapper, verifying oversized stdin is truncated before passing to hook scripts.",
+      "tags": ["test", "hook", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/hooks/session-activity-tracker.test.js",
+      "type": "file",
+      "name": "session-activity-tracker.test.js",
+      "filePath": "tests/hooks/session-activity-tracker.test.js",
+      "summary": "Comprehensive tests for the session-activity-tracker hook, covering metric recording, CSV row storage, and multi-session tracking across isolated home directories.",
+      "tags": ["test", "hook", "session", "observability"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/session-activity-tracker.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/session-activity-tracker.test.js",
+      "lineRange": [71, 666],
+      "summary": "Exhaustive test runner for session-activity-tracker covering initialization, metric accumulation, file paths, and edge cases across hundreds of scenarios.",
+      "tags": ["test", "session", "observability"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/stop-hooks-stdout.test.js",
+      "type": "file",
+      "name": "stop-hooks-stdout.test.js",
+      "filePath": "tests/hooks/stop-hooks-stdout.test.js",
+      "summary": "Tests that stop hooks emit their messages to stdout as required by the Claude Code hook protocol, validating both direct execution and run-with-flags wrapper paths.",
+      "tags": ["test", "hook", "stdout-contract"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/suggest-compact.test.js",
+      "type": "file",
+      "name": "suggest-compact.test.js",
+      "filePath": "tests/hooks/suggest-compact.test.js",
+      "summary": "Large test suite for the suggest-compact hook, verifying context-threshold detection, counter persistence, and message formatting for the compaction suggestion feature.",
+      "tags": ["test", "hook", "context-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/suggest-compact.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/hooks/suggest-compact.test.js",
+      "lineRange": [85, 898],
+      "summary": "Main test driver for suggest-compact, covering threshold triggers, counter file management, suppression flags, and edge cases for context-window compaction prompts.",
+      "tags": ["test", "hook", "context-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/hooks/test_insaits_security_monitor.py",
+      "type": "file",
+      "name": "test_insaits_security_monitor.py",
+      "filePath": "tests/hooks/test_insaits_security_monitor.py",
+      "summary": "Python test suite for the INSAITS security monitor hook, testing content extraction, anomaly detection, SDK error handling, and audit log writing with both fail-open and fail-closed modes.",
+      "tags": ["test", "hook", "security", "python"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/hooks/test_insaits_security_monitor.py:test_clean_scan_writes_audit_and_uses_environment_options",
+      "type": "function",
+      "name": "test_clean_scan_writes_audit_and_uses_environment_options",
+      "filePath": "tests/hooks/test_insaits_security_monitor.py",
+      "lineRange": [125, 158],
+      "summary": "Verifies that a clean security scan correctly writes an audit log entry and respects environment variable configuration options.",
+      "tags": ["test", "security", "audit"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/test_insaits_security_monitor.py:test_critical_anomaly_blocks_and_writes_feedback",
+      "type": "function",
+      "name": "test_critical_anomaly_blocks_and_writes_feedback",
+      "filePath": "tests/hooks/test_insaits_security_monitor.py",
+      "lineRange": [180, 208],
+      "summary": "Tests that a critical security anomaly causes the hook to block execution and write feedback to the audit log.",
+      "tags": ["test", "security", "blocking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/hooks/test_insaits_security_monitor.py:test_noncritical_anomaly_warns_without_blocking",
+      "type": "function",
+      "name": "test_noncritical_anomaly_warns_without_blocking",
+      "filePath": "tests/hooks/test_insaits_security_monitor.py",
+      "lineRange": [211, 239],
+      "summary": "Ensures that non-critical anomalies produce a warning in the audit log without blocking the hook execution.",
+      "tags": ["test", "security", "warning"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/integration/hooks.test.js",
+      "type": "file",
+      "name": "hooks.test.js",
+      "filePath": "tests/integration/hooks.test.js",
+      "summary": "Integration test suite for the full ECC hooks pipeline, exercising hooks end-to-end with real plugin configs, session payloads, and file system isolation.",
+      "tags": ["test", "integration", "hook", "end-to-end"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/integration/hooks.test.js:runHookWithInput",
+      "type": "function",
+      "name": "runHookWithInput",
+      "filePath": "tests/integration/hooks.test.js",
+      "lineRange": [50, 92],
+      "summary": "Spawns a hook script with a given JSON input payload and returns its stdout, stderr, and exit code for assertion.",
+      "tags": ["test", "integration", "hook", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/integration/hooks.test.js:runHookCommand",
+      "type": "function",
+      "name": "runHookCommand",
+      "filePath": "tests/integration/hooks.test.js",
+      "lineRange": [109, 217],
+      "summary": "Executes a hook command string by resolving it from plugin settings and running it with a test environment, supporting both sync and async hook modes.",
+      "tags": ["test", "integration", "hook"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/integration/hooks.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/integration/hooks.test.js",
+      "lineRange": [277, 1023],
+      "summary": "Comprehensive integration test runner covering all ECC hooks including session start, pre-tool, post-tool, and stop hooks with realistic plugin configurations.",
+      "tags": ["test", "integration", "hook"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/agent-compress.test.js",
+      "type": "file",
+      "name": "agent-compress.test.js",
+      "filePath": "tests/lib/agent-compress.test.js",
+      "summary": "Tests for the agent-compress library module, verifying compression and decompression of agent conversation data for context management.",
+      "tags": ["test", "library", "compression", "context-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/agent-compress.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/agent-compress.test.js",
+      "lineRange": [26, 361],
+      "summary": "Test suite driver for agent-compress covering compression ratios, round-trip fidelity, edge cases with empty input, and large payload handling.",
+      "tags": ["test", "compression", "library"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/changed-files-store.test.js",
+      "type": "file",
+      "name": "changed-files-store.test.js",
+      "filePath": "tests/lib/changed-files-store.test.js",
+      "summary": "Tests for the changed-files-store library, validating file change tracking, persistence, and retrieval used by the ECC hooks pipeline.",
+      "tags": ["test", "library", "file-tracking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/changed-files-store.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/changed-files-store.test.js",
+      "lineRange": [20, 158],
+      "summary": "Test runner for changed-files-store covering add, remove, list, and clear operations as well as persistence across process boundaries.",
+      "tags": ["test", "file-tracking", "library"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/cost-estimate.test.js",
+      "type": "file",
+      "name": "cost-estimate.test.js",
+      "filePath": "tests/lib/cost-estimate.test.js",
+      "summary": "Tests for the cost-estimate library module, checking token count to cost calculation accuracy across different Claude model pricing tiers.",
+      "tags": ["test", "library", "cost-estimation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/cost-estimate.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/cost-estimate.test.js",
+      "lineRange": [24, 111],
+      "summary": "Runs cost estimation tests against various token counts and model names, asserting correct dollar-value output.",
+      "tags": ["test", "cost-estimation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/dry-run.test.js",
+      "type": "file",
+      "name": "dry-run.test.js",
+      "filePath": "tests/lib/dry-run.test.js",
+      "summary": "Tests for the dry-run library utility, verifying that dry-run mode correctly suppresses file writes and command executions while logging intended actions.",
+      "tags": ["test", "library", "dry-run"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/dry-run.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/dry-run.test.js",
+      "lineRange": [23, 248],
+      "summary": "Test driver for dry-run utilities validating suppression behavior, log output, and flag parsing across multiple usage patterns.",
+      "tags": ["test", "dry-run"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/inspection.test.js",
+      "type": "file",
+      "name": "inspection.test.js",
+      "filePath": "tests/lib/inspection.test.js",
+      "summary": "Tests for the inspection library, validating skill-run payload construction, hook input inspection, and content extraction used across ECC diagnostics.",
+      "tags": ["test", "library", "inspection", "observability"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/inspection.test.js:makeSkillRun",
+      "type": "function",
+      "name": "makeSkillRun",
+      "filePath": "tests/lib/inspection.test.js",
+      "lineRange": [28, 42],
+      "summary": "Factory helper that constructs a synthetic skill-run payload object for use in inspection tests.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/lib/inspection.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/inspection.test.js",
+      "lineRange": [44, 230],
+      "summary": "Exercises the inspection library across multiple payload types, asserting correct field extraction and serialization.",
+      "tags": ["test", "inspection", "library"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/hooks/pre-bash-dev-server-block.test.js",
+      "target": "function:tests/hooks/pre-bash-dev-server-block.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/pre-bash-reminders.test.js",
+      "target": "function:tests/hooks/pre-bash-reminders.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/session-activity-tracker.test.js",
+      "target": "function:tests/hooks/session-activity-tracker.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/suggest-compact.test.js",
+      "target": "function:tests/hooks/suggest-compact.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/test_insaits_security_monitor.py",
+      "target": "function:tests/hooks/test_insaits_security_monitor.py:test_clean_scan_writes_audit_and_uses_environment_options",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/test_insaits_security_monitor.py",
+      "target": "function:tests/hooks/test_insaits_security_monitor.py:test_critical_anomaly_blocks_and_writes_feedback",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/hooks/test_insaits_security_monitor.py",
+      "target": "function:tests/hooks/test_insaits_security_monitor.py:test_noncritical_anomaly_warns_without_blocking",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/integration/hooks.test.js",
+      "target": "function:tests/integration/hooks.test.js:runHookWithInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/integration/hooks.test.js",
+      "target": "function:tests/integration/hooks.test.js:runHookCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/integration/hooks.test.js",
+      "target": "function:tests/integration/hooks.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/agent-compress.test.js",
+      "target": "function:tests/lib/agent-compress.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/agent-compress.test.js",
+      "target": "file:scripts/lib/agent-compress.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/agent-compress.test.js",
+      "target": "file:scripts/lib/agent-compress.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/changed-files-store.test.js",
+      "target": "function:tests/lib/changed-files-store.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/cost-estimate.test.js",
+      "target": "function:tests/lib/cost-estimate.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/cost-estimate.test.js",
+      "target": "file:scripts/lib/cost-estimate.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/cost-estimate.test.js",
+      "target": "file:scripts/lib/cost-estimate.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/dry-run.test.js",
+      "target": "function:tests/lib/dry-run.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/inspection.test.js",
+      "target": "function:tests/lib/inspection.test.js:makeSkillRun",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/inspection.test.js",
+      "target": "function:tests/lib/inspection.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/inspection.test.js",
+      "target": "file:scripts/lib/inspection.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/inspection.test.js",
+      "target": "file:scripts/lib/inspection.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

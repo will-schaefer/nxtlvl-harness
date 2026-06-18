@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "document:examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "type": "document",
+      "name": "candidate-playbook.md",
+      "filePath": "examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "summary": "Promoted CI failure diagnosis playbook (candidate id: log-backed-minimal-fix) defining the accepted and rejected paths for diagnosing GitHub Actions failures, requiring captured log evidence, scope comparison, and a named local regression command before any fix can be merged.",
+      "tags": ["documentation", "ci-cd", "playbook", "evaluator-rag"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/report.json",
+      "type": "config",
+      "name": "report.json",
+      "filePath": "examples/evaluator-rag-prototype/ci-failure-diagnosis/report.json",
+      "summary": "Evaluator-RAG prototype run report for the ci-failure-diagnosis scenario, recording a prototype_passed result with per-dimension scores and findings that warn against rerun-only approaches and require log-backed regression gates.",
+      "tags": ["evaluator-rag", "ci-cd", "data-pipeline", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "Uses a versioned schema (ecc.evaluator-rag.report.v1) and read_only flag to indicate these are immutable prototype artifacts."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/scenario.json",
+      "type": "config",
+      "name": "scenario.json",
+      "filePath": "examples/evaluator-rag-prototype/ci-failure-diagnosis/scenario.json",
+      "summary": "Evaluator-RAG scenario definition for CI failure diagnosis in read-only prototype mode, specifying retrieval sources (gh run/pr commands, repo docs, tests), five retrieval questions, forbidden actions, and acceptance gates that must be satisfied before a playbook is promoted.",
+      "tags": ["evaluator-rag", "ci-cd", "schema-definition", "configuration"],
+      "complexity": "moderate",
+      "languageNotes": "Acceptance gates and forbidden_actions form a contract that the verifier checks against candidate playbooks."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/trace.json",
+      "type": "config",
+      "name": "trace.json",
+      "filePath": "examples/evaluator-rag-prototype/ci-failure-diagnosis/trace.json",
+      "summary": "Evaluator-RAG execution trace for the ci-failure-diagnosis prototype run, capturing the five sequential phases (observation, retrieval, proposal, verification, promotion) with evidence pointers and the final promoted candidate id.",
+      "tags": ["evaluator-rag", "ci-cd", "data-pipeline", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "The read_only flag signals this trace must not be modified; it is an immutable record of a past prototype run."
+    },
+    {
+      "id": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/verifier-result.json",
+      "type": "config",
+      "name": "verifier-result.json",
+      "filePath": "examples/evaluator-rag-prototype/ci-failure-diagnosis/verifier-result.json",
+      "summary": "Verifier output for the ci-failure-diagnosis scenario comparing two candidates: accepts log-backed-minimal-fix (score 0.93) for requiring concrete evidence and rejecting rerun-only-green-wait (score 0.17) for failing to identify the failure cause or add a regression guard.",
+      "tags": ["evaluator-rag", "ci-cd", "data-pipeline", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "Provides scored, reasoned decisions per candidate with rollback instructions, forming the authoritative promotion record."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/report.json",
+      "target": "document:examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/scenario.json",
+      "target": "document:examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/trace.json",
+      "target": "document:examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/verifier-result.json",
+      "target": "document:examples/evaluator-rag-prototype/ci-failure-diagnosis/candidate-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/trace.json",
+      "target": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/verifier-result.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/report.json",
+      "target": "config:examples/evaluator-rag-prototype/ci-failure-diagnosis/verifier-result.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

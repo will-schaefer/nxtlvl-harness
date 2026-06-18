@@ -1,0 +1,862 @@
+{
+  "nodes": [
+    {
+      "id": "file:skills/skill-comply/scripts/classifier.py",
+      "type": "file",
+      "name": "classifier.py",
+      "filePath": "skills/skill-comply/scripts/classifier.py",
+      "summary": "Classifies agent trace events against a compliance spec by invoking an LLM via subprocess and parsing its JSON response, mapping each event index to a matched spec step.",
+      "tags": ["service", "validation", "llm-integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/grader.py",
+      "type": "file",
+      "name": "grader.py",
+      "filePath": "skills/skill-comply/scripts/grader.py",
+      "summary": "Grades a recorded agent trace against a compliance spec by orchestrating event classification, checking temporal ordering, computing per-step and overall compliance rates, and recommending hook promotion.",
+      "tags": ["service", "validation", "compliance"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/parser.py",
+      "type": "file",
+      "name": "parser.py",
+      "filePath": "skills/skill-comply/scripts/parser.py",
+      "summary": "Defines the core data model (ObservationEvent, Detector, Step, ComplianceSpec) and provides parse_trace and parse_spec functions for loading JSONL trace logs and YAML compliance specs from disk.",
+      "tags": ["data-model", "serialization", "utility"],
+      "complexity": "moderate",
+      "languageNotes": "Uses Python dataclasses for all domain types; parse_trace expects JSONL (one JSON object per line) while parse_spec expects YAML."
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/report.py",
+      "type": "file",
+      "name": "report.py",
+      "filePath": "skills/skill-comply/scripts/report.py",
+      "summary": "Generates a Markdown compliance report summarising overall and per-step rates, scenario outcomes, and which spec steps should be promoted to hooks based on a configurable threshold.",
+      "tags": ["service", "reporting", "compliance"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/run.py",
+      "type": "file",
+      "name": "run.py",
+      "filePath": "skills/skill-comply/scripts/run.py",
+      "summary": "Entry-point CLI for the skill-comply pipeline: parses arguments, generates a compliance spec from a skill file, generates test scenarios, runs each scenario, grades the results, and writes a Markdown report.",
+      "tags": ["entry-point", "cli", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/runner.py",
+      "type": "file",
+      "name": "runner.py",
+      "filePath": "skills/skill-comply/scripts/runner.py",
+      "summary": "Executes each test scenario in an isolated sandbox directory by invoking Claude Code via subprocess, then parses the streaming JSON output into ObservationEvent records.",
+      "tags": ["service", "sandbox", "llm-integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "type": "file",
+      "name": "scenario_generator.py",
+      "filePath": "skills/skill-comply/scripts/scenario_generator.py",
+      "summary": "Generates test scenarios for a skill by prompting an LLM (via subprocess) with the skill content and compliance spec YAML, then parsing the YAML response into Scenario dataclass instances.",
+      "tags": ["service", "llm-integration", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/spec_generator.py",
+      "type": "file",
+      "name": "spec_generator.py",
+      "filePath": "skills/skill-comply/scripts/spec_generator.py",
+      "summary": "Generates a ComplianceSpec YAML from a skill file by prompting an LLM via subprocess and validating the output by round-tripping it through parse_spec with retry logic.",
+      "tags": ["service", "llm-integration", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-comply/scripts/utils.py",
+      "type": "file",
+      "name": "utils.py",
+      "filePath": "skills/skill-comply/scripts/utils.py",
+      "summary": "Provides a single extract_yaml helper that strips optional YAML fenced-code-block delimiters from LLM output text.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/skill-comply/tests/test_grader.py",
+      "type": "file",
+      "name": "test_grader.py",
+      "filePath": "skills/skill-comply/tests/test_grader.py",
+      "summary": "Unit tests for the grader module covering compliant and noncompliant traces, temporal ordering of steps, hook-promotion recommendations, and edge cases such as empty traces and cross-referenced spec steps.",
+      "tags": ["test", "validation", "compliance"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/skill-comply/tests/test_parser.py",
+      "type": "file",
+      "name": "test_parser.py",
+      "filePath": "skills/skill-comply/tests/test_parser.py",
+      "summary": "Unit tests for the parser module verifying trace parsing (event fields, ordering, empty/missing files) and spec parsing (step fields, optional detector fields, scoring threshold, required vs optional steps).",
+      "tags": ["test", "data-model", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-comply/tests/test_runner.py",
+      "type": "file",
+      "name": "test_runner.py",
+      "filePath": "skills/skill-comply/tests/test_runner.py",
+      "summary": "Unit tests for the runner module covering sandbox setup (shell builtin skipping, missing executables), max-turns termination handling, and error message formatting when scenarios fail.",
+      "tags": ["test", "sandbox", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/classifier.py:classify_events",
+      "type": "function",
+      "name": "classify_events",
+      "filePath": "skills/skill-comply/scripts/classifier.py",
+      "lineRange": [17, 59],
+      "summary": "Builds an LLM prompt from the compliance spec and trace events, invokes the classifier LLM via subprocess, and returns a mapping from event index to matched spec step ID.",
+      "tags": ["service", "llm-integration", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/grader.py:grade",
+      "type": "function",
+      "name": "grade",
+      "filePath": "skills/skill-comply/scripts/grader.py",
+      "lineRange": [64, 124],
+      "summary": "Orchestrates compliance grading: classifies trace events, checks temporal ordering for each spec step, computes per-step detection and overall compliance rates, and returns a ComplianceResult.",
+      "tags": ["service", "validation", "compliance"],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/grader.py:StepResult",
+      "type": "class",
+      "name": "StepResult",
+      "filePath": "skills/skill-comply/scripts/grader.py",
+      "lineRange": [12, 16],
+      "summary": "Dataclass holding the grading outcome for a single compliance spec step: detection flag, supporting evidence events, and optional failure reason.",
+      "tags": ["data-model", "compliance"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/grader.py:ComplianceResult",
+      "type": "class",
+      "name": "ComplianceResult",
+      "filePath": "skills/skill-comply/scripts/grader.py",
+      "lineRange": [20, 25],
+      "summary": "Dataclass representing the full grading result for one compliance spec: per-step results, overall compliance rate, hook promotion recommendation, and raw classification mapping.",
+      "tags": ["data-model", "compliance"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/parser.py:parse_trace",
+      "type": "function",
+      "name": "parse_trace",
+      "filePath": "skills/skill-comply/scripts/parser.py",
+      "lineRange": [47, 74],
+      "summary": "Reads a JSONL trace file from disk and returns a timestamp-sorted list of ObservationEvent instances, raising on missing files or malformed JSON lines.",
+      "tags": ["serialization", "data-model", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/parser.py:parse_spec",
+      "type": "function",
+      "name": "parse_spec",
+      "filePath": "skills/skill-comply/scripts/parser.py",
+      "lineRange": [77, 107],
+      "summary": "Reads a YAML compliance spec file and constructs a ComplianceSpec with its Steps and Detectors, raising on missing files or missing required fields.",
+      "tags": ["serialization", "data-model", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/parser.py:ObservationEvent",
+      "type": "class",
+      "name": "ObservationEvent",
+      "filePath": "skills/skill-comply/scripts/parser.py",
+      "lineRange": [13, 19],
+      "summary": "Dataclass representing a single recorded agent event with timestamp, event type, tool name, session, and tool input/output fields.",
+      "tags": ["data-model", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/parser.py:ComplianceSpec",
+      "type": "class",
+      "name": "ComplianceSpec",
+      "filePath": "skills/skill-comply/scripts/parser.py",
+      "lineRange": [38, 44],
+      "summary": "Dataclass representing a compliance specification with an id, name, source rule reference, version, ordered Steps, and a hook-promotion threshold.",
+      "tags": ["data-model", "compliance"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/report.py:generate_report",
+      "type": "function",
+      "name": "generate_report",
+      "filePath": "skills/skill-comply/scripts/report.py",
+      "lineRange": [13, 138],
+      "summary": "Assembles a comprehensive Markdown compliance report covering the spec summary, per-scenario results with step-level detail, a cross-scenario step compliance table, and the raw event trace as a data appendix.",
+      "tags": ["reporting", "compliance", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/run.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "skills/skill-comply/scripts/run.py",
+      "lineRange": [22, 123],
+      "summary": "CLI entry point that parses command-line arguments, drives the full skill-comply pipeline (spec generation, scenario generation, scenario execution, grading, and report writing), and logs overall compliance metrics.",
+      "tags": ["entry-point", "cli", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/runner.py:run_scenario",
+      "type": "function",
+      "name": "run_scenario",
+      "filePath": "skills/skill-comply/scripts/runner.py",
+      "lineRange": [36, 89],
+      "summary": "Runs a single test scenario by provisioning a sandbox directory, invoking Claude Code via subprocess with the scenario prompt, and returning a ScenarioRun with parsed observation events.",
+      "tags": ["service", "sandbox", "llm-integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/runner.py:_parse_stream_json",
+      "type": "function",
+      "name": "_parse_stream_json",
+      "filePath": "skills/skill-comply/scripts/runner.py",
+      "lineRange": [125, 194],
+      "summary": "Parses the streaming JSON output from a Claude Code subprocess invocation, extracting tool-use and tool-result events into ObservationEvent records while tracking incomplete block state.",
+      "tags": ["serialization", "llm-integration", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/runner.py:ScenarioRun",
+      "type": "class",
+      "name": "ScenarioRun",
+      "filePath": "skills/skill-comply/scripts/runner.py",
+      "lineRange": [30, 33],
+      "summary": "Dataclass holding the outcome of a scenario execution: the scenario definition, list of ObservationEvents captured during the run, and sandbox directory path.",
+      "tags": ["data-model", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/scenario_generator.py:generate_scenarios",
+      "type": "function",
+      "name": "generate_scenarios",
+      "filePath": "skills/skill-comply/scripts/scenario_generator.py",
+      "lineRange": [26, 70],
+      "summary": "Prompts an LLM with skill content and spec YAML to generate test scenarios at varying difficulty levels, parses the YAML response, and returns a tuple of Scenario dataclasses sorted by level.",
+      "tags": ["factory", "llm-integration", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/scripts/scenario_generator.py:Scenario",
+      "type": "class",
+      "name": "Scenario",
+      "filePath": "skills/skill-comply/scripts/scenario_generator.py",
+      "lineRange": [17, 23],
+      "summary": "Dataclass representing a generated test scenario with id, difficulty level, description, user prompt, and optional setup shell commands.",
+      "tags": ["data-model", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/spec_generator.py:generate_spec",
+      "type": "function",
+      "name": "generate_spec",
+      "filePath": "skills/skill-comply/scripts/spec_generator.py",
+      "lineRange": [17, 72],
+      "summary": "Generates a ComplianceSpec from a skill file by prompting an LLM via subprocess, extracting the YAML response, and validating it by round-tripping through parse_spec with up to max_retries attempts.",
+      "tags": ["factory", "llm-integration", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/skill-comply/scripts/utils.py:extract_yaml",
+      "type": "function",
+      "name": "extract_yaml",
+      "filePath": "skills/skill-comply/scripts/utils.py",
+      "lineRange": [6, 13],
+      "summary": "Strips YAML fenced-code-block markers (```yaml / ```) from LLM response text, returning the bare YAML content.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_grader.py:TestGradeCompliant",
+      "type": "class",
+      "name": "TestGradeCompliant",
+      "filePath": "skills/skill-comply/tests/test_grader.py",
+      "lineRange": [53, 87],
+      "summary": "Test class verifying grader behaviour on a fully compliant trace: correct result type, 100% compliance rate, all required steps detected, optional steps detected, no hook promotion, and non-empty evidence.",
+      "tags": ["test", "compliance", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_grader.py:TestGradeNoncompliant",
+      "type": "class",
+      "name": "TestGradeNoncompliant",
+      "filePath": "skills/skill-comply/tests/test_grader.py",
+      "lineRange": [90, 119],
+      "summary": "Test class verifying grader behaviour on a noncompliant trace: low compliance rate, temporal ordering failures, undetected steps, hook promotion recommendation, and failure reason strings.",
+      "tags": ["test", "compliance", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_grader.py:TestGradeEdgeCases",
+      "type": "class",
+      "name": "TestGradeEdgeCases",
+      "filePath": "skills/skill-comply/tests/test_grader.py",
+      "lineRange": [122, 197],
+      "summary": "Test class covering grader edge cases: empty trace, compliance rate computed from required-only steps, spec_id propagation, and after_step references to later-declared spec steps.",
+      "tags": ["test", "compliance", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_parser.py:TestParseTrace",
+      "type": "class",
+      "name": "TestParseTrace",
+      "filePath": "skills/skill-comply/tests/test_parser.py",
+      "lineRange": [19, 51],
+      "summary": "Test class for parse_trace covering successful parsing, timestamp ordering, event field correctness, empty-file handling, and FileNotFoundError on missing paths.",
+      "tags": ["test", "data-model", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_parser.py:TestParseSpec",
+      "type": "class",
+      "name": "TestParseSpec",
+      "filePath": "skills/skill-comply/tests/test_parser.py",
+      "lineRange": [54, 90],
+      "summary": "Test class for parse_spec covering correct parsing of a TDD compliance spec, step and detector fields, optional detector field handling, scoring threshold, and required vs optional step classification.",
+      "tags": ["test", "data-model", "compliance"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_runner.py:TestSetupSandboxSkipsShellBuiltins",
+      "type": "class",
+      "name": "TestSetupSandboxSkipsShellBuiltins",
+      "filePath": "skills/skill-comply/tests/test_runner.py",
+      "lineRange": [23, 101],
+      "summary": "Test class verifying sandbox setup skips shell builtins (cd, pushd, popd), tolerates missing executables, and still runs valid real commands.",
+      "tags": ["test", "sandbox", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_runner.py:TestRunScenarioMaxTurnsTermination",
+      "type": "class",
+      "name": "TestRunScenarioMaxTurnsTermination",
+      "filePath": "skills/skill-comply/tests/test_runner.py",
+      "lineRange": [104, 143],
+      "summary": "Test class verifying that run_scenario treats a non-zero exit code as a normal termination when the max-turns marker is present in stdout, but raises RuntimeError without the marker.",
+      "tags": ["test", "service", "llm-integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:skills/skill-comply/tests/test_runner.py:TestRunScenarioErrorIncludesStdoutTail",
+      "type": "class",
+      "name": "TestRunScenarioErrorIncludesStdoutTail",
+      "filePath": "skills/skill-comply/tests/test_runner.py",
+      "lineRange": [146, 172],
+      "summary": "Test class verifying that RuntimeError messages from failed scenario runs include the tail of stdout to aid debugging.",
+      "tags": ["test", "service", "utility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/skill-comply/scripts/classifier.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "file:skills/skill-comply/scripts/classifier.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/report.py",
+      "target": "file:skills/skill-comply/scripts/grader.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/report.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/report.py",
+      "target": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "file:skills/skill-comply/scripts/grader.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "file:skills/skill-comply/scripts/report.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "file:skills/skill-comply/scripts/runner.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "file:skills/skill-comply/scripts/spec_generator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "target": "file:skills/skill-comply/scripts/utils.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/spec_generator.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/spec_generator.py",
+      "target": "file:skills/skill-comply/scripts/utils.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_grader.py",
+      "target": "file:skills/skill-comply/scripts/grader.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_grader.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_parser.py",
+      "target": "file:skills/skill-comply/scripts/parser.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_runner.py",
+      "target": "file:skills/skill-comply/scripts/runner.py",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/classifier.py",
+      "target": "function:skills/skill-comply/scripts/classifier.py:classify_events",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/classifier.py",
+      "target": "function:skills/skill-comply/scripts/classifier.py:classify_events",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "function:skills/skill-comply/scripts/grader.py:grade",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "function:skills/skill-comply/scripts/grader.py:grade",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "class:skills/skill-comply/scripts/grader.py:StepResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "class:skills/skill-comply/scripts/grader.py:StepResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "class:skills/skill-comply/scripts/grader.py:ComplianceResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "class:skills/skill-comply/scripts/grader.py:ComplianceResult",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "function:skills/skill-comply/scripts/parser.py:parse_trace",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "function:skills/skill-comply/scripts/parser.py:parse_trace",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "function:skills/skill-comply/scripts/parser.py:parse_spec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "function:skills/skill-comply/scripts/parser.py:parse_spec",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "class:skills/skill-comply/scripts/parser.py:ObservationEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "class:skills/skill-comply/scripts/parser.py:ObservationEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "class:skills/skill-comply/scripts/parser.py:ComplianceSpec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "class:skills/skill-comply/scripts/parser.py:ComplianceSpec",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/report.py",
+      "target": "function:skills/skill-comply/scripts/report.py:generate_report",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/report.py",
+      "target": "function:skills/skill-comply/scripts/report.py:generate_report",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "function:skills/skill-comply/scripts/run.py:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/run.py",
+      "target": "function:skills/skill-comply/scripts/run.py:main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "function:skills/skill-comply/scripts/runner.py:run_scenario",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "function:skills/skill-comply/scripts/runner.py:run_scenario",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "function:skills/skill-comply/scripts/runner.py:_parse_stream_json",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "function:skills/skill-comply/scripts/runner.py:_parse_stream_json",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "class:skills/skill-comply/scripts/runner.py:ScenarioRun",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "class:skills/skill-comply/scripts/runner.py:ScenarioRun",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "target": "function:skills/skill-comply/scripts/scenario_generator.py:generate_scenarios",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "target": "function:skills/skill-comply/scripts/scenario_generator.py:generate_scenarios",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "target": "class:skills/skill-comply/scripts/scenario_generator.py:Scenario",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/scenario_generator.py",
+      "target": "class:skills/skill-comply/scripts/scenario_generator.py:Scenario",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/spec_generator.py",
+      "target": "function:skills/skill-comply/scripts/spec_generator.py:generate_spec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/spec_generator.py",
+      "target": "function:skills/skill-comply/scripts/spec_generator.py:generate_spec",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/utils.py",
+      "target": "function:skills/skill-comply/scripts/utils.py:extract_yaml",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/utils.py",
+      "target": "function:skills/skill-comply/scripts/utils.py:extract_yaml",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_grader.py",
+      "target": "class:skills/skill-comply/tests/test_grader.py:TestGradeCompliant",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_grader.py",
+      "target": "class:skills/skill-comply/tests/test_grader.py:TestGradeNoncompliant",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_grader.py",
+      "target": "class:skills/skill-comply/tests/test_grader.py:TestGradeEdgeCases",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_parser.py",
+      "target": "class:skills/skill-comply/tests/test_parser.py:TestParseTrace",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_parser.py",
+      "target": "class:skills/skill-comply/tests/test_parser.py:TestParseSpec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_runner.py",
+      "target": "class:skills/skill-comply/tests/test_runner.py:TestSetupSandboxSkipsShellBuiltins",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_runner.py",
+      "target": "class:skills/skill-comply/tests/test_runner.py:TestRunScenarioMaxTurnsTermination",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/tests/test_runner.py",
+      "target": "class:skills/skill-comply/tests/test_runner.py:TestRunScenarioErrorIncludesStdoutTail",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/grader.py",
+      "target": "file:skills/skill-comply/tests/test_grader.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/parser.py",
+      "target": "file:skills/skill-comply/tests/test_parser.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:skills/skill-comply/scripts/runner.py",
+      "target": "file:skills/skill-comply/tests/test_runner.py",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/grader.py:grade",
+      "target": "function:skills/skill-comply/scripts/classifier.py:classify_events",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/run.py:main",
+      "target": "function:skills/skill-comply/scripts/report.py:generate_report",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/run.py:main",
+      "target": "function:skills/skill-comply/scripts/runner.py:run_scenario",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/run.py:main",
+      "target": "function:skills/skill-comply/scripts/scenario_generator.py:generate_scenarios",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/run.py:main",
+      "target": "function:skills/skill-comply/scripts/spec_generator.py:generate_spec",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-comply/scripts/spec_generator.py:generate_spec",
+      "target": "function:skills/skill-comply/scripts/parser.py:parse_spec",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Uncomment to activate; use ! prefix to force-include.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, *.lock, *.min.js, etc.
+#
+# (No project-specific exclusions detected — this directory is 10 JSON Schema files.)

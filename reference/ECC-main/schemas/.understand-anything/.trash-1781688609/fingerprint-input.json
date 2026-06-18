@@ -1,0 +1,16 @@
+{
+  "projectRoot": "/Users/willschaefer/Developer/reference/ECC-main/schemas",
+  "sourceFilePaths": [
+    "ecc-install-config.schema.json",
+    "hooks.schema.json",
+    "install-components.schema.json",
+    "install-modules.schema.json",
+    "install-profiles.schema.json",
+    "install-state.schema.json",
+    "package-manager.schema.json",
+    "plugin.schema.json",
+    "provenance.schema.json",
+    "state-store.schema.json"
+  ],
+  "gitCommitHash": "2a5b5e78b82dc63ea6cf2627b88095bef53c7f7f"
+}

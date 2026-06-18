@@ -1,0 +1,341 @@
+{
+  "nodes": [
+    {
+      "id": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "type": "file",
+      "name": "iconify_gen.sh",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "summary": "Shell script that searches, previews, and generates iOS-ready icon assets from the Iconify icon library, supporting both PNG rasterization and SVG output in a standardized directory structure.",
+      "tags": ["utility", "script", "asset-generation", "ios", "iconify"],
+      "complexity": "complex",
+      "languageNotes": "Bash script with six top-level functions covering the full generate-icon workflow: argument validation, usage display, icon search, collection listing, preview, and generation."
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:require_value",
+      "type": "function",
+      "name": "require_value",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [26, 33],
+      "summary": "Validates that a required CLI argument value is present, printing usage and exiting on failure.",
+      "tags": ["validation", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:usage",
+      "type": "function",
+      "name": "usage",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [35, 64],
+      "summary": "Prints the full CLI help message describing available subcommands, flags, and examples for iconify_gen.sh.",
+      "tags": ["utility", "documentation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:search_icons",
+      "type": "function",
+      "name": "search_icons",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [66, 103],
+      "summary": "Queries the Iconify API for icons matching a search term and optional collection filter, formatting results for display.",
+      "tags": ["api-handler", "utility", "search"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:list_collections",
+      "type": "function",
+      "name": "list_collections",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [105, 123],
+      "summary": "Fetches and displays a filtered list of available Iconify collections from the remote API.",
+      "tags": ["api-handler", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:preview_icon",
+      "type": "function",
+      "name": "preview_icon",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [125, 140],
+      "summary": "Downloads and displays a single SVG icon from Iconify for preview before generation.",
+      "tags": ["api-handler", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:generate_icon",
+      "type": "function",
+      "name": "generate_icon",
+      "filePath": "skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "lineRange": [142, 211],
+      "summary": "Downloads an SVG icon from Iconify and generates iOS AppIcon-compatible PNG sizes at multiple resolutions, outputting into a structured assets directory.",
+      "tags": ["asset-generation", "ios", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/ios-icon-gen/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ios-icon-gen/SKILL.md",
+      "summary": "Skill definition for the iOS Icon Generator workflow, guiding agents to search Iconify collections and produce properly-sized iOS app icons using the bundled iconify_gen.sh script.",
+      "tags": ["documentation", "ios", "skill", "asset-generation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/iterative-retrieval/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/iterative-retrieval/SKILL.md",
+      "summary": "Skill definition for the Iterative Retrieval Pattern — a four-phase (Dispatch, Evaluate, Refine, Loop) approach to progressively gathering just enough context for a task rather than loading everything upfront.",
+      "tags": ["documentation", "skill", "agent-workflow", "retrieval"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/ito-basket-compare/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ito-basket-compare/SKILL.md",
+      "summary": "Skill definition for the Itô Basket Compare workflow, which compares a proposed trading basket against knowledge base, portfolio notes, and financial context with strict guardrails against investment advice.",
+      "tags": ["documentation", "skill", "finance", "trading"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/ito-data-atlas-agent/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ito-data-atlas-agent/SKILL.md",
+      "summary": "Skill definition for the Itô Data Atlas Agent, an agentic data-discovery workflow that catalogs and maps available data sources with guardrails preventing unsanctioned data access.",
+      "tags": ["documentation", "skill", "finance", "data-discovery"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/ito-market-intelligence/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ito-market-intelligence/SKILL.md",
+      "summary": "Skill definition for the Itô Market Intelligence workflow, which aggregates and summarizes market signals while enforcing guardrails against actionable trading recommendations.",
+      "tags": ["documentation", "skill", "finance", "market-research"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/ito-trade-planner/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ito-trade-planner/SKILL.md",
+      "summary": "Skill definition for the Itô Trade Planner workflow, providing a structured planning process for trade ideas with strict language controls that prevent advice, predictions, or guarantees.",
+      "tags": ["documentation", "skill", "finance", "trading"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/java-coding-standards/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/java-coding-standards/SKILL.md",
+      "summary": "Comprehensive Java coding standards skill covering naming, immutability, Optional usage, streams, dependency injection, reactive patterns, exception handling, generics, project structure, and testing expectations for both Spring and Quarkus frameworks.",
+      "tags": ["documentation", "skill", "java", "coding-standards"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/jira-integration/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/jira-integration/SKILL.md",
+      "summary": "Skill definition for Jira integration, covering both MCP server and direct REST API access patterns for fetching, commenting, transitioning, and analyzing Jira tickets within a Claude Code workflow.",
+      "tags": ["documentation", "skill", "jira", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/jpa-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/jpa-patterns/SKILL.md",
+      "summary": "Skill definition for JPA/Hibernate patterns, covering entity design, N+1 prevention, repository patterns, transactions, pagination, indexing, connection pooling with HikariCP, caching, migrations, and data access testing.",
+      "tags": ["documentation", "skill", "java", "database"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/knowledge-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/knowledge-ops/SKILL.md",
+      "summary": "Skill definition for Knowledge Operations, describing a six-layer knowledge architecture and ingestion/sync workflows for managing Claude Code memory, MCP knowledge graph, document stores, and external databases.",
+      "tags": ["documentation", "skill", "knowledge-management", "memory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/kotlin-coroutines-flows/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kotlin-coroutines-flows/SKILL.md",
+      "summary": "Skill definition for Kotlin Coroutines and Flows, covering structured concurrency, scope hierarchy, parallel decomposition, Flow patterns (cold/hot/State/Shared), dispatchers, cancellation, and coroutine testing with TestDispatcher and Turbine.",
+      "tags": ["documentation", "skill", "kotlin", "concurrency"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/kotlin-exposed-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kotlin-exposed-patterns/SKILL.md",
+      "summary": "Comprehensive skill definition for JetBrains Exposed ORM patterns, covering DSL and DAO approaches, HikariCP pooling, Flyway migrations, table definitions, CRUD queries, pagination, batch operations, transactions, repository pattern, JSONB columns, and in-memory testing.",
+      "tags": ["documentation", "skill", "kotlin", "database"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/kotlin-ktor-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kotlin-ktor-patterns/SKILL.md",
+      "summary": "Comprehensive skill definition for Ktor server patterns, covering application structure, routing DSL, content negotiation, authentication (JWT), error handling, CORS, Koin dependency injection, request validation, WebSockets, and testApplication testing.",
+      "tags": ["documentation", "skill", "kotlin", "api-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/kotlin-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kotlin-patterns/SKILL.md",
+      "summary": "Comprehensive skill definition for idiomatic Kotlin development, covering null safety, immutability, sealed classes, scope functions, extension functions, coroutines, delegation, DSL builders, sequences, Gradle Kotlin DSL, error handling with Result, and collection operations.",
+      "tags": ["documentation", "skill", "kotlin", "coding-standards"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/kotlin-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kotlin-testing/SKILL.md",
+      "summary": "Comprehensive Kotlin testing skill covering TDD workflow, Kotest spec styles (String/Fun/Behavior/Describe), Kotest matchers, MockK mocking, coroutine testing with runTest and TestDispatcher, property-based testing, data-driven testing, lifecycle fixtures, Kover coverage, and Ktor testApplication patterns.",
+      "tags": ["documentation", "skill", "kotlin", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/kubernetes-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/kubernetes-patterns/SKILL.md",
+      "summary": "Comprehensive Kubernetes patterns skill covering production Deployment templates, health probes, Service/Ingress configuration, ConfigMaps, Secrets, resource limits, RBAC, HPA, PodDisruptionBudgets, namespaces, Jobs/CronJobs, kubectl debugging, and security best practices.",
+      "tags": ["documentation", "skill", "kubernetes", "infrastructure"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/laravel-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/laravel-patterns/SKILL.md",
+      "summary": "Comprehensive Laravel development patterns skill covering project structure, controller-service-action layering, routing, Eloquent model patterns, eager loading, query objects, migrations, form requests, API resources, events/jobs/queues, and caching.",
+      "tags": ["documentation", "skill", "laravel", "coding-standards"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/laravel-plugin-discovery/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/laravel-plugin-discovery/SKILL.md",
+      "summary": "Skill definition for Laravel Plugin Discovery, guiding agents to use MCP tools (SearchPluginTool, GetPluginDetailsTool) to find, evaluate, and assess compatibility of Laravel packages from the ecosystem.",
+      "tags": ["documentation", "skill", "laravel", "package-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/laravel-security/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/laravel-security/SKILL.md",
+      "summary": "Comprehensive Laravel security best practices skill covering production configuration, authentication (Sanctum), authorization (Gates/Policies), Eloquent security, CSRF protection, XSS prevention, input validation, API security, file upload security, secret management, queue security, and security event logging.",
+      "tags": ["documentation", "skill", "laravel", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/laravel-tdd/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/laravel-tdd/SKILL.md",
+      "summary": "Comprehensive Laravel TDD skill covering red-green-refactor workflow, PHPUnit/Pest configuration, model factories, HTTP/JSON/auth testing, mocking (HTTP/mail/queue/storage/events), Artisan command tests, authorization tests, and coverage goals.",
+      "tags": ["documentation", "skill", "laravel", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/laravel-verification/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/laravel-verification/SKILL.md",
+      "summary": "Skill definition for the Laravel Verification Loop, providing a seven-phase checklist (environment, Composer/autoload, linting, tests/coverage, security, database/migrations, build/deploy, queue/scheduler) to verify a Laravel project is production-ready.",
+      "tags": ["documentation", "skill", "laravel", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/latency-critical-systems/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/latency-critical-systems/SKILL.md",
+      "summary": "Concise skill definition for working on latency-critical systems, providing a structured approach to splitting metrics, mapping hot paths, ordering optimizations, and verifying improvements with guardrails against premature optimization.",
+      "tags": ["documentation", "skill", "performance-optimization", "systems"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/lead-intelligence/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/lead-intelligence/SKILL.md",
+      "summary": "Skill definition for Lead Intelligence, a five-stage pipeline (signal scoring, mutual ranking, warm path discovery, enrichment, outreach drafting) for researching and prioritizing sales leads with channel-specific outreach templates.",
+      "tags": ["documentation", "skill", "sales", "research"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/liquid-glass-design/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/liquid-glass-design/SKILL.md",
+      "summary": "Skill definition for the iOS 26 Liquid Glass Design System, providing SwiftUI, UIKit, and WidgetKit patterns for implementing glass effects, morphing transitions, container effects, and rendering mode detection.",
+      "tags": ["documentation", "skill", "ios", "ui-design"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:require_value",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:usage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:search_icons",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:list_collections",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:preview_icon",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "target": "function:skills/ios-icon-gen/scripts/iconify_gen.sh:generate_icon",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:skills/ios-icon-gen/SKILL.md",
+      "target": "file:skills/ios-icon-gen/scripts/iconify_gen.sh",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "nodes": [
+    {
+      "id": "document:releases/2.0.0-rc.1/article-outline.md",
+      "type": "document",
+      "name": "article-outline.md",
+      "filePath": "releases/2.0.0-rc.1/article-outline.md",
+      "summary": "Longform launch article outline for ECC v2.0.0-rc.1, structured in seven sections that argue ECC is a cross-harness operator substrate and Hermes is the operator shell.",
+      "tags": ["documentation", "release", "marketing", "article-outline", "launch"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/demo-prompts.md",
+      "type": "document",
+      "name": "demo-prompts.md",
+      "filePath": "releases/2.0.0-rc.1/demo-prompts.md",
+      "summary": "Three sanitized demo/proof-of-work prompts (ECC builds ECC, recording-to-assets, public launch push) abstracting private Hermes workflows into public examples for the rc.1 launch.",
+      "tags": ["documentation", "release", "demo", "prompts", "marketing"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "type": "document",
+      "name": "ito-prediction-market-skill-pack.md",
+      "filePath": "releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md",
+      "summary": "Public distribution note for the Itô prediction-market skill pack, defining included skills, gated non-advisory API access via ITO_API_KEY, and the growth loop kept separate from ECC Tools billing.",
+      "tags": ["documentation", "release", "skill-pack", "product-integration", "boundary"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/launch-checklist.md",
+      "type": "document",
+      "name": "launch-checklist.md",
+      "filePath": "releases/2.0.0-rc.1/launch-checklist.md",
+      "summary": "Operator launch checklist for ECC v2.0.0-rc.1 covering repo verification, release-surface gates, content publication, demo assets, and approval-gated messaging discipline.",
+      "tags": ["documentation", "release", "checklist", "launch", "entry-point"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/linkedin-post.md",
+      "type": "document",
+      "name": "linkedin-post.md",
+      "filePath": "releases/2.0.0-rc.1/linkedin-post.md",
+      "summary": "LinkedIn launch announcement draft for ECC v2.0.0-rc.1, gated to require live GitHub/npm URLs and keep remaining plugin/video/billing URLs approval-gated.",
+      "tags": ["documentation", "release", "social", "marketing", "launch"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "type": "document",
+      "name": "naming-and-publication-matrix.md",
+      "filePath": "releases/2.0.0-rc.1/naming-and-publication-matrix.md",
+      "summary": "Naming, slug, and publication-path decision record freezing rc.1 identity as ECC (repo affaan-m/ECC, npm ecc-universal, plugin slug ecc) with the ITO-46 blocker register and per-surface evidence commands.",
+      "tags": ["documentation", "release", "decision-record", "naming", "publication"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-15.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-15, tracking current status, the prompt-to-artifact checklist, top actions, and the next work order.",
+      "tags": ["documentation", "release", "dashboard", "operator-readiness", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-17.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-17, superseding the May 15 dashboard with refreshed status, checklist, top actions, and next work order.",
+      "tags": ["documentation", "release", "dashboard", "operator-readiness", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-18, superseding the May 17 dashboard with refreshed status, checklist, top actions, and next work order.",
+      "tags": ["documentation", "release", "dashboard", "operator-readiness", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md",
+      "summary": "Dated prompt-to-artifact operator readiness dashboard snapshot for 2026-05-19, adding a growth baseline section and superseding the May 18 dashboard.",
+      "tags": ["documentation", "release", "dashboard", "operator-readiness", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "type": "document",
+      "name": "operator-readiness-dashboard-2026-05-20.md",
+      "filePath": "releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md",
+      "summary": "Current prompt-to-artifact operator readiness dashboard snapshot for 2026-05-20, showing PR/issue/discussion/platform/supply-chain gates current plus hypergrowth, video, Linear, and billing operating lanes.",
+      "tags": ["documentation", "release", "dashboard", "operator-readiness", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "type": "document",
+      "name": "owner-approval-packet-2026-05-19.md",
+      "filePath": "releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md",
+      "summary": "Final human decision sheet (snapshot 2026-05-19) for the rc.1 public launch, recording current evidence, a per-action decision register, final URL fill-ins, evidence commands, and do-not-approve conditions.",
+      "tags": ["documentation", "release", "approval", "decision-record", "governance"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "type": "document",
+      "name": "owner-queue-cleanup-2026-05-18.md",
+      "filePath": "releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md",
+      "summary": "Owner-wide queue cleanup log for 2026-05-18 recording the commands run and the final PR and issue disposition that drove the queue to a clean state.",
+      "tags": ["documentation", "release", "queue-cleanup", "evidence", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "type": "document",
+      "name": "partner-sponsor-talks-pack.md",
+      "filePath": "releases/2.0.0-rc.1/partner-sponsor-talks-pack.md",
+      "summary": "Approval-gated outbound copy pack for ECC v2.0.0-rc.1 covering positioning, offer ladder, partner/sponsor outbound, platform-partner DMs, consulting intros, talk/podcast pitches, and a GitHub Discussion announcement.",
+      "tags": ["documentation", "release", "outbound", "marketing", "business-development"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "type": "document",
+      "name": "preview-pack-manifest.md",
+      "filePath": "releases/2.0.0-rc.1/preview-pack-manifest.md",
+      "summary": "Central manifest indexing the reviewed rc.1 preview pack — every public launch artifact, its role, and its verification gate — plus skill boundaries, adapter direction, final verification commands, and publication blockers.",
+      "tags": ["documentation", "release", "manifest", "index", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-12.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-12.md",
+      "summary": "Dated publication-evidence log for 2026-05-12 capturing source commit, registry/release state, npm dry run, plugin/harness evidence, clean-checkout plugin smoke, and remaining blockers.",
+      "tags": ["documentation", "release", "evidence", "publication", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-13-post-hardening.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md",
+      "summary": "Post-hardening publication-evidence log for 2026-05-13 recording hardening landed since the prior evidence, required command evidence, supply-chain evidence, external advisory mapping, and remaining approval blockers.",
+      "tags": ["documentation", "release", "evidence", "publication", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-13.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-13.md",
+      "summary": "Dated publication-evidence log for 2026-05-13 capturing source commit, queue/release state, required command evidence, security-gate evidence, and blockers still requiring approval or external action.",
+      "tags": ["documentation", "release", "evidence", "publication", "snapshot"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-15.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-15.md",
+      "summary": "Comprehensive publication-evidence log for 2026-05-15 covering queue/discussion state, Linear roadmap, supply-chain evidence, preview-pack state, Codex marketplace evidence, and current publication blockers through PR #1941.",
+      "tags": ["documentation", "release", "evidence", "publication", "supply-chain"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "type": "document",
+      "name": "publication-evidence-2026-05-16.md",
+      "filePath": "releases/2.0.0-rc.1/publication-evidence-2026-05-16.md",
+      "summary": "Dated publication-evidence log for 2026-05-16 recording queue/discussion state, a merge-and-triage batch, release-gate commands, and current publication blockers for the May 16 mirror.",
+      "tags": ["documentation", "release", "evidence", "publication", "snapshot"]
+      ,"complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/launch-checklist.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/article-outline.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/linkedin-post.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/demo-prompts.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/linkedin-post.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/article-outline.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/demo-prompts.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/naming-and-publication-matrix.md", "target": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md", "target": "document:releases/2.0.0-rc.1/preview-pack-manifest.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-15.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-17.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-18.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-12.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-13-post-hardening.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/launch-checklist.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-15.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/owner-approval-packet-2026-05-19.md", "target": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/owner-queue-cleanup-2026-05-18.md", "target": "document:releases/2.0.0-rc.1/publication-evidence-2026-05-16.md", "type": "related", "direction": "forward", "weight": 0.5},
+
+    {"source": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md", "target": "document:releases/2.0.0-rc.1/operator-readiness-dashboard-2026-05-20.md", "type": "related", "direction": "forward", "weight": 0.5},
+    {"source": "document:releases/2.0.0-rc.1/partner-sponsor-talks-pack.md", "target": "document:releases/2.0.0-rc.1/ito-prediction-market-skill-pack.md", "type": "related", "direction": "forward", "weight": 0.5}
+  ]
+}

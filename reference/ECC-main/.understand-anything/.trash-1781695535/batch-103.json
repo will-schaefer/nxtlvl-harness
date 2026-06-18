@@ -1,0 +1,721 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/visa-doc-translate/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/visa-doc-translate/SKILL.md",
+      "summary": "Skill definition for translating visa and immigration documents from foreign languages using OCR and LLM-based translation, covering supported document types, OCR methods, and output formatting guidelines.",
+      "tags": ["documentation", "skill-definition", "translation", "ocr"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/vite-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/vite-patterns/SKILL.md",
+      "summary": "Comprehensive skill reference for Vite build tool patterns covering configuration, plugins, HMR, environment variables, build optimization, SSR, and common pitfalls with annotated code examples.",
+      "tags": ["documentation", "skill-definition", "build-system", "frontend-ui-engineering"],
+      "complexity": "complex",
+      "languageNotes": "39 sections covering Vite-specific patterns including security caveats around VITE_ prefix and loadEnv traps."
+    },
+    {
+      "id": "document:skills/vue-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/vue-patterns/SKILL.md",
+      "summary": "Skill reference for Vue.js 3 best practices covering component architecture, composables, Pinia state management, Vue Router, template patterns, performance, testing, Nuxt-specific patterns, and Vue 3.5+ new APIs.",
+      "tags": ["documentation", "skill-definition", "component", "frontend-ui-engineering"],
+      "complexity": "complex",
+      "languageNotes": "41 sections covering Vue 3 Composition API patterns, Pinia setup stores, and Vue 3.5+ reactive props destructure."
+    },
+    {
+      "id": "document:skills/windows-desktop-e2e/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/windows-desktop-e2e/SKILL.md",
+      "summary": "Comprehensive skill reference for Windows desktop end-to-end testing via UI Automation, covering Page Object Model, locator strategies, test isolation tiers (filesystem, Job Object, Windows Sandbox), CI/CD integration, Qt-specific quirks, and screenshot fallback mode.",
+      "tags": ["documentation", "skill-definition", "test", "ci-cd"],
+      "complexity": "complex",
+      "languageNotes": "41 sections; notable three-tier isolation model: filesystem isolation, Windows Job Object for process containment, and Windows Sandbox for full-OS CI isolation."
+    },
+    {
+      "id": "document:skills/workspace-surface-audit/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/workspace-surface-audit/SKILL.md",
+      "summary": "Skill definition for auditing Claude Code workspace surfaces — inventorying existing agents, skills, commands, hooks, and rules, then benchmarking against official ECC surfaces to identify gaps and produce actionable ECC decisions.",
+      "tags": ["documentation", "skill-definition", "configuration", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/x-api/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/x-api/SKILL.md",
+      "summary": "Skill reference for integrating with the X (Twitter) API, covering OAuth 2.0 and 1.0a authentication, core tweet/timeline/search operations, media upload, rate limits, error handling, and security practices.",
+      "tags": ["documentation", "skill-definition", "api-handler", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/llm/cli/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "src/llm/cli/__init__.py",
+      "summary": "Empty Python package initializer marking src/llm/cli as a Python package with no exports.",
+      "tags": ["entry-point", "barrel"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/llm/core/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "src/llm/core/__init__.py",
+      "summary": "Minimal Python package initializer for the src/llm/core package with a single line of content.",
+      "tags": ["entry-point", "barrel"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/__init__.py",
+      "type": "file",
+      "name": "__init__.py",
+      "filePath": "tests/__init__.py",
+      "summary": "Empty Python package initializer marking the tests directory as a Python package.",
+      "tags": ["entry-point", "test"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/ci/agent-instruction-safety.test.js",
+      "type": "file",
+      "name": "agent-instruction-safety.test.js",
+      "filePath": "tests/ci/agent-instruction-safety.test.js",
+      "summary": "CI test that scans agent Markdown files to verify they include required prompt-defense baseline instructions and do not contain patterns that could expose agent internals.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/ci/agent-yaml-surface.test.js",
+      "type": "file",
+      "name": "agent-yaml-surface.test.js",
+      "filePath": "tests/ci/agent-yaml-surface.test.js",
+      "summary": "CI test that validates the agent YAML surface registry matches the actual commands directory, ensuring no undocumented or missing agent commands.",
+      "tags": ["test", "ci-cd", "validation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/ci/catalog.test.js",
+      "type": "file",
+      "name": "catalog.test.js",
+      "filePath": "tests/ci/catalog.test.js",
+      "summary": "CI test suite for the catalog builder script that verifies correct counting of agents/skills/commands, catalog output formatting, and multi-language README generation using temporary fixture directories.",
+      "tags": ["test", "ci-cd", "validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/code-reviewer-false-positive-guard.test.js",
+      "type": "file",
+      "name": "code-reviewer-false-positive-guard.test.js",
+      "filePath": "tests/ci/code-reviewer-false-positive-guard.test.js",
+      "summary": "CI test that guards against false-positive detection patterns in the code-reviewer agent by validating that known benign patterns do not trigger security warnings.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/ci/codex-skill-surface.test.js",
+      "type": "file",
+      "name": "codex-skill-surface.test.js",
+      "filePath": "tests/ci/codex-skill-surface.test.js",
+      "summary": "CI test that validates the Codex skill surface by parsing YAML frontmatter from skill files and ensuring all required metadata fields are present and consistent.",
+      "tags": ["test", "ci-cd", "validation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/ci/command-registry.test.js",
+      "type": "file",
+      "name": "command-registry.test.js",
+      "filePath": "tests/ci/command-registry.test.js",
+      "summary": "CI test suite for the command registry generator that verifies correct extraction of command metadata, generation of registry files, and handling of edge cases using temporary fixture directories.",
+      "tags": ["test", "ci-cd", "validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/dynamic-workflow-team-surface.test.js",
+      "type": "file",
+      "name": "dynamic-workflow-team-surface.test.js",
+      "filePath": "tests/ci/dynamic-workflow-team-surface.test.js",
+      "summary": "CI test that validates the dynamic workflow team surface specification by reading the surface definition and checking for required agent roles and handoff patterns.",
+      "tags": ["test", "ci-cd", "validation", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/ci/mle-workflow-coverage.test.js",
+      "type": "file",
+      "name": "mle-workflow-coverage.test.js",
+      "filePath": "tests/ci/mle-workflow-coverage.test.js",
+      "summary": "CI test that validates coverage of the machine learning engineering workflow by parsing simulation scenario tables from skill files and checking for required workflow steps.",
+      "tags": ["test", "ci-cd", "validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/no-personal-paths.test.js",
+      "type": "file",
+      "name": "no-personal-paths.test.js",
+      "filePath": "tests/ci/no-personal-paths.test.js",
+      "summary": "CI test that scans repository files for hardcoded personal filesystem paths (e.g., /Users/username) to prevent accidental path leaks in committed code.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/scan-supply-chain-iocs.test.js",
+      "type": "file",
+      "name": "scan-supply-chain-iocs.test.js",
+      "filePath": "tests/ci/scan-supply-chain-iocs.test.js",
+      "summary": "CI security test that scans supply chain indicators of compromise (IOCs) — suspicious URLs, package registry anomalies, and dependency tampering patterns — across the repository's hook and script files.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/secret-curl-flags.test.js",
+      "type": "file",
+      "name": "secret-curl-flags.test.js",
+      "filePath": "tests/ci/secret-curl-flags.test.js",
+      "summary": "CI test that detects curl invocations in shell examples that could silently exfiltrate credentials, ensuring all curl examples use safe flag combinations.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/ci/supply-chain-advisory-sources.test.js",
+      "type": "file",
+      "name": "supply-chain-advisory-sources.test.js",
+      "filePath": "tests/ci/supply-chain-advisory-sources.test.js",
+      "summary": "CI test that validates the supply chain advisory sources configuration, checking that all advisory feed URLs are reachable and return properly structured responses.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/supply-chain-watch-workflow.test.js",
+      "type": "file",
+      "name": "supply-chain-watch-workflow.test.js",
+      "filePath": "tests/ci/supply-chain-watch-workflow.test.js",
+      "summary": "CI test that validates the supply chain watch GitHub Actions workflow has required job definitions, trigger conditions, and security permissions.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/ci/validate-workflow-security.test.js",
+      "type": "file",
+      "name": "validate-workflow-security.test.js",
+      "filePath": "tests/ci/validate-workflow-security.test.js",
+      "summary": "CI test that validates GitHub Actions workflow files for security issues including overly permissive permissions, unvalidated input injection, and missing security controls.",
+      "tags": ["test", "ci-cd", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/ci/validators.test.js",
+      "type": "file",
+      "name": "validators.test.js",
+      "filePath": "tests/ci/validators.test.js",
+      "summary": "Comprehensive CI test suite for the validators script covering agent, skill, command, hook, and catalog validation logic across hundreds of test cases using temporary fixture directories.",
+      "tags": ["test", "ci-cd", "validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/codex-config.test.js",
+      "type": "file",
+      "name": "codex-config.test.js",
+      "filePath": "tests/codex-config.test.js",
+      "summary": "Test file that validates the Codex TOML configuration, ensuring required sections exist and key settings match expected values.",
+      "tags": ["test", "configuration", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/catalog.test.js:writeCatalogFixture",
+      "type": "function",
+      "name": "writeCatalogFixture",
+      "filePath": "tests/ci/catalog.test.js",
+      "lineRange": [145, 165],
+      "summary": "Builds a full catalog fixture directory tree for testing by composing multiple file writers for English/Chinese readmes, agents, and plugin metadata.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/catalog.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/ci/catalog.test.js",
+      "lineRange": [179, 291],
+      "summary": "Main test runner for catalog tests that exercises buildCatalog and runCatalogCheck functions across multiple fixture scenarios and asserts output correctness.",
+      "tags": ["test", "utility", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/catalog.test.js:writeEnglishReadme",
+      "type": "function",
+      "name": "writeEnglishReadme",
+      "filePath": "tests/ci/catalog.test.js",
+      "lineRange": [41, 67],
+      "summary": "Writes a multi-section English README fixture file with agent/skill/command/hook/rule count tables for use in catalog tests.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/catalog.test.js:writeZhDocsReadme",
+      "type": "function",
+      "name": "writeZhDocsReadme",
+      "filePath": "tests/ci/catalog.test.js",
+      "lineRange": [102, 128],
+      "summary": "Writes a Chinese-language docs README fixture with agent/skill count tables for testing catalog multi-language support.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/agent-yaml-surface.test.js:extractTopLevelList",
+      "type": "function",
+      "name": "extractTopLevelList",
+      "filePath": "tests/ci/agent-yaml-surface.test.js",
+      "lineRange": [37, 61],
+      "summary": "Parses a YAML source string and extracts items from a named top-level list key, used to verify that the agent YAML surface matches filesystem reality.",
+      "tags": ["utility", "serialization", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/agent-yaml-surface.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/agent-yaml-surface.test.js",
+      "lineRange": [75, 129],
+      "summary": "Main test orchestrator for agent-yaml-surface tests that reads the YAML surface file, scans the commands directory, and asserts parity between registry and filesystem.",
+      "tags": ["test", "entry-point", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/codex-skill-surface.test.js:parseFrontmatter",
+      "type": "function",
+      "name": "parseFrontmatter",
+      "filePath": "tests/ci/codex-skill-surface.test.js",
+      "lineRange": [39, 53],
+      "summary": "Extracts YAML frontmatter fields from a skill Markdown file, returning a key-value map of metadata properties.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/ci/codex-skill-surface.test.js:parseQuotedYamlValue",
+      "type": "function",
+      "name": "parseQuotedYamlValue",
+      "filePath": "tests/ci/codex-skill-surface.test.js",
+      "lineRange": [55, 67],
+      "summary": "Strips surrounding quotes from YAML string values when parsing skill frontmatter.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/ci/codex-skill-surface.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/codex-skill-surface.test.js",
+      "lineRange": [69, 123],
+      "summary": "Main test runner for codex skill surface validation that iterates all skill directories, parses frontmatter, and asserts required metadata fields exist.",
+      "tags": ["test", "entry-point", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/command-registry.test.js:writeFixture",
+      "type": "function",
+      "name": "writeFixture",
+      "filePath": "tests/ci/command-registry.test.js",
+      "lineRange": [29, 55],
+      "summary": "Writes a set of command fixture Markdown files to a temporary directory for command registry generator testing.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/command-registry.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/ci/command-registry.test.js",
+      "lineRange": [69, 174],
+      "summary": "Main test runner for command registry tests that exercises generateCommandRegistry across fixtures and verifies output format and content.",
+      "tags": ["test", "entry-point", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/mle-workflow-coverage.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/mle-workflow-coverage.test.js",
+      "lineRange": [155, 221],
+      "summary": "Main test runner that reads MLE workflow skill files, extracts simulation scenario rows, and validates that required workflow coverage steps are present.",
+      "tags": ["test", "entry-point", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/mle-workflow-coverage.test.js:extractSimulationRows",
+      "type": "function",
+      "name": "extractSimulationRows",
+      "filePath": "tests/ci/mle-workflow-coverage.test.js",
+      "lineRange": [137, 141],
+      "summary": "Extracts table rows from the simulation scenarios section of MLE skill Markdown files.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/ci/no-personal-paths.test.js:runValidatorAgainst",
+      "type": "function",
+      "name": "runValidatorAgainst",
+      "filePath": "tests/ci/no-personal-paths.test.js",
+      "lineRange": [53, 84],
+      "summary": "Runs the personal-paths validator against a temporary fixture file and returns the validation result, used to test specific path patterns in isolation.",
+      "tags": ["test", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/no-personal-paths.test.js:runValidatorAgainstRealRepo",
+      "type": "function",
+      "name": "runValidatorAgainstRealRepo",
+      "filePath": "tests/ci/no-personal-paths.test.js",
+      "lineRange": [86, 102],
+      "summary": "Runs the personal-paths validator against the actual repository files to ensure no real personal paths exist in committed code.",
+      "tags": ["test", "validation", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/scan-supply-chain-iocs.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/scan-supply-chain-iocs.test.js",
+      "lineRange": [45, 484],
+      "summary": "Comprehensive test runner that exhaustively tests supply chain IOC scanner detection across dozens of malicious URL patterns, typosquatted package names, and benign allowlisted patterns.",
+      "tags": ["test", "entry-point", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/scan-supply-chain-iocs.test.js:withFixture",
+      "type": "function",
+      "name": "withFixture",
+      "filePath": "tests/ci/scan-supply-chain-iocs.test.js",
+      "lineRange": [31, 43],
+      "summary": "Helper that creates a temporary fixture file, runs a callback with it, then cleans up — used to isolate IOC scanner tests.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/ci/supply-chain-advisory-sources.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/supply-chain-advisory-sources.test.js",
+      "lineRange": [41, 288],
+      "summary": "Large test runner that validates supply chain advisory source configuration, iterating advisory feeds and asserting structural properties of feed definitions.",
+      "tags": ["test", "entry-point", "security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/validate-workflow-security.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/ci/validate-workflow-security.test.js",
+      "lineRange": [45, 287],
+      "summary": "Main test runner that scans all GitHub Actions workflow YAML files for security misconfigurations, testing each vulnerability pattern across real and fixture workflows.",
+      "tags": ["test", "entry-point", "security", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/validate-workflow-security.test.js:runValidator",
+      "type": "function",
+      "name": "runValidator",
+      "filePath": "tests/ci/validate-workflow-security.test.js",
+      "lineRange": [26, 43],
+      "summary": "Executes the workflow security validator script against a given YAML file and returns parsed results for assertion.",
+      "tags": ["test", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [292, 3151],
+      "summary": "Massive test runner for the validators script covering hundreds of validation scenarios for agents, skills, commands, hooks, catalog entries, and supply chain checks.",
+      "tags": ["test", "entry-point", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:runSourceViaTempFile",
+      "type": "function",
+      "name": "runSourceViaTempFile",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [71, 91],
+      "summary": "Writes source code to a temporary file and executes it via Node.js, capturing exit code and output for validator tests that cannot require() the module directly.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:runValidatorWithDir",
+      "type": "function",
+      "name": "runValidatorWithDir",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [102, 116],
+      "summary": "Runs the validators script against a single fixture directory and returns structured validation results.",
+      "tags": ["test", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:writeCatalogFixture",
+      "type": "function",
+      "name": "writeCatalogFixture",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [227, 290],
+      "summary": "Writes a full catalog fixture structure with agents, skills, commands, hooks, and rules to a temporary directory for validator testing.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:runCatalogValidator",
+      "type": "function",
+      "name": "runCatalogValidator",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [155, 183],
+      "summary": "Runs catalog-specific validation logic and returns structured results, used by tests to assert catalog integrity rules.",
+      "tags": ["test", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/ci/validators.test.js:runSkillsValidator",
+      "type": "function",
+      "name": "runSkillsValidator",
+      "filePath": "tests/ci/validators.test.js",
+      "lineRange": [193, 225],
+      "summary": "Runs skills-specific validation logic and returns structured results, used by tests to assert skill frontmatter and content rules.",
+      "tags": ["test", "utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/codex-config.test.js:getTomlSection",
+      "type": "function",
+      "name": "getTomlSection",
+      "filePath": "tests/codex-config.test.js",
+      "lineRange": [32, 42],
+      "summary": "Extracts a named TOML section's content from a raw TOML string for targeted assertion in codex config tests.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "file:scripts/ci/catalog.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/ci/command-registry.test.js",
+      "target": "file:scripts/ci/generate-command-registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "function:tests/ci/catalog.test.js:writeCatalogFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "function:tests/ci/catalog.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "function:tests/ci/catalog.test.js:writeEnglishReadme",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "function:tests/ci/catalog.test.js:writeZhDocsReadme",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/agent-yaml-surface.test.js",
+      "target": "function:tests/ci/agent-yaml-surface.test.js:extractTopLevelList",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/agent-yaml-surface.test.js",
+      "target": "function:tests/ci/agent-yaml-surface.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/codex-skill-surface.test.js",
+      "target": "function:tests/ci/codex-skill-surface.test.js:parseFrontmatter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/codex-skill-surface.test.js",
+      "target": "function:tests/ci/codex-skill-surface.test.js:parseQuotedYamlValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/codex-skill-surface.test.js",
+      "target": "function:tests/ci/codex-skill-surface.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/command-registry.test.js",
+      "target": "function:tests/ci/command-registry.test.js:writeFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/command-registry.test.js",
+      "target": "function:tests/ci/command-registry.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/mle-workflow-coverage.test.js",
+      "target": "function:tests/ci/mle-workflow-coverage.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/mle-workflow-coverage.test.js",
+      "target": "function:tests/ci/mle-workflow-coverage.test.js:extractSimulationRows",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/no-personal-paths.test.js",
+      "target": "function:tests/ci/no-personal-paths.test.js:runValidatorAgainst",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/no-personal-paths.test.js",
+      "target": "function:tests/ci/no-personal-paths.test.js:runValidatorAgainstRealRepo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/scan-supply-chain-iocs.test.js",
+      "target": "function:tests/ci/scan-supply-chain-iocs.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/scan-supply-chain-iocs.test.js",
+      "target": "function:tests/ci/scan-supply-chain-iocs.test.js:withFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/supply-chain-advisory-sources.test.js",
+      "target": "function:tests/ci/supply-chain-advisory-sources.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validate-workflow-security.test.js",
+      "target": "function:tests/ci/validate-workflow-security.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validate-workflow-security.test.js",
+      "target": "function:tests/ci/validate-workflow-security.test.js:runValidator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:runSourceViaTempFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:runValidatorWithDir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:writeCatalogFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:runCatalogValidator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/validators.test.js",
+      "target": "function:tests/ci/validators.test.js:runSkillsValidator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/codex-config.test.js",
+      "target": "function:tests/codex-config.test.js:getTomlSection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/ci/catalog.test.js",
+      "target": "file:scripts/ci/catalog.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/ci/command-registry.test.js",
+      "target": "file:scripts/ci/generate-command-registry.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

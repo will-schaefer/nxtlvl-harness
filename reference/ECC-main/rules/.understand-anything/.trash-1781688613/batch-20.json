@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "document:vue/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "vue/coding-style.md",
+      "summary": "Vue-specific coding-style rules covering SFC structure, reactivity discipline, computed vs watchers, lifecycle/DOM handling, and compiler macros; extends the common coding-style baseline.",
+      "tags": ["vue", "coding-style", "sfc", "reactivity", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:vue/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "vue/hooks.md",
+      "summary": "Vue PostToolUse automation hook rules specifying vue-tsc typecheck, lint/format targets, architecture boundary checks, and hook sequencing; extends the common hooks baseline.",
+      "tags": ["vue", "hooks", "tooling", "vue-tsc", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:vue/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "vue/patterns.md",
+      "summary": "Vue architectural pattern rules for composables, props/emits/v-model, provide/inject, Pinia stores, vue-router, and vue-query server caching; extends the common patterns baseline.",
+      "tags": ["vue", "patterns", "composables", "pinia", "state-management"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:vue/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "vue/security.md",
+      "summary": "Vue security rules on automatic escaping, trusted-template-only usage, v-html and render-function risks, URL/style/event injection, and avoiding client-bundle secrets; extends the common security baseline.",
+      "tags": ["vue", "security", "xss", "v-html", "injection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:vue/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "vue/testing.md",
+      "summary": "Vue testing rules covering the Vitest + Vue Test Utils stack, async rendering, what to test, composable and Pinia testing, and mount configuration; extends the common testing baseline.",
+      "tags": ["vue", "testing", "vitest", "vue-test-utils", "rules"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:vue/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:vue/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:vue/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:vue/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:vue/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

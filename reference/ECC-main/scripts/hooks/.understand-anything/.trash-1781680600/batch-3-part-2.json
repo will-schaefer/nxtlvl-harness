@@ -1,0 +1,513 @@
+{
+  "nodes": [
+    {
+      "id": "file:insaits-security-monitor.py",
+      "type": "file",
+      "name": "insaits-security-monitor.py",
+      "filePath": "insaits-security-monitor.py",
+      "summary": "PreToolUse (Bash|Write|Edit|MultiEdit) security gate that runs local InsAIts anomaly detection on tool input (credential exposure, prompt injection, hallucination chains, 20+ types). BLOCKS with exit 2 on critical findings; warns via stderr otherwise. Writes a forensic audit JSONL.",
+      "tags": ["hook", "pretooluse", "security", "gate", "blocking"],
+      "complexity": "complex",
+      "languageNotes": "Python hook with configurable fail-open/fail-closed behavior via INSAITS_FAIL_MODE; exposes module-level functions for testing."
+    },
+    {
+      "id": "function:insaits-security-monitor.py:extract_content",
+      "type": "function",
+      "name": "extract_content",
+      "filePath": "insaits-security-monitor.py",
+      "lineRange": [95, 126],
+      "summary": "Extracts the inspectable text content from a tool-input payload across Bash command, Write/Edit content, and MultiEdit edits shapes.",
+      "tags": ["security", "parsing", "input-handling"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:insaits-security-monitor.py:write_audit",
+      "type": "function",
+      "name": "write_audit",
+      "filePath": "insaits-security-monitor.py",
+      "lineRange": [129, 145],
+      "summary": "Appends a hash-enriched, timestamped audit event to the forensic session JSONL, swallowing IO errors with a warning.",
+      "tags": ["security", "audit", "logging"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:insaits-security-monitor.py:get_anomaly_attr",
+      "type": "function",
+      "name": "get_anomaly_attr",
+      "filePath": "insaits-security-monitor.py",
+      "lineRange": [148, 157],
+      "summary": "Reads an attribute from an anomaly object or dict uniformly, tolerating both shapes returned by the detector.",
+      "tags": ["security", "accessor", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:insaits-security-monitor.py:format_feedback",
+      "type": "function",
+      "name": "format_feedback",
+      "filePath": "insaits-security-monitor.py",
+      "lineRange": [160, 184],
+      "summary": "Formats detected anomalies into a human-readable stderr feedback block shown to the agent.",
+      "tags": ["security", "formatting", "feedback"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:insaits-security-monitor.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "insaits-security-monitor.py",
+      "lineRange": [187, 265],
+      "summary": "Entry point: reads stdin JSON, extracts content, runs the InsAIts monitor, writes the audit event, and exits 2 to block on critical anomalies or 0 with warnings otherwise (respecting fail-mode).",
+      "tags": ["entry-point", "security", "gate", "blocking"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:insaits-security-wrapper.js",
+      "type": "file",
+      "name": "insaits-security-wrapper.js",
+      "filePath": "insaits-security-wrapper.js",
+      "summary": "Thin Node bridge that receives hook stdin and delegates to insaits-security-monitor.py, existing because run-with-flags.js spawns hooks via node and needs a JS entry point. Forwards exit codes (including block exit 2).",
+      "tags": ["hook", "pretooluse", "security", "wrapper", "bridge"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:mcp-health-check.js",
+      "type": "file",
+      "name": "mcp-health-check.js",
+      "filePath": "mcp-health-check.js",
+      "summary": "PreToolUse / PostToolUseFailure hook that probes MCP server health before MCP tool calls and, on failure, marks servers unhealthy and attempts reconnect+re-probe. Persists health state across compaction; fails open or blocks based on configuration.",
+      "tags": ["hook", "pretooluse", "mcp", "gate", "observe"],
+      "complexity": "complex",
+      "languageNotes": "Largest file in the batch; spawns command MCP servers safely (rejects unsafe shell chars) and probes HTTP servers treating auth-gated codes as reachable."
+    },
+    {
+      "id": "function:mcp-health-check.js:loadState",
+      "type": "function",
+      "name": "loadState",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [82, 93],
+      "summary": "Loads the persisted MCP health-state map from disk, returning a normalized empty structure on missing or invalid data.",
+      "tags": ["mcp", "state", "persistence"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:mcp-health-check.js:readRawStdin",
+      "type": "function",
+      "name": "readRawStdin",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [104, 123],
+      "summary": "Reads the raw hook stdin payload with a size cap, supporting an env override for synchronous test injection.",
+      "tags": ["input-handling", "hook", "stdin"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:extractMcpTarget",
+      "type": "function",
+      "name": "extractMcpTarget",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [133, 167],
+      "summary": "Derives the target MCP server name from the tool name (mcp__<server>__<tool>) and input fields.",
+      "tags": ["mcp", "parsing", "tool-call"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:markUnhealthy",
+      "type": "function",
+      "name": "markUnhealthy",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [213, 229],
+      "summary": "Records a server as unhealthy with an exponential backoff next-retry timestamp and the failure code/message.",
+      "tags": ["mcp", "state", "backoff", "health"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:requestHttp",
+      "type": "function",
+      "name": "requestHttp",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [256, 299],
+      "summary": "Issues a timeout-bounded HTTP/HTTPS reachability probe and resolves with whether the status code indicates a healthy or reachable server.",
+      "tags": ["mcp", "http", "probe", "health"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:probeCommandServer",
+      "type": "function",
+      "name": "probeCommandServer",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [301, 481],
+      "summary": "Spawns a stdio command MCP server with retries and timeout, rejecting unsafe shell characters, to verify it can start successfully.",
+      "tags": ["mcp", "spawn", "probe", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:mcp-health-check.js:probeServer",
+      "type": "function",
+      "name": "probeServer",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [483, 514],
+      "summary": "Dispatches to the HTTP or command probe based on the resolved server config and classifies the result as healthy or reconnectable.",
+      "tags": ["mcp", "probe", "health"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:attemptReconnect",
+      "type": "function",
+      "name": "attemptReconnect",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [528, 555],
+      "summary": "Runs the per-server reconnect command (synchronously, with timeout) and reports success or the trimmed failure output.",
+      "tags": ["mcp", "reconnect", "recovery"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:mcp-health-check.js:handlePreToolUse",
+      "type": "function",
+      "name": "handlePreToolUse",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [567, 630],
+      "summary": "PreToolUse path: respects backoff, probes the target server, marks health, attempts reconnect when down, and decides fail-open vs block.",
+      "tags": ["mcp", "pretooluse", "gate", "health"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:mcp-health-check.js:handlePostToolUseFailure",
+      "type": "function",
+      "name": "handlePostToolUseFailure",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [632, 678],
+      "summary": "PostToolUseFailure path: classifies the failure, marks the server unhealthy, attempts reconnect and re-probe, and updates persisted state.",
+      "tags": ["mcp", "posttooluse", "recovery", "health"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:mcp-health-check.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "mcp-health-check.js",
+      "lineRange": [680, 715],
+      "summary": "Entry point: reads stdin, extracts the MCP target, and routes to the PreToolUse or PostToolUseFailure handler, emitting logs and the appropriate exit decision.",
+      "tags": ["entry-point", "mcp", "hook"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:observe-runner.js",
+      "type": "file",
+      "name": "observe-runner.js",
+      "filePath": "observe-runner.js",
+      "summary": "Hook adapter that resolves the plugin root and spawns the continuous-learning-v2 observe.sh shell hook for the current lifecycle phase, relaying its stdout/stderr/exit. Observes only (non-blocking telemetry).",
+      "tags": ["hook", "observe", "telemetry", "non-blocking", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:observe-runner.js:getPluginRoot",
+      "type": "function",
+      "name": "getPluginRoot",
+      "filePath": "observe-runner.js",
+      "lineRange": [11, 22],
+      "summary": "Resolves the plugin root directory from explicit options or the CLAUDE_PLUGIN_ROOT / ECC_PLUGIN_ROOT environment variables.",
+      "tags": ["plugin-root", "resolution", "env"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:observe-runner.js:findShellBinary",
+      "type": "function",
+      "name": "findShellBinary",
+      "filePath": "observe-runner.js",
+      "lineRange": [47, 70],
+      "summary": "Locates a usable bash binary across env overrides and common paths to run the observe shell hook cross-platform.",
+      "tags": ["shell", "detection", "cross-platform"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:observe-runner.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "observe-runner.js",
+      "lineRange": [89, 160],
+      "summary": "Core logic: resolves the observe.sh target within the plugin root, spawns it with the phase and stdin, and captures its result for relay.",
+      "tags": ["adapter", "spawn", "observe"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:observe-runner.js:emitHookResult",
+      "type": "function",
+      "name": "emitHookResult",
+      "filePath": "observe-runner.js",
+      "lineRange": [162, 177],
+      "summary": "Relays the child hook's stderr/stdout to the parent streams and exits with its status, defaulting to a safe pass-through.",
+      "tags": ["adapter", "pass-through", "output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:plugin-hook-bootstrap.js",
+      "type": "file",
+      "name": "plugin-hook-bootstrap.js",
+      "filePath": "plugin-hook-bootstrap.js",
+      "summary": "Hook bootstrap that normalizes the plugin root, ensures the agent-data-home env, and spawns the real target hook (Node or shell) sandboxed within the plugin root, passing stdin through. Pass-through on failure.",
+      "tags": ["hook", "bootstrap", "adapter", "non-blocking", "entry-point"],
+      "complexity": "complex",
+      "languageNotes": "Path-traversal guard via resolveTarget ensures spawned scripts stay inside the plugin root; platform-normalizes Windows drive letters."
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:passthrough",
+      "type": "function",
+      "name": "passthrough",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [23, 33],
+      "summary": "Emits the child result's stdout and exits with its status, the default safe path when no specialized handling applies.",
+      "tags": ["bootstrap", "pass-through", "output"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:normalizePluginRootForPlatform",
+      "type": "function",
+      "name": "normalizePluginRootForPlatform",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [35, 47],
+      "summary": "Normalizes the plugin root path for the current platform, uppercasing Windows drive letters for consistent comparison.",
+      "tags": ["bootstrap", "path", "cross-platform"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:resolveTarget",
+      "type": "function",
+      "name": "resolveTarget",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [49, 59],
+      "summary": "Resolves a relative hook path against the plugin root and enforces that the result stays inside it, guarding against path traversal.",
+      "tags": ["bootstrap", "security", "path-traversal"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:findShellBinary",
+      "type": "function",
+      "name": "findShellBinary",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [61, 84],
+      "summary": "Locates a usable bash binary across env overrides and common locations for spawning shell-based hooks.",
+      "tags": ["shell", "detection", "cross-platform"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:spawnNode",
+      "type": "function",
+      "name": "spawnNode",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [86, 101],
+      "summary": "Spawns the resolved Node hook script with the agent-data-home env injected and the raw stdin forwarded.",
+      "tags": ["bootstrap", "spawn", "node"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:spawnShell",
+      "type": "function",
+      "name": "spawnShell",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [103, 127],
+      "summary": "Spawns the resolved shell hook via the detected bash binary with the agent-data-home env and forwarded stdin.",
+      "tags": ["bootstrap", "spawn", "shell"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:plugin-hook-bootstrap.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "plugin-hook-bootstrap.js",
+      "lineRange": [129, 172],
+      "summary": "Entry point: reads stdin, resolves the target hook from args, dispatches to spawnNode or spawnShell, and falls back to pass-through on errors.",
+      "tags": ["entry-point", "bootstrap", "dispatcher"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:post-edit-accumulator.js",
+      "type": "file",
+      "name": "post-edit-accumulator.js",
+      "filePath": "post-edit-accumulator.js",
+      "summary": "PostToolUse Edit/Write hook that appends each edited JS/TS path to a session-scoped temp file so stop-format-typecheck.js can batch format+typecheck once at Stop, eliminating per-edit latency. Observes only.",
+      "tags": ["hook", "posttooluse", "quality", "observe", "non-blocking"],
+      "complexity": "simple",
+      "languageNotes": "Uses appendFileSync for atomic concurrent writes; dedup is deferred to the consuming Stop hook."
+    },
+    {
+      "id": "function:post-edit-accumulator.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "post-edit-accumulator.js",
+      "lineRange": [50, 64],
+      "summary": "Parses the edit payload and appends each touched JS/TS file path (single or MultiEdit) to the session accumulation file.",
+      "tags": ["entry-point", "accumulator", "file-tracking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:post-edit-console-warn.js",
+      "type": "file",
+      "name": "post-edit-console-warn.js",
+      "filePath": "post-edit-console-warn.js",
+      "summary": "PostToolUse Edit hook that warns (with line numbers) when an edited JS/TS file contains console.log statements, helping remove debug code before commit. Observes only (pass-through).",
+      "tags": ["hook", "posttooluse", "quality", "observe", "non-blocking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:post-edit-format.js",
+      "type": "file",
+      "name": "post-edit-format.js",
+      "filePath": "post-edit-format.js",
+      "summary": "PostToolUse Edit hook that auto-detects the project formatter (Biome or Prettier) and formats the edited JS/TS file, preferring the local .bin binary; for Biome uses check --write to fold in linting. Fails silently. Observes only.",
+      "tags": ["hook", "posttooluse", "quality", "observe", "non-blocking"],
+      "complexity": "moderate",
+      "languageNotes": "Guards against cmd.exe command injection by rejecting unsafe path characters when spawning the formatter."
+    },
+    {
+      "id": "function:post-edit-format.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "post-edit-format.js",
+      "lineRange": [37, 88],
+      "summary": "Core logic: resolves the project root and formatter for an edited JS/TS file and runs the formatter binary against it, passing input through.",
+      "tags": ["entry-point", "format", "quality"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:post-edit-typecheck.js",
+      "type": "file",
+      "name": "post-edit-typecheck.js",
+      "filePath": "post-edit-typecheck.js",
+      "summary": "PostToolUse Edit hook that, after editing a .ts/.tsx file, walks up to the nearest tsconfig.json and runs tsc --noEmit, reporting only errors that reference the edited file. Observes only (pass-through).",
+      "tags": ["hook", "posttooluse", "quality", "observe", "non-blocking"],
+      "complexity": "moderate",
+      "languageNotes": "Avoids bare-basename matching to prevent false positives across same-named files; uses npx.cmd on Windows to dodge shell:true injection."
+    },
+    {
+      "id": "file:pre-bash-dev-server-block.js",
+      "type": "file",
+      "name": "pre-bash-dev-server-block.js",
+      "filePath": "pre-bash-dev-server-block.js",
+      "summary": "PreToolUse Bash gate that parses the command (including substitutions and subshells) and BLOCKS long-running dev-server launches (npm/pnpm/yarn/bun/npx dev/start, tmux launchers) to keep the agent from hanging on foreground servers.",
+      "tags": ["hook", "pretooluse", "gate", "blocking", "bash"],
+      "complexity": "complex",
+      "languageNotes": "Hand-rolled shell tokenizer handles quoting, env-var prefixes, and skippable command wrappers (env/sudo/exec) before classifying the leading command word."
+    },
+    {
+      "id": "function:pre-bash-dev-server-block.js:readToken",
+      "type": "function",
+      "name": "readToken",
+      "filePath": "pre-bash-dev-server-block.js",
+      "lineRange": [41, 89],
+      "summary": "Reads a single shell token from an input string starting at an index, respecting single/double quoting and whitespace.",
+      "tags": ["bash", "tokenizer", "parsing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:pre-bash-dev-server-block.js:getLeadingCommandWord",
+      "type": "function",
+      "name": "getLeadingCommandWord",
+      "filePath": "pre-bash-dev-server-block.js",
+      "lineRange": [107, 152],
+      "summary": "Determines the effective leading command word of a shell segment, skipping env-var assignments and wrapper prefixes like env/sudo/exec.",
+      "tags": ["bash", "parsing", "command-detection"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:pre-bash-dev-server-block.js:collectCheckSegments",
+      "type": "function",
+      "name": "collectCheckSegments",
+      "filePath": "pre-bash-dev-server-block.js",
+      "lineRange": [179, 200],
+      "summary": "Expands a command into all shell segments to inspect, recursing into command substitutions and subshell groups.",
+      "tags": ["bash", "parsing", "segments"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:pre-bash-dev-server-block.js:isBlockedDevSegment",
+      "type": "function",
+      "name": "isBlockedDevSegment",
+      "filePath": "pre-bash-dev-server-block.js",
+      "lineRange": [202, 206],
+      "summary": "Tests whether a shell segment launches a blocked dev server or tmux launcher based on its leading command word and patterns.",
+      "tags": ["bash", "gate", "blocking", "detection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:pre-compact.js",
+      "type": "file",
+      "name": "pre-compact.js",
+      "filePath": "pre-compact.js",
+      "summary": "PreCompact lifecycle hook that preserves session state (writes a marker and recent files index to the sessions dir) before Claude compacts context, so important state survives summarization. Observes only.",
+      "tags": ["hook", "precompact", "session-persistence", "observe", "non-blocking"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:pre-compact.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "pre-compact.js",
+      "lineRange": [22, 43],
+      "summary": "Entry point: ensures the sessions directory exists and appends a pre-compaction marker plus recent-files context before exiting 0.",
+      "tags": ["entry-point", "precompact", "session-persistence"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:quality-gate.js",
+      "type": "file",
+      "name": "quality-gate.js",
+      "filePath": "quality-gate.js",
+      "summary": "PostToolUse Edit hook running lightweight per-file quality checks (Biome/Prettier for .json/.md, plus Prettier/Go/Python checks); skips JS/TS+Biome since post-edit-format.js already covers it. Optionally strict/fix via env. Observes/warns.",
+      "tags": ["hook", "posttooluse", "quality", "observe", "non-blocking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:quality-gate.js:maybeRunQualityGate",
+      "type": "function",
+      "name": "maybeRunQualityGate",
+      "filePath": "quality-gate.js",
+      "lineRange": [57, 132],
+      "summary": "Core logic: resolves the project root/formatter for the edited file and runs the appropriate per-language quality checks, honoring fix/strict env flags.",
+      "tags": ["quality", "format", "lint", "validation"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:extract_content", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:write_audit", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:get_anomaly_attr", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:format_feedback", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:main", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:extract_content", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:write_audit", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:get_anomaly_attr", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:format_feedback", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:insaits-security-monitor.py", "target": "function:insaits-security-monitor.py:main", "type": "exports", "direction": "forward", "weight": 0.8},
+    {"source": "file:insaits-security-wrapper.js", "target": "file:insaits-security-monitor.py", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:loadState", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:readRawStdin", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:extractMcpTarget", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:markUnhealthy", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:requestHttp", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:probeCommandServer", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:probeServer", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:attemptReconnect", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:handlePreToolUse", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:handlePostToolUseFailure", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:mcp-health-check.js", "target": "function:mcp-health-check.js:main", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:observe-runner.js", "target": "function:observe-runner.js:getPluginRoot", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:observe-runner.js", "target": "function:observe-runner.js:findShellBinary", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:observe-runner.js", "target": "function:observe-runner.js:run", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:observe-runner.js", "target": "function:observe-runner.js:emitHookResult", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:passthrough", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:normalizePluginRootForPlatform", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:resolveTarget", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:findShellBinary", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:spawnNode", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:spawnShell", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:plugin-hook-bootstrap.js", "target": "function:plugin-hook-bootstrap.js:main", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:post-edit-accumulator.js", "target": "function:post-edit-accumulator.js:run", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:post-edit-accumulator.js", "target": "file:stop-format-typecheck.js", "type": "depends_on", "direction": "forward", "weight": 0.6},
+    {"source": "file:post-edit-format.js", "target": "function:post-edit-format.js:run", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:pre-bash-dev-server-block.js", "target": "function:pre-bash-dev-server-block.js:readToken", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:pre-bash-dev-server-block.js", "target": "function:pre-bash-dev-server-block.js:getLeadingCommandWord", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:pre-bash-dev-server-block.js", "target": "function:pre-bash-dev-server-block.js:collectCheckSegments", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:pre-bash-dev-server-block.js", "target": "function:pre-bash-dev-server-block.js:isBlockedDevSegment", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:pre-compact.js", "target": "function:pre-compact.js:main", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:quality-gate.js", "target": "function:quality-gate.js:maybeRunQualityGate", "type": "contains", "direction": "forward", "weight": 1.0}
+  ]
+}

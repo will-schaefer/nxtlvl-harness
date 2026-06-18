@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/ruby/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/ruby/coding-style.md",
+      "summary": "ECC always-follow rule document prescribing Ruby coding standards, including RuboCop-based formatting/linting, Rails style conventions, and structured error handling with begin/rescue.",
+      "tags": ["documentation", "configuration", "ruby", "code-quality", "linting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/ruby/hooks.md",
+      "summary": "ECC rule document defining PostToolUse hook patterns for Ruby projects, covering RuboCop auto-correction triggers, warning thresholds, and CI gate integration suggestions.",
+      "tags": ["documentation", "configuration", "ruby", "ci-cd", "automation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/ruby/patterns.md",
+      "summary": "ECC rule document prescribing idiomatic Ruby/Rails architectural patterns across persistence (ActiveRecord), background jobs, frontend (Hotwire/Stimulus), and authentication (Devise/Warden).",
+      "tags": ["documentation", "configuration", "ruby", "architecture", "rails"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/ruby/security.md",
+      "summary": "ECC rule document mandating Ruby/Rails security practices including Rails defaults (CSRF, param whitelisting), SQL injection prevention via ActiveRecord, session management, dependency auditing with Bundler-Audit, and web safety controls.",
+      "tags": ["documentation", "security", "ruby", "rails", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/ruby/testing.md",
+      "summary": "ECC rule document specifying Ruby testing standards using RSpec with FactoryBot and Faker, covering the test pyramid (unit/integration/system), fixture management, and coverage thresholds via SimpleCov.",
+      "tags": ["documentation", "configuration", "ruby", "testing", "rspec"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

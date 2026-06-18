@@ -1,0 +1,56 @@
+{
+  "nodes": [
+    {
+      "id": "config:manifests/install-components.json",
+      "type": "config",
+      "name": "install-components.json",
+      "filePath": "manifests/install-components.json",
+      "summary": "Defines the full catalog of installable ECC components (baseline, language, framework, capability, agent, and skill families), each mapping to one or more module IDs. Acts as the user-facing component registry that the installer resolves against install-modules.json.",
+      "tags": ["configuration", "installation", "component-registry", "build-system"],
+      "complexity": "complex"
+    },
+    {
+      "id": "config:manifests/install-modules.json",
+      "type": "config",
+      "name": "install-modules.json",
+      "filePath": "manifests/install-modules.json",
+      "summary": "Declares every installable ECC module with its kind, file paths, harness targets, dependencies, cost, stability, and default-install flag. This is the ground-truth module registry that installation tooling reads to copy or link the correct files for each selected module.",
+      "tags": ["configuration", "installation", "module-registry", "build-system"],
+      "complexity": "complex",
+      "languageNotes": "Each module entry carries a targets array listing the AI harness platforms it supports (claude, cursor, opencode, codex, zed, etc.) and an explicit dependency list enabling topological resolution during install."
+    },
+    {
+      "id": "config:manifests/install-profiles.json",
+      "type": "config",
+      "name": "install-profiles.json",
+      "filePath": "manifests/install-profiles.json",
+      "summary": "Defines named installation profiles (minimal, opencode, core, developer, security, research, full) each as a curated list of module IDs, giving users a one-flag way to select a purpose-built ECC configuration without individually specifying modules.",
+      "tags": ["configuration", "installation", "profiles", "build-system"],
+      "complexity": "moderate",
+      "languageNotes": "The 'full' profile enumerates all currently classified modules, making it the canonical reference for the complete ECC feature surface; guardrails docs note 'full' as the recommended install profile."
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:manifests/install-components.json",
+      "target": "config:manifests/install-modules.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:manifests/install-profiles.json",
+      "target": "config:manifests/install-modules.json",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:manifests/install-components.json",
+      "target": "config:manifests/install-profiles.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

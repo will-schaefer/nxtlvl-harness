@@ -1,0 +1,123 @@
+[
+  {
+    "order": 1,
+    "title": "Project Overview",
+    "description": "The README is the authoritative map of the entire system: it explains ECC's identity as a cross-harness agent operating system, enumerates the seven major component kinds (Skills, Agents, Commands, Rules, Hooks, Automation, Rust/Python layers), and describes the three-tier install model (modules \u2192 components \u2192 profiles). Reading it first establishes the vocabulary used throughout every other file in the tour. The companion SOUL.md distills ECC's philosophical core \u2014 the principles and agent-orchestration philosophy that explain why the architecture is shaped the way it is.",
+    "nodeIds": [
+      "document:README.md",
+      "document:SOUL.md"
+    ],
+    "languageLesson": "ECC is a markdown-dominant codebase: Skills, Agents, Commands, and Rules are all spec-driven Markdown files rather than executable code. The plugin runtime reads these specs and injects them into agent context, so the 'source of truth' for most functionality is a SKILL.md or command .md, not a .js or .py file."
+  },
+  {
+    "order": 2,
+    "title": "Plugin Manifest & npm Package",
+    "description": "Two config files define ECC as an installable artifact. The plugin.json is the Claude Code plugin manifest: it declares plugin identity, the directories that contain skills and commands, hook registrations, and settings schema \u2014 it is what Claude Code reads when a user installs ECC via `/install ecc@ecc`. The package.json alongside it is the npm manifest for `ecc-universal`, listing every file that ships to npm and the scripts that drive the CI/CD pipeline. Together they answer the question: how does ECC get from a git repo into a running agent session?",
+    "nodeIds": [
+      "config:.claude-plugin/plugin.json",
+      "config:.claude-plugin/marketplace.json",
+      "config:package.json"
+    ],
+    "languageLesson": "Claude Code plugins use a plugin.json manifest to declare capabilities without any code: a skills directory path, a commands path, and hook entry points are all that's needed to extend the harness. This manifest-first design means ECC's 271 skills and 92 commands are registered purely through directory conventions."
+  },
+  {
+    "order": 3,
+    "title": "Skills Catalog \u2014 the Dominant Surface",
+    "description": "Skills are the largest component kind in ECC (271 files) and the primary interface users interact with. CLAUDE.md at the repo root is the in-session instruction file that describes which skills exist and how to invoke them; AGENTS.md expands on this for the 67 named subagent definitions; and CONTRIBUTING.md shows exactly how a new skill is added \u2014 the template convention, required frontmatter, and wiring into plugin.json. This trio covers the full lifecycle of a skill: what it is, how it runs, and how to extend the catalog.",
+    "nodeIds": [
+      "document:CLAUDE.md",
+      "document:AGENTS.md",
+      "document:CONTRIBUTING.md"
+    ],
+    "languageLesson": "ECC skills follow a spec-driven pattern: each SKILL.md describes a capability in natural language with a structured preamble. The harness reads this file and injects it into agent context at invocation time \u2014 there is no compilation step. This makes skills auditable, diffable, and writable by non-engineers."
+  },
+  {
+    "order": 4,
+    "title": "Commands & Rules",
+    "description": "Beyond skills, ECC exposes 92 slash commands (COMMANDS-QUICK-REF.md) and 114 per-language coding-standard rules (RULES.md). Commands give users imperative actions (/plan, /review, /ship, etc.) while rules inject language-specific constraints (Python style, Rust idioms, TypeScript patterns) into every agent session. These two layers together shape the agent's behavior at the command surface and at the code-generation level \u2014 they are the 'policy layer' of the OS.",
+    "nodeIds": [
+      "document:COMMANDS-QUICK-REF.md",
+      "document:RULES.md"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "Install Pipeline \u2014 Core Scripts",
+    "description": "The Node.js automation layer (scripts/) is ECC's operational backbone. The fan-in analysis identifies `utils.js` (24 inbound edges) as the most-depended-upon file in the entire codebase \u2014 it provides path resolution, file I/O, git helpers, and process execution used by every other script. `install-manifests.js` (16 inbound edges) is the manifest loader that reads ECC's three-tier install model (modules/components/profiles) from disk. `install-executor.js` is the engine that materializes an install plan across all supported targets (Claude Code, Cursor, Codex, Antigravity). These three files form the core of the install pipeline.",
+    "nodeIds": [
+      "file:scripts/lib/utils.js",
+      "file:scripts/lib/install-manifests.js",
+      "file:scripts/lib/install-executor.js"
+    ],
+    "languageLesson": "The install pipeline uses a plan-then-execute pattern: `install-manifests.js` resolves what needs to be installed from declarative YAML manifests, `install-executor.js` turns that plan into file-system operations across multiple harness targets. This separation makes the install logic testable in isolation from file-system side effects."
+  },
+  {
+    "order": 6,
+    "title": "Install Targets & Lifecycle",
+    "description": "Building on the core engine from Step 5, `install-targets/registry.js` (the highest fan-out file in the codebase at 12 outbound edges) is the central registry of every harness target ECC can install into \u2014 Claude Code, Cursor, Codex, and more. Each adapter knows how to write config files, symlinks, and manifests for its specific target. `install-lifecycle.js` wraps the whole pipeline in discovery, health-check, repair, and uninstall operations, persisting state via `install-state.js`. This is how ECC becomes idempotent and self-healing.",
+    "nodeIds": [
+      "file:scripts/lib/install-targets/registry.js",
+      "file:scripts/lib/install-lifecycle.js",
+      "file:scripts/lib/install-state.js"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Lifecycle Hooks",
+    "description": "Hooks are ECC's event-driven behavior layer \u2014 they run at session start, before/after bash commands, and before/after tool use. The `bash-hook-dispatcher.js` (highest fan-out hook file, 11 outbound edges) is the central router that composes individual hook handlers into a pipeline for PreBash and PostBash events. `session-start.js` injects rich context (recent session history, learned skills, MCP inventory) into every new Claude session. `pretooluse-visible-output.js` provides the shared utility that lets hooks attach `additionalContext` to tool calls. Together these three files implement ECC's 'always-on intelligence' \u2014 the ambient enhancements every session gets for free.",
+    "nodeIds": [
+      "file:scripts/hooks/bash-hook-dispatcher.js",
+      "file:scripts/hooks/session-start.js",
+      "file:scripts/hooks/pretooluse-visible-output.js"
+    ],
+    "languageLesson": "Claude Code hooks receive structured JSON on stdin and must respond with JSON on stdout. ECC's dispatcher pattern composes multiple handlers \u2014 each a pure function of the hook payload \u2014 into a single hook entry point, keeping individual handlers small and independently testable."
+  },
+  {
+    "order": 8,
+    "title": "Session Adapters & MCP Inventory",
+    "description": "Two tightly coupled clusters (identified by the topology analysis) handle cross-harness session data. The session adapters cluster (`canonical-session.js`, `registry.js`, and harness-specific adapters) normalizes session history from Claude Code, Codex, OpenCode, and tmux into a single canonical schema \u2014 enabling ECC to inject cross-harness context regardless of which tool the user is running. The MCP inventory cluster (`canonical-mcp.js`, `collect.js`, harness readers) performs the same normalization for MCP server configurations. Both clusters follow the same registry-and-adapter pattern as the install targets.",
+    "nodeIds": [
+      "file:scripts/lib/session-adapters/canonical-session.js",
+      "file:scripts/lib/session-adapters/registry.js",
+      "file:scripts/lib/mcp-inventory/canonical-mcp.js",
+      "file:scripts/mcp-inventory.js"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Rust Control Plane (ecc2/)",
+    "description": "The `ecc2/` directory is ECC's high-performance native layer, a Rust binary named `ecc-tui`. `main.rs` is the CLI entry point implementing the full control-plane surface via clap subcommands: session management, schedules, remote dispatch, worktree control, memory graph, and observability export. `config/mod.rs` (9 inbound edges \u2014 one of the most-imported files in the Rust layer) defines all runtime config structs that drive agent behavior. `tui/dashboard.rs` implements the interactive terminal dashboard. `session/store.rs` provides the SQLite-backed persistence layer. The Cargo.toml manifest defines this as the `ecc-tui` crate with TUI and async-runtime dependencies.",
+    "nodeIds": [
+      "file:ecc2/src/main.rs",
+      "file:ecc2/src/config/mod.rs",
+      "file:ecc2/src/tui/dashboard.rs",
+      "file:ecc2/src/session/store.rs",
+      "config:ecc2/Cargo.toml"
+    ],
+    "languageLesson": "Rust's module system maps directly to the filesystem: `config/mod.rs` is the public interface for the entire `config` module. The `ecc2` crate uses Tokio for async I/O and Ratatui for the terminal UI \u2014 two idioms common in Rust CLI tools where performance and low latency matter."
+  },
+  {
+    "order": 10,
+    "title": "Python LLM Abstraction Layer (src/)",
+    "description": "The `src/llm/` package is ECC's provider-agnostic AI inference layer. `core/types.py` (9 inbound edges \u2014 the most-imported Python file) defines the canonical type system: Role, ProviderType, message and tool-call dataclasses. `core/interface.py` defines the abstract `LLMProvider` base class and the full error hierarchy, establishing the contract every provider must implement. `providers/resolver.py` reads environment variables to instantiate the correct provider at runtime (Claude, OpenAI, Ollama, astraflow). The `__main__.py` entry point enables `python -m llm` invocation from CI scripts and hooks.",
+    "nodeIds": [
+      "file:src/llm/core/types.py",
+      "file:src/llm/core/interface.py",
+      "file:src/llm/providers/resolver.py",
+      "file:src/llm/__main__.py"
+    ],
+    "languageLesson": "The abstract base class + resolver pattern is the standard Python approach to provider switching without if-chains: `interface.py` defines the contract, each provider in `providers/` implements it, and `resolver.py` picks the right one at runtime from environment config. Adding a new LLM provider requires only a new class and a line in the resolver."
+  },
+  {
+    "order": 11,
+    "title": "CI/CD & Supply-Chain Security",
+    "description": "ECC's GitHub Actions pipelines close the loop from code to shipped artifact. `ci.yml` runs the full test suite across a 3\u00d73\u00d74 OS/Node/package-manager matrix \u2014 the broadest compatibility gate in the repo. `release.yml` handles tag-triggered publishing to npm including an IOC (indicators of compromise) supply-chain scan before any artifact is published. `generator-generic-ossf-slsa3-publish.yml` generates SLSA level-3 provenance for every release, providing a cryptographically verifiable build chain. `supply-chain-watch.yml` runs every 6 hours to continuously verify npm registry signatures. This pipeline reflects ECC's identity as infrastructure software where supply-chain integrity is non-negotiable.",
+    "nodeIds": [
+      "pipeline:.github/workflows/ci.yml",
+      "pipeline:.github/workflows/release.yml",
+      "pipeline:.github/workflows/generator-generic-ossf-slsa3-publish.yml",
+      "pipeline:.github/workflows/supply-chain-watch.yml"
+    ],
+    "languageLesson": "GitHub Actions reusable workflows (`workflow_call`) let ECC factor the test and release logic into `reusable-test.yml` and `reusable-release.yml`, then call them from both CI and release pipelines without duplication. SLSA provenance is generated as a separate workflow that triggers on `release: published` \u2014 decoupling build verification from the release process itself."
+  }
+]

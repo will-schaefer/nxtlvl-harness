@@ -1,0 +1,104 @@
+{
+  "nodes": [
+    {
+      "id": "document:dart/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "dart/coding-style.md",
+      "summary": "Dart/Flutter coding-style rules covering formatting, immutability, naming, null safety, Dart 3 sealed types and pattern matching, error handling, async/futures, imports, and code generation. Extends the common coding-style rules with language-specific guidance.",
+      "tags": ["dart", "flutter", "coding-style", "null-safety", "pattern-matching"],
+      "complexity": "moderate",
+      "languageNotes": "Targets **/*.dart, pubspec.yaml, and analysis_options.yaml; emphasizes Dart 3+ sealed classes and exhaustive switch patterns."
+    },
+    {
+      "id": "document:dart/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "dart/hooks.md",
+      "summary": "Dart/Flutter automation hooks defining PostToolUse formatting/analysis hooks, a recommended hook configuration, pre-commit checks, and useful one-liners. Extends the common hooks rules with Dart-specific tooling.",
+      "tags": ["dart", "flutter", "hooks", "automation", "pre-commit"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:dart/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "dart/patterns.md",
+      "summary": "Dart/Flutter architectural patterns covering the repository pattern, BLoC/Cubit and Riverpod state management, dependency injection, ViewModel and UseCase patterns, freezed immutable state, clean-architecture layer boundaries, and GoRouter navigation. Extends the common patterns rules.",
+      "tags": ["dart", "flutter", "patterns", "state-management", "clean-architecture"],
+      "complexity": "complex",
+      "languageNotes": "Covers competing state-management approaches (BLoC/Cubit vs Riverpod) and enforces clean-architecture layer boundaries with freezed and GoRouter."
+    },
+    {
+      "id": "document:dart/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "dart/security.md",
+      "summary": "Dart/Flutter security rules covering secrets management, network security, input validation, data protection, Android- and iOS-specific hardening, WebView security, and build-time obfuscation. Extends the common security rules with mobile-specific guidance.",
+      "tags": ["dart", "flutter", "security", "mobile", "data-protection"],
+      "complexity": "moderate",
+      "languageNotes": "Adds mobile-specific path targets (AndroidManifest.xml, Info.plist) and platform-specific hardening for Android and iOS."
+    },
+    {
+      "id": "document:dart/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "dart/testing.md",
+      "summary": "Dart/Flutter testing rules covering the test framework and test types, unit testing of BLoC (bloc_test) and Riverpod (ProviderContainer) state managers, widget tests, fakes-over-mocks, async testing, golden tests, naming, organization, and coverage. Extends the common testing rules.",
+      "tags": ["dart", "flutter", "testing", "widget-tests", "golden-tests"],
+      "complexity": "complex",
+      "languageNotes": "Prescribes fakes over mocks and pairs state-manager tests to their frameworks (bloc_test for BLoC, ProviderContainer for Riverpod)."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:dart/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/patterns.md",
+      "target": "document:dart/testing.md",
+      "type": "similar_to",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:dart/coding-style.md",
+      "target": "document:dart/patterns.md",
+      "type": "similar_to",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

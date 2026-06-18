@@ -1,0 +1,907 @@
+{
+  "nodes": [
+    {
+      "id": "file:run-with-flags-shell.sh",
+      "type": "file",
+      "name": "run-with-flags-shell.sh",
+      "filePath": "run-with-flags-shell.sh",
+      "summary": "Bash entry shim for ECC hooks: reads stdin, asks check-hook-enabled.js whether the hook is active for the current profile, and dispatches to the target hook script with the lifecycle phase prefix. Passes stdin through unchanged (exit 0) when disabled or missing.",
+      "tags": ["hook", "dispatcher", "shell", "observe", "non-blocking"],
+      "complexity": "simple",
+      "languageNotes": "Uses `set -euo pipefail` and resolves CLAUDE_PLUGIN_ROOT with a fallback; fail-open design echoes stdin and exits 0 on any gating decision so it never blocks tool execution."
+    },
+    {
+      "id": "file:session-activity-tracker.js",
+      "type": "file",
+      "name": "session-activity-tracker.js",
+      "filePath": "session-activity-tracker.js",
+      "summary": "PostToolUse observe hook that records a sanitized per-tool activity row (redacted params, file events, git working-tree diff/patch previews) to ~/.claude/metrics/tool-usage.jsonl for ECC metric sync. Exports run() for the in-process run-with-flags wrapper.",
+      "tags": ["hook", "posttooluse", "observability", "observe", "non-blocking"],
+      "complexity": "complex",
+      "languageNotes": "Heavy secret-redaction and diff/patch-preview pipeline; enriches file events by shelling out to git (spawnSync) to reconstruct working-tree patches before logging."
+    },
+    {
+      "id": "file:session-end-marker.js",
+      "type": "file",
+      "name": "session-end-marker.js",
+      "filePath": "session-end-marker.js",
+      "summary": "Lightweight SessionEnd hook that removes the current session's observer lease and stops the per-project observer once the final lease ends, then passes stdin through unchanged. Exports run() for in-process execution.",
+      "tags": ["hook", "sessionend", "cleanup", "observe", "non-blocking"],
+      "complexity": "simple",
+      "languageNotes": "Delegates all lease/observer bookkeeping to ../lib/observer-sessions; wraps cleanup in try/catch so a failure is logged but never blocks (always returns the original stdin)."
+    },
+    {
+      "id": "file:session-end.js",
+      "type": "file",
+      "name": "session-end.js",
+      "filePath": "session-end.js",
+      "summary": "Stop-event session-persistence hook that extracts a meaningful summary from the JSONL transcript (user messages, tools used, files modified) and writes/merges a per-session markdown file with ECC summary markers for cross-session continuity.",
+      "tags": ["hook", "stop", "session-persistence", "observe", "non-blocking"],
+      "complexity": "complex",
+      "languageNotes": "Builds and merges a markdown session header with ECC:SUMMARY:START/END comment markers using escaped-regexp replacement so repeated Stop calls update rather than duplicate the summary block."
+    },
+    {
+      "id": "file:session-start-bootstrap.js",
+      "type": "file",
+      "name": "session-start-bootstrap.js",
+      "filePath": "session-start-bootstrap.js",
+      "summary": "Bootstrap loader for the SessionStart hook: resolves the ECC plugin root (env var or well-known fallback paths) and delegates to scripts/hooks/run-with-flags.js with the session:start event, which gates and then runs session-start.js. Falls open by passing stdin through if the plugin root cannot be found.",
+      "tags": ["hook", "sessionstart", "bootstrap", "dispatcher", "non-blocking"],
+      "complexity": "moderate",
+      "languageNotes": "Extracted from an inline `node -e` string in hooks.json specifically so the shell never sees `!` (history expansion) characters; scans the plugin cache directory tree to locate the runner root."
+    },
+    {
+      "id": "file:session-start.js",
+      "type": "file",
+      "name": "session-start.js",
+      "filePath": "session-start.js",
+      "summary": "SessionStart context-injection hook that loads bounded prior context into the new session: selects the most recent matching session summary, surfaces active instincts and learned skills, prunes expired session files, writes a session lease, and emits a character-limited additionalContext payload to stdout.",
+      "tags": ["hook", "sessionstart", "context-injection", "observe", "non-blocking"],
+      "complexity": "complex",
+      "languageNotes": "Wraps injected prior-session summaries in an explicit HISTORICAL-REFERENCE-ONLY guard so stale task descriptions and ARGUMENTS= payloads are not re-executed; bounds total injected context via getSessionStartMaxContextChars."
+    },
+    {
+      "id": "file:stop-format-typecheck.js",
+      "type": "file",
+      "name": "stop-format-typecheck.js",
+      "filePath": "stop-format-typecheck.js",
+      "summary": "Stop-event quality hook that reads the post-edit accumulator and batch-formats edited JS/TS files (grouped by project root) and type-checks .ts/.tsx files (grouped by tsconfig dir, tsc --noEmit), reporting type errors to stderr. Exports run() so the runner uses require() and the 300s timeout governs the full batch.",
+      "tags": ["hook", "stop", "format", "typecheck", "gate"],
+      "complexity": "complex",
+      "languageNotes": "Allocates per-batch timeouts proportional to batch count to stay under the Stop budget; guards against cmd.exe path-operator characters and clears the accumulator on read so repeated Stop calls do not double-process."
+    },
+    {
+      "id": "file:suggest-compact.js",
+      "type": "file",
+      "name": "suggest-compact.js",
+      "filePath": "suggest-compact.js",
+      "summary": "PreToolUse advisory hook that suggests manual compaction at logical intervals using two signals: a tool-call counter (first at a threshold, then periodically) and the primary context-size signal from the latest transcript usage record compared to a window-scaled token threshold. Emits a reminder via stdout, never blocks.",
+      "tags": ["hook", "pretooluse", "context-management", "observe", "non-blocking"],
+      "complexity": "complex",
+      "languageNotes": "Persists per-session counters and context buckets to the temp dir with TTL-based cleanup; uses transcript usage tokens as the primary window-pressure signal since tool-call count is a weak proxy."
+    },
+
+    {
+      "id": "function:session-activity-tracker.js:redactSecrets",
+      "type": "function",
+      "name": "redactSecrets",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [31, 43],
+      "summary": "Redacts tokens, Authorization headers, AWS access-key IDs, passwords, and GitHub PAT prefixes from a string before it is logged.",
+      "tags": ["security", "redaction", "sanitization", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-activity-tracker.js:sanitizeParamValue",
+      "type": "function",
+      "name": "sanitizeParamValue",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [53, 83],
+      "summary": "Recursively sanitizes a tool-input parameter value (arrays, objects, scalars), truncating and redacting each leaf before it is recorded in the activity log.",
+      "tags": ["sanitization", "recursive", "serialization", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:pushFileEvent",
+      "type": "function",
+      "name": "pushFileEvent",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [110, 139],
+      "summary": "Appends a deduplicated file-event record (path, action, optional diff and patch previews) to the events list, skipping URL-like and duplicate entries.",
+      "tags": ["data-model", "deduplication", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:buildPatchPreviewFromReplacement",
+      "type": "function",
+      "name": "buildPatchPreviewFromReplacement",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [184, 199],
+      "summary": "Builds a sanitized unified-diff-style patch preview from old/new replacement strings, prefixing removed and added lines.",
+      "tags": ["diff", "serialization", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-activity-tracker.js:buildDiffPreviewFromPatchPreview",
+      "type": "function",
+      "name": "buildDiffPreviewFromPatchPreview",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [209, 234],
+      "summary": "Derives a compact human-readable diff preview (first removed and added line) from an already-built patch preview.",
+      "tags": ["diff", "serialization", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:inferDefaultFileAction",
+      "type": "function",
+      "name": "inferDefaultFileAction",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [236, 254],
+      "summary": "Maps a tool name (write, edit, multiedit, notebookedit, etc.) to a default file action label for activity records.",
+      "tags": ["classification", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-activity-tracker.js:collectFilePaths",
+      "type": "function",
+      "name": "collectFilePaths",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [266, 297],
+      "summary": "Recursively walks a tool-input value collecting candidate file paths from known path-bearing keys, arrays, and nested objects.",
+      "tags": ["recursive", "extraction", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:fileEventPatchPreview",
+      "type": "function",
+      "name": "fileEventPatchPreview",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [324, 342],
+      "summary": "Produces a patch preview for a file event based on tool action, handling replacement edits and file-creation content.",
+      "tags": ["diff", "serialization", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:candidateGitPaths",
+      "type": "function",
+      "name": "candidateGitPaths",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [364, 395],
+      "summary": "Computes the set of candidate path spellings (absolute, repo-relative, POSIX-normalized) for a file so git diff/ls-files lookups succeed across platforms.",
+      "tags": ["git", "path-resolution", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:patchPreviewFromGitDiff",
+      "type": "function",
+      "name": "patchPreviewFromGitDiff",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [397, 422],
+      "summary": "Runs git diff for the candidate paths and extracts hunk headers and added/removed lines into a bounded patch preview.",
+      "tags": ["git", "diff", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:enrichFileEventFromWorkingTree",
+      "type": "function",
+      "name": "enrichFileEventFromWorkingTree",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [430, 468],
+      "summary": "Enriches a file event with diff and patch previews reconstructed from the git working tree when the tool input did not supply them.",
+      "tags": ["git", "enrichment", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:collectFileEvents",
+      "type": "function",
+      "name": "collectFileEvents",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [470, 510],
+      "summary": "Recursively traverses tool input to build file-event records, attaching the inferred action plus diff/patch previews for each path-bearing key.",
+      "tags": ["recursive", "extraction", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:summarizeInput",
+      "type": "function",
+      "name": "summarizeInput",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [521, 545],
+      "summary": "Builds a short human-readable summary line of a tool invocation from its name, input fields, and extracted file paths.",
+      "tags": ["serialization", "summary", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:buildActivityRow",
+      "type": "function",
+      "name": "buildActivityRow",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [563, 595],
+      "summary": "Assembles the full sanitized activity record (event, tool, session id, file events, params, input/output summaries, timestamp) written to the metrics JSONL.",
+      "tags": ["data-model", "serialization", "observability"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-activity-tracker.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [597, 612],
+      "summary": "In-process entry point: parses the PostToolUse stdin payload, builds the activity row, and appends it to the tool-usage metrics file. Returns input unchanged.",
+      "tags": ["entry-point", "hook", "observe"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-activity-tracker.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "session-activity-tracker.js",
+      "lineRange": [614, 626],
+      "summary": "Legacy direct-CLI entry: reads bounded stdin and invokes run(), writing pass-through output to stdout.",
+      "tags": ["entry-point", "hook", "cli"],
+      "complexity": "simple"
+    },
+
+    {
+      "id": "function:session-end-marker.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "session-end-marker.js",
+      "lineRange": [21, 49],
+      "summary": "SessionEnd in-process entry: resolves the session id, removes its observer lease, and stops the per-project observer when no leases remain; returns stdin unchanged and never throws.",
+      "tags": ["entry-point", "hook", "sessionend", "cleanup"],
+      "complexity": "moderate"
+    },
+
+    {
+      "id": "function:session-end.js:extractSessionSummary",
+      "type": "function",
+      "name": "extractSessionSummary",
+      "filePath": "session-end.js",
+      "lineRange": [40, 111],
+      "summary": "Parses the JSONL transcript to extract a session summary: recent user messages, tools used, and files modified, with ANSI stripping and bounded slicing.",
+      "tags": ["parsing", "transcript", "summary"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-end.js:getSessionMetadata",
+      "type": "function",
+      "name": "getSessionMetadata",
+      "filePath": "session-end.js",
+      "lineRange": [136, 144],
+      "summary": "Collects session metadata (project name, git branch, worktree) used to build the session-file header.",
+      "tags": ["metadata", "git", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-end.js:buildSessionHeader",
+      "type": "function",
+      "name": "buildSessionHeader",
+      "filePath": "session-end.js",
+      "lineRange": [151, 167],
+      "summary": "Builds the markdown session-file header (date, started, last-updated, project, branch, worktree), preserving an existing start time when present.",
+      "tags": ["serialization", "markdown", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-end.js:mergeSessionHeader",
+      "type": "function",
+      "name": "mergeSessionHeader",
+      "filePath": "session-end.js",
+      "lineRange": [169, 179],
+      "summary": "Replaces the header region of existing session-file content with a freshly built header, or prepends one when no header exists.",
+      "tags": ["serialization", "markdown", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-end.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "session-end.js",
+      "lineRange": [181, 295],
+      "summary": "Orchestrates the Stop-event session persistence: resolves the session file path from the transcript, extracts the summary, merges header and summary markers into the file, and writes it back.",
+      "tags": ["entry-point", "hook", "session-persistence", "orchestration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-end.js:buildSummarySection",
+      "type": "function",
+      "name": "buildSummarySection",
+      "filePath": "session-end.js",
+      "lineRange": [297, 324],
+      "summary": "Renders the markdown summary section body (tasks, tools used, files modified) from an extracted summary object.",
+      "tags": ["serialization", "markdown", "utility"],
+      "complexity": "moderate"
+    },
+
+    {
+      "id": "function:session-start-bootstrap.js:resolvePluginRoot",
+      "type": "function",
+      "name": "resolvePluginRoot",
+      "filePath": "session-start-bootstrap.js",
+      "lineRange": [73, 116],
+      "summary": "Resolves the ECC plugin root directory by checking CLAUDE_PLUGIN_ROOT, well-known plugin paths, and by scanning the plugin cache org/version directory tree for one containing run-with-flags.js.",
+      "tags": ["path-resolution", "bootstrap", "utility"],
+      "complexity": "moderate"
+    },
+
+    {
+      "id": "function:session-start.js:dedupeRecentSessions",
+      "type": "function",
+      "name": "dedupeRecentSessions",
+      "filePath": "session-start.js",
+      "lineRange": [57, 84],
+      "summary": "Finds recent session files across the search dirs and deduplicates them by basename, keeping the most recently modified copy of each.",
+      "tags": ["deduplication", "session", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:getSessionStartMode",
+      "type": "function",
+      "name": "getSessionStartMode",
+      "filePath": "session-start.js",
+      "lineRange": [119, 144],
+      "summary": "Parses the SessionStart stdin payload to determine the start mode (startup, resume, clear, compact) and detect skip/invalid cases.",
+      "tags": ["parsing", "sessionstart", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:limitSessionStartContext",
+      "type": "function",
+      "name": "limitSessionStartContext",
+      "filePath": "session-start.js",
+      "lineRange": [146, 158],
+      "summary": "Truncates the assembled additionalContext payload to a configured maximum character budget, appending a truncation marker.",
+      "tags": ["context-injection", "bounding", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:session-start.js:pruneExpiredSessions",
+      "type": "function",
+      "name": "pruneExpiredSessions",
+      "filePath": "session-start.js",
+      "lineRange": [160, 198],
+      "summary": "Deletes session files older than the configured retention window from the search dirs based on file mtime.",
+      "tags": ["cleanup", "retention", "session"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:selectMatchingSession",
+      "type": "function",
+      "name": "selectMatchingSession",
+      "filePath": "session-start.js",
+      "lineRange": [226, 271],
+      "summary": "Selects the most relevant prior session for the current cwd/project by matching worktree and project header fields in candidate session files.",
+      "tags": ["session", "matching", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-start.js:parseInstinctFile",
+      "type": "function",
+      "name": "parseInstinctFile",
+      "filePath": "session-start.js",
+      "lineRange": [273, 320],
+      "summary": "Parses an instinct YAML/markdown file into structured instinct records (id, confidence, content) for context injection.",
+      "tags": ["parsing", "instincts", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-start.js:readInstinctsFromDir",
+      "type": "function",
+      "name": "readInstinctsFromDir",
+      "filePath": "session-start.js",
+      "lineRange": [322, 347],
+      "summary": "Reads and parses all instinct files (.yml/.yaml/.md) from a directory, tagging each with its scope (project or global).",
+      "tags": ["instincts", "parsing", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:summarizeActiveInstincts",
+      "type": "function",
+      "name": "summarizeActiveInstincts",
+      "filePath": "session-start.js",
+      "lineRange": [360, 411],
+      "summary": "Deduplicates instincts across project and global scopes, ranks them by confidence and scope, and renders the top-N actionable instincts as an injectable summary block.",
+      "tags": ["instincts", "ranking", "context-injection"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-start.js:summarizeLearnedSkillFile",
+      "type": "function",
+      "name": "summarizeLearnedSkillFile",
+      "filePath": "session-start.js",
+      "lineRange": [453, 487],
+      "summary": "Summarizes a single learned-skill markdown file (heading, when-to-use, first paragraph) into a bounded one-line entry for the session-start context.",
+      "tags": ["learned-skills", "markdown", "summary"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:summarizeLearnedSkills",
+      "type": "function",
+      "name": "summarizeLearnedSkills",
+      "filePath": "session-start.js",
+      "lineRange": [502, 524],
+      "summary": "Collects and summarizes the available learned-skill files into a reference-only context block listing the top-N skills.",
+      "tags": ["learned-skills", "context-injection", "summary"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:session-start.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "session-start.js",
+      "lineRange": [526, 684],
+      "summary": "Orchestrates SessionStart: prunes expired sessions, writes a session lease, gathers active instincts, prior-session summary (with a historical-reference guard), learned skills, aliases, and project info, then assembles and emits the bounded additionalContext payload.",
+      "tags": ["entry-point", "hook", "context-injection", "orchestration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:session-start.js:writeSessionStartPayload",
+      "type": "function",
+      "name": "writeSessionStartPayload",
+      "filePath": "session-start.js",
+      "lineRange": [686, 718],
+      "summary": "Serializes the SessionStart hook payload (additionalContext) as JSON and writes it to stdout, flushing reliably before resolving.",
+      "tags": ["serialization", "hook", "context-injection"],
+      "complexity": "moderate"
+    },
+
+    {
+      "id": "function:stop-format-typecheck.js:formatBatch",
+      "type": "function",
+      "name": "formatBatch",
+      "filePath": "stop-format-typecheck.js",
+      "lineRange": [48, 77],
+      "summary": "Formats a batch of edited files under one project root using the detected formatter binary, guarding against unsafe path characters when shelling out.",
+      "tags": ["format", "batch", "quality"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stop-format-typecheck.js:findTsConfigDir",
+      "type": "function",
+      "name": "findTsConfigDir",
+      "filePath": "stop-format-typecheck.js",
+      "lineRange": [79, 89],
+      "summary": "Walks up from a file path to find the nearest directory containing a tsconfig.json.",
+      "tags": ["typescript", "path-resolution", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:stop-format-typecheck.js:typecheckBatch",
+      "type": "function",
+      "name": "typecheckBatch",
+      "filePath": "stop-format-typecheck.js",
+      "lineRange": [91, 134],
+      "summary": "Runs tsc --noEmit over a tsconfig dir and filters the output to type errors relevant to the edited files, reporting them to stderr.",
+      "tags": ["typecheck", "typescript", "gate"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:stop-format-typecheck.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "stop-format-typecheck.js",
+      "lineRange": [136, 179],
+      "summary": "Reads and clears the post-edit accumulator, groups edited files by project root (for formatting) and by tsconfig dir (for type-checking), allocates per-batch timeouts, and runs both passes.",
+      "tags": ["entry-point", "hook", "orchestration", "quality"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:stop-format-typecheck.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "stop-format-typecheck.js",
+      "lineRange": [188, 195],
+      "summary": "In-process entry point for run-with-flags: invokes main() (catching errors to stderr) and returns the raw stdin pass-through.",
+      "tags": ["entry-point", "hook", "stop"],
+      "complexity": "simple"
+    },
+
+    {
+      "id": "function:suggest-compact.js:cleanupOldCounters",
+      "type": "function",
+      "name": "cleanupOldCounters",
+      "filePath": "suggest-compact.js",
+      "lineRange": [74, 111],
+      "summary": "Removes stale tool-count and context-bucket state files older than the retention window from the temp dir, skipping the current session's files.",
+      "tags": ["cleanup", "retention", "state"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:suggest-compact.js:incrementToolCallCount",
+      "type": "function",
+      "name": "incrementToolCallCount",
+      "filePath": "suggest-compact.js",
+      "lineRange": [118, 146],
+      "summary": "Atomically reads, increments, and writes the per-session tool-call counter file using a low-level file descriptor with a fallback write.",
+      "tags": ["state", "counter", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:suggest-compact.js:buildContextSuggestion",
+      "type": "function",
+      "name": "buildContextSuggestion",
+      "filePath": "suggest-compact.js",
+      "lineRange": [169, 194],
+      "summary": "Computes whether a compaction reminder is warranted from the latest transcript usage tokens versus a window-scaled threshold and re-reminder interval, persisting the last context bucket.",
+      "tags": ["context-management", "threshold", "transcript"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:suggest-compact.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "suggest-compact.js",
+      "lineRange": [196, 266],
+      "summary": "Orchestrates the compact suggester: reads the stdin payload, manages per-session counter/bucket state, evaluates the tool-count and context-size signals, and emits any compaction reminder messages.",
+      "tags": ["entry-point", "hook", "context-management", "orchestration"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:run-with-flags-shell.sh",
+      "target": "file:check-hook-enabled.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:redactSecrets",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:sanitizeParamValue",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:pushFileEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:buildPatchPreviewFromReplacement",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:buildDiffPreviewFromPatchPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:inferDefaultFileAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:collectFilePaths",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:fileEventPatchPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:candidateGitPaths",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:patchPreviewFromGitDiff",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:enrichFileEventFromWorkingTree",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:collectFileEvents",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:summarizeInput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:buildActivityRow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-activity-tracker.js",
+      "target": "function:session-activity-tracker.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+
+    {
+      "source": "file:session-end-marker.js",
+      "target": "function:session-end-marker.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end-marker.js",
+      "target": "function:session-end-marker.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:extractSessionSummary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:getSessionMetadata",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:buildSessionHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:mergeSessionHeader",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-end.js",
+      "target": "function:session-end.js:buildSummarySection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+
+    {
+      "source": "file:session-start-bootstrap.js",
+      "target": "function:session-start-bootstrap.js:resolvePluginRoot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start-bootstrap.js",
+      "target": "file:session-start.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:dedupeRecentSessions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:getSessionStartMode",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:limitSessionStartContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:pruneExpiredSessions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:selectMatchingSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:parseInstinctFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:readInstinctsFromDir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:summarizeActiveInstincts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:summarizeLearnedSkillFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:summarizeLearnedSkills",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:session-start.js",
+      "target": "function:session-start.js:writeSessionStartPayload",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:formatBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:findTsConfigDir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:typecheckBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "function:stop-format-typecheck.js:run",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:stop-format-typecheck.js",
+      "target": "file:post-edit-accumulator.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+
+    {
+      "source": "file:suggest-compact.js",
+      "target": "function:suggest-compact.js:cleanupOldCounters",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:suggest-compact.js",
+      "target": "function:suggest-compact.js:incrementToolCallCount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:suggest-compact.js",
+      "target": "function:suggest-compact.js:buildContextSuggestion",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:suggest-compact.js",
+      "target": "function:suggest-compact.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

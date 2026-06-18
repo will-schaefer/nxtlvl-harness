@@ -1,0 +1,98 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/web/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/web/coding-style.md",
+      "summary": "Defines web coding style conventions covering file organization, CSS custom properties, animation-only properties, semantic HTML usage, and naming guidelines to enforce consistency across frontend code.",
+      "tags": ["documentation", "configuration", "frontend-ui-engineering", "web", "coding-standards"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/web/design-quality.md",
+      "type": "document",
+      "name": "design-quality.md",
+      "filePath": "rules/web/design-quality.md",
+      "summary": "Establishes web design quality standards including an anti-template policy, banned UI patterns, required qualities, and a component checklist to ensure high-quality, non-generic frontend output.",
+      "tags": ["documentation", "frontend-ui-engineering", "web", "quality", "design"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/web/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/web/hooks.md",
+      "summary": "Specifies recommended Claude Code hook configurations for web projects, covering PostToolUse hooks for format-on-save, lint, type-check, and CSS lint, plus PreToolUse file size guards and Stop hooks for final build verification.",
+      "tags": ["documentation", "configuration", "ci-cd", "web", "hooks"],
+      "complexity": "moderate",
+      "languageNotes": "Describes hook JSON configuration patterns specific to the ECC harness, including PostToolUse, PreToolUse, and Stop hook categories with ordering guidance."
+    },
+    {
+      "id": "document:rules/web/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/web/patterns.md",
+      "summary": "Documents preferred frontend architectural patterns including component composition (compound components, render props, container/presentational split), state management strategies, URL-as-state, and data fetching patterns (stale-while-revalidate, optimistic updates, parallel loading).",
+      "tags": ["documentation", "frontend-ui-engineering", "web", "architecture", "patterns"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/web/performance.md",
+      "type": "document",
+      "name": "performance.md",
+      "filePath": "rules/web/performance.md",
+      "summary": "Defines web performance rules targeting Core Web Vitals, bundle budget constraints, loading strategies, image optimization, font loading, and animation performance with a final checklist.",
+      "tags": ["documentation", "frontend-ui-engineering", "web", "performance", "optimization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/web/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/web/security.md",
+      "summary": "Provides web security rules covering Content Security Policy (nonce-based CSP), XSS prevention, third-party script controls, HTTPS and security headers, and secure form handling.",
+      "tags": ["documentation", "security", "web", "frontend-ui-engineering", "xss-prevention"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/web/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/web/testing.md",
+      "summary": "Specifies web testing rules with a priority ordering across visual regression, accessibility, performance, cross-browser, and responsive testing, plus guidance on E2E test shape and unit test scope.",
+      "tags": ["documentation", "test", "web", "frontend-ui-engineering", "accessibility"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/web/coding-style.md",
+      "target": "document:rules/web/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/web/hooks.md",
+      "target": "document:rules/web/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/web/performance.md",
+      "target": "document:rules/web/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/web/security.md",
+      "target": "document:rules/web/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

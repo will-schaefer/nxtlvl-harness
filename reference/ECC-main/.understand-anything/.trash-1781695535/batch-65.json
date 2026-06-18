@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/ruby/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/ruby/coding-style.md",
+      "summary": "Always-follow rule document defining Ruby coding style standards for ECC, covering RuboCop-based linting, Rails conventions, formatting, and error handling guidelines with links to the community style guide.",
+      "tags": ["documentation", "configuration", "ruby", "code-quality"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/ruby/hooks.md",
+      "summary": "Always-follow rule document specifying PostToolUse hook patterns for Ruby projects, including RuboCop auto-correct triggers, formatting warnings, and CI gate suggestions for lint enforcement.",
+      "tags": ["documentation", "configuration", "ruby", "ci-cd"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/ruby/patterns.md",
+      "summary": "Always-follow rule document prescribing idiomatic Ruby and Rails architectural patterns, covering the Rails Way, ActiveRecord persistence, background jobs, frontend integration, and authentication approaches.",
+      "tags": ["documentation", "configuration", "ruby", "architecture"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/ruby/security.md",
+      "summary": "Always-follow rule document enumerating Ruby and Rails security requirements, including protection against SQL injection via ActiveRecord, CSRF/XSS/CORS defaults, session hardening, dependency auditing with Bundler Audit, and web safety practices.",
+      "tags": ["documentation", "security", "ruby", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/ruby/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/ruby/testing.md",
+      "summary": "Always-follow rule document defining Ruby testing standards, specifying RSpec as the framework, the test pyramid (unit/integration/system), FactoryBot fixtures, test commands, and coverage thresholds.",
+      "tags": ["documentation", "test", "ruby", "configuration"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/ruby/hooks.md",
+      "target": "document:rules/ruby/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/ruby/patterns.md",
+      "target": "document:rules/ruby/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/ruby/security.md",
+      "target": "document:rules/ruby/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/ruby/testing.md",
+      "target": "document:rules/ruby/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "order": 1,
+    "title": "What ECC Is",
+    "description": "Start here to understand ECC's target shape before reading any detail. The reference architecture defines ECC 2.0 as a cross-harness agent operating system and maps each baseline component (worktree/session orchestration, HUD/observability, the self-improving loop, AgentShield, ECC Tools) onto the GA roadmap backlog. Reading these two together gives you both the 'what' (the architecture's intended form) and the 'how it gets built' (the dated, evidence-tracked roadmap), so every later doc has a place to hang.",
+    "nodeIds": ["document:ECC-2.0-REFERENCE-ARCHITECTURE.md", "document:ECC-2.0-GA-ROADMAP.md"]
+  },
+  {
+    "order": 2,
+    "title": "Get Running",
+    "description": "Now that you know what ECC aims to be, see how an operator actually brings it up. The rc.1 quickstart walks a contributor through clone, install, the test and observability gates, and distilling a first skill that switches across Claude Code, Codex, and OpenCode. HERMES-SETUP then layers the Hermes operator shell on top, showing what ships publicly and the recommended bring-up order. This is the fastest path from 'reading about ECC' to 'a working operator surface'.",
+    "nodeIds": ["document:releases/2.0.0-rc.1/quickstart.md", "document:HERMES-SETUP.md"]
+  },
+  {
+    "order": 3,
+    "title": "The Cross-Harness Core",
+    "description": "This is ECC's central design idea and the most tightly-coupled cluster in the whole corpus. cross-harness.md defines ECC as a reusable workflow layer that keeps durable assets (skills, rules, hooks, MCP config, sessions) in one repo and adapts them thinly at each harness edge. harness-adapter-compliance.md turns that principle into a practical scorecard of compliance states (native, adapter-backed, instruction-backed, reference-only) per harness. Together they answer 'how does one system stay coherent across Codex, Claude Code, Cursor, OpenCode, and more?'",
+    "nodeIds": ["document:architecture/cross-harness.md", "document:architecture/harness-adapter-compliance.md"]
+  },
+  {
+    "order": 4,
+    "title": "The Session Adapter Boundary",
+    "description": "Building on the cross-harness principle from Step 3, this step shows how a harness-neutral boundary is specified concretely. The discovery doc analyzes the 1.x-to-2.0 gap and names the first adapters to support (dmux-tmux, claude-history, codex-worktree, opencode). The session-adapter contract then pins the canonical `ecc.session.v1` snapshot schema that every adapter must emit and every consumer reads. This pairing is the template for how ECC turns a design principle into a versioned contract.",
+    "nodeIds": ["document:ECC-2.0-SESSION-ADAPTER-DISCOVERY.md", "document:SESSION-ADAPTER-CONTRACT.md"],
+    "languageLesson": "Schema versioning: the contract distinguishes additive changes (new optional fields, safe within ecc.session.v1) from breaking changes (which require a new version). This additive-vs-breaking discipline is what lets many independently-built adapters stay interoperable over time."
+  },
+  {
+    "order": 5,
+    "title": "Selective Install & Capability Routing",
+    "description": "ECC does not force every harness to take everything. The selective-install design (the product/UX view) and architecture (the layered-services view) define a component model — baseline plus language, framework, and capability packs — so an operator installs only what they need. capability-surface-selection.md then gives the decision rule for where any new behavior belongs: a rule, a skill, an MCP server, or a plain CLI/API workflow, biased toward the narrowest reliable surface. This is the governance backbone behind ECC's modularity.",
+    "nodeIds": ["document:SELECTIVE-INSTALL-DESIGN.md", "document:SELECTIVE-INSTALL-ARCHITECTURE.md", "document:capability-surface-selection.md"]
+  },
+  {
+    "order": 6,
+    "title": "Adapting to a Harness",
+    "description": "With the cross-harness contract understood, see how it lands on real harnesses. The Antigravity, JoyCode, and Qwen guides each document a per-harness installer: source-path mapping, the installed directory layout, and install-state-tracked uninstall that preserves user files. The manual-adaptation guide covers the fallback path for non-native harnesses (e.g. Grok-style setups) via context packing and hand-reproduced commands. Read these as concrete instances of the 'thin adapter at each edge' rule from Step 3.",
+    "nodeIds": ["document:ANTIGRAVITY-GUIDE.md", "document:JOYCODE-GUIDE.md", "document:QWEN-GUIDE.md", "document:MANUAL-ADAPTATION-GUIDE.md"]
+  },
+  {
+    "order": 7,
+    "title": "The Skills & Capability System",
+    "description": "Skills are how ECC packages reusable behavior. The skill-development guide is the end-to-end authoring reference (SKILL.md format, frontmatter, patterns, testing, fork-to-PR flow); the placement and adaptation policies govern where curated, learned, imported, and evolved skills live and how external ideas become ECC-native. continuous-learning-v2 closes the loop, capturing hook observations that score into instincts and eventually evolve into new skills. This is ECC's self-improving capability engine.",
+    "nodeIds": ["document:SKILL-DEVELOPMENT-GUIDE.md", "document:SKILL-PLACEMENT-POLICY.md", "document:skill-adaptation-policy.md", "document:continuous-learning-v2-spec.md"]
+  },
+  {
+    "order": 8,
+    "title": "The Command Surface",
+    "description": "Skills and agents are exposed to users through slash commands. COMMAND-AGENT-MAP.md is the human-facing discoverability map of which command invokes which agent or skill, while COMMAND-REGISTRY.json is the machine-readable single source of truth behind it, with aggregate statistics. Seeing the prose map and its backing data file side by side illustrates a recurring ECC pattern: a rendered human view kept in sync with a structured data source.",
+    "nodeIds": ["document:COMMAND-AGENT-MAP.md", "config:COMMAND-REGISTRY.json"]
+  },
+  {
+    "order": 9,
+    "title": "Observability & Operator Surface",
+    "description": "An operator needs to see what agents are doing. This cluster defines the local, opt-in observability story: the HUD-status contract specifies a harness-neutral `ecc.hud-status.v1` payload for status surfaces and handoffs; the progress-sync contract sets the minimum evidence before a status update may claim a lane is current across GitHub, Linear, and local handoffs; and observability-readiness is the gate that checks all these signals are present without sending any telemetry. Note how every surface here is, again, a versioned contract.",
+    "nodeIds": ["document:architecture/observability-readiness.md", "document:architecture/hud-status-session-control.md", "document:architecture/progress-sync-contract.md"]
+  },
+  {
+    "order": 10,
+    "title": "Operations & Incident Response",
+    "description": "This is the operator's day-to-day survival kit. TROUBLESHOOTING and its distilled hook-bug-workarounds checklist capture community-tested fixes for upstream Claude Code bugs (false hook-error labels, early compaction, MCP auth loss); token-optimization keeps sessions cheap and long; and the supply-chain incident-response runbook turns real npm/PyPI/Actions compromise campaigns into IOC checks and hardening steps. Together they show ECC treating reliability and security as first-class operational concerns, not afterthoughts.",
+    "nodeIds": ["document:TROUBLESHOOTING.md", "document:hook-bug-workarounds.md", "document:token-optimization.md", "document:security/supply-chain-incident-response.md"]
+  },
+  {
+    "order": 11,
+    "title": "Planning Patterns",
+    "description": "How does work get from idea to issue in ECC? PLAN-PRD-PATTERN explains the markdown-staged flow where /plan-prd (the why) and /plan (the how) write plain .md staging files, and argues why staging files beat in-context state. The mega-plan and phase-1 issue bundle are a worked example of that pattern at scale — ready-to-run repo prompts distilled into postable GitHub issues, including the session-adapter contract you met in Step 4. The capability and project-guidelines templates show the reusable scaffolding authors start from.",
+    "nodeIds": ["document:PLAN-PRD-PATTERN.md", "document:MEGA-PLAN-REPO-PROMPTS-2026-03-12.md", "document:PHASE1-ISSUE-BUNDLE-2026-03-12.md", "document:examples/product-capability-template.md"]
+  },
+  {
+    "order": 12,
+    "title": "Release & Go-to-Market",
+    "description": "The tour ends where ECC meets the world. The rc.1 release notes anchor the launch campaign, and publication-readiness is the canonical gate every dated evidence log defers to — a release-identity matrix, gate table, required-command evidence, and do-not-publish conditions. The GA release notes record the finished 2.0.0 story (261 public skills, the control-pane substrate), and the metrics-and-sponsorship playbook turns all of it into a partner-facing business pitch. This closes the loop from 'what ECC is' (Step 1) to 'why anyone should fund and adopt it'.",
+    "nodeIds": ["document:releases/2.0.0-rc.1/release-notes.md", "document:releases/2.0.0-rc.1/publication-readiness.md", "document:releases/2.0.0/release-notes.md", "document:business/metrics-and-sponsorship.md"]
+  }
+]

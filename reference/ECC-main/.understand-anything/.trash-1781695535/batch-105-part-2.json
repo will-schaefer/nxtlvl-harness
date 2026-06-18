@@ -1,0 +1,284 @@
+{
+  "nodes": [
+    {
+      "id": "file:tests/opencode-config.test.js",
+      "type": "file",
+      "name": "opencode-config.test.js",
+      "filePath": "tests/opencode-config.test.js",
+      "summary": "Tests for ECC's OpenCode configuration integration, verifying that the plugin config file is valid and contains required settings for OpenCode compatibility.",
+      "tags": ["test", "configuration", "opencode"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/opencode-plugin-hooks.test.js",
+      "type": "file",
+      "name": "opencode-plugin-hooks.test.js",
+      "filePath": "tests/opencode-plugin-hooks.test.js",
+      "summary": "Tests that ECC plugin hooks function correctly within an OpenCode environment, verifying hook registration, client creation, and failure handling.",
+      "tags": ["test", "hook", "opencode", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/opencode-plugin-hooks.test.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "tests/opencode-plugin-hooks.test.js",
+      "lineRange": [82, 262],
+      "summary": "Main test entry point for OpenCode plugin hook tests, orchestrating plugin loading, client creation, and hook invocation scenarios.",
+      "tags": ["test", "opencode", "hook"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/opencode-tools.test.js",
+      "type": "file",
+      "name": "opencode-tools.test.js",
+      "filePath": "tests/opencode-tools.test.js",
+      "summary": "Tests for ECC tools when run under OpenCode, verifying tool loading, mock context injection, and correct behavior in the OpenCode tool execution environment.",
+      "tags": ["test", "opencode", "tools"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/opencode-tools.test.js:loadTools",
+      "type": "function",
+      "name": "loadTools",
+      "filePath": "tests/opencode-tools.test.js",
+      "lineRange": [29, 62],
+      "summary": "Loads all ECC tools from the plugin directory and returns them for inspection and invocation in tests.",
+      "tags": ["test", "utility", "tools"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/opencode-tools.test.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "tests/opencode-tools.test.js",
+      "lineRange": [85, 231],
+      "summary": "Main test driver that exercises each loaded OpenCode tool with mock contexts and asserts correct output and side effects.",
+      "tags": ["test", "opencode", "tools"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/plugin-manifest.test.js",
+      "type": "file",
+      "name": "plugin-manifest.test.js",
+      "filePath": "tests/plugin-manifest.test.js",
+      "summary": "Validates the ECC plugin manifest JSON for structural correctness, required fields, and consistency with the markdown files declared in the manifest.",
+      "tags": ["test", "plugin", "manifest", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/plugin-manifest.test.js:collectMarkdownFiles",
+      "type": "function",
+      "name": "collectMarkdownFiles",
+      "filePath": "tests/plugin-manifest.test.js",
+      "lineRange": [69, 89],
+      "summary": "Recursively collects all markdown file paths under a given directory for manifest completeness verification.",
+      "tags": ["test", "utility", "filesystem"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/run-all.js",
+      "type": "file",
+      "name": "run-all.js",
+      "filePath": "tests/run-all.js",
+      "summary": "Test runner entry point that discovers and sequentially executes all test files in the tests/ directory, reporting pass/fail counts and timing.",
+      "tags": ["entry-point", "test", "test-runner"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/run-all.js:walkFiles",
+      "type": "function",
+      "name": "walkFiles",
+      "filePath": "tests/run-all.js",
+      "lineRange": [25, 36],
+      "summary": "Recursively walks a directory tree and yields all file paths matching a given predicate, used for test file discovery.",
+      "tags": ["utility", "filesystem", "discovery"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/scripts/build-opencode.test.js",
+      "type": "file",
+      "name": "build-opencode.test.js",
+      "filePath": "tests/scripts/build-opencode.test.js",
+      "summary": "Tests for the build-opencode script, verifying that it correctly assembles the OpenCode plugin bundle with all required components.",
+      "tags": ["test", "build", "opencode", "script"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/build-opencode.test.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "tests/scripts/build-opencode.test.js",
+      "lineRange": [22, 121],
+      "summary": "Runs the build-opencode script in a temporary directory and asserts that output files, structure, and content match expected bundle layout.",
+      "tags": ["test", "build", "opencode"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/scripts/catalog.test.js",
+      "type": "file",
+      "name": "catalog.test.js",
+      "filePath": "tests/scripts/catalog.test.js",
+      "summary": "Tests for the catalog script, verifying that the ECC component catalog is generated with correct entries, fields, and formatting.",
+      "tags": ["test", "catalog", "script"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/catalog.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/catalog.test.js",
+      "lineRange": [40, 102],
+      "summary": "Exercises the catalog script across multiple scenarios and asserts correct catalog entry generation and output formatting.",
+      "tags": ["test", "catalog"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/scripts/check-unicode-safety.test.js",
+      "type": "file",
+      "name": "check-unicode-safety.test.js",
+      "filePath": "tests/scripts/check-unicode-safety.test.js",
+      "summary": "Tests for the unicode safety checker script, verifying detection of dangerous unicode sequences, homoglyphs, and zero-width characters in project files.",
+      "tags": ["test", "security", "unicode", "script"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/claw.test.js",
+      "type": "file",
+      "name": "claw.test.js",
+      "filePath": "tests/scripts/claw.test.js",
+      "summary": "Tests for the claw utility script, exercising project-scanning, rule discovery, and configuration assembly functionality.",
+      "tags": ["test", "claw", "script", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/claw.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/claw.test.js",
+      "lineRange": [50, 323],
+      "summary": "Comprehensive test runner for the claw script covering rule discovery, config generation, path resolution, and output formatting.",
+      "tags": ["test", "claw", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/codex-hooks.test.js",
+      "type": "file",
+      "name": "codex-hooks.test.js",
+      "filePath": "tests/scripts/codex-hooks.test.js",
+      "summary": "Tests for the Codex hooks integration, verifying hermetic execution of hooks in simulated Codex worker environments with plugin cache seeding.",
+      "tags": ["test", "codex", "hook", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/codex-hooks.test.js:makeHermeticCodexEnv",
+      "type": "function",
+      "name": "makeHermeticCodexEnv",
+      "filePath": "tests/scripts/codex-hooks.test.js",
+      "lineRange": [69, 86],
+      "summary": "Creates a hermetically isolated environment for Codex hook tests by setting up a clean temp directory with required env variables and plugin cache.",
+      "tags": ["test", "utility", "codex", "isolation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/scripts/consult.test.js",
+      "type": "file",
+      "name": "consult.test.js",
+      "filePath": "tests/scripts/consult.test.js",
+      "summary": "Tests for the consult script, validating multi-model consultation output parsing, match finding, and result formatting.",
+      "tags": ["test", "consult", "script"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/consult.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/consult.test.js",
+      "lineRange": [45, 192],
+      "summary": "Test driver for the consult script covering JSON parsing, result matching, and output formatting scenarios.",
+      "tags": ["test", "consult"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/scripts/dashboard-web.test.js",
+      "type": "file",
+      "name": "dashboard-web.test.js",
+      "filePath": "tests/scripts/dashboard-web.test.js",
+      "summary": "Large test suite for the dashboard-web script, covering HTML generation, data aggregation, and file output for the ECC web dashboard.",
+      "tags": ["test", "dashboard", "web", "script"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:tests/opencode-plugin-hooks.test.js",
+      "target": "function:tests/opencode-plugin-hooks.test.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/opencode-tools.test.js",
+      "target": "function:tests/opencode-tools.test.js:loadTools",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/opencode-tools.test.js",
+      "target": "function:tests/opencode-tools.test.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/plugin-manifest.test.js",
+      "target": "function:tests/plugin-manifest.test.js:collectMarkdownFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/run-all.js",
+      "target": "function:tests/run-all.js:walkFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/build-opencode.test.js",
+      "target": "function:tests/scripts/build-opencode.test.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/catalog.test.js",
+      "target": "function:tests/scripts/catalog.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/claw.test.js",
+      "target": "function:tests/scripts/claw.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/codex-hooks.test.js",
+      "target": "function:tests/scripts/codex-hooks.test.js:makeHermeticCodexEnv",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/consult.test.js",
+      "target": "function:tests/scripts/consult.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    }
+  ]
+}

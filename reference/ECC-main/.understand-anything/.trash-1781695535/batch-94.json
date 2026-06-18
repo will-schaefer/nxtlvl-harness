@@ -1,0 +1,256 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/dynamic-workflow-mode/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/dynamic-workflow-mode/SKILL.md",
+      "summary": "Defines the Dynamic Workflow Mode skill, which teaches ECC agents how to construct task-local harnesses at runtime, including decision trees, shared skill extraction, eval gates, and anti-patterns.",
+      "tags": ["documentation", "agent-workflow", "skill-definition", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/e2e-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/e2e-testing/SKILL.md",
+      "summary": "Comprehensive E2E testing patterns skill covering Playwright configuration, Page Object Model, flaky test quarantine, artifact management, CI/CD integration, Web3/wallet testing, and financial flow testing.",
+      "tags": ["documentation", "test", "e2e-testing", "playwright", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/ecc-guide/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ecc-guide/SKILL.md",
+      "summary": "ECC Guide skill providing a concierge interface for navigating the ECC repository, covering onboarding, feature discovery, install guidance, troubleshooting, and standard response templates.",
+      "tags": ["documentation", "skill-definition", "onboarding", "user-guidance"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/ecc-tools-cost-audit/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ecc-tools-cost-audit/SKILL.md",
+      "summary": "ECC Tools Cost Audit skill with a structured workflow for tracing and reducing LLM API cost burn in agentic systems, covering burn-path analysis, PR multiplication, quota bypass, premium-model leakage, and retry storms.",
+      "tags": ["documentation", "skill-definition", "cost-optimization", "observability"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/email-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/email-ops/SKILL.md",
+      "summary": "Email Ops skill guiding agents through composing, reviewing, and sending emails via MCP tools, emphasizing reading thread context before drafting and verifying state before reporting.",
+      "tags": ["documentation", "skill-definition", "email", "agent-workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/energy-procurement/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/energy-procurement/SKILL.md",
+      "summary": "Energy Procurement domain expert skill covering utility bill anatomy, procurement strategies, demand charge management, renewable energy PPAs, market timing, and escalation protocols for energy buying decisions.",
+      "tags": ["documentation", "skill-definition", "domain-knowledge", "energy"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/enterprise-agent-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/enterprise-agent-ops/SKILL.md",
+      "summary": "Enterprise Agent Ops skill defining operational domains, baseline controls, incident patterns, metrics to track, and deployment integrations for running AI agents at enterprise scale.",
+      "tags": ["documentation", "skill-definition", "operations", "enterprise"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/error-handling/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/error-handling/SKILL.md",
+      "summary": "Comprehensive error handling patterns skill with typed error classes, Result pattern, API error handlers, React error boundaries, Python exception hierarchies, Go sentinel errors, and retry with exponential backoff across TypeScript, Python, and Go.",
+      "tags": ["documentation", "skill-definition", "error-handling", "multi-language"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/eval-harness/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/eval-harness/SKILL.md",
+      "summary": "Eval Harness skill covering capability evals, regression evals, code-based and model-based graders, pass@k metrics, and a full define-implement-evaluate-report workflow for measuring agent and model quality.",
+      "tags": ["documentation", "skill-definition", "evaluation", "ai-quality"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/evm-token-decimals/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/evm-token-decimals/SKILL.md",
+      "summary": "EVM Token Decimals skill teaching correct runtime querying of token decimal values from on-chain contracts, caching strategies, defensive handling of non-standard tokens, and WAD normalization in Solidity and TypeScript.",
+      "tags": ["documentation", "skill-definition", "blockchain", "web3"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/exa-search/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/exa-search/SKILL.md",
+      "summary": "Exa Search skill documenting how to use the Exa MCP tools for neural web search and code context retrieval, with patterns for quick lookup, code research, company research, and technical deep dives.",
+      "tags": ["documentation", "skill-definition", "search", "mcp-integration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/fal-ai-media/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/fal-ai-media/SKILL.md",
+      "summary": "fal.ai Media Generation skill covering image generation, image editing, video generation, audio synthesis, and cost estimation via fal.ai MCP tools, referencing multiple models including Flux, Seedance, Kling, and Veo 3.",
+      "tags": ["documentation", "skill-definition", "media-generation", "ai-models"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/fastapi-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/fastapi-patterns/SKILL.md",
+      "summary": "FastAPI Patterns skill providing opinionated project structure, app factory pattern, pydantic-settings configuration, Pydantic v2 schemas, dependency injection, router design, service layer patterns, and testing with httpx and pytest.",
+      "tags": ["documentation", "skill-definition", "fastapi", "python"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/finance-billing-ops/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/finance-billing-ops/SKILL.md",
+      "summary": "Finance Billing Ops skill for investigating and resolving billing anomalies, separating customer incidents from product truth, inspecting code-backed billing behavior, and producing structured billing investigation reports.",
+      "tags": ["documentation", "skill-definition", "finance", "billing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/flox-environments/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/flox-environments/SKILL.md",
+      "summary": "Flox Environments skill covering Nix-based reproducible development environments, manifest structure, version pinning, platform-specific packages, language-specific recipes for Python/Node/Rust/Go/C++, hooks, and common anti-patterns.",
+      "tags": ["documentation", "skill-definition", "infrastructure", "development-environment"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/flutter-dart-code-review/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/flutter-dart-code-review/SKILL.md",
+      "summary": "Flutter/Dart Code Review skill with 15 review categories spanning project health, Dart pitfalls, widget best practices, state management, performance, testing, accessibility, platform concerns, security, navigation, error handling, l10n, DI, and static analysis.",
+      "tags": ["documentation", "skill-definition", "flutter", "code-review"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/foundation-models-on-device/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/foundation-models-on-device/SKILL.md",
+      "summary": "FoundationModels on-device LLM skill for iOS 26, covering availability checks, basic sessions, guided generation with @Generable, tool calling, snapshot streaming, and SwiftUI integration patterns.",
+      "tags": ["documentation", "skill-definition", "ios", "on-device-ml"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/frontend-a11y/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/frontend-a11y/SKILL.md",
+      "summary": "Frontend Accessibility Patterns skill with concrete HTML/ARIA examples for form accessibility, semantic HTML, keyboard navigation, focus management, images, reduced motion, and an accessibility checklist.",
+      "tags": ["documentation", "skill-definition", "accessibility", "frontend"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/frontend-design-direction/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/frontend-design-direction/SKILL.md",
+      "summary": "Frontend Design Direction skill providing opinionated UI/UX principles, implementation guidance, anti-patterns to avoid, and a review checklist for directing visual and interaction design decisions.",
+      "tags": ["documentation", "skill-definition", "frontend", "design"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/frontend-patterns/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/frontend-patterns/SKILL.md",
+      "summary": "Frontend Development Patterns skill covering React component composition, compound components, render props, custom hooks, context+reducer state management, performance optimization with memoization and virtualization, form handling, error boundaries, Framer Motion animations, and accessibility patterns.",
+      "tags": ["documentation", "skill-definition", "frontend", "react"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/frontend-slides/scripts/export-pdf.sh",
+      "type": "file",
+      "name": "export-pdf.sh",
+      "filePath": "skills/frontend-slides/scripts/export-pdf.sh",
+      "summary": "Shell script for exporting presentation slides to PDF, providing logging helpers (info, ok, warn, err) and orchestrating the full slide-export pipeline including dependency checks and file output.",
+      "tags": ["script", "pdf-export", "presentation", "utility"],
+      "complexity": "complex",
+      "languageNotes": "418-line shell script with structured logging functions; the four helper functions (info, ok, warn, err) are one-liners and fall below the significance filter."
+    },
+    {
+      "id": "file:skills/frontend-slides/scripts/extract-pptx.py",
+      "type": "file",
+      "name": "extract-pptx.py",
+      "filePath": "skills/frontend-slides/scripts/extract-pptx.py",
+      "summary": "Python script using python-pptx to extract text content and embedded images from a PPTX file, writing per-slide text files and image files to a structured output directory.",
+      "tags": ["script", "utility", "pptx", "data-extraction"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/frontend-slides/scripts/extract-pptx.py:extract_pptx",
+      "type": "function",
+      "name": "extract_pptx",
+      "filePath": "skills/frontend-slides/scripts/extract-pptx.py",
+      "lineRange": [18, 75],
+      "summary": "Loads a PPTX file and iterates over slides to extract text frames and embedded images, writing text to .txt files and images to per-slide output directories.",
+      "tags": ["utility", "data-extraction", "pptx"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/fsharp-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/fsharp-testing/SKILL.md",
+      "summary": "F# Testing Patterns skill covering xUnit + FsUnit unit tests, Unquote assertions, async tests, parameterized Theory tests, property-based testing with FsCheck, mocking via function stubs and NSubstitute, ASP.NET Core integration tests, and common anti-patterns.",
+      "tags": ["documentation", "skill-definition", "fsharp", "test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/gan-style-harness/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/gan-style-harness/SKILL.md",
+      "summary": "GAN-Style Harness skill defining a three-agent architecture (Planner, Generator, Evaluator) that uses adversarial generation-evaluation loops to iteratively improve content quality, with scoring rubrics, usage patterns, and model-capability evolution stages.",
+      "tags": ["documentation", "skill-definition", "multi-agent", "evaluation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/gateguard/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/gateguard/SKILL.md",
+      "summary": "GateGuard skill defining a fact-forcing pre-action gate that requires reading a file before editing it, covering Edit/Write/Bash gate types, quick-start via ECC hook or standalone package, and best practices for blocking on facts rather than taste.",
+      "tags": ["documentation", "skill-definition", "safety", "pre-action-gate"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/frontend-slides/scripts/extract-pptx.py",
+      "target": "function:skills/frontend-slides/scripts/extract-pptx.py:extract_pptx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/frontend-slides/scripts/extract-pptx.py",
+      "target": "function:skills/frontend-slides/scripts/extract-pptx.py:extract_pptx",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

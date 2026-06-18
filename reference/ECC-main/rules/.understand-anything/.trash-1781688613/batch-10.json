@@ -1,0 +1,93 @@
+{
+  "nodes": [
+    {
+      "id": "document:kotlin/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "kotlin/coding-style.md",
+      "summary": "Kotlin-specific coding-style rules covering formatting, immutability, naming, null safety, sealed types, extension and scope functions, and error handling. Extends the common coding-style baseline.",
+      "tags": ["kotlin", "coding-style", "null-safety", "immutability", "conventions"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:kotlin/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "kotlin/hooks.md",
+      "summary": "Kotlin-specific hook rules defining PostToolUse automations (e.g. formatting/lint commands) layered on the common hooks baseline.",
+      "tags": ["kotlin", "hooks", "automation", "post-tool-use"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:kotlin/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "kotlin/patterns.md",
+      "summary": "Kotlin and Android/KMP architectural patterns including dependency injection, ViewModel, Repository, UseCase, expect/actual multiplatform, coroutine patterns, and DSL builders. Extends the common patterns baseline.",
+      "tags": ["kotlin", "android", "patterns", "kmp", "coroutines"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:kotlin/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "kotlin/security.md",
+      "summary": "Kotlin and Android/KMP security rules covering secrets management, network security, input validation, data protection, authentication, ProGuard/R8, and WebView hardening. Extends the common security baseline.",
+      "tags": ["kotlin", "android", "security", "data-protection", "authentication"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:kotlin/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "kotlin/testing.md",
+      "summary": "Kotlin and Android/KMP testing rules covering the test framework, Turbine ViewModel testing, fakes over mocks, coroutine testing, Ktor MockEngine, Room/SQLDelight testing, and naming/organization. Extends the common testing baseline.",
+      "tags": ["kotlin", "android", "testing", "coroutines", "fakes"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:kotlin/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:kotlin/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:kotlin/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:kotlin/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:kotlin/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:kotlin/patterns.md",
+      "target": "document:kotlin/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

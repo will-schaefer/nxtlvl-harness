@@ -1,0 +1,912 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/hooks/auto-tmux-dev.js",
+      "type": "file",
+      "name": "auto-tmux-dev.js",
+      "filePath": "scripts/hooks/auto-tmux-dev.js",
+      "summary": "PreToolUse hook that intercepts long-running dev-server commands and redirects them into a named tmux window so Claude's session stays unblocked.",
+      "tags": ["hook", "middleware", "event-handler", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/auto-tmux-dev.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "scripts/hooks/auto-tmux-dev.js",
+      "lineRange": [34, 90],
+      "summary": "Detects dev-server commands in the hook payload and rewrites them to launch inside a tmux window, returning the modified hook output.",
+      "tags": ["hook", "event-handler", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "type": "file",
+      "name": "bash-hook-dispatcher.js",
+      "filePath": "scripts/hooks/bash-hook-dispatcher.js",
+      "summary": "Central dispatcher that reads stdin, iterates over all registered PreBash or PostBash hook modules, and merges their outputs into a single Claude hook response.",
+      "tags": ["hook", "middleware", "entry-point", "event-handler"],
+      "complexity": "complex",
+      "languageNotes": "Implements a fan-out runner pattern: each hook module exports a run() function; results are normalized and combined before writing to stdout."
+    },
+    {
+      "id": "function:scripts/hooks/bash-hook-dispatcher.js:runHooks",
+      "type": "function",
+      "name": "runHooks",
+      "filePath": "scripts/hooks/bash-hook-dispatcher.js",
+      "lineRange": [123, 174],
+      "summary": "Iterates over an array of hook modules, calls each in sequence, and accumulates their results; short-circuits on a blocking denial exit code.",
+      "tags": ["hook", "middleware", "event-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/bash-hook-dispatcher.js:normalizeHookResult",
+      "type": "function",
+      "name": "normalizeHookResult",
+      "filePath": "scripts/hooks/bash-hook-dispatcher.js",
+      "lineRange": [90, 121],
+      "summary": "Coerces raw hook output (Buffer, string, or JSON object) into a normalized result object with stdout, stderr, and exitCode fields.",
+      "tags": ["utility", "serialization", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/bash-hook-dispatcher.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/hooks/bash-hook-dispatcher.js",
+      "lineRange": [184, 197],
+      "summary": "Entry point: reads stdin, dispatches to either runPreBash or runPostBash based on the hook type argument, and writes the result to stdout.",
+      "tags": ["entry-point", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/hooks/bash-hook-dispatcher.js:readStdinRaw",
+      "type": "function",
+      "name": "readStdinRaw",
+      "filePath": "scripts/hooks/bash-hook-dispatcher.js",
+      "lineRange": [75, 88],
+      "summary": "Reads all stdin bytes asynchronously and resolves a Promise with the raw string.",
+      "tags": ["utility", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/block-no-verify.js",
+      "type": "file",
+      "name": "block-no-verify.js",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "summary": "PreToolUse hook that parses shell commands to detect and block git commit --no-verify and --hooks-path overrides, preventing hook bypass during commits.",
+      "tags": ["hook", "security", "validation", "middleware"],
+      "complexity": "complex",
+      "languageNotes": "Implements a hand-rolled shell tokenizer to handle quoted strings and multi-command pipelines without relying on external parsers."
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:tokenizeShellWords",
+      "type": "function",
+      "name": "tokenizeShellWords",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [82, 163],
+      "summary": "Splits a shell command string into a flat array of word tokens, handling single quotes, double quotes, and backslash escapes.",
+      "tags": ["utility", "validation", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:detectGitCommand",
+      "type": "function",
+      "name": "detectGitCommand",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [298, 371],
+      "summary": "Locates the first git invocation in a command string and extracts its subcommand, accounting for comments and shell metacharacters.",
+      "tags": ["utility", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:hasNoVerifyFlag",
+      "type": "function",
+      "name": "hasNoVerifyFlag",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [379, 416],
+      "summary": "Scans tokenized git commit arguments for --no-verify, -n, or short-flag combinations that skip hooks.",
+      "tags": ["security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:hasHooksPathOverride",
+      "type": "function",
+      "name": "hasHooksPathOverride",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [421, 446],
+      "summary": "Detects use of --hooks-path pointing to /dev/null or empty directories as a mechanism to silence hooks.",
+      "tags": ["security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:checkCommand",
+      "type": "function",
+      "name": "checkCommand",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [451, 478],
+      "summary": "Orchestrates git command detection and runs all hook-bypass checks, returning a denial message or null.",
+      "tags": ["security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:extractCommand",
+      "type": "function",
+      "name": "extractCommand",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [483, 504],
+      "summary": "Extracts the raw shell command string from either a JSON hook payload or a plain string input.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/hooks/block-no-verify.js:findGit",
+      "type": "function",
+      "name": "findGit",
+      "filePath": "scripts/hooks/block-no-verify.js",
+      "lineRange": [272, 291],
+      "summary": "Finds the byte offset of the git binary in a shell command, ensuring it is a valid command token and not part of a comment.",
+      "tags": ["utility", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/check-hook-enabled.js",
+      "type": "file",
+      "name": "check-hook-enabled.js",
+      "filePath": "scripts/hooks/check-hook-enabled.js",
+      "summary": "Tiny shim that re-exports the isHookEnabled check from scripts/lib/hook-flags.js for standalone use in hook wrappers.",
+      "tags": ["hook", "utility", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/doc-file-warning.js",
+      "type": "file",
+      "name": "doc-file-warning.js",
+      "filePath": "scripts/hooks/doc-file-warning.js",
+      "summary": "PreToolUse hook that warns before writing to ad-hoc documentation files (e.g., notes outside structured docs/ directories), surfacing the warning as additional context.",
+      "tags": ["hook", "validation", "middleware"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/gateguard-fact-force.js",
+      "type": "file",
+      "name": "gateguard-fact-force.js",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "summary": "Core GateGuard hook implementing a fact-forcing gate: intercepts file edits, file writes, and destructive Bash commands, requiring Claude to recite specific facts before proceeding; tracks per-session denials with filesystem-backed state.",
+      "tags": ["hook", "security", "middleware", "validation"],
+      "complexity": "complex",
+      "languageNotes": "Uses atomic write-rename pattern for state persistence, SHA-256 hashing for session/file key deduplication, and a configurable denial budget via ECC_GATEGUARD_BUDGET."
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveGit",
+      "type": "function",
+      "name": "isDestructiveGit",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [311, 405],
+      "summary": "Classifies a tokenized git command as destructive (e.g., reset --hard, push --force, checkout --, clean -f) using a comprehensive set of subcommand-aware rules.",
+      "tags": ["security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveFindExec",
+      "type": "function",
+      "name": "isDestructiveFindExec",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [472, 531],
+      "summary": "Checks whether a find -exec chain executes a destructive command (rm, git reset, etc.) as its terminal action.",
+      "tags": ["security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveBash",
+      "type": "function",
+      "name": "isDestructiveBash",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [533, 561],
+      "summary": "Top-level destructive command check: tests for SQL DDL, extra destructive regex patterns, find -exec chains, and bare rm/git destructive subcommands.",
+      "tags": ["security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:saveState",
+      "type": "function",
+      "name": "saveState",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [659, 719],
+      "summary": "Persists the GateGuard state object to a JSON file using an atomic write-rename sequence, merging with any concurrent writes to avoid races.",
+      "tags": ["utility", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:isReadOnlyGitIntrospection",
+      "type": "function",
+      "name": "isReadOnlyGitIntrospection",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [829, 897],
+      "summary": "Determines whether a git command is safe read-only introspection (status, diff, log, show) with no side effects, so GateGuard can skip it.",
+      "tags": ["security", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [1024, 1130],
+      "summary": "Main gate evaluation: dispatches by tool type (Edit, Write, Bash), checks denial budget and session state, and returns either a fact-forcing denial message or an allow result.",
+      "tags": ["hook", "middleware", "security"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:tokenizeAllowlistedShellWords",
+      "type": "function",
+      "name": "tokenizeAllowlistedShellWords",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [181, 228],
+      "summary": "Shell word tokenizer that only returns tokens from the ECC allowlisted command set, used for safe introspection checks.",
+      "tags": ["utility", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:loadState",
+      "type": "function",
+      "name": "loadState",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [622, 642],
+      "summary": "Reads and validates the per-session GateGuard state file, returning a fresh default state if missing or expired.",
+      "tags": ["utility", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/hooks/gateguard-fact-force.js:collectExecutableBodies",
+      "type": "function",
+      "name": "collectExecutableBodies",
+      "filePath": "scripts/hooks/gateguard-fact-force.js",
+      "lineRange": [434, 462],
+      "summary": "Recursively extracts all command substitution bodies, subshell groups, and brace groups from a shell command for destructive-command scanning.",
+      "tags": ["utility", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/post-bash-build-complete.js",
+      "type": "file",
+      "name": "post-bash-build-complete.js",
+      "filePath": "scripts/hooks/post-bash-build-complete.js",
+      "summary": "PostBash hook that detects successful npm/pnpm/yarn build completions and injects a context message prompting Claude to run tests next.",
+      "tags": ["hook", "event-handler", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/post-bash-command-log.js",
+      "type": "file",
+      "name": "post-bash-command-log.js",
+      "filePath": "scripts/hooks/post-bash-command-log.js",
+      "summary": "PostBash hook that appends a sanitized record of each executed command (with credentials redacted) to a persistent session command log file.",
+      "tags": ["hook", "event-handler", "observability"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/post-bash-dispatcher.js",
+      "type": "file",
+      "name": "post-bash-dispatcher.js",
+      "filePath": "scripts/hooks/post-bash-dispatcher.js",
+      "summary": "Thin entry point that delegates PostBash hook invocations to the central bash-hook-dispatcher, enabling the multi-hook fan-out pattern.",
+      "tags": ["hook", "entry-point", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/post-bash-pr-created.js",
+      "type": "file",
+      "name": "post-bash-pr-created.js",
+      "filePath": "scripts/hooks/post-bash-pr-created.js",
+      "summary": "PostBash hook that detects successful gh pr create output and injects the newly created PR URL and review command as additional context for Claude.",
+      "tags": ["hook", "event-handler", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "type": "file",
+      "name": "pre-bash-commit-quality.js",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "summary": "PreBash hook that intercepts git commit commands, inspects staged files for code smells and convention violations, validates the commit message format, and runs the project linter; blocks commits with actionable feedback.",
+      "tags": ["hook", "validation", "security", "middleware"],
+      "complexity": "complex",
+      "languageNotes": "Cross-platform linter resolution traverses PATH manually to support Windows .cmd wrappers alongside Unix executables."
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-commit-quality.js:findFileIssues",
+      "type": "function",
+      "name": "findFileIssues",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "lineRange": [65, 133],
+      "summary": "Scans the staged content of one source file for console.log leaks, debugger statements, TODO markers, and hardcoded secrets patterns.",
+      "tags": ["validation", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-commit-quality.js:validateCommitMessage",
+      "type": "function",
+      "name": "validateCommitMessage",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "lineRange": [140, 189],
+      "summary": "Extracts the commit message from the git commit command and validates it against Conventional Commits format, length, and case rules.",
+      "tags": ["validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-commit-quality.js:runLinter",
+      "type": "function",
+      "name": "runLinter",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "lineRange": [244, 305],
+      "summary": "Discovers and runs ESLint, Biome, or markdownlint on the staged file set, using cross-platform command resolution.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-commit-quality.js:evaluate",
+      "type": "function",
+      "name": "evaluate",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "lineRange": [312, 418],
+      "summary": "Main evaluation pipeline: checks if this is a commit command, gathers staged files, runs all quality checks, and produces a blocking or advisory hook response.",
+      "tags": ["hook", "validation", "middleware"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-commit-quality.js:resolveCommand",
+      "type": "function",
+      "name": "resolveCommand",
+      "filePath": "scripts/hooks/pre-bash-commit-quality.js",
+      "lineRange": [209, 223],
+      "summary": "Resolves a command name to its absolute executable path by searching PATH directories and accounting for Windows file extensions.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "type": "file",
+      "name": "pre-bash-dev-server-block.js",
+      "filePath": "scripts/hooks/pre-bash-dev-server-block.js",
+      "summary": "PreBash hook that blocks dev-server launch commands (e.g., npm run dev, vite, next dev) from running in the foreground, guiding users to use tmux instead.",
+      "tags": ["hook", "validation", "middleware"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-dev-server-block.js:readToken",
+      "type": "function",
+      "name": "readToken",
+      "filePath": "scripts/hooks/pre-bash-dev-server-block.js",
+      "lineRange": [41, 89],
+      "summary": "Reads a single shell token from a command string starting at a given index, handling quoted strings, escape sequences, and redirections.",
+      "tags": ["utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-dev-server-block.js:getLeadingCommandWord",
+      "type": "function",
+      "name": "getLeadingCommandWord",
+      "filePath": "scripts/hooks/pre-bash-dev-server-block.js",
+      "lineRange": [107, 152],
+      "summary": "Walks the tokens of a shell segment to find the effective command word, skipping env variable assignments, sudo, env, and option-value pairs.",
+      "tags": ["utility", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/pre-bash-dev-server-block.js:collectCheckSegments",
+      "type": "function",
+      "name": "collectCheckSegments",
+      "filePath": "scripts/hooks/pre-bash-dev-server-block.js",
+      "lineRange": [179, 200],
+      "summary": "Recursively extracts all shell segments (including command substitutions and subshells) that need to be checked for dev-server patterns.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/pre-bash-dispatcher.js",
+      "type": "file",
+      "name": "pre-bash-dispatcher.js",
+      "filePath": "scripts/hooks/pre-bash-dispatcher.js",
+      "summary": "Thin entry point that delegates PreBash hook invocations to the central bash-hook-dispatcher, enabling the multi-hook fan-out pattern.",
+      "tags": ["hook", "entry-point", "middleware"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pre-bash-git-push-reminder.js",
+      "type": "file",
+      "name": "pre-bash-git-push-reminder.js",
+      "filePath": "scripts/hooks/pre-bash-git-push-reminder.js",
+      "summary": "PreBash hook that intercepts git push commands and injects a pre-push checklist reminder as additional context for Claude.",
+      "tags": ["hook", "middleware", "event-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pre-bash-tmux-reminder.js",
+      "type": "file",
+      "name": "pre-bash-tmux-reminder.js",
+      "filePath": "scripts/hooks/pre-bash-tmux-reminder.js",
+      "summary": "PreBash hook that reminds Claude to use a tmux window when running long-lived commands like npm install, cargo build, or pytest.",
+      "tags": ["hook", "middleware", "event-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pre-write-doc-warn.js",
+      "type": "file",
+      "name": "pre-write-doc-warn.js",
+      "filePath": "scripts/hooks/pre-write-doc-warn.js",
+      "summary": "Minimal PreToolUse hook that delegates doc-file write warnings to doc-file-warning.js via its run() export.",
+      "tags": ["hook", "middleware", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "file",
+      "name": "pretooluse-visible-output.js",
+      "filePath": "scripts/hooks/pretooluse-visible-output.js",
+      "summary": "Shared library module exporting utilities for normalizing and combining the additionalContext field in PreToolUse hook responses.",
+      "tags": ["utility", "middleware", "hook"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/run-with-flags.js",
+      "type": "file",
+      "name": "run-with-flags.js",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "summary": "Universal hook wrapper that handles ECC_DISABLED_HOOKS gating, dry-run preview, and module/subprocess dispatch, allowing hook scripts to export a run() function or be invoked as child processes.",
+      "tags": ["hook", "middleware", "entry-point", "factory"],
+      "complexity": "complex",
+      "languageNotes": "Supports both CommonJS module-exports style (require + run()) and legacy spawn-based hooks within the same dispatcher, with automatic module detection."
+    },
+    {
+      "id": "function:scripts/hooks/run-with-flags.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "lineRange": [144, 257],
+      "summary": "Top-level dispatcher: reads argv for script path and profiles, validates the path, determines module vs spawn mode, executes the hook, and exits with the resolved code.",
+      "tags": ["entry-point", "hook", "middleware"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/hooks/run-with-flags.js:resolveHookResult",
+      "type": "function",
+      "name": "resolveHookResult",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "lineRange": [62, 81],
+      "summary": "Converts the raw return value of a hook's run() into a normalized {stdout, stderr, exitCode} result, handling Buffer, string, and JSON object forms.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/run-with-flags.js:extractTargetContext",
+      "type": "function",
+      "name": "extractTargetContext",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "lineRange": [105, 123],
+      "summary": "Parses the hook stdin payload to extract the tool name, file path, and command for use in dry-run preview messages.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/hooks/run-with-flags.js:buildDryRunPreview",
+      "type": "function",
+      "name": "buildDryRunPreview",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "lineRange": [127, 142],
+      "summary": "Builds a human-readable dry-run summary string showing which hook would fire and what target it would act on.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/hooks/run-with-flags.js:resolveLegacySpawnStdout",
+      "type": "function",
+      "name": "resolveLegacySpawnStdout",
+      "filePath": "scripts/hooks/run-with-flags.js",
+      "lineRange": [83, 94],
+      "summary": "Applies echo-sanitization and exit-code extraction to the raw stdout of a spawned legacy hook process.",
+      "tags": ["utility", "middleware"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/hooks/auto-tmux-dev.js",
+      "target": "function:scripts/hooks/auto-tmux-dev.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "function:scripts/hooks/bash-hook-dispatcher.js:runHooks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "function:scripts/hooks/bash-hook-dispatcher.js:normalizeHookResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "function:scripts/hooks/bash-hook-dispatcher.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "function:scripts/hooks/bash-hook-dispatcher.js:readStdinRaw",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:tokenizeShellWords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:detectGitCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:hasNoVerifyFlag",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:hasHooksPathOverride",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:checkCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:extractCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/block-no-verify.js",
+      "target": "function:scripts/hooks/block-no-verify.js:findGit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveGit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveFindExec",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:isDestructiveBash",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:saveState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:isReadOnlyGitIntrospection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:tokenizeAllowlistedShellWords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:loadState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "function:scripts/hooks/gateguard-fact-force.js:collectExecutableBodies",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "target": "function:scripts/hooks/pre-bash-commit-quality.js:findFileIssues",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "target": "function:scripts/hooks/pre-bash-commit-quality.js:validateCommitMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "target": "function:scripts/hooks/pre-bash-commit-quality.js:runLinter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "target": "function:scripts/hooks/pre-bash-commit-quality.js:evaluate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "target": "function:scripts/hooks/pre-bash-commit-quality.js:resolveCommand",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "target": "function:scripts/hooks/pre-bash-dev-server-block.js:readToken",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "target": "function:scripts/hooks/pre-bash-dev-server-block.js:getLeadingCommandWord",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "target": "function:scripts/hooks/pre-bash-dev-server-block.js:collectCheckSegments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "function:scripts/hooks/run-with-flags.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "function:scripts/hooks/run-with-flags.js:resolveHookResult",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "function:scripts/hooks/run-with-flags.js:extractTargetContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "function:scripts/hooks/run-with-flags.js:buildDryRunPreview",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "function:scripts/hooks/run-with-flags.js:resolveLegacySpawnStdout",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/auto-tmux-dev.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/block-no-verify.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/gateguard-fact-force.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/post-bash-build-complete.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/post-bash-command-log.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/post-bash-pr-created.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/pre-bash-commit-quality.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/pre-bash-git-push-reminder.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/pre-bash-tmux-reminder.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "target": "file:scripts/lib/hook-flags.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/check-hook-enabled.js",
+      "target": "file:scripts/lib/hook-flags.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/doc-file-warning.js",
+      "target": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/gateguard-fact-force.js",
+      "target": "file:scripts/lib/shell-substitution.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/post-bash-dispatcher.js",
+      "target": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "target": "file:scripts/lib/shell-split.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dev-server-block.js",
+      "target": "file:scripts/lib/shell-substitution.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-dispatcher.js",
+      "target": "file:scripts/hooks/bash-hook-dispatcher.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-git-push-reminder.js",
+      "target": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-bash-tmux-reminder.js",
+      "target": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/pre-write-doc-warn.js",
+      "target": "file:scripts/hooks/doc-file-warning.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "file:scripts/hooks/pretooluse-visible-output.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/hooks/run-with-flags.js",
+      "target": "file:scripts/lib/hook-flags.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/perl/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/perl/coding-style.md",
+      "summary": "Prescribes Perl coding style conventions for the ECC harness, covering language standards (strict/warnings), immutability practices, code formatting, and linting toolchain configuration.",
+      "tags": ["documentation", "configuration", "perl", "code-quality"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/perl/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/perl/hooks.md",
+      "summary": "Defines guidelines for using Claude Code PostToolUse hooks in Perl projects, including recommended hook patterns and warnings about common pitfalls.",
+      "tags": ["documentation", "hooks", "perl", "automation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/perl/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/perl/patterns.md",
+      "summary": "Documents idiomatic Perl design patterns for the ECC context, including repository pattern, DTOs/value objects, resource management, module interfaces, and dependency management.",
+      "tags": ["documentation", "perl", "design-patterns", "architecture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/perl/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/perl/security.md",
+      "summary": "Specifies Perl security rules covering taint mode, input validation, safe file I/O, process execution hygiene, SQL injection prevention, and security scanning tooling.",
+      "tags": ["documentation", "security", "perl", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/perl/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/perl/testing.md",
+      "summary": "Describes the Perl testing framework, test runner setup, coverage requirements, mocking strategies, and common pitfalls for the ECC harness Perl rule set.",
+      "tags": ["documentation", "testing", "perl", "test"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

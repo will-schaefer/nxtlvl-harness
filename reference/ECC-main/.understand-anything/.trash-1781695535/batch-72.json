@@ -1,0 +1,102 @@
+{
+  "nodes": [
+    {
+      "id": "config:schemas/ecc-install-config.schema.json",
+      "type": "config",
+      "name": "ecc-install-config.schema.json",
+      "filePath": "schemas/ecc-install-config.schema.json",
+      "summary": "JSON Schema (draft-07) defining the structure of the ECC install configuration file, including target platform enum (claude, cursor, codex, etc.), profile, module lists, and include/exclude component filters.",
+      "tags": ["schema-definition", "configuration", "installation", "validation"],
+      "complexity": "simple",
+      "languageNotes": "Uses draft-07 strict schema with additionalProperties:false and an enum of 11 supported target platforms."
+    },
+    {
+      "id": "config:schemas/hooks.schema.json",
+      "type": "config",
+      "name": "hooks.schema.json",
+      "filePath": "schemas/hooks.schema.json",
+      "summary": "JSON Schema defining the full Claude Code hooks configuration format, covering all hook event types (SessionStart, PreToolUse, PostToolUse, Stop, etc.) and three hook action types: command, http, and prompt/agent.",
+      "tags": ["schema-definition", "configuration", "hooks", "validation"],
+      "complexity": "moderate",
+      "languageNotes": "Uses $defs for reusable hookItem, matcherEntry, and stringArray types; supports both object and array root forms via oneOf."
+    },
+    {
+      "id": "config:schemas/install-components.schema.json",
+      "type": "config",
+      "name": "install-components.schema.json",
+      "filePath": "schemas/install-components.schema.json",
+      "summary": "JSON Schema for the ECC install components manifest, describing the array of installable component definitions each with an id (namespaced by family), family enum, description, and list of module ids.",
+      "tags": ["schema-definition", "configuration", "installation", "validation"],
+      "complexity": "simple",
+      "languageNotes": "Component id must match pattern ^(baseline|lang|framework|capability|agent|skill|locale):[a-z0-9-]+$."
+    },
+    {
+      "id": "config:schemas/install-modules.schema.json",
+      "type": "config",
+      "name": "install-modules.schema.json",
+      "filePath": "schemas/install-modules.schema.json",
+      "summary": "JSON Schema for the ECC install modules manifest, specifying each module's kind (rules, agents, commands, hooks, etc.), file paths, supported targets, dependencies, cost (light/medium/heavy), and stability (experimental/beta/stable).",
+      "tags": ["schema-definition", "configuration", "installation", "validation"],
+      "complexity": "moderate",
+      "languageNotes": "Modules carry target allowlists (11 platforms), cost and stability enums, and a defaultInstall boolean for profile resolution."
+    },
+    {
+      "id": "config:schemas/install-profiles.schema.json",
+      "type": "config",
+      "name": "install-profiles.schema.json",
+      "filePath": "schemas/install-profiles.schema.json",
+      "summary": "JSON Schema for ECC install profiles, where each named profile (e.g. 'full', 'minimal') maps to a description and a list of module ids to install.",
+      "tags": ["schema-definition", "configuration", "installation", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:schemas/install-state.schema.json",
+      "type": "config",
+      "name": "install-state.schema.json",
+      "filePath": "schemas/install-state.schema.json",
+      "summary": "JSON Schema for the ECC installation state record written after an install run, capturing target details, the original request (profile, modules, include/exclude), the resolved module selection, source provenance (repoVersion, repoCommit), and the full list of file operations performed.",
+      "tags": ["schema-definition", "configuration", "installation", "data-model"],
+      "complexity": "moderate",
+      "languageNotes": "Schema version locked to const 'ecc.install.v1'; operations array uses additionalProperties:true for forward compatibility."
+    },
+    {
+      "id": "config:schemas/package-manager.schema.json",
+      "type": "config",
+      "name": "package-manager.schema.json",
+      "filePath": "schemas/package-manager.schema.json",
+      "summary": "Minimal JSON Schema for the persisted package manager preference, constraining the value to npm, pnpm, yarn, or bun with an optional ISO 8601 timestamp of when the preference was last set.",
+      "tags": ["schema-definition", "configuration", "build-system"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:schemas/plugin.schema.json",
+      "type": "config",
+      "name": "plugin.schema.json",
+      "filePath": "schemas/plugin.schema.json",
+      "summary": "JSON Schema for a Claude Code plugin manifest (plugin.json), validating fields like name, semver version, author, skills, commands, mcpServers, and a features summary block counting agents/skills/commands and listing hook events.",
+      "tags": ["schema-definition", "configuration", "infrastructure"],
+      "complexity": "simple",
+      "languageNotes": "Author field supports both a plain string and a structured object with name+url; mcpServers accepts string, array, or object for flexibility."
+    },
+    {
+      "id": "config:schemas/provenance.schema.json",
+      "type": "config",
+      "name": "provenance.schema.json",
+      "filePath": "schemas/provenance.schema.json",
+      "summary": "JSON Schema for skill provenance metadata attached to learned and imported skills in ~/.claude/skills/, requiring source origin, creation timestamp, confidence score (0-1), and author.",
+      "tags": ["schema-definition", "configuration", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:schemas/state-store.schema.json",
+      "type": "config",
+      "name": "state-store.schema.json",
+      "filePath": "schemas/state-store.schema.json",
+      "summary": "Comprehensive JSON Schema ($id: ecc.state-store.v1) for the ECC runtime state store, defining entity shapes for sessions, skillRuns, skillVersions, decisions, installState, governanceEvents, and workItems — the full persistence surface of the harness.",
+      "tags": ["schema-definition", "configuration", "data-model", "infrastructure"],
+      "complexity": "complex",
+      "languageNotes": "Uses $defs for shared primitive types (nonEmptyString, nullableString, nullableInteger, jsonValue) referenced throughout all entity definitions."
+    }
+  ],
+  "edges": []
+}

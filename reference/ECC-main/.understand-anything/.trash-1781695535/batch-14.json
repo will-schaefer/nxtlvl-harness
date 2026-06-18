@@ -1,0 +1,427 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/control-pane.js",
+      "type": "file",
+      "name": "control-pane.js",
+      "filePath": "scripts/control-pane.js",
+      "summary": "Entry-point script that starts the ECC control-pane HTTP server, parses CLI arguments, and opens a browser tab pointing at the local UI.",
+      "tags": ["entry-point", "service", "cli", "server"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/control-pane.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/control-pane.js",
+      "lineRange": [24, 54],
+      "summary": "Parses CLI arguments, creates and starts the control-pane HTTP server, opens a browser, and registers SIGINT/SIGTERM handlers for graceful shutdown.",
+      "tags": ["entry-point", "server", "cli"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/control-pane.js:openBrowser",
+      "type": "function",
+      "name": "openBrowser",
+      "filePath": "scripts/control-pane.js",
+      "lineRange": [12, 22],
+      "summary": "Spawns a platform browser-open command in the background to navigate to a given URL, detaching it from the Node process.",
+      "tags": ["utility", "browser", "process"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/control-pane/actions.js",
+      "type": "file",
+      "name": "actions.js",
+      "filePath": "scripts/lib/control-pane/actions.js",
+      "summary": "Defines and builds the set of runnable control-pane actions (e.g., sync, search, run tests), constructing their CLI command-line strings from a static definition map.",
+      "tags": ["service", "factory", "command-builder"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/actions.js:buildControlPaneAction",
+      "type": "function",
+      "name": "buildControlPaneAction",
+      "filePath": "scripts/lib/control-pane/actions.js",
+      "lineRange": [96, 121],
+      "summary": "Looks up a named action definition, resolves working directory and arguments, and returns a fully-populated action object including its executable command-line string.",
+      "tags": ["factory", "command-builder", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/control-pane/server.js",
+      "type": "file",
+      "name": "server.js",
+      "filePath": "scripts/lib/control-pane/server.js",
+      "summary": "Creates and configures the control-pane HTTP server, wiring routes for the UI, snapshot API, action execution, and static-file serving with host/origin security checks.",
+      "tags": ["service", "api-handler", "server", "security"],
+      "complexity": "complex",
+      "languageNotes": "Uses Node.js built-in http module with manual request routing — no framework dependency."
+    },
+    {
+      "id": "function:scripts/lib/control-pane/server.js:createControlPaneServer",
+      "type": "function",
+      "name": "createControlPaneServer",
+      "filePath": "scripts/lib/control-pane/server.js",
+      "lineRange": [186, 324],
+      "summary": "Wires all HTTP routes (UI HTML, static assets, snapshot endpoint, action endpoints) into a Node http.Server, enforcing host/origin allowlist and optional read-only mode.",
+      "tags": ["api-handler", "server", "routing"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/server.js:runAction",
+      "type": "function",
+      "name": "runAction",
+      "filePath": "scripts/lib/control-pane/server.js",
+      "lineRange": [131, 184],
+      "summary": "Spawns an action's shell command, captures stdout/stderr with a configurable timeout, and resolves to a structured result object including exit code and bounded output.",
+      "tags": ["service", "process", "async"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/server.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/lib/control-pane/server.js",
+      "lineRange": [76, 97],
+      "summary": "Parses process.argv-style argument arrays into a typed config object covering host, port, database paths, query, read-only, and no-open flags.",
+      "tags": ["utility", "cli", "config"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/control-pane/state.js",
+      "type": "file",
+      "name": "state.js",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "summary": "Reads ECC's SQLite databases to build the complete control-pane snapshot: sessions, knowledge graph entities, connector status, work items, and available actions.",
+      "tags": ["service", "data-model", "database", "serialization"],
+      "complexity": "complex",
+      "languageNotes": "Uses sql.js (WASM SQLite) for zero-native-dependency database access; TOML config loaded via smol-toml."
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:buildControlPaneSnapshot",
+      "type": "function",
+      "name": "buildControlPaneSnapshot",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [544, 622],
+      "summary": "Top-level snapshot builder that resolves config, opens databases, and aggregates sessions, knowledge entries, connector status, work items, and actions into a single payload.",
+      "tags": ["service", "data-model", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:recallKnowledgeEntries",
+      "type": "function",
+      "name": "recallKnowledgeEntries",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [379, 416],
+      "summary": "Scores and ranks knowledge graph entities against optional query terms using TF-style token matching, returning the top results with matched terms and priority metadata.",
+      "tags": ["service", "search", "ranking"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:scoreEntity",
+      "type": "function",
+      "name": "scoreEntity",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [333, 377],
+      "summary": "Computes a relevance score for a knowledge entity by matching query terms against weighted fields (name, type, path, summary, observations) and boosting pinned/high-priority entries.",
+      "tags": ["search", "ranking", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:resolveControlPaneConfig",
+      "type": "function",
+      "name": "resolveControlPaneConfig",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [108, 130],
+      "summary": "Discovers and deep-merges all applicable TOML config files from default search paths (home dir, cwd, parent dirs) into a normalized configuration object.",
+      "tags": ["config", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:connectorStatus",
+      "type": "function",
+      "name": "connectorStatus",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [428, 455],
+      "summary": "Computes the live sync status of every configured memory connector by joining config definitions with checkpoint rows from the database.",
+      "tags": ["service", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:summarizeSessions",
+      "type": "function",
+      "name": "summarizeSessions",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [232, 262],
+      "summary": "Aggregates a list of session rows into summary statistics including total count, token usage, tool invocations, and cumulative cost.",
+      "tags": ["utility", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:summarizeWorkItems",
+      "type": "function",
+      "name": "summarizeWorkItems",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [502, 529],
+      "summary": "Groups work items by normalized status category (open, in-progress, done, blocked) and returns counts alongside the full item list.",
+      "tags": ["utility", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/control-pane/state.js:normalizeSession",
+      "type": "function",
+      "name": "normalizeSession",
+      "filePath": "scripts/lib/control-pane/state.js",
+      "lineRange": [174, 208],
+      "summary": "Converts a raw SQLite session row into a typed session object with numeric coercion, JSON parsing for stored metadata, and unread message count injection.",
+      "tags": ["serialization", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/control-pane/ui.js",
+      "type": "file",
+      "name": "ui.js",
+      "filePath": "scripts/lib/control-pane/ui.js",
+      "summary": "Generates the complete control-pane single-page HTML application as a template literal, embedding all CSS, JavaScript, and React-like UI logic inline.",
+      "tags": ["service", "ui", "html-generation"],
+      "complexity": "complex",
+      "languageNotes": "Produces a self-contained HTML page via a single large template-literal function with no build step — all UI logic runs in the browser via inline scripts."
+    },
+    {
+      "id": "function:scripts/lib/control-pane/ui.js:renderControlPaneHtml",
+      "type": "function",
+      "name": "renderControlPaneHtml",
+      "filePath": "scripts/lib/control-pane/ui.js",
+      "lineRange": [3, 629],
+      "summary": "Renders the entire control-pane single-page application as an HTML string, containing the complete client-side UI with embedded styles and JavaScript.",
+      "tags": ["ui", "html-generation", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/control-pane-actions.test.js",
+      "type": "file",
+      "name": "control-pane-actions.test.js",
+      "filePath": "tests/lib/control-pane-actions.test.js",
+      "summary": "Unit tests for the control-pane actions module, verifying action construction, command-line formatting, shell quoting, and error handling for invalid action IDs.",
+      "tags": ["test", "unit-test"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:tests/lib/control-pane-state.test.js",
+      "type": "file",
+      "name": "control-pane-state.test.js",
+      "filePath": "tests/lib/control-pane-state.test.js",
+      "summary": "Integration tests for the control-pane state module, creating in-memory SQLite fixtures to verify snapshot building, session reading, knowledge recall, config resolution, and work-item normalization.",
+      "tags": ["test", "integration-test", "database"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/control-pane.test.js",
+      "type": "file",
+      "name": "control-pane.test.js",
+      "filePath": "tests/scripts/control-pane.test.js",
+      "summary": "End-to-end integration tests for the control-pane entry-point script, starting a real HTTP server and verifying API responses, action execution, static file serving, and host-rebinding security.",
+      "tags": ["test", "integration-test", "server"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/control-pane.js",
+      "target": "function:scripts/control-pane.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/control-pane.js",
+      "target": "function:scripts/control-pane.js:openBrowser",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/control-pane.js",
+      "target": "file:scripts/lib/control-pane/server.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/actions.js",
+      "target": "function:scripts/lib/control-pane/actions.js:buildControlPaneAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "function:scripts/lib/control-pane/server.js:createControlPaneServer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "function:scripts/lib/control-pane/server.js:runAction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "function:scripts/lib/control-pane/server.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "file:scripts/lib/control-pane/actions.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "file:scripts/lib/control-pane/state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "file:scripts/lib/control-pane/ui.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:buildControlPaneSnapshot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:recallKnowledgeEntries",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:scoreEntity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:resolveControlPaneConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:connectorStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:summarizeSessions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:summarizeWorkItems",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "function:scripts/lib/control-pane/state.js:normalizeSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "file:scripts/lib/control-pane/actions.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/ui.js",
+      "target": "function:scripts/lib/control-pane/ui.js:renderControlPaneHtml",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/control-pane-actions.test.js",
+      "target": "file:scripts/lib/control-pane/actions.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/actions.js",
+      "target": "file:tests/lib/control-pane-actions.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/control-pane-state.test.js",
+      "target": "file:scripts/lib/control-pane/state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/control-pane/state.js",
+      "target": "file:tests/lib/control-pane-state.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/control-pane.test.js",
+      "target": "file:scripts/control-pane.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/control-pane.test.js",
+      "target": "file:scripts/lib/control-pane/server.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/control-pane.js",
+      "target": "file:tests/scripts/control-pane.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/control-pane/server.js",
+      "target": "file:tests/scripts/control-pane.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

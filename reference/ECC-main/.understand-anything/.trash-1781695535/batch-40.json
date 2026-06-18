@@ -1,0 +1,48 @@
+{
+  "nodes": [
+    {
+      "id": "config:ecc2/Cargo.toml",
+      "type": "config",
+      "name": "Cargo.toml",
+      "filePath": "ecc2/Cargo.toml",
+      "summary": "Rust package manifest for the ecc-tui binary, defining the ECC 2.0 control-plane crate with dependencies for a TUI dashboard (ratatui, crossterm), async runtime (tokio), SQLite session store (rusqlite), git integration (git2), CLI parsing (clap), serialization (serde), and structured logging (tracing). Release profile enables LTO and binary stripping for minimal production output.",
+      "tags": ["configuration", "rust", "build-system", "dependency-management", "infrastructure"],
+      "complexity": "moderate",
+      "languageNotes": "Uses a vendored-openssl feature flag to bundle OpenSSL for cross-platform builds; release profile sets lto=true and codegen-units=1 for maximum optimization."
+    },
+    {
+      "id": "document:ecc2/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "ecc2/README.md",
+      "summary": "Alpha-status developer guide for the ECC 2.0 Rust control plane, describing current capabilities (TUI dashboard, SQLite session store, daemon mode, risk-scoring), the intended goals (multi-agent orchestration, worktree management), CLI run and test instructions, and an explicit list of features still missing before GA.",
+      "tags": ["documentation", "infrastructure", "development"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "config:ecc2/rust-toolchain.toml",
+      "type": "config",
+      "name": "rust-toolchain.toml",
+      "filePath": "ecc2/rust-toolchain.toml",
+      "summary": "Rust toolchain pin for the ecc2 crate, locking the channel to 1.96 with rustfmt and clippy components. Required because several dependencies use Rust edition 2024 syntax that older toolchains do not support.",
+      "tags": ["configuration", "rust", "build-system"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ecc2/README.md",
+      "target": "config:ecc2/Cargo.toml",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:ecc2/rust-toolchain.toml",
+      "target": "config:ecc2/Cargo.toml",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

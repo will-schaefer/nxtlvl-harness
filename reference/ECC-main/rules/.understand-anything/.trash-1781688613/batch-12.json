@@ -1,0 +1,88 @@
+{
+  "nodes": [
+    {
+      "id": "document:perl/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "perl/coding-style.md",
+      "summary": "Perl-specific coding-style rules covering standards, immutability, formatting (perltidy), and linting (perlcritic), extending the common coding-style baseline.",
+      "tags": ["perl", "coding-style", "formatting", "linting", "immutability"],
+      "complexity": "simple",
+      "languageNotes": "Frontmatter scopes the rule to Perl source globs (.pl, .pm, .t, .psgi, .cgi)."
+    },
+    {
+      "id": "document:perl/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "perl/hooks.md",
+      "summary": "Perl-specific automation-hook rules describing PostToolUse hooks and warning handling, extending the common hooks baseline.",
+      "tags": ["perl", "hooks", "automation", "post-tool-use"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:perl/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "perl/patterns.md",
+      "summary": "Perl-specific design-pattern rules covering the repository pattern, DTOs/value objects, resource management, module interfaces, and dependency management, extending the common patterns baseline.",
+      "tags": ["perl", "patterns", "repository-pattern", "dto", "dependency-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:perl/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "perl/security.md",
+      "summary": "Perl-specific security rules covering taint mode, input validation, file I/O, process execution, SQL-injection prevention, and security scanning, extending the common security baseline.",
+      "tags": ["perl", "security", "taint-mode", "input-validation", "sql-injection"],
+      "complexity": "moderate",
+      "languageNotes": "Emphasizes Perl taint mode (-T) as a first-class defense mechanism."
+    },
+    {
+      "id": "document:perl/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "perl/testing.md",
+      "summary": "Perl-specific testing rules covering the test framework, runner (prove), coverage (Devel::Cover), mocking, and common pitfalls, extending the common testing baseline.",
+      "tags": ["perl", "testing", "coverage", "mocking", "test-runner"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:perl/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:perl/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:perl/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:perl/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:perl/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

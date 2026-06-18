@@ -1,0 +1,224 @@
+{
+  "nodes": [
+    {
+      "id": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "document",
+      "name": "agentshield-enterprise-research-roadmap.md",
+      "filePath": "architecture/agentshield-enterprise-research-roadmap.md",
+      "summary": "Planning roadmap that proposes turning AgentShield's scanner, policy gate, corpus, and reporting surface into a multi-harness enterprise security control plane, with eight enterprise gaps, a five-slice build order, non-goals, and acceptance gates.",
+      "tags": ["documentation", "security", "roadmap", "enterprise", "architecture"],
+      "complexity": "complex",
+      "languageNotes": "Long-form research artifact citing external runtimes (Orca, Superset, dmux, Claude HUD, Meta-Harness, Autocontext, Hermes) as design pressure rather than dependencies."
+    },
+    {
+      "id": "document:architecture/cross-harness.md",
+      "type": "document",
+      "name": "cross-harness.md",
+      "filePath": "architecture/cross-harness.md",
+      "summary": "Defines ECC as a reusable workflow layer that keeps durable assets (skills, rules, hooks, MCP config, sessions) in one repo and adapts them thinly at each harness edge, with a portability matrix and the rule to put durable behavior in ECC first.",
+      "tags": ["documentation", "architecture", "cross-harness", "portability", "adapter"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/discussion-response-playbook.md",
+      "type": "document",
+      "name": "discussion-response-playbook.md",
+      "filePath": "architecture/discussion-response-playbook.md",
+      "summary": "Operator guide that folds GitHub Discussions into the same operating queue as PRs, issues, and Linear work, with an audit loop, category routing table, reply templates, and outcome-recording rules.",
+      "tags": ["documentation", "operations", "playbook", "community", "queue"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/evaluator-rag-prototype.md",
+      "type": "document",
+      "name": "evaluator-rag-prototype.md",
+      "filePath": "architecture/evaluator-rag-prototype.md",
+      "summary": "Specifies the smallest read-only artifact set for a self-improving harness loop: a five-artifact evaluator/RAG contract (scenario, trace, report, candidate playbook, verifier result), a phase model, corpus fixtures, ECC Tools mapping, and promotion rules.",
+      "tags": ["documentation", "architecture", "rag", "evaluation", "self-improving"],
+      "complexity": "complex",
+      "languageNotes": "Defines a retrieval-then-verify contract that deliberately separates read-only retrieval from any mutating action until a verifier promotes a playbook."
+    },
+    {
+      "id": "document:architecture/harness-adapter-compliance.md",
+      "type": "document",
+      "name": "harness-adapter-compliance.md",
+      "filePath": "architecture/harness-adapter-compliance.md",
+      "summary": "Public onramp matrix turning the cross-harness architecture into a practical scorecard of compliance states (native, adapter-backed, instruction-backed, reference-only) per harness, with a verification-command onramp and a data-backed scorecard contract.",
+      "tags": ["documentation", "architecture", "cross-harness", "compliance", "scorecard"],
+      "complexity": "moderate",
+      "languageNotes": "Matrix is generated from scripts/lib/harness-adapter-compliance.js and verified by npm run harness:adapters -- --check, so the prose is a rendered view of a data source."
+    },
+    {
+      "id": "document:architecture/hud-status-session-control.md",
+      "type": "document",
+      "name": "hud-status-session-control.md",
+      "filePath": "architecture/hud-status-session-control.md",
+      "summary": "Defines the harness-neutral ecc.hud-status.v1 status payload and session-control vocabulary for local operator surfaces, HUDs, and handoffs, with stable top-level sections, a sync contract, and the current CLI implementations that project into it.",
+      "tags": ["documentation", "architecture", "observability", "schema-definition", "session-control"],
+      "complexity": "moderate",
+      "languageNotes": "Specifies a versioned payload contract (schema_version ecc.hud-status.v1) where producers must keep field names stable and emit null/unknown rather than inventing incompatible names."
+    },
+    {
+      "id": "document:architecture/observability-readiness.md",
+      "type": "document",
+      "name": "observability-readiness.md",
+      "filePath": "architecture/observability-readiness.md",
+      "summary": "Describes ECC 2.0's local, opt-in observability readiness gate that checks core signals (live status, HUD contract, session traces, harness baseline, tool activity, risk ledger, progress sync, release safety) are present without sending telemetry, plus an operator workflow.",
+      "tags": ["documentation", "architecture", "observability", "monitoring", "readiness"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/platform-value-loop.md",
+      "type": "document",
+      "name": "platform-value-loop.md",
+      "filePath": "architecture/platform-value-loop.md",
+      "summary": "Frames ECC's three-layer product direction (meta-harness, dedicated agent, control pane) and the OSS platform thesis, defining a product-integration contract and value loop by which external products contribute skill packs and gated APIs back into ECC.",
+      "tags": ["documentation", "architecture", "platform", "product-strategy", "value-loop"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:architecture/progress-sync-contract.md",
+      "type": "document",
+      "name": "progress-sync-contract.md",
+      "filePath": "architecture/progress-sync-contract.md",
+      "summary": "Defines the minimum evidence required before a status update can claim a lane is current across GitHub, Linear, local handoffs, the repo roadmap, and the work-items store, with flow lanes, merge-batch update rules, a realtime boundary, and a release gate.",
+      "tags": ["documentation", "architecture", "progress-tracking", "contract", "release-gate"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:architecture/cross-harness.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/cross-harness.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/harness-adapter-compliance.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/harness-adapter-compliance.md",
+      "target": "document:architecture/observability-readiness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/hud-status-session-control.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/observability-readiness.md",
+      "target": "document:architecture/evaluator-rag-prototype.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/hud-status-session-control.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/progress-sync-contract.md",
+      "target": "document:architecture/hud-status-session-control.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/progress-sync-contract.md",
+      "target": "document:architecture/discussion-response-playbook.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/discussion-response-playbook.md",
+      "target": "document:architecture/progress-sync-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/evaluator-rag-prototype.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/evaluator-rag-prototype.md",
+      "target": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/platform-value-loop.md",
+      "target": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/platform-value-loop.md",
+      "target": "document:architecture/evaluator-rag-prototype.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/harness-adapter-compliance.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/cross-harness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:architecture/agentshield-enterprise-research-roadmap.md",
+      "target": "document:architecture/platform-value-loop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

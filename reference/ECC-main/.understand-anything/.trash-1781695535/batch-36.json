@@ -1,0 +1,185 @@
+{
+  "nodes": [
+    {
+      "id": "document:commands/kotlin-test.md",
+      "type": "document",
+      "name": "kotlin-test.md",
+      "filePath": "commands/kotlin-test.md",
+      "summary": "Defines the /kotlin-test slash command implementing a full Kotlin TDD cycle with Kotest, covering StringSpec, BehaviorSpec, data-driven, and coroutine test patterns alongside coverage targets and best practices.",
+      "tags": ["documentation", "test-driven-development", "kotlin", "command", "tdd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/learn-eval.md",
+      "type": "document",
+      "name": "learn-eval.md",
+      "filePath": "commands/learn-eval.md",
+      "summary": "Defines the /learn-eval command that extracts insights from a completed session, evaluates their quality, and selectively persists only high-value learnings with a structured 5-step process including a scoring rubric.",
+      "tags": ["documentation", "command", "learning", "session-management", "knowledge-extraction"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/learn.md",
+      "type": "document",
+      "name": "learn.md",
+      "filePath": "commands/learn.md",
+      "summary": "Defines the /learn command that extracts reusable patterns, conventions, and techniques from the current session and saves them for future re-use, specifying output format and extraction criteria.",
+      "tags": ["documentation", "command", "learning", "session-management", "pattern-extraction"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/loop-start.md",
+      "type": "document",
+      "name": "loop-start.md",
+      "filePath": "commands/loop-start.md",
+      "summary": "Defines the /loop-start command for initiating a multi-step agentic loop, specifying the startup flow, required safety checks, and supported arguments.",
+      "tags": ["documentation", "command", "agentic-loop", "automation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/loop-status.md",
+      "type": "document",
+      "name": "loop-status.md",
+      "filePath": "commands/loop-status.md",
+      "summary": "Defines the /loop-status command for querying the current state of a running agentic loop, including cross-session CLI output, watch mode, and snapshot file references.",
+      "tags": ["documentation", "command", "agentic-loop", "monitoring", "status-reporting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/marketing-campaign.md",
+      "type": "document",
+      "name": "marketing-campaign.md",
+      "filePath": "commands/marketing-campaign.md",
+      "summary": "Defines the /marketing-campaign command for generating full marketing campaigns or single deliverables, with modes for full campaign, single deliverable, and copy review, plus agent delegation support.",
+      "tags": ["documentation", "command", "marketing", "content-generation", "multi-agent"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/model-route.md",
+      "type": "document",
+      "name": "model-route.md",
+      "filePath": "commands/model-route.md",
+      "summary": "Defines the /model-route command that applies a routing heuristic to select the optimal AI model for a given task based on task characteristics.",
+      "tags": ["documentation", "command", "model-routing", "orchestration", "ai-routing"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/multi-backend.md",
+      "type": "document",
+      "name": "multi-backend.md",
+      "filePath": "commands/multi-backend.md",
+      "summary": "Defines the /multi-backend command for backend-focused development using multi-model collaboration, specifying the 6-phase workflow (research through quality review) and multi-model call specifications.",
+      "tags": ["documentation", "command", "multi-agent", "backend-development", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/multi-execute.md",
+      "type": "document",
+      "name": "multi-execute.md",
+      "filePath": "commands/multi-execute.md",
+      "summary": "Defines the /multi-execute command for multi-model collaborative code execution, routing frontend tasks to Gemini, backend to Codex, and fullstack to parallel calls, with a 5-phase workflow culminating in automatic audit and delivery.",
+      "tags": ["documentation", "command", "multi-agent", "model-routing", "workflow"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/multi-frontend.md",
+      "type": "document",
+      "name": "multi-frontend.md",
+      "filePath": "commands/multi-frontend.md",
+      "summary": "Defines the /multi-frontend command for frontend-focused development using multi-model collaboration, specifying the same 6-phase workflow as multi-backend but scoped to UI, styles, and frontend logic.",
+      "tags": ["documentation", "command", "multi-agent", "frontend-development", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/multi-plan.md",
+      "type": "document",
+      "name": "multi-plan.md",
+      "filePath": "commands/multi-plan.md",
+      "summary": "Defines the /multi-plan command for multi-model collaborative planning, orchestrating prompt enhancement, context retrieval, cross-validation, and dual-model plan drafting before delivering a final Claude implementation plan.",
+      "tags": ["documentation", "command", "multi-agent", "planning", "workflow"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:commands/multi-workflow.md",
+      "type": "document",
+      "name": "multi-workflow.md",
+      "filePath": "commands/multi-workflow.md",
+      "summary": "Defines the /multi-workflow command as the general-purpose multi-model collaborative development entry point, combining research, ideation, planning, implementation, optimization, and quality review phases.",
+      "tags": ["documentation", "command", "multi-agent", "workflow", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/orch-add-feature.md",
+      "type": "document",
+      "name": "orch-add-feature.md",
+      "filePath": "commands/orch-add-feature.md",
+      "summary": "Defines the /orch-add-feature command that delegates a new feature addition task to an orchestrator agent, specifying usage and expected behavior.",
+      "tags": ["documentation", "command", "orchestration", "feature-development", "delegation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/orch-build-mvp.md",
+      "type": "document",
+      "name": "orch-build-mvp.md",
+      "filePath": "commands/orch-build-mvp.md",
+      "summary": "Defines the /orch-build-mvp command that delegates building an MVP to an orchestrator agent, scoping the task to a minimal viable product.",
+      "tags": ["documentation", "command", "orchestration", "mvp", "delegation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/orch-change-feature.md",
+      "type": "document",
+      "name": "orch-change-feature.md",
+      "filePath": "commands/orch-change-feature.md",
+      "summary": "Defines the /orch-change-feature command that delegates a feature modification task to an orchestrator agent.",
+      "tags": ["documentation", "command", "orchestration", "feature-development", "delegation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/orch-fix-defect.md",
+      "type": "document",
+      "name": "orch-fix-defect.md",
+      "filePath": "commands/orch-fix-defect.md",
+      "summary": "Defines the /orch-fix-defect command that delegates defect investigation and fixing to an orchestrator agent.",
+      "tags": ["documentation", "command", "orchestration", "debugging", "delegation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/orch-refine-code.md",
+      "type": "document",
+      "name": "orch-refine-code.md",
+      "filePath": "commands/orch-refine-code.md",
+      "summary": "Defines the /orch-refine-code command that delegates code quality refinement and cleanup to an orchestrator agent.",
+      "tags": ["documentation", "command", "orchestration", "refactoring", "delegation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:commands/plan-prd.md",
+      "type": "document",
+      "name": "plan-prd.md",
+      "filePath": "commands/plan-prd.md",
+      "summary": "Defines the /plan-prd command implementing a 4-phase PRD generation workflow (Frame, Ground, Decide, Generate), producing a structured Product Requirements Document with template and handoff instructions.",
+      "tags": ["documentation", "command", "planning", "prd", "product-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/plan.md",
+      "type": "document",
+      "name": "plan.md",
+      "filePath": "commands/plan.md",
+      "summary": "Defines the /plan command that converts an idea or PRD into a structured implementation plan grounded in learned patterns, with optional planner agent delegation and PRD artifact output.",
+      "tags": ["documentation", "command", "planning", "implementation", "workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:commands/pm2.md",
+      "type": "document",
+      "name": "pm2.md",
+      "filePath": "commands/pm2.md",
+      "summary": "Defines the /pm2 command that initializes PM2 process manager configuration for a multi-service project, auto-detecting services and generating ecosystem.config.cjs, wrapper scripts, and per-service command files with Windows-specific PowerShell support.",
+      "tags": ["documentation", "command", "pm2", "process-management", "infrastructure"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": []
+}

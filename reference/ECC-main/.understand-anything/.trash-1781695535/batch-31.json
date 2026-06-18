@@ -1,0 +1,193 @@
+{
+  "nodes": [
+    {
+      "id": "document:agents/e2e-runner.md",
+      "type": "document",
+      "name": "e2e-runner.md",
+      "filePath": "agents/e2e-runner.md",
+      "summary": "Defines the E2E Test Runner agent responsible for planning, creating, and executing end-to-end tests using Agent Browser (primary) or Playwright (fallback), with structured workflow steps and flaky test handling strategies.",
+      "tags": ["documentation", "agent", "test", "e2e-testing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/fastapi-reviewer.md",
+      "type": "document",
+      "name": "fastapi-reviewer.md",
+      "filePath": "agents/fastapi-reviewer.md",
+      "summary": "Defines the FastAPI code reviewer agent covering security, dependency injection, async patterns, and Pydantic validation with prioritized findings (critical/high/medium) and structured output format.",
+      "tags": ["documentation", "agent", "code-review", "api-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:agents/flutter-reviewer.md",
+      "type": "document",
+      "name": "flutter-reviewer.md",
+      "filePath": "agents/flutter-reviewer.md",
+      "summary": "Comprehensive Flutter/Dart code review agent with an extensive checklist covering architecture, state management, widget composition, performance, accessibility, security, and internationalization across 25 structured sections.",
+      "tags": ["documentation", "agent", "code-review", "mobile"],
+      "complexity": "complex",
+      "languageNotes": "Covers Flutter-specific patterns including BLoC/Provider/Riverpod state management, Dart null-safety idioms, and platform-channel integration."
+    },
+    {
+      "id": "document:agents/fsharp-reviewer.md",
+      "type": "document",
+      "name": "fsharp-reviewer.md",
+      "filePath": "agents/fsharp-reviewer.md",
+      "summary": "F# code review agent focusing on functional programming idioms, type safety, discriminated unions, computation expressions, and .NET interoperability with tiered priority findings and diagnostic commands.",
+      "tags": ["documentation", "agent", "code-review", "functional-programming"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/gan-evaluator.md",
+      "type": "document",
+      "name": "gan-evaluator.md",
+      "filePath": "agents/gan-evaluator.md",
+      "summary": "GAN (Generate-and-Evaluate) evaluator agent that systematically tests and scores generated web apps using browser automation, providing ruthlessly strict design and interaction quality feedback with structured scoring rubric.",
+      "tags": ["documentation", "agent", "evaluation", "browser-testing"],
+      "complexity": "complex",
+      "languageNotes": "Part of a three-agent GAN loop (planner/generator/evaluator) for iterative web app generation with multi-mode evaluation (playwright, screenshot, code-only)."
+    },
+    {
+      "id": "document:agents/gan-generator.md",
+      "type": "document",
+      "name": "gan-generator.md",
+      "filePath": "agents/gan-generator.md",
+      "summary": "GAN generator agent that creates and iterates on web app implementations based on product specs and evaluator feedback, maintaining a generator state file and emphasizing creative quality to avoid AI-generated slop.",
+      "tags": ["documentation", "agent", "code-generation", "iteration"],
+      "complexity": "moderate",
+      "languageNotes": "Pairs with gan-evaluator.md and gan-planner.md to form the three-part GAN agentic loop."
+    },
+    {
+      "id": "document:agents/gan-planner.md",
+      "type": "document",
+      "name": "gan-planner.md",
+      "filePath": "agents/gan-planner.md",
+      "summary": "GAN planner agent that translates user intent into a structured product specification, driving the downstream generator and evaluator agents in the iterative web app creation loop.",
+      "tags": ["documentation", "agent", "planning", "code-generation"],
+      "complexity": "moderate",
+      "languageNotes": "Entry point of the GAN (Generate-And-Evaluate) agentic trio alongside gan-generator.md and gan-evaluator.md."
+    },
+    {
+      "id": "document:agents/go-build-resolver.md",
+      "type": "document",
+      "name": "go-build-resolver.md",
+      "filePath": "agents/go-build-resolver.md",
+      "summary": "Go build error resolver agent providing diagnostic commands, module troubleshooting steps, and common fix patterns for compilation failures, with explicit stop conditions and structured output format.",
+      "tags": ["documentation", "agent", "build-system", "debugging"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/go-reviewer.md",
+      "type": "document",
+      "name": "go-reviewer.md",
+      "filePath": "agents/go-reviewer.md",
+      "summary": "Go code review agent covering security, error handling, concurrency patterns, idiomatic Go style, and performance with tiered priority findings and diagnostic commands including go vet and staticcheck.",
+      "tags": ["documentation", "agent", "code-review", "concurrency"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:agents/harmonyos-app-resolver.md",
+      "type": "document",
+      "name": "harmonyos-app-resolver.md",
+      "filePath": "agents/harmonyos-app-resolver.md",
+      "summary": "HarmonyOS/ArkTS application development expert agent enforcing strict V2 state management and Navigation-only routing, with detailed ArkTS compilation constraint checks and API usage guidelines.",
+      "tags": ["documentation", "agent", "mobile", "debugging"],
+      "complexity": "complex",
+      "languageNotes": "Targets HarmonyOS Next with ArkTS and ArkUI, enforcing ArkUI State Management V2 exclusively and prohibiting deprecated V1 patterns."
+    },
+    {
+      "id": "document:agents/harness-optimizer.md",
+      "type": "document",
+      "name": "harness-optimizer.md",
+      "filePath": "agents/harness-optimizer.md",
+      "summary": "Minimal ECC harness optimizer agent that analyzes Claude Code settings and agent configurations to recommend performance improvements, with strict scope constraints and concise output.",
+      "tags": ["documentation", "agent", "configuration", "optimization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:agents/healthcare-reviewer.md",
+      "type": "document",
+      "name": "healthcare-reviewer.md",
+      "filePath": "agents/healthcare-reviewer.md",
+      "summary": "Healthcare code reviewer agent specializing in clinical safety, HIPAA PHI compliance, CDSS engine validation, clinical workflow integrity, and data consistency for medical software systems.",
+      "tags": ["documentation", "agent", "code-review", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/homelab-architect.md",
+      "type": "document",
+      "name": "homelab-architect.md",
+      "filePath": "agents/homelab-architect.md",
+      "summary": "Homelab infrastructure architect agent guiding self-hosted service design with Docker Compose, networking, DNS, and storage, with explicit safety defaults for network isolation and backup strategies.",
+      "tags": ["documentation", "agent", "infrastructure", "containerization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/java-build-resolver.md",
+      "type": "document",
+      "name": "java-build-resolver.md",
+      "filePath": "agents/java-build-resolver.md",
+      "summary": "Java build error resolver agent with framework-specific sections for plain Java, Spring Boot, and Quarkus, covering Maven/Gradle troubleshooting, common fix patterns, and structured diagnostic commands.",
+      "tags": ["documentation", "agent", "build-system", "debugging"],
+      "complexity": "complex",
+      "languageNotes": "Detects framework context (Spring Boot vs Quarkus vs plain Java) before diagnosing, with separate Maven and Gradle troubleshooting tracks."
+    },
+    {
+      "id": "document:agents/java-reviewer.md",
+      "type": "document",
+      "name": "java-reviewer.md",
+      "filePath": "agents/java-reviewer.md",
+      "summary": "Java code review agent covering security, error handling, architecture, JPA/relational database patterns, concurrency, state machines, and framework-specific checks for Spring Boot and Quarkus.",
+      "tags": ["documentation", "agent", "code-review", "database"],
+      "complexity": "complex",
+      "languageNotes": "Includes Quarkus-specific Panache MongoDB patterns alongside JPA/relational checks, and workflow/state-machine review for payment and event-driven code."
+    },
+    {
+      "id": "document:agents/kotlin-build-resolver.md",
+      "type": "document",
+      "name": "kotlin-build-resolver.md",
+      "filePath": "agents/kotlin-build-resolver.md",
+      "summary": "Kotlin build error resolver agent providing Gradle troubleshooting, Kotlin compiler flag guidance, common fix patterns, and structured diagnostic commands with explicit stop conditions.",
+      "tags": ["documentation", "agent", "build-system", "debugging"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/kotlin-reviewer.md",
+      "type": "document",
+      "name": "kotlin-reviewer.md",
+      "filePath": "agents/kotlin-reviewer.md",
+      "summary": "Kotlin/Android code review agent with a comprehensive checklist covering architecture, coroutines, Jetpack Compose, Kotlin idioms, Android-specific patterns, security, and Gradle build configuration.",
+      "tags": ["documentation", "agent", "code-review", "mobile"],
+      "complexity": "complex",
+      "languageNotes": "Covers Kotlin Coroutines, Flow, and Jetpack Compose patterns alongside standard Android architecture components."
+    },
+    {
+      "id": "document:agents/loop-operator.md",
+      "type": "document",
+      "name": "loop-operator.md",
+      "filePath": "agents/loop-operator.md",
+      "summary": "Minimal loop operator agent that manages continuous execution loops with required checks for resource consumption, progress tracking, and escalation criteria when iteration limits are reached.",
+      "tags": ["documentation", "agent", "automation", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:agents/marketing-agent.md",
+      "type": "document",
+      "name": "marketing-agent.md",
+      "filePath": "agents/marketing-agent.md",
+      "summary": "End-to-end marketing campaign agent orchestrating audience research, positioning, landing page copy, email sequences, social posts, video scripts, ad copy variants, and content calendar creation with anti-slop quality standards.",
+      "tags": ["documentation", "agent", "content-generation", "marketing"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:agents/mle-reviewer.md",
+      "type": "document",
+      "name": "mle-reviewer.md",
+      "filePath": "agents/mle-reviewer.md",
+      "summary": "Machine learning engineer reviewer agent covering problem framing, metrics design, data contracts, training reproducibility, model evaluation, serving deployment, and monitoring for ML systems.",
+      "tags": ["documentation", "agent", "code-review", "machine-learning"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": []
+}

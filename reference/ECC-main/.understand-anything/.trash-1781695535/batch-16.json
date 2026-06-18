@@ -1,0 +1,666 @@
+{
+  "nodes": [
+    {
+      "id": "file:skills/ck/commands/forget.mjs",
+      "type": "file",
+      "name": "forget.mjs",
+      "filePath": "skills/ck/commands/forget.mjs",
+      "summary": "Implements the 'ck forget' command that removes a named context entry from the CK project registry and deletes its on-disk data.",
+      "tags": ["command", "service", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/ck/commands/info.mjs",
+      "type": "file",
+      "name": "info.mjs",
+      "filePath": "skills/ck/commands/info.mjs",
+      "summary": "Implements the 'ck info' command that displays detailed metadata for a single named context, including its most recent session state.",
+      "tags": ["command", "utility", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/ck/commands/init.mjs",
+      "type": "file",
+      "name": "init.mjs",
+      "filePath": "skills/ck/commands/init.mjs",
+      "summary": "Implements the 'ck init' command that bootstraps a new CK context from optional CLAUDE.md and README files, extracting project metadata to seed the context store.",
+      "tags": ["command", "factory", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/ck/commands/list.mjs",
+      "type": "file",
+      "name": "list.mjs",
+      "filePath": "skills/ck/commands/list.mjs",
+      "summary": "Implements the 'ck list' command that renders a tabular summary of all registered CK contexts with staleness indicators and recent session info.",
+      "tags": ["command", "utility", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/ck/commands/migrate.mjs",
+      "type": "file",
+      "name": "migrate.mjs",
+      "filePath": "skills/ck/commands/migrate.mjs",
+      "summary": "Implements the 'ck migrate' command that converts legacy Markdown-based context files into the structured JSON context format used by the current CK system.",
+      "tags": ["command", "migration", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/ck/commands/resume.mjs",
+      "type": "file",
+      "name": "resume.mjs",
+      "filePath": "skills/ck/commands/resume.mjs",
+      "summary": "Implements the 'ck resume' command that looks up an existing context by name and prints a briefing box to help the agent reorient to the project state.",
+      "tags": ["command", "utility", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/ck/commands/save.mjs",
+      "type": "file",
+      "name": "save.mjs",
+      "filePath": "skills/ck/commands/save.mjs",
+      "summary": "Implements the 'ck save' command that captures the current session state — summary, decisions, next steps, blockers, and git activity — and appends it to the context store.",
+      "tags": ["command", "service", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:skills/ck/commands/shared.mjs",
+      "type": "file",
+      "name": "shared.mjs",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "summary": "Core shared library for the CK (context-keeper) skill, exporting path constants, JSON/context I/O helpers, git utilities, and all rendering functions used by every CK command.",
+      "tags": ["utility", "service", "barrel"],
+      "complexity": "complex",
+      "languageNotes": "ESM (.mjs) module exporting 22 named symbols — functions and constants — consumed by all sibling command files; uses Node.js fs, path, os, crypto, and child_process APIs."
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:readJson",
+      "type": "function",
+      "name": "readJson",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [24, 31],
+      "summary": "Reads and parses a JSON file from disk, returning null if the file does not exist.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:writeJson",
+      "type": "function",
+      "name": "writeJson",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [33, 37],
+      "summary": "Serializes an object to JSON and writes it to disk, creating parent directories as needed.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:readProjects",
+      "type": "function",
+      "name": "readProjects",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [39, 41],
+      "summary": "Reads the CK projects registry JSON file, returning an empty object if not yet initialized.",
+      "tags": ["utility", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:writeProjects",
+      "type": "function",
+      "name": "writeProjects",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [43, 45],
+      "summary": "Persists the projects registry object to the CK home directory.",
+      "tags": ["utility", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:contextPath",
+      "type": "function",
+      "name": "contextPath",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [49, 51],
+      "summary": "Returns the path to a context's JSON data file given its context directory.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:contextMdPath",
+      "type": "function",
+      "name": "contextMdPath",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [53, 55],
+      "summary": "Returns the path to a context's human-readable Markdown representation file.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:loadContext",
+      "type": "function",
+      "name": "loadContext",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [57, 59],
+      "summary": "Loads a context's JSON data object from disk given its storage directory.",
+      "tags": ["utility", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:saveContext",
+      "type": "function",
+      "name": "saveContext",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [61, 66],
+      "summary": "Persists a context's JSON data and regenerates the corresponding Markdown file atomically.",
+      "tags": ["utility", "data-model", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:resolveContext",
+      "type": "function",
+      "name": "resolveContext",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [74, 113],
+      "summary": "Resolves a user-provided context argument (name, numeric index, or fuzzy string) to a fully-loaded context object, supporting multiple match strategies.",
+      "tags": ["utility", "service", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:today",
+      "type": "function",
+      "name": "today",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [117, 119],
+      "summary": "Returns today's date as an ISO YYYY-MM-DD string.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:daysAgoLabel",
+      "type": "function",
+      "name": "daysAgoLabel",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [121, 127],
+      "summary": "Converts an ISO date string to a human-readable relative time label such as 'today', 'yesterday', or 'N days ago'.",
+      "tags": ["utility", "formatting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:stalenessIcon",
+      "type": "function",
+      "name": "stalenessIcon",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [129, 135],
+      "summary": "Returns a staleness indicator character based on how many days have elapsed since the given date.",
+      "tags": ["utility", "formatting"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:shortId",
+      "type": "function",
+      "name": "shortId",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [139, 141],
+      "summary": "Generates a short random hex identifier for tagging new sessions.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:gitLogSince",
+      "type": "function",
+      "name": "gitLogSince",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [159, 162],
+      "summary": "Returns the raw git log output for a project directory since a given date string.",
+      "tags": ["utility", "git"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:gitSummary",
+      "type": "function",
+      "name": "gitSummary",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [164, 181],
+      "summary": "Aggregates git activity since a date into commit count, file change count, and a snippet of recent commit messages for display in a context summary.",
+      "tags": ["utility", "git"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:encodeProjectPath",
+      "type": "function",
+      "name": "encodeProjectPath",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [185, 188],
+      "summary": "Encodes an absolute project path into a filesystem-safe string for use as a directory name.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:nativeMemoryDir",
+      "type": "function",
+      "name": "nativeMemoryDir",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [190, 193],
+      "summary": "Returns the path to the Claude Code native memory directory for a given project, mirroring the convention used by the host agent.",
+      "tags": ["utility", "service"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:renderContextMd",
+      "type": "function",
+      "name": "renderContextMd",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [198, 270],
+      "summary": "Renders a full Markdown document from a context object, including project metadata, all session entries, decisions, constraints, and next steps.",
+      "tags": ["utility", "serialization", "formatting"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:renderBriefingBox",
+      "type": "function",
+      "name": "renderBriefingBox",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [273, 317],
+      "summary": "Renders a bordered terminal briefing box summarizing the most recent session state — left-off point, next steps, and blockers — for the 'ck resume' command output.",
+      "tags": ["utility", "formatting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:renderInfoBlock",
+      "type": "function",
+      "name": "renderInfoBlock",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [320, 344],
+      "summary": "Renders a multi-line terminal info block showing full context detail for the 'ck info' command.",
+      "tags": ["utility", "formatting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/shared.mjs:renderListTable",
+      "type": "function",
+      "name": "renderListTable",
+      "filePath": "skills/ck/commands/shared.mjs",
+      "lineRange": [347, 387],
+      "summary": "Renders a padded ASCII table of all CK contexts with staleness icons, session IDs, summaries, and relative timestamps for the 'ck list' command.",
+      "tags": ["utility", "formatting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/migrate.mjs:parseLeftOff",
+      "type": "function",
+      "name": "parseLeftOff",
+      "filePath": "skills/ck/commands/migrate.mjs",
+      "lineRange": [59, 80],
+      "summary": "Parses the legacy 'Left Off' section from a Markdown context file, handling both bulleted and free-form session block formats.",
+      "tags": ["utility", "migration", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/ck/commands/migrate.mjs:parseDecisionsTable",
+      "type": "function",
+      "name": "parseDecisionsTable",
+      "filePath": "skills/ck/commands/migrate.mjs",
+      "lineRange": [40, 51],
+      "summary": "Parses a Markdown pipe-table of decisions from a legacy context file, extracting each decision row as a structured object.",
+      "tags": ["utility", "migration", "serialization"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/ck/commands/forget.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/info.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/init.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/list.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/migrate.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/resume.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/save.mjs",
+      "target": "file:skills/ck/commands/shared.mjs",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:readJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:writeJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:readProjects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:writeProjects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:contextPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:contextMdPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:loadContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:saveContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:resolveContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:today",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:daysAgoLabel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:stalenessIcon",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:shortId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:gitLogSince",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:gitSummary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:encodeProjectPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:nativeMemoryDir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderContextMd",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderBriefingBox",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderInfoBlock",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderListTable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/migrate.mjs",
+      "target": "function:skills/ck/commands/migrate.mjs:parseLeftOff",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/migrate.mjs",
+      "target": "function:skills/ck/commands/migrate.mjs:parseDecisionsTable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:readJson",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:writeJson",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:readProjects",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:writeProjects",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:contextPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:contextMdPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:loadContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:saveContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:resolveContext",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:today",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:daysAgoLabel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:stalenessIcon",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:shortId",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:gitLogSince",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:gitSummary",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:encodeProjectPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:nativeMemoryDir",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderContextMd",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderBriefingBox",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderInfoBlock",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/ck/commands/shared.mjs",
+      "target": "function:skills/ck/commands/shared.mjs:renderListTable",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

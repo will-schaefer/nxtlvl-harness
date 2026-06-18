@@ -1,0 +1,1012 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/repair.js",
+      "type": "file",
+      "name": "repair.js",
+      "filePath": "scripts/repair.js",
+      "summary": "CLI script that repairs installed ECC plugin states by re-running lifecycle checks, accepting target filters and output format flags.",
+      "tags": ["entry-point", "utility", "cli"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/repair.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/repair.js",
+      "lineRange": [16, 43],
+      "summary": "Parses CLI arguments for the repair script, extracting target filters, output format flags, and help requests.",
+      "tags": ["utility", "cli"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/repair.js:printHuman",
+      "type": "function",
+      "name": "printHuman",
+      "filePath": "scripts/repair.js",
+      "lineRange": [45, 67],
+      "summary": "Formats and prints repair results in human-readable format, showing status and details for each repaired entry.",
+      "tags": ["utility", "output-formatting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/repair.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/repair.js",
+      "lineRange": [69, 96],
+      "summary": "Orchestrates the repair flow: parses args, invokes repairInstalledStates from install-lifecycle, and prints results.",
+      "tags": ["entry-point", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/uninstall.js",
+      "type": "file",
+      "name": "uninstall.js",
+      "filePath": "scripts/uninstall.js",
+      "summary": "CLI script that uninstalls ECC plugins by target, delegating to install-lifecycle and install-manifests utilities.",
+      "tags": ["entry-point", "utility", "cli"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/uninstall.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/uninstall.js",
+      "lineRange": [16, 43],
+      "summary": "Parses CLI arguments for the uninstall script, extracting target filters, force flags, and help requests.",
+      "tags": ["utility", "cli"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/uninstall.js:printHuman",
+      "type": "function",
+      "name": "printHuman",
+      "filePath": "scripts/uninstall.js",
+      "lineRange": [45, 67],
+      "summary": "Formats and prints uninstall results in human-readable format with status per entry.",
+      "tags": ["utility", "output-formatting"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/uninstall.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/uninstall.js",
+      "lineRange": [69, 95],
+      "summary": "Orchestrates uninstall flow: parses args, invokes the uninstall lifecycle, and prints or JSON-outputs results.",
+      "tags": ["entry-point", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/install-config.test.js",
+      "type": "file",
+      "name": "install-config.test.js",
+      "filePath": "tests/lib/install-config.test.js",
+      "summary": "Test suite for scripts/lib/install/config.js, covering configuration loading, validation, and default-merging behavior.",
+      "tags": ["test", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-config.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-config.test.js",
+      "lineRange": [41, 142],
+      "summary": "Main test runner for install-config, exercising config read/write/validate scenarios via temp fixtures.",
+      "tags": ["test", "configuration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-executor.test.js",
+      "type": "file",
+      "name": "install-executor.test.js",
+      "filePath": "tests/lib/install-executor.test.js",
+      "summary": "Test suite for the install executor module, exercising file copy, symlink, and rollback operations across fixture layouts.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/install-executor.test.js:writeLegacySourceFixture",
+      "type": "function",
+      "name": "writeLegacySourceFixture",
+      "filePath": "tests/lib/install-executor.test.js",
+      "lineRange": [48, 70],
+      "summary": "Writes a legacy-format plugin source fixture to a temp directory for executor tests.",
+      "tags": ["test", "fixture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-executor.test.js:writeManifestSourceFixture",
+      "type": "function",
+      "name": "writeManifestSourceFixture",
+      "filePath": "tests/lib/install-executor.test.js",
+      "lineRange": [72, 117],
+      "summary": "Writes a manifest-format plugin source fixture with full directory structure for executor tests.",
+      "tags": ["test", "fixture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-executor.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-executor.test.js",
+      "lineRange": [131, 433],
+      "summary": "Comprehensive test suite covering install executor operations: copy, apply, rollback, and edge cases with both legacy and manifest fixture layouts.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-lifecycle.test.js",
+      "type": "file",
+      "name": "install-lifecycle.test.js",
+      "filePath": "tests/lib/install-lifecycle.test.js",
+      "summary": "Largest test file in the suite; comprehensively tests the install-lifecycle module covering install, upgrade, repair, and removal flows with state management.",
+      "tags": ["test", "installation", "lifecycle"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/install-lifecycle.test.js:createCursorStateOptions",
+      "type": "function",
+      "name": "createCursorStateOptions",
+      "filePath": "tests/lib/install-lifecycle.test.js",
+      "lineRange": [56, 86],
+      "summary": "Builds a cursor-state options object used to simulate multi-target install state for lifecycle tests.",
+      "tags": ["test", "fixture", "state-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-lifecycle.test.js:managedOperation",
+      "type": "function",
+      "name": "managedOperation",
+      "filePath": "tests/lib/install-lifecycle.test.js",
+      "lineRange": [98, 109],
+      "summary": "Wraps a lifecycle operation in setup/teardown for test isolation, handling temp directories and state cleanup.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-lifecycle.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-lifecycle.test.js",
+      "lineRange": [111, 1606],
+      "summary": "Massive test runner covering the full install lifecycle: initial installs, upgrades, repairs, removals, error handling, and concurrent state scenarios.",
+      "tags": ["test", "lifecycle", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-manifests.test.js",
+      "type": "file",
+      "name": "install-manifests.test.js",
+      "filePath": "tests/lib/install-manifests.test.js",
+      "summary": "Test suite for the install-manifests module, validating manifest loading, parsing, and resolution against plugin repositories.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/install-manifests.test.js:writeManifestSet",
+      "type": "function",
+      "name": "writeManifestSet",
+      "filePath": "tests/lib/install-manifests.test.js",
+      "lineRange": [49, 65],
+      "summary": "Writes a set of manifest JSON files to a test repo directory, enabling manifest-loading integration tests.",
+      "tags": ["test", "fixture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-manifests.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-manifests.test.js",
+      "lineRange": [67, 880],
+      "summary": "Comprehensive test runner for install-manifests covering manifest discovery, validation, multi-locale support, and edge cases.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-request.test.js",
+      "type": "file",
+      "name": "install-request.test.js",
+      "filePath": "tests/lib/install-request.test.js",
+      "summary": "Test suite for the install request module, verifying request parsing, validation, and normalization logic.",
+      "tags": ["test", "installation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-request.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-request.test.js",
+      "lineRange": [24, 247],
+      "summary": "Exercises the install request module's parsing and validation paths across a range of valid and malformed inputs.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-state.test.js",
+      "type": "file",
+      "name": "install-state.test.js",
+      "filePath": "tests/lib/install-state.test.js",
+      "summary": "Test suite for the install-state module, covering read/write state persistence and migration scenarios.",
+      "tags": ["test", "state-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/install-state.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-state.test.js",
+      "lineRange": [39, 232],
+      "summary": "Exercises state file read/write, format migration, and concurrency edge cases for the install-state module.",
+      "tags": ["test", "state-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/install-targets.test.js",
+      "type": "file",
+      "name": "install-targets.test.js",
+      "filePath": "tests/lib/install-targets.test.js",
+      "summary": "Large test suite for install-targets registry, validating target resolution, filtering, and registry lookups.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/install-targets.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/install-targets.test.js",
+      "lineRange": [32, 1093],
+      "summary": "Exhaustive test runner for the install-targets registry covering target discovery, platform filtering, and registry edge cases.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/locale-install.test.js",
+      "type": "file",
+      "name": "locale-install.test.js",
+      "filePath": "tests/lib/locale-install.test.js",
+      "summary": "Test suite validating locale-specific install behavior, ensuring that locale-aware manifest selection and path normalization work correctly.",
+      "tags": ["test", "installation", "localization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/locale-install.test.js:runInstallApply",
+      "type": "function",
+      "name": "runInstallApply",
+      "filePath": "tests/lib/locale-install.test.js",
+      "lineRange": [20, 29],
+      "summary": "Helper that invokes the install-apply pipeline in a test context, used to drive locale install scenarios.",
+      "tags": ["test", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/lib/locale-install.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/locale-install.test.js",
+      "lineRange": [43, 224],
+      "summary": "Exercises locale-aware install scenarios including locale detection, manifest selection per locale, and path normalization.",
+      "tags": ["test", "installation", "localization"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/mcp-config.test.js",
+      "type": "file",
+      "name": "mcp-config.test.js",
+      "filePath": "tests/lib/mcp-config.test.js",
+      "summary": "Small test suite for the MCP configuration module, verifying config read, write, and merge operations.",
+      "tags": ["test", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:tests/lib/mcp-config.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/mcp-config.test.js",
+      "lineRange": [19, 60],
+      "summary": "Exercises MCP config read/write/merge paths in a temp directory fixture.",
+      "tags": ["test", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/lib/selective-install.test.js",
+      "type": "file",
+      "name": "selective-install.test.js",
+      "filePath": "tests/lib/selective-install.test.js",
+      "summary": "Test suite for selective install behavior, validating that specific plugin components can be installed or skipped based on request filters.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/selective-install.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/selective-install.test.js",
+      "lineRange": [46, 834],
+      "summary": "Large test runner exercising selective install filtering: include/exclude patterns, partial installs, and request-driven component selection.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/auto-update.test.js",
+      "type": "file",
+      "name": "auto-update.test.js",
+      "filePath": "tests/scripts/auto-update.test.js",
+      "summary": "Integration test suite for the auto-update script, verifying update detection, execution, and rollback scenarios.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/auto-update.test.js:makeRecord",
+      "type": "function",
+      "name": "makeRecord",
+      "filePath": "tests/scripts/auto-update.test.js",
+      "lineRange": [41, 72],
+      "summary": "Builds a plugin record fixture with configurable version and install state for auto-update test scenarios.",
+      "tags": ["test", "fixture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/auto-update.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/auto-update.test.js",
+      "lineRange": [83, 393],
+      "summary": "Exercises auto-update scenarios: no updates available, updates applied, rollback on failure, and state persistence after update.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/doctor.test.js",
+      "type": "file",
+      "name": "doctor.test.js",
+      "filePath": "tests/scripts/doctor.test.js",
+      "summary": "Test suite for the doctor diagnostic script, validating health checks and state inspection reporting.",
+      "tags": ["test", "diagnostics"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/doctor.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/scripts/doctor.test.js",
+      "lineRange": [37, 60],
+      "summary": "Helper that executes the doctor script as a child process and returns stdout/stderr for assertion.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/doctor.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/doctor.test.js",
+      "lineRange": [74, 188],
+      "summary": "Exercises doctor health check scenarios: clean state, broken state, missing files, and JSON vs human output modes.",
+      "tags": ["test", "diagnostics"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/install-apply.test.js",
+      "type": "file",
+      "name": "install-apply.test.js",
+      "filePath": "tests/scripts/install-apply.test.js",
+      "summary": "Integration test suite for the install-apply script, exercising end-to-end plugin installation from manifests to disk.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/install-apply.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/scripts/install-apply.test.js",
+      "lineRange": [27, 53],
+      "summary": "Helper that invokes the install-apply script in a subprocess and captures output for assertions.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/install-apply.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/install-apply.test.js",
+      "lineRange": [67, 904],
+      "summary": "Large integration test runner covering fresh install, reinstall, upgrade, force-install, dry-run, and error paths for the install-apply script.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/list-installed.test.js",
+      "type": "file",
+      "name": "list-installed.test.js",
+      "filePath": "tests/scripts/list-installed.test.js",
+      "summary": "Test suite for the list-installed script, verifying that installed plugin state is accurately reported in both human and JSON output modes.",
+      "tags": ["test", "installation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/list-installed.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/scripts/list-installed.test.js",
+      "lineRange": [37, 60],
+      "summary": "Runs the list-installed script as a child process and captures output for assertion in tests.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/list-installed.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/list-installed.test.js",
+      "lineRange": [74, 137],
+      "summary": "Exercises list-installed output for empty, single, and multi-plugin states in human and JSON format.",
+      "tags": ["test", "installation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:tests/scripts/repair.test.js",
+      "type": "file",
+      "name": "repair.test.js",
+      "filePath": "tests/scripts/repair.test.js",
+      "summary": "Integration test suite for the repair CLI script, covering repair of broken, partial, and already-healthy plugin states.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/repair.test.js:runNode",
+      "type": "function",
+      "name": "runNode",
+      "filePath": "tests/scripts/repair.test.js",
+      "lineRange": [41, 66],
+      "summary": "Executes the repair.js script as a Node.js child process, capturing output and exit code for assertions.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/repair.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/repair.test.js",
+      "lineRange": [90, 324],
+      "summary": "Exercises the repair CLI across scenarios: healthy state no-op, broken link repair, missing file re-copy, and JSON vs human output.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/uninstall.test.js",
+      "type": "file",
+      "name": "uninstall.test.js",
+      "filePath": "tests/scripts/uninstall.test.js",
+      "summary": "Integration test suite for the uninstall CLI script, verifying complete and selective uninstall flows with state cleanup.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/scripts/uninstall.test.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "tests/scripts/uninstall.test.js",
+      "lineRange": [40, 63],
+      "summary": "Executes the uninstall.js script as a child process and captures output for assertions.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/uninstall.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/uninstall.test.js",
+      "lineRange": [77, 285],
+      "summary": "Exercises uninstall scenarios: full uninstall, selective target uninstall, non-existent target, and state file cleanup after removal.",
+      "tags": ["test", "installation"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/repair.js",
+      "target": "function:scripts/repair.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/repair.js",
+      "target": "function:scripts/repair.js:printHuman",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/repair.js",
+      "target": "function:scripts/repair.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/repair.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/repair.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/uninstall.js",
+      "target": "function:scripts/uninstall.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/uninstall.js",
+      "target": "function:scripts/uninstall.js:printHuman",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/uninstall.js",
+      "target": "function:scripts/uninstall.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/uninstall.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/uninstall.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-config.test.js",
+      "target": "function:tests/lib/install-config.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-config.test.js",
+      "target": "file:scripts/lib/install/config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-config.test.js",
+      "target": "file:scripts/lib/install/config.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-executor.test.js",
+      "target": "function:tests/lib/install-executor.test.js:writeLegacySourceFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-executor.test.js",
+      "target": "function:tests/lib/install-executor.test.js:writeManifestSourceFixture",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-executor.test.js",
+      "target": "function:tests/lib/install-executor.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-executor.test.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-executor.test.js",
+      "target": "file:scripts/lib/install-executor.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "function:tests/lib/install-lifecycle.test.js:createCursorStateOptions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "function:tests/lib/install-lifecycle.test.js:managedOperation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "function:tests/lib/install-lifecycle.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-lifecycle.test.js",
+      "target": "file:scripts/lib/install-lifecycle.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-manifests.test.js",
+      "target": "function:tests/lib/install-manifests.test.js:writeManifestSet",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-manifests.test.js",
+      "target": "function:tests/lib/install-manifests.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-manifests.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-manifests.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-request.test.js",
+      "target": "function:tests/lib/install-request.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-request.test.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-request.test.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-state.test.js",
+      "target": "function:tests/lib/install-state.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-state.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-state.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/install-targets.test.js",
+      "target": "function:tests/lib/install-targets.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/install-targets.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-targets.test.js",
+      "target": "file:scripts/lib/install-targets/registry.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/install-targets.test.js",
+      "target": "file:scripts/lib/install-targets/registry.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/locale-install.test.js",
+      "target": "function:tests/lib/locale-install.test.js:runInstallApply",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/locale-install.test.js",
+      "target": "function:tests/lib/locale-install.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/locale-install.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/locale-install.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/mcp-config.test.js",
+      "target": "function:tests/lib/mcp-config.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/mcp-config.test.js",
+      "target": "file:scripts/lib/mcp-config.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/mcp-config.test.js",
+      "target": "file:scripts/lib/mcp-config.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/lib/selective-install.test.js",
+      "target": "function:tests/lib/selective-install.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/selective-install.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/selective-install.test.js",
+      "target": "file:scripts/lib/install/request.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/selective-install.test.js",
+      "target": "file:scripts/lib/install-manifests.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/auto-update.test.js",
+      "target": "function:tests/scripts/auto-update.test.js:makeRecord",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/auto-update.test.js",
+      "target": "function:tests/scripts/auto-update.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/auto-update.test.js",
+      "target": "file:scripts/auto-update.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/auto-update.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/auto-update.test.js",
+      "target": "file:scripts/auto-update.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/doctor.test.js",
+      "target": "function:tests/scripts/doctor.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/doctor.test.js",
+      "target": "function:tests/scripts/doctor.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/doctor.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/install-apply.test.js",
+      "target": "function:tests/scripts/install-apply.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/install-apply.test.js",
+      "target": "function:tests/scripts/install-apply.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/install-apply.test.js",
+      "target": "file:scripts/lib/install/apply.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/install-apply.test.js",
+      "target": "file:scripts/lib/install/apply.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/list-installed.test.js",
+      "target": "function:tests/scripts/list-installed.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/list-installed.test.js",
+      "target": "function:tests/scripts/list-installed.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/list-installed.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/repair.test.js",
+      "target": "function:tests/scripts/repair.test.js:runNode",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/repair.test.js",
+      "target": "function:tests/scripts/repair.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/repair.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/repair.test.js",
+      "target": "file:scripts/repair.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:tests/scripts/uninstall.test.js",
+      "target": "function:tests/scripts/uninstall.test.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/uninstall.test.js",
+      "target": "function:tests/scripts/uninstall.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/uninstall.test.js",
+      "target": "file:scripts/lib/install-state.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/uninstall.test.js",
+      "target": "file:scripts/uninstall.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

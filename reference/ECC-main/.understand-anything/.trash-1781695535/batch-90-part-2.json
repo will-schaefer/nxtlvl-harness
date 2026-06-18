@@ -1,0 +1,499 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/hooks/post-edit-typecheck.js",
+      "type": "file",
+      "name": "post-edit-typecheck.js",
+      "filePath": "scripts/hooks/post-edit-typecheck.js",
+      "summary": "PostToolUse hook that runs TypeScript type-checking on modified TypeScript files after each edit, providing fast feedback on type errors.",
+      "tags": ["middleware", "hook", "event-handler", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/hooks/run-with-flags-shell.sh",
+      "type": "file",
+      "name": "run-with-flags-shell.sh",
+      "filePath": "scripts/hooks/run-with-flags-shell.sh",
+      "summary": "Shell wrapper script that invokes hook executables while respecting ECC_HOOK_PROFILE and ECC_DISABLED_HOOKS runtime gating flags.",
+      "tags": ["middleware", "hook", "utility", "script"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/hooks/session-start-bootstrap.js",
+      "type": "file",
+      "name": "session-start-bootstrap.js",
+      "filePath": "scripts/hooks/session-start-bootstrap.js",
+      "summary": "SessionStart hook that bootstraps the ECC environment by resolving the plugin root and ensuring required directories are initialized.",
+      "tags": ["middleware", "hook", "event-handler", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/hooks/session-start-bootstrap.js:resolvePluginRoot",
+      "type": "function",
+      "name": "resolvePluginRoot",
+      "filePath": "scripts/hooks/session-start-bootstrap.js",
+      "lineRange": [73, 116],
+      "summary": "Walks candidate directories to locate the installed ECC plugin root by searching for plugin.json markers.",
+      "tags": ["utility", "discovery"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/agent-compress.js",
+      "type": "file",
+      "name": "agent-compress.js",
+      "filePath": "scripts/lib/agent-compress.js",
+      "summary": "Library that parses, summarizes, and compresses ECC agent Markdown files into lightweight catalog and summary representations for context-efficient loading.",
+      "tags": ["utility", "serialization", "agent"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/agent-compress.js:buildAgentCatalog",
+      "type": "function",
+      "name": "buildAgentCatalog",
+      "filePath": "scripts/lib/agent-compress.js",
+      "lineRange": [165, 211],
+      "summary": "Builds a catalog array of all agents from a directory, each with name, description, tools, and model from parsed frontmatter.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/agent-compress.js:extractSummary",
+      "type": "function",
+      "name": "extractSummary",
+      "filePath": "scripts/lib/agent-compress.js",
+      "lineRange": [48, 98],
+      "summary": "Extracts a condensed summary of an agent's capabilities from its Markdown body, targeting key sections like When to Use and How It Works.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/agent-compress.js:parseFrontmatter",
+      "type": "function",
+      "name": "parseFrontmatter",
+      "filePath": "scripts/lib/agent-compress.js",
+      "lineRange": [10, 42],
+      "summary": "Parses YAML frontmatter from an agent Markdown string into a structured metadata object.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/agent-compress.js:lazyLoadAgent",
+      "type": "function",
+      "name": "lazyLoadAgent",
+      "filePath": "scripts/lib/agent-compress.js",
+      "lineRange": [217, 233],
+      "summary": "Returns a lazy-load accessor for full agent content, loading from disk only when accessed.",
+      "tags": ["utility", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/cost-estimate.js",
+      "type": "file",
+      "name": "cost-estimate.js",
+      "filePath": "scripts/lib/cost-estimate.js",
+      "summary": "Utility library that estimates API token costs from token counts and pricing tiers.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/cost-estimate.js:estimateCost",
+      "type": "function",
+      "name": "estimateCost",
+      "filePath": "scripts/lib/cost-estimate.js",
+      "lineRange": [22, 30],
+      "summary": "Calculates estimated cost for an API call given input tokens, output tokens, and per-token pricing.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/ecc_dashboard_runtime.py",
+      "type": "file",
+      "name": "ecc_dashboard_runtime.py",
+      "filePath": "scripts/lib/ecc_dashboard_runtime.py",
+      "summary": "Python helper that launches the ECC dashboard in a terminal window, providing cross-platform terminal detection and window management.",
+      "tags": ["utility", "service", "monitoring"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/ecc_dashboard_runtime.py:build_terminal_launch",
+      "type": "function",
+      "name": "build_terminal_launch",
+      "filePath": "scripts/lib/ecc_dashboard_runtime.py",
+      "lineRange": [35, 61],
+      "summary": "Builds the OS-specific terminal launch command for the ECC dashboard, supporting macOS Terminal/iTerm2 and gnome-terminal.",
+      "tags": ["utility", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/harness-adapter-compliance.js",
+      "type": "file",
+      "name": "harness-adapter-compliance.js",
+      "filePath": "scripts/lib/harness-adapter-compliance.js",
+      "summary": "Library implementing ECC harness adapter compliance validation and Markdown/text rendering for the compliance scorecard, covering adapter records and documentation sync.",
+      "tags": ["utility", "validation", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/harness-adapter-compliance.js:validateAdapterRecords",
+      "type": "function",
+      "name": "validateAdapterRecords",
+      "filePath": "scripts/lib/harness-adapter-compliance.js",
+      "lineRange": [352, 411],
+      "summary": "Validates that all adapter records in the ECC harness are current and consistent with their declared configurations.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/harness-adapter-compliance.js:validateDocumentation",
+      "type": "function",
+      "name": "validateDocumentation",
+      "filePath": "scripts/lib/harness-adapter-compliance.js",
+      "lineRange": [425, 440],
+      "summary": "Validates that documentation files are in sync with adapter records, checking for missing or stale entries.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/harness-adapter-compliance.js:renderMarkdownTable",
+      "type": "function",
+      "name": "renderMarkdownTable",
+      "filePath": "scripts/lib/harness-adapter-compliance.js",
+      "lineRange": [318, 337],
+      "summary": "Renders the adapter compliance scorecard as a Markdown table suitable for documentation.",
+      "tags": ["utility", "serialization"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/inspection.js",
+      "type": "file",
+      "name": "inspection.js",
+      "filePath": "scripts/lib/inspection.js",
+      "summary": "Library for analyzing tool-use failure patterns in Claude Code sessions, grouping failures by cause and suggesting remediation actions.",
+      "tags": ["utility", "monitoring", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/inspection.js:detectPatterns",
+      "type": "function",
+      "name": "detectPatterns",
+      "filePath": "scripts/lib/inspection.js",
+      "lineRange": [71, 111],
+      "summary": "Analyzes grouped failure data to detect recurring patterns such as permission errors, network issues, or missing files.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/inspection.js:generateReport",
+      "type": "function",
+      "name": "generateReport",
+      "filePath": "scripts/lib/inspection.js",
+      "lineRange": [121, 156],
+      "summary": "Generates a structured failure inspection report with pattern summaries, affected tools, and suggested actions.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/inspection.js:inspect",
+      "type": "function",
+      "name": "inspect",
+      "filePath": "scripts/lib/inspection.js",
+      "lineRange": [192, 201],
+      "summary": "Top-level entry point that accepts raw failure data and returns a complete inspection report.",
+      "tags": ["utility", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/lib/package-manager.d.ts",
+      "type": "file",
+      "name": "package-manager.d.ts",
+      "filePath": "scripts/lib/package-manager.d.ts",
+      "summary": "TypeScript declaration file exposing the package-manager detection and command-building API surface for use in typed consumers.",
+      "tags": ["type-definition", "utility"],
+      "complexity": "moderate",
+      "languageNotes": "Declaration-only .d.ts — no runtime code; provides types for the corresponding .js implementation."
+    },
+    {
+      "id": "file:scripts/lib/session-aliases.d.ts",
+      "type": "file",
+      "name": "session-aliases.d.ts",
+      "filePath": "scripts/lib/session-aliases.d.ts",
+      "summary": "TypeScript declaration file for the session-aliases library, defining types for session alias resolution and management.",
+      "tags": ["type-definition", "utility"],
+      "complexity": "moderate",
+      "languageNotes": "Declaration-only .d.ts — no runtime code."
+    },
+    {
+      "id": "file:scripts/lib/session-manager.d.ts",
+      "type": "file",
+      "name": "session-manager.d.ts",
+      "filePath": "scripts/lib/session-manager.d.ts",
+      "summary": "TypeScript declaration file for the session-manager library, exposing types for session lifecycle operations.",
+      "tags": ["type-definition", "utility"],
+      "complexity": "moderate",
+      "languageNotes": "Declaration-only .d.ts — no runtime code."
+    },
+    {
+      "id": "file:scripts/lib/utils.d.ts",
+      "type": "file",
+      "name": "utils.d.ts",
+      "filePath": "scripts/lib/utils.d.ts",
+      "summary": "TypeScript declaration file for the shared ECC utilities library, providing types for file I/O helpers, path resolution, and common data transformations.",
+      "tags": ["type-definition", "utility"],
+      "complexity": "moderate",
+      "languageNotes": "Declaration-only .d.ts — no runtime code; the largest of the four type declaration files at 202 lines."
+    },
+    {
+      "id": "file:scripts/loop-status.js",
+      "type": "file",
+      "name": "loop-status.js",
+      "filePath": "scripts/loop-status.js",
+      "summary": "CLI tool that monitors Claude Code loop sessions by reading JSONL transcripts, analyzing tool-use progress and anomalies, and writing periodic status snapshots for external tooling.",
+      "tags": ["utility", "monitoring", "cli", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/loop-status.js:analyzeTranscript",
+      "type": "function",
+      "name": "analyzeTranscript",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [401, 527],
+      "summary": "Parses a Claude Code JSONL transcript to extract tool-use sequences, compute progress signals, detect stalls, and produce a structured analysis result.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/loop-status.js:buildStatus",
+      "type": "function",
+      "name": "buildStatus",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [529, 573],
+      "summary": "Builds the final status object from an analyzed transcript, including overall state, signals, and recommended next action.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/loop-status.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [64, 130],
+      "summary": "Parses CLI arguments for loop-status including transcript path, watch mode, interval, output format, and snapshot options.",
+      "tags": ["utility", "cli"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/loop-status.js:writeStatusSnapshots",
+      "type": "function",
+      "name": "writeStatusSnapshots",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [677, 718],
+      "summary": "Atomically writes status snapshot JSON files to the configured output directory for each monitored session.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/loop-status.js:findTranscriptPaths",
+      "type": "function",
+      "name": "findTranscriptPaths",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [200, 238],
+      "summary": "Discovers Claude Code JSONL transcript files from the default ~/.claude/projects/ directory tree or a specified path.",
+      "tags": ["utility", "discovery"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/loop-status.js:runWatch",
+      "type": "function",
+      "name": "runWatch",
+      "filePath": "scripts/loop-status.js",
+      "lineRange": [755, 778],
+      "summary": "Runs loop-status in continuous watch mode, re-analyzing transcripts at a configurable interval until interrupted.",
+      "tags": ["utility", "monitoring"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/hooks/session-start-bootstrap.js",
+      "target": "function:scripts/hooks/session-start-bootstrap.js:resolvePluginRoot",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/agent-compress.js",
+      "target": "function:scripts/lib/agent-compress.js:buildAgentCatalog",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/agent-compress.js",
+      "target": "function:scripts/lib/agent-compress.js:extractSummary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/agent-compress.js",
+      "target": "function:scripts/lib/agent-compress.js:parseFrontmatter",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/agent-compress.js",
+      "target": "function:scripts/lib/agent-compress.js:lazyLoadAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/agent-compress.js",
+      "target": "file:tests/lib/agent-compress.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/cost-estimate.js",
+      "target": "function:scripts/lib/cost-estimate.js:estimateCost",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/cost-estimate.js",
+      "target": "file:tests/lib/cost-estimate.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/ecc_dashboard_runtime.py",
+      "target": "function:scripts/lib/ecc_dashboard_runtime.py:build_terminal_launch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/ecc_dashboard_runtime.py",
+      "target": "file:ecc_dashboard.py",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:scripts/lib/harness-adapter-compliance.js",
+      "target": "function:scripts/lib/harness-adapter-compliance.js:validateAdapterRecords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/harness-adapter-compliance.js",
+      "target": "function:scripts/lib/harness-adapter-compliance.js:validateDocumentation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/harness-adapter-compliance.js",
+      "target": "function:scripts/lib/harness-adapter-compliance.js:renderMarkdownTable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/inspection.js",
+      "target": "function:scripts/lib/inspection.js:detectPatterns",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/inspection.js",
+      "target": "function:scripts/lib/inspection.js:generateReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/inspection.js",
+      "target": "function:scripts/lib/inspection.js:inspect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/inspection.js",
+      "target": "file:tests/lib/inspection.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:analyzeTranscript",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:buildStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:writeStatusSnapshots",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:findTranscriptPaths",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "function:scripts/loop-status.js:runWatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/loop-status.js",
+      "target": "file:tests/scripts/loop-status.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/harness-adapter-compliance.js",
+      "target": "function:scripts/lib/harness-adapter-compliance.js:validateAdapterRecords",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:scripts/harness-adapter-compliance.js",
+      "target": "function:scripts/lib/harness-adapter-compliance.js:validateDocumentation",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

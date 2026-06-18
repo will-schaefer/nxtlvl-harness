@@ -1,0 +1,55 @@
+{
+  "nodes": [
+    {
+      "id": "document:releases/1.10.0/release-notes.md",
+      "type": "document",
+      "name": "release-notes.md",
+      "filePath": "releases/1.10.0/release-notes.md",
+      "summary": "Canonical ECC v1.10.0 release notes framing the version as a surface-sync and operator-lane release: it records the synced OSS counts (38 agents, 156 skills, 72 commands), the new operator/media skills, the ECC 2.0 alpha control-plane status, install surfaces, and the recommended upgrade path.",
+      "tags": ["documentation", "release-notes", "changelog", "versioning"],
+      "complexity": "moderate",
+      "languageNotes": "Structured markdown with six H2 sections (Positioning, What Changed, ECC 2.0 Status, Install Guidance, Recommended Upgrade Path) serving as the authoritative source the announcement and X thread restate."
+    },
+    {
+      "id": "document:releases/1.10.0/discussion-announcement.md",
+      "type": "document",
+      "name": "discussion-announcement.md",
+      "filePath": "releases/1.10.0/discussion-announcement.md",
+      "summary": "Long-form discussion/forum announcement for ECC v1.10.0, narrating the hard-sync release (140K stars, corrected plugin metadata) and the ECC 2.0 alpha control-plane in-tree under ecc2/ for a community audience.",
+      "tags": ["documentation", "announcement", "release", "marketing"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:releases/1.10.0/x-thread.md",
+      "type": "document",
+      "name": "x-thread.md",
+      "filePath": "releases/1.10.0/x-thread.md",
+      "summary": "Draft X/Twitter thread promoting ECC v1.10.0 in condensed social-media voice, highlighting the 140K-star milestone, the surface sync (38 agents, 156 skills, 72 commands), the operator/media lane, and the ecc2/ alpha control plane.",
+      "tags": ["documentation", "announcement", "social-media", "marketing"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:releases/1.10.0/release-notes.md",
+      "target": "document:releases/1.10.0/discussion-announcement.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.10.0/release-notes.md",
+      "target": "document:releases/1.10.0/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:releases/1.10.0/discussion-announcement.md",
+      "target": "document:releases/1.10.0/x-thread.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

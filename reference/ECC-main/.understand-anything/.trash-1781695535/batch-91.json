@@ -1,0 +1,655 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/observability-readiness.js",
+      "type": "file",
+      "name": "observability-readiness.js",
+      "filePath": "scripts/observability-readiness.js",
+      "summary": "CLI gate script that performs a deterministic observability readiness check for ECC 2.0, inspecting repository structure for required hooks, configs, and doc markers, then emitting a scored report in text or JSON format.",
+      "tags": ["utility", "validation", "ci-cd", "observability"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/observability-readiness.js:buildChecks",
+      "type": "function",
+      "name": "buildChecks",
+      "filePath": "scripts/observability-readiness.js",
+      "lineRange": [113, 352],
+      "summary": "Core check engine that reads repository files and evaluates dozens of individual observability requirements, returning a list of pass/fail check objects with evidence and point values.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/observability-readiness.js:buildReport",
+      "type": "function",
+      "name": "buildReport",
+      "filePath": "scripts/observability-readiness.js",
+      "lineRange": [354, 402],
+      "summary": "Assembles the full readiness report from check results, computing scores, identifying top failing checks, and structuring the output for text or JSON rendering.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/observability-readiness.js:renderText",
+      "type": "function",
+      "name": "renderText",
+      "filePath": "scripts/observability-readiness.js",
+      "lineRange": [404, 429],
+      "summary": "Formats the observability readiness report into a human-readable multi-line text string.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/preview-pack-smoke.js",
+      "type": "file",
+      "name": "preview-pack-smoke.js",
+      "filePath": "scripts/preview-pack-smoke.js",
+      "summary": "Deterministic smoke gate CLI for the ECC 2.0 rc.1 preview pack, verifying required artifacts, manifest entries, verification commands, Hermes boundary markers, and absence of forbidden content.",
+      "tags": ["utility", "validation", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/preview-pack-smoke.js:buildReport",
+      "type": "function",
+      "name": "buildReport",
+      "filePath": "scripts/preview-pack-smoke.js",
+      "lineRange": [209, 297],
+      "summary": "Runs all smoke checks against the preview pack—artifact presence, manifest completeness, verification commands, Hermes markers, and forbidden content—and assembles a signed report with a SHA-256 fingerprint.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/preview-pack-smoke.js:findForbiddenContent",
+      "type": "function",
+      "name": "findForbiddenContent",
+      "filePath": "scripts/preview-pack-smoke.js",
+      "lineRange": [178, 198],
+      "summary": "Scans a set of relative file paths for forbidden content patterns, returning a list of offenders with file path and line number.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/release-approval-gate.js",
+      "type": "file",
+      "name": "release-approval-gate.js",
+      "filePath": "scripts/release-approval-gate.js",
+      "summary": "Final approval gate CLI for ECC 2.0 rc.1 publication, checking decision register approval states, URL surface coverage, announcement content rules, and approval-command presence before allowing outbound release actions.",
+      "tags": ["utility", "validation", "ci-cd"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-approval-gate.js:buildReport",
+      "type": "function",
+      "name": "buildReport",
+      "filePath": "scripts/release-approval-gate.js",
+      "lineRange": [366, 479],
+      "summary": "Orchestrates all approval checks—decision register validation, URL surface coverage, announcement content, command presence—and returns a signed, fingerprinted report.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-approval-gate.js:parseDecisionRegister",
+      "type": "function",
+      "name": "parseDecisionRegister",
+      "filePath": "scripts/release-approval-gate.js",
+      "lineRange": [226, 249],
+      "summary": "Parses a Markdown decision register table into a Map of decision labels to their approval states.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/release-approval-gate.js:findAnnouncementOffenders",
+      "type": "function",
+      "name": "findAnnouncementOffenders",
+      "filePath": "scripts/release-approval-gate.js",
+      "lineRange": [259, 302],
+      "summary": "Scans announcement files for forbidden patterns—undrafted placeholder text, stale URLs, and premature links—returning offenders with file path and line number.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-approval-gate.js:topActionsForChecks",
+      "type": "function",
+      "name": "topActionsForChecks",
+      "filePath": "scripts/release-approval-gate.js",
+      "lineRange": [335, 364],
+      "summary": "Derives the highest-priority remediation actions from a list of failing checks, mapping specific failed check IDs to concrete fix instructions.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/release-video-suite.js",
+      "type": "file",
+      "name": "release-video-suite.js",
+      "filePath": "scripts/release-video-suite.js",
+      "summary": "Large release-pipeline CLI that validates the ECC 2.0 video production lane—verifying source media assets, suite render artifacts, publish candidates, and ffprobe-measured media properties—without embedding raw file paths in the output.",
+      "tags": ["utility", "validation", "ci-cd"],
+      "complexity": "complex",
+      "languageNotes": "Uses spawnSync to invoke ffprobe for media metadata probing; the --skip-probe flag makes it usable in fixture/dry-run mode."
+    },
+    {
+      "id": "function:scripts/release-video-suite.js:buildReport",
+      "type": "function",
+      "name": "buildReport",
+      "filePath": "scripts/release-video-suite.js",
+      "lineRange": [838, 976],
+      "summary": "Assembles the full video suite report by inspecting source assets, suite artifacts, and publish candidates, running all validation checks and generating top-action recommendations.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-video-suite.js:probeMedia",
+      "type": "function",
+      "name": "probeMedia",
+      "filePath": "scripts/release-video-suite.js",
+      "lineRange": [502, 561],
+      "summary": "Invokes ffprobe via spawnSync to extract duration, video stream count, audio stream count, and file size from a media file, returning a structured media info object.",
+      "tags": ["utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-video-suite.js:detectBlackSegments",
+      "type": "function",
+      "name": "detectBlackSegments",
+      "filePath": "scripts/release-video-suite.js",
+      "lineRange": [563, 610],
+      "summary": "Uses ffprobe's blackdetect filter to identify black-frame segments in a video file, returning segment data for quality validation.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/release-video-suite.js:validateVideoArtifact",
+      "type": "function",
+      "name": "validateVideoArtifact",
+      "filePath": "scripts/release-video-suite.js",
+      "lineRange": [656, 721],
+      "summary": "Validates a single video artifact against expected duration, resolution, audio, and file-size constraints, collecting failure messages for each violated constraint.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/release-video-suite.js:evaluatePrimaryRender",
+      "type": "function",
+      "name": "evaluatePrimaryRender",
+      "filePath": "scripts/release-video-suite.js",
+      "lineRange": [775, 836],
+      "summary": "Evaluates the primary render artifact for duration, resolution, audio, bitrate, and frame-rate compliance, generating a pass/fail summary.",
+      "tags": ["validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/skill-create-output.js",
+      "type": "file",
+      "name": "skill-create-output.js",
+      "filePath": "scripts/skill-create-output.js",
+      "summary": "Provides the SkillCreateOutput class and supporting terminal UI helpers (boxed layouts, progress bars, animation) used to render the /skill-create command's analysis results to the terminal.",
+      "tags": ["utility", "component"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "class:scripts/skill-create-output.js:SkillCreateOutput",
+      "type": "class",
+      "name": "SkillCreateOutput",
+      "filePath": "scripts/skill-create-output.js",
+      "lineRange": [81, 174],
+      "summary": "Terminal output manager for the skill-create command, providing methods to render each phase of analysis (header, analyze, results, patterns, instincts, output, next steps, footer) using chalk-colored box layouts.",
+      "tags": ["component", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/accessibility/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/accessibility/SKILL.md",
+      "summary": "Skill definition for WCAG 2.2 accessibility implementation, covering a five-step workflow (component role, perceivable, operable, understandable, robust) with web, iOS, and Android code examples and a best-practices checklist.",
+      "tags": ["documentation", "accessibility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-architecture-audit/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-architecture-audit/SKILL.md",
+      "summary": "Skill definition for auditing multi-agent architectures across a 12-layer stack, covering five common failure patterns (wrapper regression, memory contamination, tool discipline, transport corruption, hidden layers) with a four-phase audit workflow and severity model.",
+      "tags": ["documentation", "agent-architecture", "debugging-and-error-recovery"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-eval/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-eval/SKILL.md",
+      "summary": "Skill definition for running structured agent evaluations using YAML task definitions, git worktree isolation, and three judge types (code-based, pattern-based, LLM-as-judge) to compare agent outputs.",
+      "tags": ["documentation", "test", "agent-evaluation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-harness-construction/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-harness-construction/SKILL.md",
+      "summary": "Concise skill definition covering the construction of Claude Code agent harnesses, defining core components (hooks, rules, commands, skills) and guiding when to build vs. reuse existing harnesses.",
+      "tags": ["documentation", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agent-introspection-debugging/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-introspection-debugging/SKILL.md",
+      "summary": "Skill definition for debugging agent behavior by inspecting internal state, tool call patterns, context usage, and response quality, with structured diagnostic steps and root-cause taxonomy.",
+      "tags": ["documentation", "debugging-and-error-recovery"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-payment-x402/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-payment-x402/SKILL.md",
+      "summary": "Skill definition for integrating HTTP 402 x402 payment protocol into agentic workflows, covering payment flow, wallet configuration, error handling, and provider-specific implementation patterns.",
+      "tags": ["documentation", "api-handler", "agent-architecture"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/examples/high-score-example.md",
+      "type": "document",
+      "name": "high-score-example.md",
+      "filePath": "skills/agent-self-evaluation/examples/high-score-example.md",
+      "summary": "Worked example of an agent self-evaluation report achieving a high score, demonstrating expected output format and quality criteria across all scoring axes.",
+      "tags": ["documentation", "test"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/examples/low-score-example.md",
+      "type": "document",
+      "name": "low-score-example.md",
+      "filePath": "skills/agent-self-evaluation/examples/low-score-example.md",
+      "summary": "Worked example of an agent self-evaluation report achieving a low score, illustrating common failure modes and deficient output patterns across evaluation axes.",
+      "tags": ["documentation", "test"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/references/evaluation-criteria.md",
+      "type": "document",
+      "name": "evaluation-criteria.md",
+      "filePath": "skills/agent-self-evaluation/references/evaluation-criteria.md",
+      "summary": "Reference document defining the scoring rubric for agent self-evaluation, detailing criteria and weight for each evaluation axis (accuracy, completeness, clarity, actionability, conciseness).",
+      "tags": ["documentation", "schema-definition"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/references/hook-integration.md",
+      "type": "document",
+      "name": "hook-integration.md",
+      "filePath": "skills/agent-self-evaluation/references/hook-integration.md",
+      "summary": "Reference document explaining how to wire the agent-self-evaluation skill into Claude Code hooks so evaluation runs automatically at session stop.",
+      "tags": ["documentation", "infrastructure"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "type": "file",
+      "name": "evaluate.py",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "summary": "Python evaluation engine that scores agent responses across five axes (accuracy, completeness, clarity, actionability, conciseness) and formats a structured evaluation report with per-axis scores, strengths, weaknesses, and improvement suggestions.",
+      "tags": ["utility", "validation", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_accuracy",
+      "type": "function",
+      "name": "check_accuracy",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [47, 90],
+      "summary": "Evaluates factual accuracy of an agent response against a reference answer by checking key claim coverage and penalizing contradictions.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_completeness",
+      "type": "function",
+      "name": "check_completeness",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [93, 132],
+      "summary": "Scores completeness of a response by measuring coverage of required sections, code examples, and expected topics from the task definition.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_clarity",
+      "type": "function",
+      "name": "check_clarity",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [160, 198],
+      "summary": "Assesses clarity by checking for jargon overuse, missing summary sentences, and readability indicators, returning a scored result with findings.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_actionability",
+      "type": "function",
+      "name": "check_actionability",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [201, 242],
+      "summary": "Evaluates whether a response provides concrete next steps, commands, and examples that a user could act on immediately.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_conciseness",
+      "type": "function",
+      "name": "check_conciseness",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [245, 289],
+      "summary": "Measures response length relative to task complexity and detects repetitive or padding content, scoring conciseness accordingly.",
+      "tags": ["validation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:evaluate",
+      "type": "function",
+      "name": "evaluate",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [292, 300],
+      "summary": "Top-level evaluation orchestrator that runs all five axis checks and aggregates their scores into a final evaluation result.",
+      "tags": ["utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/agent-self-evaluation/scripts/evaluate.py:format_report",
+      "type": "function",
+      "name": "format_report",
+      "filePath": "skills/agent-self-evaluation/scripts/evaluate.py",
+      "lineRange": [303, 361],
+      "summary": "Renders the evaluation results as a formatted Markdown report including overall score, per-axis breakdown, strengths, weaknesses, and recommended improvements.",
+      "tags": ["utility", "serialization"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-self-evaluation/SKILL.md",
+      "summary": "Skill definition for agent self-evaluation, describing the five-axis scoring framework (accuracy, completeness, clarity, actionability, conciseness), workflow steps, hook integration pattern, and usage of the bundled evaluate.py script.",
+      "tags": ["documentation", "test", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agent-self-evaluation/templates/evaluation-report.md",
+      "type": "document",
+      "name": "evaluation-report.md",
+      "filePath": "skills/agent-self-evaluation/templates/evaluation-report.md",
+      "summary": "Template for agent self-evaluation reports, providing the standard structure for overall score, per-axis breakdown, strengths, weaknesses, and improvement suggestions.",
+      "tags": ["documentation", "schema-definition"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agent-sort/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agent-sort/SKILL.md",
+      "summary": "Skill definition for intelligently sorting and organizing agent outputs, task lists, or items by various criteria including priority, complexity, dependency order, and semantic similarity.",
+      "tags": ["documentation", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/agentic-engineering/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agentic-engineering/SKILL.md",
+      "summary": "Brief skill definition introducing agentic engineering principles—decomposing tasks for multi-step autonomous execution, managing state across tool calls, and applying engineering discipline to agent-driven workflows.",
+      "tags": ["documentation", "agent-architecture"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/agentic-os/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/agentic-os/SKILL.md",
+      "summary": "Comprehensive skill definition for the agentic OS paradigm, covering how Claude Code functions as an OS-layer orchestrator with 33 sections spanning process management, memory, inter-agent communication, scheduling, and security boundaries.",
+      "tags": ["documentation", "agent-architecture", "infrastructure"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/ai-first-engineering/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ai-first-engineering/SKILL.md",
+      "summary": "Concise skill definition for AI-first engineering, focusing on designing systems and codebases that maximize AI-assisted development velocity through clean interfaces, good documentation, and LLM-friendly structure.",
+      "tags": ["documentation", "development"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/ai-regression-testing/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/ai-regression-testing/SKILL.md",
+      "summary": "Skill definition for AI regression testing, providing a 19-section framework for detecting behavioral regressions in AI-generated outputs using snapshot tests, LLM-as-judge comparisons, and automated test harnesses.",
+      "tags": ["documentation", "test", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/android-clean-architecture/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/android-clean-architecture/SKILL.md",
+      "summary": "Skill definition for Android Clean Architecture, covering the three-layer structure (presentation/domain/data), Kotlin patterns, dependency injection with Hilt, and 23 sections of implementation guidance.",
+      "tags": ["documentation", "component"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:skills/angular-developer/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "skills/angular-developer/SKILL.md",
+      "summary": "Skill definition for Angular development, covering component architecture, reactive patterns with RxJS, module organization, testing strategies, and Angular-specific coding conventions.",
+      "tags": ["documentation", "component"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/observability-readiness.js",
+      "target": "function:scripts/observability-readiness.js:buildChecks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/observability-readiness.js",
+      "target": "function:scripts/observability-readiness.js:buildReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/observability-readiness.js",
+      "target": "function:scripts/observability-readiness.js:renderText",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/preview-pack-smoke.js",
+      "target": "function:scripts/preview-pack-smoke.js:buildReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/preview-pack-smoke.js",
+      "target": "function:scripts/preview-pack-smoke.js:findForbiddenContent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-approval-gate.js",
+      "target": "function:scripts/release-approval-gate.js:buildReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-approval-gate.js",
+      "target": "function:scripts/release-approval-gate.js:parseDecisionRegister",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-approval-gate.js",
+      "target": "function:scripts/release-approval-gate.js:findAnnouncementOffenders",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-approval-gate.js",
+      "target": "function:scripts/release-approval-gate.js:topActionsForChecks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-video-suite.js",
+      "target": "function:scripts/release-video-suite.js:buildReport",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-video-suite.js",
+      "target": "function:scripts/release-video-suite.js:probeMedia",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-video-suite.js",
+      "target": "function:scripts/release-video-suite.js:detectBlackSegments",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-video-suite.js",
+      "target": "function:scripts/release-video-suite.js:validateVideoArtifact",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/release-video-suite.js",
+      "target": "function:scripts/release-video-suite.js:evaluatePrimaryRender",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/skill-create-output.js",
+      "target": "class:scripts/skill-create-output.js:SkillCreateOutput",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_accuracy",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_completeness",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_clarity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_actionability",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:check_conciseness",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:evaluate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "target": "function:skills/agent-self-evaluation/scripts/evaluate.py:format_report",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "file:skills/agent-self-evaluation/scripts/evaluate.py",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "document:skills/agent-self-evaluation/references/evaluation-criteria.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "document:skills/agent-self-evaluation/references/hook-integration.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "document:skills/agent-self-evaluation/templates/evaluation-report.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "document:skills/agent-self-evaluation/examples/high-score-example.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:skills/agent-self-evaluation/SKILL.md",
+      "target": "document:skills/agent-self-evaluation/examples/low-score-example.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/skill-create-output.js",
+      "target": "file:tests/scripts/skill-create-output.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

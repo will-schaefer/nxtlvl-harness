@@ -1,0 +1,122 @@
+{
+  "nodes": [
+    {
+      "id": "file:skills/skill-stocktake/scripts/quick-diff.sh",
+      "type": "file",
+      "name": "quick-diff.sh",
+      "filePath": "skills/skill-stocktake/scripts/quick-diff.sh",
+      "summary": "Compares skill file modification times against the evaluated_at timestamp in results.json, outputting a JSON array of changed or newly-added skill files for incremental re-evaluation.",
+      "tags": ["utility", "script", "diff", "skill-stocktake"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/skill-stocktake/scripts/quick-diff.sh:process_dir",
+      "type": "function",
+      "name": "process_dir",
+      "filePath": "skills/skill-stocktake/scripts/quick-diff.sh",
+      "lineRange": [52, 78],
+      "summary": "Iterates markdown files in a given directory and emits a JSON object per file whose mtime is newer than evaluated_at or that is not yet present in results.json.",
+      "tags": ["utility", "file-scan", "diff"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-stocktake/scripts/save-results.sh",
+      "type": "file",
+      "name": "save-results.sh",
+      "filePath": "skills/skill-stocktake/scripts/save-results.sh",
+      "summary": "Merges evaluated skill data from stdin into an existing results.json file, stamping the current UTC time as evaluated_at and safely writing via a temp file to prevent concurrent-write races.",
+      "tags": ["utility", "script", "persistence", "skill-stocktake"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:skills/skill-stocktake/scripts/scan.sh",
+      "type": "file",
+      "name": "scan.sh",
+      "filePath": "skills/skill-stocktake/scripts/scan.sh",
+      "summary": "Enumerates all skill markdown files from global and project .claude/skills directories, extracting YAML frontmatter fields and usage frequency counts from an observations JSONL file, and outputs a structured JSON summary.",
+      "tags": ["utility", "script", "skill-stocktake", "file-scan"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:skills/skill-stocktake/scripts/scan.sh:extract_field",
+      "type": "function",
+      "name": "extract_field",
+      "filePath": "skills/skill-stocktake/scripts/scan.sh",
+      "lineRange": [30, 47],
+      "summary": "Extracts a single-line YAML frontmatter field value from a skill markdown file using awk, handling both quoted and unquoted values.",
+      "tags": ["utility", "parsing", "yaml"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:skills/skill-stocktake/scripts/scan.sh:count_obs",
+      "type": "function",
+      "name": "count_obs",
+      "filePath": "skills/skill-stocktake/scripts/scan.sh",
+      "lineRange": [57, 66],
+      "summary": "Counts tool-use observations for a given skill file path since a cutoff timestamp by querying an observations JSONL file with jq.",
+      "tags": ["utility", "analytics", "observations"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:skills/skill-stocktake/scripts/scan.sh:scan_dir_to_json",
+      "type": "function",
+      "name": "scan_dir_to_json",
+      "filePath": "skills/skill-stocktake/scripts/scan.sh",
+      "lineRange": [69, 128],
+      "summary": "Scans a directory of skill markdown files, extracts name/description/mtime per file, pre-aggregates observation counts for 7-day and 30-day windows in O(n+m) passes, and assembles a JSON array of skill objects.",
+      "tags": ["utility", "file-scan", "analytics", "skill-stocktake"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:skills/skill-stocktake/scripts/quick-diff.sh",
+      "target": "function:skills/skill-stocktake/scripts/quick-diff.sh:process_dir",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-stocktake/scripts/scan.sh",
+      "target": "function:skills/skill-stocktake/scripts/scan.sh:extract_field",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-stocktake/scripts/scan.sh",
+      "target": "function:skills/skill-stocktake/scripts/scan.sh:count_obs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:skills/skill-stocktake/scripts/scan.sh",
+      "target": "function:skills/skill-stocktake/scripts/scan.sh:scan_dir_to_json",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "function:skills/skill-stocktake/scripts/scan.sh:scan_dir_to_json",
+      "target": "function:skills/skill-stocktake/scripts/scan.sh:extract_field",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:skills/skill-stocktake/scripts/scan.sh:scan_dir_to_json",
+      "target": "function:skills/skill-stocktake/scripts/scan.sh:count_obs",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:skills/skill-stocktake/scripts/save-results.sh",
+      "target": "file:skills/skill-stocktake/scripts/scan.sh",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

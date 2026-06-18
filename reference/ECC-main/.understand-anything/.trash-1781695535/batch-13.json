@@ -1,0 +1,629 @@
+{
+  "nodes": [
+    {
+      "id": "file:scripts/lib/state-store/index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "scripts/lib/state-store/index.js",
+      "summary": "Entry point for the ECC SQLite-backed state store: resolves the database path, wraps sql.js with a transaction-safe API, opens the database, applies migrations, and builds the full query API via createStateStore.",
+      "tags": ["entry-point", "service", "database", "factory"],
+      "complexity": "complex",
+      "languageNotes": "Uses sql.js (WebAssembly SQLite) instead of better-sqlite3 to stay dependency-light; wrapSqlJsDatabase adds a custom transaction/exec layer on top."
+    },
+    {
+      "id": "file:scripts/lib/state-store/migrations.js",
+      "type": "file",
+      "name": "migrations.js",
+      "filePath": "scripts/lib/state-store/migrations.js",
+      "summary": "Manages SQLite schema migrations for the state store: tracks applied versions in a schema_migrations table and applies pending migrations in a single transaction.",
+      "tags": ["database", "migration", "schema-definition"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/lib/state-store/queries.js",
+      "type": "file",
+      "name": "queries.js",
+      "filePath": "scripts/lib/state-store/queries.js",
+      "summary": "Defines all SQL queries and the full data-access API for the state store, covering sessions, skill runs, work items, governance events, install state, and status aggregation across ECC entities.",
+      "tags": ["database", "service", "data-model", "api-handler"],
+      "complexity": "complex",
+      "languageNotes": "createQueryApi (lines 382–899) is a large factory function that prepares all SQL statements at construction time for reuse."
+    },
+    {
+      "id": "file:scripts/lib/state-store/schema.js",
+      "type": "file",
+      "name": "schema.js",
+      "filePath": "scripts/lib/state-store/schema.js",
+      "summary": "Loads the ECC entity JSON schema and provides AJV-based validation helpers (validateEntity, assertValidEntity) used throughout queries.js to guard all write operations.",
+      "tags": ["validation", "schema-definition", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/sessions-cli.js",
+      "type": "file",
+      "name": "sessions-cli.js",
+      "filePath": "scripts/sessions-cli.js",
+      "summary": "CLI tool for inspecting ECC session records: lists recent sessions, shows detailed session view with workers, skill runs, and decisions — outputs as JSON or human-readable text.",
+      "tags": ["entry-point", "utility", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/status.js",
+      "type": "file",
+      "name": "status.js",
+      "filePath": "scripts/status.js",
+      "summary": "CLI tool that queries the ECC state store for a system-wide status snapshot — active sessions, skill run health, install state, governance events, work items, and GitHub coordination — and renders the result as human-readable text, Markdown, or JSON.",
+      "tags": ["entry-point", "utility", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/work-items.js",
+      "type": "file",
+      "name": "work-items.js",
+      "filePath": "scripts/work-items.js",
+      "summary": "CLI tool for managing ECC work items: lists, gets, upserts, and closes items, and syncs GitHub PRs/issues from the gh CLI into the state store as work items.",
+      "tags": ["entry-point", "utility", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/lib/state-store.test.js",
+      "type": "file",
+      "name": "state-store.test.js",
+      "filePath": "tests/lib/state-store.test.js",
+      "summary": "Comprehensive integration test suite for the state store library: exercises database initialization, migrations, session/skill/work-item/governance CRUD operations, status aggregation, and CLI script invocations.",
+      "tags": ["test", "database", "integration"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:tests/scripts/github-coordination.test.js",
+      "type": "file",
+      "name": "github-coordination.test.js",
+      "filePath": "tests/scripts/github-coordination.test.js",
+      "summary": "Integration tests for GitHub coordination work-item sync: uses a gh CLI shim to simulate GitHub API responses and verifies that work-items.js correctly upserts PR and issue work items into the state store.",
+      "tags": ["test", "integration", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/state-store/index.js:wrapSqlJsDatabase",
+      "type": "function",
+      "name": "wrapSqlJsDatabase",
+      "filePath": "scripts/lib/state-store/index.js",
+      "lineRange": [34, 139],
+      "summary": "Wraps a raw sql.js database instance with a higher-level API (exec, pragma, all, get, run, transaction, close) that automatically persists the in-memory database to disk after each mutating operation.",
+      "tags": ["factory", "database", "service"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/state-store/index.js:openDatabase",
+      "type": "function",
+      "name": "openDatabase",
+      "filePath": "scripts/lib/state-store/index.js",
+      "lineRange": [141, 162],
+      "summary": "Opens the SQLite database file from disk (or creates a new one), loads it into sql.js memory, and sets WAL mode and foreign key pragmas.",
+      "tags": ["database", "factory"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/state-store/index.js:createStateStore",
+      "type": "function",
+      "name": "createStateStore",
+      "filePath": "scripts/lib/state-store/index.js",
+      "lineRange": [164, 185],
+      "summary": "Public factory that initializes the complete state store: resolves path, opens the database, applies pending migrations, and returns the full query API bundled with a close method.",
+      "tags": ["factory", "entry-point", "database"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/state-store/index.js:resolveStateStorePath",
+      "type": "function",
+      "name": "resolveStateStorePath",
+      "filePath": "scripts/lib/state-store/index.js",
+      "lineRange": [14, 24],
+      "summary": "Resolves the SQLite database path from ECC_STATE_STORE_PATH env var, project-local .ecc-state.db, or a default under ~/.claude/ecc/state.db.",
+      "tags": ["utility", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/state-store/migrations.js:applyMigrations",
+      "type": "function",
+      "name": "applyMigrations",
+      "filePath": "scripts/lib/state-store/migrations.js",
+      "lineRange": [175, 203],
+      "summary": "Determines which schema migrations have not yet been applied and executes them in order inside a single database transaction, recording each applied version in schema_migrations.",
+      "tags": ["database", "migration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/state-store/migrations.js:getAppliedMigrations",
+      "type": "function",
+      "name": "getAppliedMigrations",
+      "filePath": "scripts/lib/state-store/migrations.js",
+      "lineRange": [159, 173],
+      "summary": "Queries the schema_migrations table and returns all applied migration records ordered by version.",
+      "tags": ["database", "migration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/state-store/queries.js:createQueryApi",
+      "type": "function",
+      "name": "createQueryApi",
+      "filePath": "scripts/lib/state-store/queries.js",
+      "lineRange": [382, 899],
+      "summary": "Factory that prepares all SQL statements once at initialization time and returns a complete data-access API object covering upsert/insert/get/list operations for sessions, skill runs, work items, skill versions, decisions, install state, and governance events.",
+      "tags": ["factory", "database", "api-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/lib/state-store/queries.js:summarizeSkillRuns",
+      "type": "function",
+      "name": "summarizeSkillRuns",
+      "filePath": "scripts/lib/state-store/queries.js",
+      "lineRange": [178, 205],
+      "summary": "Aggregates a list of skill run records into summary statistics including success/failure counts, rate percentages, and most recent runs.",
+      "tags": ["utility", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/state-store/queries.js:summarizeInstallHealth",
+      "type": "function",
+      "name": "summarizeInstallHealth",
+      "filePath": "scripts/lib/state-store/queries.js",
+      "lineRange": [207, 236],
+      "summary": "Aggregates plugin installation records into a health summary with healthy/degraded/unknown counts and per-installation detail.",
+      "tags": ["utility", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/lib/state-store/queries.js:summarizeWorkItems",
+      "type": "function",
+      "name": "summarizeWorkItems",
+      "filePath": "scripts/lib/state-store/queries.js",
+      "lineRange": [238, 260],
+      "summary": "Aggregates work item records into a summary with open/closed/attention/total counts for status reporting.",
+      "tags": ["utility", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/lib/state-store/schema.js:getEntityValidator",
+      "type": "function",
+      "name": "getEntityValidator",
+      "filePath": "scripts/lib/state-store/schema.js",
+      "lineRange": [44, 64],
+      "summary": "Returns a cached AJV validator for the named entity type, compiling from the JSON schema on first access.",
+      "tags": ["validation", "utility", "singleton"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/sessions-cli.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/sessions-cli.js",
+      "lineRange": [127, 169],
+      "summary": "Entry point for the sessions CLI: parses args, opens the state store, dispatches to list or detail view, and prints results as JSON or human-readable output.",
+      "tags": ["entry-point", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/sessions-cli.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/sessions-cli.js",
+      "lineRange": [17, 48],
+      "summary": "Parses CLI arguments for the sessions tool, extracting the subcommand (list, detail), session ID, limit, and output format flags.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/status.js:renderMarkdown",
+      "type": "function",
+      "name": "renderMarkdown",
+      "filePath": "scripts/status.js",
+      "lineRange": [274, 423],
+      "summary": "Renders the full ECC status payload as a structured Markdown document with sections for skill runs, install health, work items, GitHub coordination, and governance events.",
+      "tags": ["utility", "serialization"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/status.js:summarizeGithubCoordination",
+      "type": "function",
+      "name": "summarizeGithubCoordination",
+      "filePath": "scripts/status.js",
+      "lineRange": [168, 209],
+      "summary": "Extracts and structures GitHub coordination summary data from work items, grouping epics, PRs, and issues with their statuses for inclusion in the status output.",
+      "tags": ["utility", "service"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/status.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/status.js",
+      "lineRange": [431, 486],
+      "summary": "Entry point for the status CLI: opens the state store, fetches the status snapshot, optionally writes JSON and Markdown outputs to file, and prints the result.",
+      "tags": ["entry-point", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/status.js:parseArgs",
+      "type": "function",
+      "name": "parseArgs",
+      "filePath": "scripts/status.js",
+      "lineRange": [21, 75],
+      "summary": "Parses CLI arguments for the status tool, extracting output format, file paths for JSON/Markdown writes, and section filter flags.",
+      "tags": ["utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/work-items.js:syncGithubWorkItems",
+      "type": "function",
+      "name": "syncGithubWorkItems",
+      "filePath": "scripts/work-items.js",
+      "lineRange": [260, 324],
+      "summary": "Fetches open GitHub PRs and issues via the gh CLI, upserts them into the state store as work items, and closes any stale items no longer present in GitHub.",
+      "tags": ["service", "event-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/work-items.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/work-items.js",
+      "lineRange": [403, 497],
+      "summary": "Entry point for the work-items CLI: dispatches to list, get, set, close, or GitHub sync subcommands against the state store.",
+      "tags": ["entry-point", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/work-items.js:buildGithubPrWorkItem",
+      "type": "function",
+      "name": "buildGithubPrWorkItem",
+      "filePath": "scripts/work-items.js",
+      "lineRange": [188, 210],
+      "summary": "Maps a GitHub PR API response object to the ECC work item format, computing status, owner, and metadata fields.",
+      "tags": ["serialization", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/work-items.js:buildGithubIssueWorkItem",
+      "type": "function",
+      "name": "buildGithubIssueWorkItem",
+      "filePath": "scripts/work-items.js",
+      "lineRange": [212, 232],
+      "summary": "Maps a GitHub issue API response object to the ECC work item format, including label extraction and metadata normalization.",
+      "tags": ["serialization", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:scripts/work-items.js:closeStaleGithubItems",
+      "type": "function",
+      "name": "closeStaleGithubItems",
+      "filePath": "scripts/work-items.js",
+      "lineRange": [234, 258],
+      "summary": "Marks work items in the state store as closed if their IDs are no longer present in the set of active GitHub items for the given repo.",
+      "tags": ["service", "database"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/lib/state-store.test.js:seedStore",
+      "type": "function",
+      "name": "seedStore",
+      "filePath": "tests/lib/state-store.test.js",
+      "lineRange": [109, 307],
+      "summary": "Seeds a fresh state store database with representative fixture data covering sessions, skill runs, skill versions, decisions, install state, and governance events for use in integration tests.",
+      "tags": ["test", "utility", "factory"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/state-store.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/lib/state-store.test.js",
+      "lineRange": [309, 1000],
+      "summary": "Main test runner that executes the full state store test suite: verifies database initialization, migration idempotency, session listing/detail, status aggregation, work item CRUD, and CLI script output.",
+      "tags": ["test"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:tests/lib/state-store.test.js:createGhShim",
+      "type": "function",
+      "name": "createGhShim",
+      "filePath": "tests/lib/state-store.test.js",
+      "lineRange": [52, 103],
+      "summary": "Creates a gh CLI shim binary for testing: writes a Node.js script that serves pre-configured JSON responses based on argument patterns, enabling hermetic GitHub API simulation.",
+      "tags": ["test", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:tests/scripts/github-coordination.test.js:runTests",
+      "type": "function",
+      "name": "runTests",
+      "filePath": "tests/scripts/github-coordination.test.js",
+      "lineRange": [90, 248],
+      "summary": "Test runner for GitHub coordination sync scenarios: verifies that work-items.js correctly syncs PRs and issues from a gh shim into the state store and marks stale items as closed.",
+      "tags": ["test"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "file:scripts/lib/state-store/migrations.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "file:scripts/lib/state-store/queries.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "file:scripts/lib/state-store/schema.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/state-store/queries.js",
+      "target": "file:scripts/lib/state-store/schema.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/sessions-cli.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/status.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/lib/state-store.test.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:tests/scripts/github-coordination.test.js",
+      "target": "file:scripts/lib/state-store/index.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "function:scripts/lib/state-store/index.js:wrapSqlJsDatabase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "function:scripts/lib/state-store/index.js:openDatabase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "function:scripts/lib/state-store/index.js:createStateStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "function:scripts/lib/state-store/index.js:resolveStateStorePath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/migrations.js",
+      "target": "function:scripts/lib/state-store/migrations.js:applyMigrations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/migrations.js",
+      "target": "function:scripts/lib/state-store/migrations.js:getAppliedMigrations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/queries.js",
+      "target": "function:scripts/lib/state-store/queries.js:createQueryApi",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/queries.js",
+      "target": "function:scripts/lib/state-store/queries.js:summarizeSkillRuns",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/queries.js",
+      "target": "function:scripts/lib/state-store/queries.js:summarizeInstallHealth",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/queries.js",
+      "target": "function:scripts/lib/state-store/queries.js:summarizeWorkItems",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/schema.js",
+      "target": "function:scripts/lib/state-store/schema.js:getEntityValidator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/sessions-cli.js",
+      "target": "function:scripts/sessions-cli.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/sessions-cli.js",
+      "target": "function:scripts/sessions-cli.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/status.js",
+      "target": "function:scripts/status.js:renderMarkdown",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/status.js",
+      "target": "function:scripts/status.js:summarizeGithubCoordination",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/status.js",
+      "target": "function:scripts/status.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/status.js",
+      "target": "function:scripts/status.js:parseArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "function:scripts/work-items.js:syncGithubWorkItems",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "function:scripts/work-items.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "function:scripts/work-items.js:buildGithubPrWorkItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "function:scripts/work-items.js:buildGithubIssueWorkItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "function:scripts/work-items.js:closeStaleGithubItems",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/state-store.test.js",
+      "target": "function:tests/lib/state-store.test.js:seedStore",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/state-store.test.js",
+      "target": "function:tests/lib/state-store.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/lib/state-store.test.js",
+      "target": "function:tests/lib/state-store.test.js:createGhShim",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:tests/scripts/github-coordination.test.js",
+      "target": "function:tests/scripts/github-coordination.test.js:runTests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "file:tests/lib/state-store.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/lib/state-store/index.js",
+      "target": "file:tests/scripts/github-coordination.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/work-items.js",
+      "target": "file:tests/scripts/github-coordination.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "function:scripts/lib/state-store/index.js:createStateStore",
+      "target": "function:scripts/lib/state-store/migrations.js:applyMigrations",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:scripts/lib/state-store/index.js:createStateStore",
+      "target": "function:scripts/lib/state-store/queries.js:createQueryApi",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

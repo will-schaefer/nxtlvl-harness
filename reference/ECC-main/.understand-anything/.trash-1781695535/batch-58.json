@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/golang/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/golang/coding-style.md",
+      "summary": "Go-specific coding style rules covering mandatory gofmt/goimports formatting, interface-and-struct design principles, and error wrapping conventions; extends the common coding-style baseline.",
+      "tags": ["documentation", "configuration", "golang", "code-style", "error-handling"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/golang/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/golang/hooks.md",
+      "summary": "Go-specific PostToolUse hook recommendations for auto-formatting with gofmt/goimports, static analysis with go vet, and extended checks with staticcheck after editing Go files; extends the common hooks baseline.",
+      "tags": ["documentation", "configuration", "golang", "hooks", "static-analysis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/golang/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/golang/patterns.md",
+      "summary": "Go-specific design patterns covering functional options, small interface definitions at the consumer site, and constructor-based dependency injection; extends the common patterns baseline with idiomatic Go examples.",
+      "tags": ["documentation", "configuration", "golang", "design-patterns", "dependency-injection"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/golang/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/golang/security.md",
+      "summary": "Go-specific security rules covering secret management via environment variables, gosec static security scanning, and mandatory context.Context timeout usage; extends the common security baseline.",
+      "tags": ["documentation", "configuration", "golang", "security", "static-analysis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/golang/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/golang/testing.md",
+      "summary": "Go-specific testing rules prescribing table-driven tests with the standard go test framework, mandatory -race flag for race detection, and coverage measurement; extends the common testing baseline.",
+      "tags": ["documentation", "configuration", "golang", "testing", "race-detection"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

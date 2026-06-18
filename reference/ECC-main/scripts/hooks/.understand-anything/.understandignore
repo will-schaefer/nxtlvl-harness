@@ -1,0 +1,10 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+#
+# Scope: the ECC hook subsystem (reference/ECC-main/scripts/hooks) — a flat dir of
+# ~48 hook scripts. Nothing to exclude here; built-in defaults (*.min.js, *.map,
+# node_modules/, etc.) already cover the usual noise and none of it is present.
+#
+# Uncomment to exclude if desired:
+# *.sh
+# *.py

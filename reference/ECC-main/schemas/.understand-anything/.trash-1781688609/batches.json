@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 10,
+  "totalBatches": 1,
+  "exportsByPath": {},
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "ecc-install-config.schema.json",
+          "language": "json",
+          "sizeLines": 64,
+          "fileCategory": "config"
+        },
+        {
+          "path": "hooks.schema.json",
+          "language": "json",
+          "sizeLines": 197,
+          "fileCategory": "config"
+        },
+        {
+          "path": "install-components.schema.json",
+          "language": "json",
+          "sizeLines": 59,
+          "fileCategory": "config"
+        },
+        {
+          "path": "install-modules.schema.json",
+          "language": "json",
+          "sizeLines": 112,
+          "fileCategory": "config"
+        },
+        {
+          "path": "install-profiles.schema.json",
+          "language": "json",
+          "sizeLines": 45,
+          "fileCategory": "config"
+        },
+        {
+          "path": "install-state.schema.json",
+          "language": "json",
+          "sizeLines": 210,
+          "fileCategory": "config"
+        },
+        {
+          "path": "package-manager.schema.json",
+          "language": "json",
+          "sizeLines": 23,
+          "fileCategory": "config"
+        },
+        {
+          "path": "plugin.schema.json",
+          "language": "json",
+          "sizeLines": 70,
+          "fileCategory": "config"
+        },
+        {
+          "path": "provenance.schema.json",
+          "language": "json",
+          "sizeLines": 31,
+          "fileCategory": "config"
+        },
+        {
+          "path": "state-store.schema.json",
+          "language": "json",
+          "sizeLines": 382,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "ecc-install-config.schema.json": [],
+        "hooks.schema.json": [],
+        "install-components.schema.json": [],
+        "install-modules.schema.json": [],
+        "install-profiles.schema.json": [],
+        "install-state.schema.json": [],
+        "package-manager.schema.json": [],
+        "plugin.schema.json": [],
+        "provenance.schema.json": [],
+        "state-store.schema.json": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

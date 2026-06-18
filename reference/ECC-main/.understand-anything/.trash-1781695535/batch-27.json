@@ -1,0 +1,145 @@
+{
+  "nodes": [
+    {
+      "id": "config:agent.yaml",
+      "type": "config",
+      "name": "agent.yaml",
+      "filePath": "agent.yaml",
+      "summary": "Top-level ECC plugin manifest defining the agent identity (name, version, model preferences), and enumerating the full catalog of skills and commands published by the ECC package.",
+      "tags": ["configuration", "agent-manifest", "plugin-registry", "build-system"],
+      "complexity": "complex",
+      "languageNotes": "Uses a custom 'spec_version' field — ECC's gitagent export format. Enumerates 140+ skills and 90+ commands as plain string lists."
+    },
+    {
+      "id": "config:greptile.json",
+      "type": "config",
+      "name": "greptile.json",
+      "filePath": "greptile.json",
+      "summary": "Greptile AI code-review bot configuration controlling review strictness, PR trigger conditions, output sections, and per-scope security rules that flag prompt injection and supply-chain risks specific to ECC's agentic codebase.",
+      "tags": ["configuration", "code-review", "security", "ci-cd"],
+      "complexity": "moderate",
+      "languageNotes": "Uses a `customContext.rules` array to attach scope-targeted review instructions — effectively embedding security policy into the review bot config."
+    },
+    {
+      "id": "file:install.ps1",
+      "type": "file",
+      "name": "install.ps1",
+      "filePath": "install.ps1",
+      "summary": "Windows PowerShell entrypoint for the ECC installer that resolves symlinks to find the real package root, auto-installs npm dependencies if missing, then delegates to the Node.js `scripts/install-apply.js` runtime.",
+      "tags": ["entry-point", "installation", "infrastructure", "cross-platform"],
+      "complexity": "simple",
+      "languageNotes": "Uses Set-StrictMode and $ErrorActionPreference = 'Stop' for robust error handling; handles array-typed symlink targets as a PowerShell quirk."
+    },
+    {
+      "id": "file:install.sh",
+      "type": "file",
+      "name": "install.sh",
+      "filePath": "install.sh",
+      "summary": "POSIX shell entrypoint for the ECC installer that resolves symlinked npm bin paths to the real package root, auto-installs npm dependencies if missing, and execs the Node.js `scripts/install-apply.js` runtime with MSYS2/Git Bash path conversion support.",
+      "tags": ["entry-point", "installation", "infrastructure", "cross-platform"],
+      "complexity": "simple",
+      "languageNotes": "Uses cygpath for MSYS2/Git Bash compatibility so Windows Node.js receives a valid Win32 path rather than a doubled POSIX path."
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "Root npm package manifest for `ecc-universal` v2.0.0, declaring the full file inclusion list for multi-harness distribution (Claude Code, Codex, Cursor, Gemini, OpenCode), npm bin entries, build/test/lint scripts, dependencies, and Node.js >=18 engine requirement.",
+      "tags": ["configuration", "build-system", "package-manifest", "entry-point"],
+      "complexity": "complex",
+      "languageNotes": "The `files` array spans many harness-specific dotdirectories (.claude-plugin, .codex, .cursor, .gemini, .opencode, etc.), making the distribution multi-target by design."
+    },
+    {
+      "id": "config:pyproject.toml",
+      "type": "config",
+      "name": "pyproject.toml",
+      "filePath": "pyproject.toml",
+      "summary": "Python project configuration for the `llm-abstraction` package — a provider-agnostic LLM abstraction layer supporting Anthropic, OpenAI, and Ollama — with hatchling build backend, ruff/mypy linting, and pytest/coverage tooling.",
+      "tags": ["configuration", "build-system", "python", "schema-definition"],
+      "complexity": "moderate",
+      "languageNotes": "Uses hatchling as build backend with packages rooted at `src/llm`; the `llm-select` CLI entry point maps to `llm.cli.selector:main`."
+    },
+    {
+      "id": "document:the-longform-guide.md",
+      "type": "document",
+      "name": "the-longform-guide.md",
+      "filePath": "the-longform-guide.md",
+      "summary": "Comprehensive deep-dive guide to Claude Code covering context and memory management, continuous learning, token optimization, verification loops, parallelization patterns, groundwork setup, sub-agent best practices, and productivity tips including voice transcription and terminal aliases.",
+      "tags": ["documentation", "best-practices", "agent-workflow", "configuration"],
+      "complexity": "complex",
+      "languageNotes": "18 sections covering both conceptual ECC usage patterns and concrete operational techniques; companion to the-shortform-guide.md."
+    },
+    {
+      "id": "document:the-security-guide.md",
+      "type": "document",
+      "name": "the-security-guide.md",
+      "filePath": "the-security-guide.md",
+      "summary": "Comprehensive agentic security reference covering attack vectors, sandboxing strategies, sanitization techniques (hidden Unicode/comment payloads, attachment and linked-content hygiene), approval boundaries, observability/logging, kill switches, and a minimum-bar security checklist for ECC deployments.",
+      "tags": ["documentation", "security", "best-practices", "infrastructure"],
+      "complexity": "complex",
+      "languageNotes": "22 sections including a CVE section tracking Claude Code CVEs from February 2026 and a tooling landscape survey — functions as ECC's primary security reference document."
+    },
+    {
+      "id": "document:the-shortform-guide.md",
+      "type": "document",
+      "name": "the-shortform-guide.md",
+      "filePath": "the-shortform-guide.md",
+      "summary": "Concise reference guide to Claude Code fundamentals covering skills, commands, hooks, subagents, rules/memory, MCPs, plugins, tips (parallel workflows, keyboard shortcuts, sandboxing), and the author's personal ECC setup including plugins, MCP servers, hooks, and rules structure.",
+      "tags": ["documentation", "reference", "best-practices", "agent-workflow"],
+      "complexity": "complex",
+      "languageNotes": "27 sections; functions as an opinionated quick-reference companion to the-longform-guide.md, including personal setup details and editor preferences (Zed vs VSCode/Cursor)."
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:install.ps1",
+      "target": "file:scripts/install-apply.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:install.sh",
+      "target": "file:scripts/install-apply.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:install.ps1",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:install.sh",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:greptile.json",
+      "target": "config:package.json",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:the-longform-guide.md",
+      "target": "document:the-shortform-guide.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:the-security-guide.md",
+      "target": "config:greptile.json",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

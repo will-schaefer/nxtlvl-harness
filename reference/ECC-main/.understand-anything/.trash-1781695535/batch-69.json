@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/typescript/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/typescript/coding-style.md",
+      "summary": "Comprehensive TypeScript/JavaScript coding style guide covering type usage, interfaces vs type aliases, immutability patterns, error handling with async/await, input validation via Zod, and console.log hygiene — applied to all .ts/.tsx/.js/.jsx files.",
+      "tags": ["documentation", "typescript", "configuration", "coding-standards", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/typescript/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/typescript/hooks.md",
+      "summary": "Specifies Claude Code PostToolUse and Stop hooks for TypeScript/JavaScript files, including Prettier auto-formatting, TypeScript type checking, and console.log detection — extends the common hooks rules.",
+      "tags": ["documentation", "typescript", "ci-cd", "automation", "hooks"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/typescript/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/typescript/patterns.md",
+      "summary": "Defines three canonical TypeScript design patterns for ECC projects: a generic ApiResponse wrapper interface, the custom hooks pattern (useDebounce example), and a typed Repository interface for data access.",
+      "tags": ["documentation", "typescript", "design-patterns", "api-schema", "development"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/typescript/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/typescript/security.md",
+      "summary": "TypeScript/JavaScript security rules focused on secret management via environment variables and references the security-reviewer skill for comprehensive audits — extends the common security rules.",
+      "tags": ["documentation", "security", "typescript", "configuration", "development"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/typescript/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/typescript/testing.md",
+      "summary": "TypeScript/JavaScript testing rules mandating Playwright for E2E testing of critical user flows and referencing the e2e-runner agent — extends the common testing rules.",
+      "tags": ["documentation", "typescript", "test", "e2e-testing", "development"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/typescript/coding-style.md",
+      "target": "document:rules/common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/typescript/hooks.md",
+      "target": "document:rules/common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/typescript/patterns.md",
+      "target": "document:rules/common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/typescript/security.md",
+      "target": "document:rules/common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/typescript/testing.md",
+      "target": "document:rules/common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

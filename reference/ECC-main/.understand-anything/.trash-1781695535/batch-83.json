@@ -1,0 +1,77 @@
+{
+  "nodes": [
+    {
+      "id": "document:skills/remotion-video-creation/rules/sequencing.md",
+      "type": "document",
+      "name": "sequencing.md",
+      "filePath": "skills/remotion-video-creation/rules/sequencing.md",
+      "summary": "Rule document covering Remotion sequencing patterns including `<Sequence>`, `<Series>`, premounting, nested sequences, and frame-of-reference behavior inside sequences.",
+      "tags": ["documentation", "remotion", "video-creation", "sequencing", "animation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/tailwind.md",
+      "type": "document",
+      "name": "tailwind.md",
+      "filePath": "skills/remotion-video-creation/rules/tailwind.md",
+      "summary": "Short rule document directing use of TailwindCSS in Remotion projects while prohibiting CSS transition/animate classes in favor of `useCurrentFrame()`-driven animation.",
+      "tags": ["documentation", "remotion", "tailwind", "configuration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/text-animations.md",
+      "type": "document",
+      "name": "text-animations.md",
+      "filePath": "skills/remotion-video-creation/rules/text-animations.md",
+      "summary": "Rule document describing typography and text animation patterns in Remotion, covering typewriter effects (string-slice approach) and word-highlight animations with asset references.",
+      "tags": ["documentation", "remotion", "animation", "typography"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/timing.md",
+      "type": "document",
+      "name": "timing.md",
+      "filePath": "skills/remotion-video-creation/rules/timing.md",
+      "summary": "Comprehensive rule document covering Remotion interpolation and animation timing, including linear interpolation with clamping, spring animation physical properties, delay/duration patterns, combining springs, and easing functions.",
+      "tags": ["documentation", "remotion", "animation", "spring", "easing"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/transcribe-captions.md",
+      "type": "document",
+      "name": "transcribe-captions.md",
+      "filePath": "skills/remotion-video-creation/rules/transcribe-captions.md",
+      "summary": "Rule document listing three Remotion audio-to-caption transcription options: local Whisper.cpp, browser-based whisper-web (WASM), and cloud OpenAI Whisper API, with trade-offs.",
+      "tags": ["documentation", "remotion", "audio", "captions", "speech-to-text"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/transitions.md",
+      "type": "document",
+      "name": "transitions.md",
+      "filePath": "skills/remotion-video-creation/rules/transitions.md",
+      "summary": "Rule document covering fullscreen scene transitions in Remotion using `<TransitionSeries>`, including available transition types (fade, slide, wipe, flip), timing options, and duration calculation patterns.",
+      "tags": ["documentation", "remotion", "transitions", "animation", "video-creation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/trimming.md",
+      "type": "document",
+      "name": "trimming.md",
+      "filePath": "skills/remotion-video-creation/rules/trimming.md",
+      "summary": "Rule document explaining Remotion animation trimming patterns using `<Sequence>` with negative `from` values to trim the start, `durationInFrames` to trim the end, and nested sequences to combine trim and delay.",
+      "tags": ["documentation", "remotion", "sequencing", "animation", "timing"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:skills/remotion-video-creation/rules/videos.md",
+      "type": "document",
+      "name": "videos.md",
+      "filePath": "skills/remotion-video-creation/rules/videos.md",
+      "summary": "Comprehensive rule document for embedding videos in Remotion using `@remotion/media`, covering the `<Video>` component, trimming, delaying, sizing, volume control, playback speed, looping, and pitch adjustment.",
+      "tags": ["documentation", "remotion", "video-creation", "media", "animation"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": []
+}

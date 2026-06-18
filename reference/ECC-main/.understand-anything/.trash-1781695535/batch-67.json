@@ -1,0 +1,50 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/swift/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/swift/coding-style.md",
+      "summary": "Swift coding style rules covering formatting conventions, immutability preferences, naming guidelines, error handling with Result/throws, and structured concurrency best practices for the ECC harness.",
+      "tags": ["documentation", "configuration", "swift", "code-style", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/swift/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/swift/hooks.md",
+      "summary": "Swift-specific hook rules for the ECC harness, documenting PostToolUse hook patterns and a warning about Swift hook limitations compared to other language runtimes.",
+      "tags": ["documentation", "configuration", "swift", "hooks", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/swift/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/swift/patterns.md",
+      "summary": "Swift architectural pattern guidelines covering protocol-oriented design, value types, the Actor concurrency model, and dependency injection strategies with references to Swift Evolution proposals.",
+      "tags": ["documentation", "configuration", "swift", "patterns", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/swift/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/swift/security.md",
+      "summary": "Swift security rules for the ECC harness covering secret management via Keychain, transport security with App Transport Security enforcement, and input validation requirements.",
+      "tags": ["documentation", "configuration", "swift", "security", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/swift/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/swift/testing.md",
+      "summary": "Swift testing guidelines mandating the Swift Testing framework, test isolation with setUp/tearDown, parameterized test suites, and coverage thresholds for the ECC plugin.",
+      "tags": ["documentation", "configuration", "swift", "test", "rules"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": []
+}

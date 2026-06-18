@@ -1,0 +1,650 @@
+{
+  "nodes": [
+    {
+      "id": "file:scaffolds/cursor/rules/ecc-agent-data-home.mdc",
+      "type": "file",
+      "name": "ecc-agent-data-home.mdc",
+      "filePath": "scaffolds/cursor/rules/ecc-agent-data-home.mdc",
+      "summary": "Cursor rules file that configures isolated ECC memory persistence for Cursor IDE, pointing session data to ~/.cursor/ecc instead of ~/.claude and explaining the ECC_AGENT_DATA_HOME override.",
+      "tags": ["configuration", "scaffold", "cursor", "memory-boundary"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/build-opencode.js",
+      "type": "file",
+      "name": "build-opencode.js",
+      "filePath": "scripts/build-opencode.js",
+      "summary": "Build script that compiles the .opencode TypeScript distribution using the project-local TypeScript compiler (tsc) with the .opencode/tsconfig.json configuration.",
+      "tags": ["build-system", "script", "typescript", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/ci/catalog.js",
+      "type": "file",
+      "name": "catalog.js",
+      "filePath": "scripts/ci/catalog.js",
+      "summary": "CI catalog sync and validation script that parses README and agent doc count expectations, evaluates them against the actual catalog of skills/commands/agents, and syncs English and Chinese documentation files to match.",
+      "tags": ["ci-cd", "validation", "documentation", "catalog-sync"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/catalog.js:parseReadmeExpectations",
+      "type": "function",
+      "name": "parseReadmeExpectations",
+      "filePath": "scripts/ci/catalog.js",
+      "lineRange": [88, 169],
+      "summary": "Parses numeric count expectations (skills, commands, agents, rules) from the English README using regex matches for CI validation.",
+      "tags": ["validation", "parsing", "documentation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/catalog.js:syncEnglishReadme",
+      "type": "function",
+      "name": "syncEnglishReadme",
+      "filePath": "scripts/ci/catalog.js",
+      "lineRange": [408, 462],
+      "summary": "Updates the English README by replacing catalog count placeholders with current catalog values across all tracked sections.",
+      "tags": ["documentation", "catalog-sync", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/ci/catalog.js:createDocumentSpecs",
+      "type": "function",
+      "name": "createDocumentSpecs",
+      "filePath": "scripts/ci/catalog.js",
+      "lineRange": [613, 681],
+      "summary": "Builds the list of document sync specifications that pair each documentation file with its parser and sync callbacks for catalog consistency checking.",
+      "tags": ["catalog-sync", "factory", "documentation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/catalog.js:runCatalogCheck",
+      "type": "function",
+      "name": "runCatalogCheck",
+      "filePath": "scripts/ci/catalog.js",
+      "lineRange": [737, 760],
+      "summary": "Orchestrates the full catalog check: builds catalog, syncs documents, evaluates expectations, and returns pass/fail results.",
+      "tags": ["ci-cd", "orchestration", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/check-unicode-safety.js",
+      "type": "file",
+      "name": "check-unicode-safety.js",
+      "filePath": "scripts/ci/check-unicode-safety.js",
+      "summary": "CI security script that scans all text files for dangerous Unicode characters (invisible code points, bidirectional overrides, homoglyphs) and optionally auto-sanitizes them.",
+      "tags": ["ci-cd", "security", "validation", "unicode"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/check-unicode-safety.js:isDangerousInvisibleCodePoint",
+      "type": "function",
+      "name": "isDangerousInvisibleCodePoint",
+      "filePath": "scripts/ci/check-unicode-safety.js",
+      "lineRange": [109, 143],
+      "summary": "Classifies a Unicode code point as dangerous and invisible (zero-width, bidi override, invisible separator, etc.) that could be used for prompt injection attacks.",
+      "tags": ["security", "validation", "unicode"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/ci/check-unicode-safety.js:sanitizeText",
+      "type": "function",
+      "name": "sanitizeText",
+      "filePath": "scripts/ci/check-unicode-safety.js",
+      "lineRange": [155, 173],
+      "summary": "Strips dangerous invisible characters and normalizes suspicious Unicode sequences from text content for safe storage.",
+      "tags": ["security", "sanitization", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/generate-command-registry.js",
+      "type": "file",
+      "name": "generate-command-registry.js",
+      "filePath": "scripts/ci/generate-command-registry.js",
+      "summary": "CI script that scans all command Markdown files, extracts descriptions and references to agents/skills, infers command types, and writes or checks a JSON command registry file.",
+      "tags": ["ci-cd", "registry", "commands", "code-generation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/generate-command-registry.js:generateRegistry",
+      "type": "function",
+      "name": "generateRegistry",
+      "filePath": "scripts/ci/generate-command-registry.js",
+      "lineRange": [171, 205],
+      "summary": "Scans command files to build the full registry object with per-command metadata, agent/skill usage counts, and top usage statistics.",
+      "tags": ["ci-cd", "registry", "data-model"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/ci/generate-command-registry.js:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "scripts/ci/generate-command-registry.js",
+      "lineRange": [275, 302],
+      "summary": "Entry-point function that parses CLI args and executes check, write, or print-summary modes for the command registry.",
+      "tags": ["entry-point", "cli", "utility"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/scan-supply-chain-iocs.js",
+      "type": "file",
+      "name": "scan-supply-chain-iocs.js",
+      "filePath": "scripts/ci/scan-supply-chain-iocs.js",
+      "summary": "CI supply-chain security scanner that walks source files and node_modules to detect indicators of compromise (IOCs): malicious package patterns, credential theft targets, and suspicious Claude settings modifications.",
+      "tags": ["ci-cd", "security", "supply-chain", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/scan-supply-chain-iocs.js:scanFile",
+      "type": "function",
+      "name": "scanFile",
+      "filePath": "scripts/ci/scan-supply-chain-iocs.js",
+      "lineRange": [622, 705],
+      "summary": "Core IOC scanner for a single file: checks against all indicator patterns, crypto theft patterns, and permission manipulation patterns, emitting findings with severity levels.",
+      "tags": ["security", "validation", "supply-chain"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/scan-supply-chain-iocs.js:claudePermissionDenyRanges",
+      "type": "function",
+      "name": "claudePermissionDenyRanges",
+      "filePath": "scripts/ci/scan-supply-chain-iocs.js",
+      "lineRange": [589, 616],
+      "summary": "Parses a Claude settings JSON file and returns character ranges for permission denyList entries to enable targeted IOC detection within permission blocks.",
+      "tags": ["security", "parsing", "supply-chain"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/supply-chain-advisory-sources.js",
+      "type": "file",
+      "name": "supply-chain-advisory-sources.js",
+      "filePath": "scripts/ci/supply-chain-advisory-sources.js",
+      "summary": "CI utility that fetches and validates supply-chain advisory feeds (npm audit, GitHub advisories, OSSF Scorecard) to keep the IOC scanner's data sources current.",
+      "tags": ["ci-cd", "security", "supply-chain", "api-handler"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/supply-chain-advisory-sources.js:validateSources",
+      "type": "function",
+      "name": "validateSources",
+      "filePath": "scripts/ci/supply-chain-advisory-sources.js",
+      "lineRange": [111, 175],
+      "summary": "Validates all configured advisory sources by checking their fetch status and ensuring they are reachable, returning structured pass/fail results.",
+      "tags": ["security", "validation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/supply-chain-advisory-sources.js:requestUrl",
+      "type": "function",
+      "name": "requestUrl",
+      "filePath": "scripts/ci/supply-chain-advisory-sources.js",
+      "lineRange": [226, 280],
+      "summary": "HTTP/HTTPS request helper with timeout support, returning status, headers, and response body for advisory source validation.",
+      "tags": ["utility", "http", "networking"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/validate-agents.js",
+      "type": "file",
+      "name": "validate-agents.js",
+      "filePath": "scripts/ci/validate-agents.js",
+      "summary": "CI validator that reads all agent Markdown files, parses their YAML frontmatter, and checks required fields (name, description, tools, model) for compliance.",
+      "tags": ["ci-cd", "validation", "agents"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/validate-commands.js",
+      "type": "file",
+      "name": "validate-commands.js",
+      "filePath": "scripts/ci/validate-commands.js",
+      "summary": "CI validator that checks all command Markdown files for required frontmatter (description), consistent naming, and valid agent/skill cross-references.",
+      "tags": ["ci-cd", "validation", "commands"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/validate-hooks.js",
+      "type": "file",
+      "name": "validate-hooks.js",
+      "filePath": "scripts/ci/validate-hooks.js",
+      "summary": "CI validator that reads the hooks configuration from settings.json, checks each hook entry for valid matchers, command existence, and required fields.",
+      "tags": ["ci-cd", "validation", "hooks"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/validate-hooks.js:validateHooks",
+      "type": "function",
+      "name": "validateHooks",
+      "filePath": "scripts/ci/validate-hooks.js",
+      "lineRange": [127, 237],
+      "summary": "Main hook validation loop that iterates hook groups, validates each entry, and aggregates errors with file-reference context.",
+      "tags": ["ci-cd", "validation", "hooks"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/ci/validate-install-manifests.js",
+      "type": "file",
+      "name": "validate-install-manifests.js",
+      "filePath": "scripts/ci/validate-install-manifests.js",
+      "summary": "CI validator that reads all plugin install manifest JSON files, verifies their schema, checks referenced files exist, and ensures no stale paths are listed.",
+      "tags": ["ci-cd", "validation", "install-manifests"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/validate-install-manifests.js:validateInstallManifests",
+      "type": "function",
+      "name": "validateInstallManifests",
+      "filePath": "scripts/ci/validate-install-manifests.js",
+      "lineRange": [56, 216],
+      "summary": "Primary validation routine for install manifests that verifies all file entries exist, checks manifest schema compliance, and reports errors.",
+      "tags": ["ci-cd", "validation", "install-manifests"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/ci/validate-no-personal-paths.js",
+      "type": "file",
+      "name": "validate-no-personal-paths.js",
+      "filePath": "scripts/ci/validate-no-personal-paths.js",
+      "summary": "CI security validator that scans all committed files for personal path leaks (e.g., /Users/username/ hard-coded paths) that should not appear in public source.",
+      "tags": ["ci-cd", "security", "validation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/ci/validate-rules.js",
+      "type": "file",
+      "name": "validate-rules.js",
+      "filePath": "scripts/ci/validate-rules.js",
+      "summary": "CI validator that collects all rule Markdown files and checks each one for required content structure and naming conventions.",
+      "tags": ["ci-cd", "validation", "rules"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/ci/validate-skills.js",
+      "type": "file",
+      "name": "validate-skills.js",
+      "filePath": "scripts/ci/validate-skills.js",
+      "summary": "CI validator that inspects skill directories for required SKILL.md presence, valid frontmatter fields, and compliance with skill placement policy.",
+      "tags": ["ci-cd", "validation", "skills"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/ci/validate-workflow-security.js",
+      "type": "file",
+      "name": "validate-workflow-security.js",
+      "filePath": "scripts/ci/validate-workflow-security.js",
+      "summary": "CI security validator for GitHub Actions workflow files that detects dangerous patterns: unpinned actions, missing permission scopes, and unsafe checkout configurations.",
+      "tags": ["ci-cd", "security", "github-actions", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/ci/validate-workflow-security.js:findViolations",
+      "type": "function",
+      "name": "findViolations",
+      "filePath": "scripts/ci/validate-workflow-security.js",
+      "lineRange": [122, 244],
+      "summary": "Scans a parsed workflow YAML object for security violations including unpinned third-party actions, overly permissive scopes, and missing security headers.",
+      "tags": ["security", "validation", "github-actions"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/claw.js",
+      "type": "file",
+      "name": "claw.js",
+      "filePath": "scripts/claw.js",
+      "summary": "NanoClaw v2 — a zero-dependency interactive REPL for Claude Code that wraps `claude -p` with persistent session management, history compaction, and session branching stored in ~/.claude/claw/.",
+      "tags": ["entry-point", "cli", "repl", "session-management"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/claw.js:askClaude",
+      "type": "function",
+      "name": "askClaude",
+      "filePath": "scripts/claw.js",
+      "lineRange": [86, 119],
+      "summary": "Invokes the `claude -p` subprocess with model, session resume flags, and full conversation history, returning the model's text response.",
+      "tags": ["utility", "subprocess", "session-management"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/claw.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/claw.js",
+      "lineRange": [287, 449],
+      "summary": "Primary REPL loop for claw.js: parses CLI args, dispatches subcommands (sessions, export, branch, compact), and runs the interactive prompt loop with history persistence.",
+      "tags": ["entry-point", "cli", "repl"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/codemaps/generate.ts",
+      "type": "file",
+      "name": "generate.ts",
+      "filePath": "scripts/codemaps/generate.ts",
+      "summary": "TypeScript codemap generator that walks the source directory, classifies files by area (frontend, backend, database, etc.), and produces structured Markdown architecture documentation under docs/CODEMAPS/.",
+      "tags": ["code-generation", "documentation", "utility", "architecture"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/codemaps/generate.ts:generateAreaDoc",
+      "type": "function",
+      "name": "generateAreaDoc",
+      "filePath": "scripts/codemaps/generate.ts",
+      "lineRange": [182, 242],
+      "summary": "Renders a structured Markdown document for a single codebase area with directory trees, key files, and architectural summaries.",
+      "tags": ["documentation", "code-generation", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/codex-git-hooks/pre-commit",
+      "type": "file",
+      "name": "pre-commit",
+      "filePath": "scripts/codex-git-hooks/pre-commit",
+      "summary": "ECC Codex git pre-commit hook that scans staged file diffs for high-signal secrets (API keys, tokens, private key blocks) and blocks the commit if any are found.",
+      "tags": ["security", "git-hook", "ci-cd", "secret-detection"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/codex-git-hooks/pre-push",
+      "type": "file",
+      "name": "pre-push",
+      "filePath": "scripts/codex-git-hooks/pre-push",
+      "summary": "ECC Codex git pre-push hook that detects the project's package manager and runs lint, typecheck, test, and build scripts (and optionally audit) before allowing a push.",
+      "tags": ["ci-cd", "git-hook", "validation", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:scripts/codex/check-codex-global-state.sh",
+      "type": "file",
+      "name": "check-codex-global-state.sh",
+      "filePath": "scripts/codex/check-codex-global-state.sh",
+      "summary": "Shell diagnostic script for the Codex environment that checks global state including plugin cache integrity, git hook installation, and ECC configuration consistency.",
+      "tags": ["script", "diagnostics", "codex", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/codex/check-plugin-cache.js",
+      "type": "file",
+      "name": "check-plugin-cache.js",
+      "filePath": "scripts/codex/check-plugin-cache.js",
+      "summary": "Codex utility that validates the Claude Code plugin cache directory, listing installed versions, checking manifest references, and detecting stale or corrupt cache entries.",
+      "tags": ["utility", "codex", "plugin-management", "validation"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/codex/check-plugin-cache.js:checkCache",
+      "type": "function",
+      "name": "checkCache",
+      "filePath": "scripts/codex/check-plugin-cache.js",
+      "lineRange": [173, 239],
+      "summary": "Main cache validation routine that iterates installed plugin versions, checks for manifest references, and reports orphaned or missing cache segments.",
+      "tags": ["validation", "plugin-management", "utility"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/codex/install-global-git-hooks.sh",
+      "type": "file",
+      "name": "install-global-git-hooks.sh",
+      "filePath": "scripts/codex/install-global-git-hooks.sh",
+      "summary": "Shell script that installs the ECC Codex git hooks (pre-commit, pre-push) into the global git hooks directory for system-wide activation.",
+      "tags": ["script", "git-hook", "installation", "codex"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/codex/merge-codex-config.js",
+      "type": "file",
+      "name": "merge-codex-config.js",
+      "filePath": "scripts/codex/merge-codex-config.js",
+      "summary": "Codex configuration merge utility that performs add-only TOML merging from the ECC .codex/config.toml baseline into a target config file, preserving existing user values.",
+      "tags": ["utility", "codex", "configuration", "merge"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/codex/merge-codex-config.js:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/codex/merge-codex-config.js",
+      "lineRange": [212, 315],
+      "summary": "Primary merge orchestrator that reads source and target TOML files, diffs missing keys and tables, and writes the merged result back to disk.",
+      "tags": ["entry-point", "configuration", "merge"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/dashboard-web.js",
+      "type": "file",
+      "name": "dashboard-web.js",
+      "filePath": "scripts/dashboard-web.js",
+      "summary": "ECC capabilities web dashboard that serves an HTTP server on port 3456, rendering agents, skills, commands, rules, MCPs, and hooks as a searchable multi-language HTML UI.",
+      "tags": ["entry-point", "api-handler", "dashboard", "ui"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/dashboard-web.js:renderHTML",
+      "type": "function",
+      "name": "renderHTML",
+      "filePath": "scripts/dashboard-web.js",
+      "lineRange": [104, 756],
+      "summary": "Generates the complete HTML page for the ECC capabilities dashboard including all CSS, JavaScript, data loading, and rendering logic as a self-contained string.",
+      "tags": ["ui", "html-generation", "dashboard"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:scripts/discord/ecc-bot.mjs",
+      "type": "file",
+      "name": "ecc-bot.mjs",
+      "filePath": "scripts/discord/ecc-bot.mjs",
+      "summary": "Dependency-free Discord bot for the ECC community that responds to slash commands (/ecc, /skill, /docs, /release) using the local ECC repo as a data source and native Node.js WebSockets.",
+      "tags": ["service", "discord", "api-handler", "community"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:scripts/discord/ecc-bot.mjs:respond",
+      "type": "function",
+      "name": "respond",
+      "filePath": "scripts/discord/ecc-bot.mjs",
+      "lineRange": [148, 176],
+      "summary": "Routes Discord interaction events to the appropriate command handler and sends the reply via the Discord REST API.",
+      "tags": ["api-handler", "routing", "discord"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:scripts/discord/ecc-bot.mjs:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "scripts/discord/ecc-bot.mjs",
+      "lineRange": [183, 220],
+      "summary": "Establishes the Discord Gateway WebSocket connection, handles heartbeat/reconnect, and dispatches interaction events to the respond handler.",
+      "tags": ["entry-point", "service", "websocket"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:scripts/ci/catalog.js",
+      "target": "function:scripts/ci/catalog.js:parseReadmeExpectations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/catalog.js",
+      "target": "function:scripts/ci/catalog.js:syncEnglishReadme",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/catalog.js",
+      "target": "function:scripts/ci/catalog.js:createDocumentSpecs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/catalog.js",
+      "target": "function:scripts/ci/catalog.js:runCatalogCheck",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/check-unicode-safety.js",
+      "target": "function:scripts/ci/check-unicode-safety.js:isDangerousInvisibleCodePoint",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/check-unicode-safety.js",
+      "target": "function:scripts/ci/check-unicode-safety.js:sanitizeText",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/generate-command-registry.js",
+      "target": "function:scripts/ci/generate-command-registry.js:generateRegistry",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/generate-command-registry.js",
+      "target": "function:scripts/ci/generate-command-registry.js:run",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/scan-supply-chain-iocs.js",
+      "target": "function:scripts/ci/scan-supply-chain-iocs.js:scanFile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/scan-supply-chain-iocs.js",
+      "target": "function:scripts/ci/scan-supply-chain-iocs.js:claudePermissionDenyRanges",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/supply-chain-advisory-sources.js",
+      "target": "function:scripts/ci/supply-chain-advisory-sources.js:validateSources",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/supply-chain-advisory-sources.js",
+      "target": "function:scripts/ci/supply-chain-advisory-sources.js:requestUrl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/validate-hooks.js",
+      "target": "function:scripts/ci/validate-hooks.js:validateHooks",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/validate-install-manifests.js",
+      "target": "function:scripts/ci/validate-install-manifests.js:validateInstallManifests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/validate-workflow-security.js",
+      "target": "function:scripts/ci/validate-workflow-security.js:findViolations",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/claw.js",
+      "target": "function:scripts/claw.js:askClaude",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/claw.js",
+      "target": "function:scripts/claw.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/codemaps/generate.ts",
+      "target": "function:scripts/codemaps/generate.ts:generateAreaDoc",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/codex/check-plugin-cache.js",
+      "target": "function:scripts/codex/check-plugin-cache.js:checkCache",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/codex/merge-codex-config.js",
+      "target": "function:scripts/codex/merge-codex-config.js:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/dashboard-web.js",
+      "target": "function:scripts/dashboard-web.js:renderHTML",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/discord/ecc-bot.mjs",
+      "target": "function:scripts/discord/ecc-bot.mjs:respond",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/discord/ecc-bot.mjs",
+      "target": "function:scripts/discord/ecc-bot.mjs:main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:scripts/ci/catalog.js",
+      "target": "file:tests/ci/catalog.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/ci/generate-command-registry.js",
+      "target": "file:tests/ci/command-registry.test.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:scripts/codex/install-global-git-hooks.sh",
+      "target": "file:scripts/codex-git-hooks/pre-commit",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:scripts/codex/install-global-git-hooks.sh",
+      "target": "file:scripts/codex-git-hooks/pre-push",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

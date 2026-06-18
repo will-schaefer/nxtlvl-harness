@@ -1,0 +1,37 @@
+{
+  "nodes": [
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "Top-level documentation for the ECC rules catalogue, explaining the layered directory structure (a shared common/ core plus per-language directories), the two installation methods (install script and manual), the rules-vs-skills distinction, how to add a new language, and the rule-priority model where language-specific rules override common rules like CSS specificity.",
+      "tags": ["readme", "documentation", "overview", "installation", "layering", "precedence"],
+      "complexity": "moderate",
+      "languageNotes": "Markdown catalogue index whose Rule Priority section frames the common-vs-language precedence model using a CSS-specificity analogy."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:README.md",
+      "target": "document:common/coding-style.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:common/testing.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:common/security.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

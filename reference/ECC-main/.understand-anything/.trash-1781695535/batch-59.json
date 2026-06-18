@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/kotlin/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/kotlin/coding-style.md",
+      "summary": "Kotlin coding style guidelines covering formatting, immutability, naming conventions, null safety, sealed types, extension functions, scope functions, and error handling for ECC-guided Kotlin development.",
+      "tags": ["documentation", "configuration", "kotlin", "coding-standards"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/kotlin/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/kotlin/hooks.md",
+      "summary": "Defines PostToolUse hook behavior rules specific to Kotlin projects, guiding automated post-edit actions within the ECC harness for Kotlin codebases.",
+      "tags": ["documentation", "configuration", "kotlin", "ci-cd"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/kotlin/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/kotlin/patterns.md",
+      "summary": "Comprehensive Kotlin architecture pattern guide covering dependency injection, ViewModel, Repository, UseCase, Kotlin Multiplatform (KMP) expect/actual, coroutines, and DSL builder patterns with code examples.",
+      "tags": ["documentation", "configuration", "kotlin", "architecture"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:rules/kotlin/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/kotlin/security.md",
+      "summary": "Kotlin security guidelines covering secrets management, network security, input validation, data protection, authentication, ProGuard/R8 obfuscation, and WebView security for Android and KMP projects.",
+      "tags": ["documentation", "security", "kotlin", "configuration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/kotlin/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/kotlin/testing.md",
+      "summary": "Kotlin testing standards covering JUnit5/Kotest setup, ViewModel testing with Turbine, fakes over mocks philosophy, coroutine testing, Ktor MockEngine, Room/SQLDelight testing, test naming conventions, and test organization.",
+      "tags": ["documentation", "test", "kotlin", "configuration"],
+      "complexity": "complex"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/kotlin/coding-style.md",
+      "target": "document:rules/kotlin/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/kotlin/coding-style.md",
+      "target": "document:rules/kotlin/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/kotlin/coding-style.md",
+      "target": "document:rules/kotlin/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/kotlin/hooks.md",
+      "target": "document:rules/kotlin/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

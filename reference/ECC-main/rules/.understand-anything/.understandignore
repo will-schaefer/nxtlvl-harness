@@ -1,0 +1,13 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Lines below are suggestions — uncomment to activate.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+# This target is a pure markdown corpus (114 coding-standard rule files).
+# Nothing to exclude by default — every .md file is signal.
+
+# --- Detected directories (uncomment to exclude) ---
+
+# (none — all subdirectories are language/domain rule sets worth analyzing)

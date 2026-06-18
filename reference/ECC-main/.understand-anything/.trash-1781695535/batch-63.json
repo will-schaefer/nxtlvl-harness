@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "document:rules/python/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "rules/python/coding-style.md",
+      "summary": "Python-specific coding style rules extending the common style guide, covering PEP 8 compliance, mandatory type annotations, preference for immutable dataclasses and NamedTuples, and toolchain requirements (black, isort, ruff).",
+      "tags": ["documentation", "configuration", "python", "code-style"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/python/fastapi.md",
+      "type": "document",
+      "name": "fastapi.md",
+      "filePath": "rules/python/fastapi.md",
+      "summary": "Comprehensive FastAPI development rules covering project structure, async usage, dependency injection patterns, Pydantic schema design, security practices (CORS, JWT, rate-limiting), and testing with dependency overrides.",
+      "tags": ["documentation", "configuration", "python", "api-handler", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:rules/python/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "rules/python/hooks.md",
+      "summary": "Python-specific Claude Code hook configuration guidance, specifying PostToolUse hooks for auto-formatting with black/ruff and type-checking with mypy/pyright after Python file edits.",
+      "tags": ["documentation", "configuration", "python", "ci-cd"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/python/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "rules/python/patterns.md",
+      "summary": "Python-specific design patterns reference extending the common patterns guide, covering structural typing via Protocol, dataclasses as DTOs, and resource management with context managers and generators.",
+      "tags": ["documentation", "configuration", "python", "data-model"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/python/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "rules/python/security.md",
+      "summary": "Python-specific security rules extending the common security guide, covering environment-based secret management with dotenv and static analysis with bandit.",
+      "tags": ["documentation", "configuration", "python", "security"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:rules/python/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "rules/python/testing.md",
+      "summary": "Python-specific testing rules extending the common testing guide, specifying pytest as the framework, coverage reporting via pytest-cov, and test categorization using pytest.mark for unit and integration tests.",
+      "tags": ["documentation", "configuration", "python", "test"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:rules/python/coding-style.md",
+      "target": "document:rules/common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/python/hooks.md",
+      "target": "document:rules/common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/python/patterns.md",
+      "target": "document:rules/common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/python/security.md",
+      "target": "document:rules/common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:rules/python/testing.md",
+      "target": "document:rules/common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

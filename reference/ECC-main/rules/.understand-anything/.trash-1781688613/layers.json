@@ -1,0 +1,179 @@
+[
+  {
+    "id": "layer:foundation-universal-principles",
+    "name": "Foundation: Universal Principles",
+    "description": "The language-agnostic core of the rule catalogue (common/) — agents, code-review, coding-style, development-workflow, git-workflow, hooks, patterns, performance, security, and testing — that every language ruleset inherits and overrides, like the base of a CSS-specificity cascade.",
+    "nodeIds": [
+      "document:common/agents.md",
+      "document:common/code-review.md",
+      "document:common/coding-style.md",
+      "document:common/development-workflow.md",
+      "document:common/git-workflow.md",
+      "document:common/hooks.md",
+      "document:common/patterns.md",
+      "document:common/performance.md",
+      "document:common/security.md",
+      "document:common/testing.md"
+    ]
+  },
+  {
+    "id": "layer:typescript-web-core",
+    "name": "TypeScript & Web Core",
+    "description": "The shared frontend substrate that sits between the universal core and the UI frameworks: the foundational TypeScript/JavaScript ruleset plus the web-domain rules (CSS, semantic HTML, design quality, Core Web Vitals) that react, angular, vue, and nuxt all build on.",
+    "nodeIds": [
+      "document:typescript/coding-style.md",
+      "document:typescript/hooks.md",
+      "document:typescript/patterns.md",
+      "document:typescript/security.md",
+      "document:typescript/testing.md",
+      "document:web/coding-style.md",
+      "document:web/design-quality.md",
+      "document:web/hooks.md",
+      "document:web/patterns.md",
+      "document:web/performance.md",
+      "document:web/security.md",
+      "document:web/testing.md"
+    ]
+  },
+  {
+    "id": "layer:frontend-frameworks",
+    "name": "Frontend Frameworks",
+    "description": "Component-based UI framework rulesets — React, Angular, Vue, and Nuxt — that extend the TypeScript & Web Core layer with framework-specific component, state, routing, and rendering conventions.",
+    "nodeIds": [
+      "document:react/coding-style.md",
+      "document:react/hooks.md",
+      "document:react/patterns.md",
+      "document:react/security.md",
+      "document:react/testing.md",
+      "document:angular/coding-style.md",
+      "document:angular/hooks.md",
+      "document:angular/patterns.md",
+      "document:angular/security.md",
+      "document:angular/testing.md",
+      "document:vue/coding-style.md",
+      "document:vue/hooks.md",
+      "document:vue/patterns.md",
+      "document:vue/security.md",
+      "document:vue/testing.md",
+      "document:nuxt/coding-style.md",
+      "document:nuxt/hooks.md",
+      "document:nuxt/patterns.md",
+      "document:nuxt/security.md",
+      "document:nuxt/testing.md"
+    ]
+  },
+  {
+    "id": "layer:jvm-languages",
+    "name": "JVM Languages",
+    "description": "Rulesets for the JVM ecosystem — Java and Kotlin (including Android/KMP) — extending the universal core with records, sealed types, coroutines, and JVM-specific tooling and testing standards.",
+    "nodeIds": [
+      "document:java/coding-style.md",
+      "document:java/hooks.md",
+      "document:java/patterns.md",
+      "document:java/security.md",
+      "document:java/testing.md",
+      "document:kotlin/coding-style.md",
+      "document:kotlin/hooks.md",
+      "document:kotlin/patterns.md",
+      "document:kotlin/security.md",
+      "document:kotlin/testing.md"
+    ]
+  },
+  {
+    "id": "layer:dotnet-languages",
+    "name": ".NET Languages",
+    "description": "Rulesets for the .NET ecosystem — C# and F# — extending the universal core with records/immutability, ASP.NET Core security, and framework-appropriate (xUnit, FsCheck property-based) testing conventions.",
+    "nodeIds": [
+      "document:csharp/coding-style.md",
+      "document:csharp/hooks.md",
+      "document:csharp/patterns.md",
+      "document:csharp/security.md",
+      "document:csharp/testing.md",
+      "document:fsharp/coding-style.md",
+      "document:fsharp/hooks.md",
+      "document:fsharp/patterns.md",
+      "document:fsharp/security.md",
+      "document:fsharp/testing.md"
+    ]
+  },
+  {
+    "id": "layer:systems-languages",
+    "name": "Systems Languages",
+    "description": "Rulesets for compiled systems languages — Rust, C++, and Go — extending the universal core with ownership/RAII memory discipline, idiomatic error handling, static-analysis tooling, and race/sanitizer-aware testing.",
+    "nodeIds": [
+      "document:rust/coding-style.md",
+      "document:rust/hooks.md",
+      "document:rust/patterns.md",
+      "document:rust/security.md",
+      "document:rust/testing.md",
+      "document:cpp/coding-style.md",
+      "document:cpp/hooks.md",
+      "document:cpp/patterns.md",
+      "document:cpp/security.md",
+      "document:cpp/testing.md",
+      "document:golang/coding-style.md",
+      "document:golang/hooks.md",
+      "document:golang/patterns.md",
+      "document:golang/security.md",
+      "document:golang/testing.md"
+    ]
+  },
+  {
+    "id": "layer:scripting-languages",
+    "name": "Scripting Languages",
+    "description": "Rulesets for dynamic scripting and web-backend languages — Python (including the FastAPI framework ruleset), Ruby/Rails, Perl, and PHP — extending the universal core with interpreter-specific style, taint/injection safety, and framework testing conventions.",
+    "nodeIds": [
+      "document:python/coding-style.md",
+      "document:python/fastapi.md",
+      "document:python/hooks.md",
+      "document:python/patterns.md",
+      "document:python/security.md",
+      "document:python/testing.md",
+      "document:ruby/coding-style.md",
+      "document:ruby/hooks.md",
+      "document:ruby/patterns.md",
+      "document:ruby/security.md",
+      "document:ruby/testing.md",
+      "document:perl/coding-style.md",
+      "document:perl/hooks.md",
+      "document:perl/patterns.md",
+      "document:perl/security.md",
+      "document:perl/testing.md",
+      "document:php/coding-style.md",
+      "document:php/hooks.md",
+      "document:php/patterns.md",
+      "document:php/security.md",
+      "document:php/testing.md"
+    ]
+  },
+  {
+    "id": "layer:mobile-cross-platform",
+    "name": "Mobile & Cross-Platform",
+    "description": "Rulesets for mobile and cross-platform app languages — Swift (Apple platforms), Dart/Flutter, and ArkTS/HarmonyOS — extending the universal core with platform-specific UI patterns, mobile security hardening, and widget/UI testing.",
+    "nodeIds": [
+      "document:swift/coding-style.md",
+      "document:swift/hooks.md",
+      "document:swift/patterns.md",
+      "document:swift/security.md",
+      "document:swift/testing.md",
+      "document:dart/coding-style.md",
+      "document:dart/hooks.md",
+      "document:dart/patterns.md",
+      "document:dart/security.md",
+      "document:dart/testing.md",
+      "document:arkts/coding-style.md",
+      "document:arkts/hooks.md",
+      "document:arkts/patterns.md",
+      "document:arkts/security.md",
+      "document:arkts/testing.md"
+    ]
+  },
+  {
+    "id": "layer:catalogue-index",
+    "name": "Catalogue Index",
+    "description": "The catalogue's entry point — the top-level README that documents the layered rule hierarchy and points readers to the common core and per-language directories.",
+    "nodeIds": [
+      "document:README.md"
+    ]
+  }
+]

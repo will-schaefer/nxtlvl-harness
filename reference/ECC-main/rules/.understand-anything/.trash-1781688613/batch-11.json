@@ -1,0 +1,86 @@
+{
+  "nodes": [
+    {
+      "id": "document:nuxt/coding-style.md",
+      "type": "document",
+      "name": "coding-style.md",
+      "filePath": "nuxt/coding-style.md",
+      "summary": "Nuxt-specific coding-style rules covering directory layout, auto-imports discipline, compiler macros, config-file separation, and head/meta handling. Extends the common coding-style baseline.",
+      "tags": ["nuxt", "coding-style", "auto-imports", "compiler-macros", "directory-layout"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:nuxt/hooks.md",
+      "type": "document",
+      "name": "hooks.md",
+      "filePath": "nuxt/hooks.md",
+      "summary": "Nuxt-specific hook rules defining typecheck, lint, and format commands plus a suggested PostToolUse chain for automated quality gates. Extends the common hooks baseline.",
+      "tags": ["nuxt", "hooks", "typecheck", "lint", "format"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:nuxt/patterns.md",
+      "type": "document",
+      "name": "patterns.md",
+      "filePath": "nuxt/patterns.md",
+      "summary": "Nuxt-specific architectural patterns covering data-fetch selection, shared state, Nitro server routes, route middleware, and hydration-safe rendering. Extends the common patterns baseline.",
+      "tags": ["nuxt", "patterns", "data-fetching", "nitro", "hydration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:nuxt/security.md",
+      "type": "document",
+      "name": "security.md",
+      "filePath": "nuxt/security.md",
+      "summary": "Nuxt-specific security rules covering runtimeConfig public/private separation, server-route input validation, SSR payload leakage, cookie/auth passthrough, and SSRF on server $fetch. Extends the common security baseline.",
+      "tags": ["nuxt", "security", "ssr", "input-validation", "ssrf"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:nuxt/testing.md",
+      "type": "document",
+      "name": "testing.md",
+      "filePath": "nuxt/testing.md",
+      "summary": "Nuxt-specific testing rules covering test setup, runtime helpers, E2E helpers, and guidance on what to test at which level. Extends the common testing baseline.",
+      "tags": ["nuxt", "testing", "e2e", "runtime-helpers", "test-strategy"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:nuxt/coding-style.md",
+      "target": "document:common/coding-style.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:nuxt/hooks.md",
+      "target": "document:common/hooks.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:nuxt/patterns.md",
+      "target": "document:common/patterns.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:nuxt/security.md",
+      "target": "document:common/security.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:nuxt/testing.md",
+      "target": "document:common/testing.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

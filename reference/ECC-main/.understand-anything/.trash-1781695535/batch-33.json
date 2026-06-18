@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "document:agents/spec-miner.md",
+      "type": "document",
+      "name": "spec-miner.md",
+      "filePath": "agents/spec-miner.md",
+      "summary": "Defines the Spec Miner agent, a multi-phase subagent that crawls a codebase to extract structured specifications by discovering entry points, performing deep per-module dives with call-chain expansion, and generating canonical spec output with invariants and requirements.",
+      "tags": ["documentation", "agent", "specification", "code-analysis", "multi-phase"],
+      "complexity": "complex",
+      "languageNotes": "Three-phase process (Scope Discovery, Per-Module Deep Dive, Spec Generation) with token budget strategy and integration hooks for other agents."
+    },
+    {
+      "id": "document:agents/swift-build-resolver.md",
+      "type": "document",
+      "name": "swift-build-resolver.md",
+      "filePath": "agents/swift-build-resolver.md",
+      "summary": "Defines the Swift Build Error Resolver agent, a specialized subagent that diagnoses and resolves Swift compilation failures across SPM, Xcode, and toolchain environments using a structured diagnostic-then-fix workflow.",
+      "tags": ["documentation", "agent", "swift", "build-system", "debugging"],
+      "complexity": "moderate",
+      "languageNotes": "Covers SPM, Xcode, and Swift version/toolchain troubleshooting paths as distinct sections with stop conditions for escalation."
+    },
+    {
+      "id": "document:agents/swift-reviewer.md",
+      "type": "document",
+      "name": "swift-reviewer.md",
+      "filePath": "agents/swift-reviewer.md",
+      "summary": "Defines the Swift code reviewer agent, a subagent that evaluates Swift pull requests against prioritized criteria covering safety, error handling, concurrency, memory management, and protocol-oriented design, issuing pass/fail approval decisions.",
+      "tags": ["documentation", "agent", "swift", "code-review", "quality"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/tdd-guide.md",
+      "type": "document",
+      "name": "tdd-guide.md",
+      "filePath": "agents/tdd-guide.md",
+      "summary": "Defines the TDD Guide agent, which drives a strict red-green-refactor test-driven development cycle, enforcing test-first ordering, coverage verification, and anti-pattern avoidance, with an eval-driven addendum for v1.8.",
+      "tags": ["documentation", "agent", "test-driven-development", "testing", "quality"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:agents/type-design-analyzer.md",
+      "type": "document",
+      "name": "type-design-analyzer.md",
+      "filePath": "agents/type-design-analyzer.md",
+      "summary": "Defines the Type Design Analyzer agent, a focused subagent that evaluates type definitions against four criteria — encapsulation, invariant expression, invariant usefulness, and enforcement — and produces a structured analysis report.",
+      "tags": ["documentation", "agent", "type-safety", "code-analysis", "quality"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:agents/typescript-reviewer.md",
+      "type": "document",
+      "name": "typescript-reviewer.md",
+      "filePath": "agents/typescript-reviewer.md",
+      "summary": "Defines the TypeScript code reviewer agent, a subagent that reviews TypeScript/Node.js code against prioritized security, type-safety, async correctness, error handling, and idiomatic patterns criteria, with optional React/Next.js coverage.",
+      "tags": ["documentation", "agent", "typescript", "code-review", "security"],
+      "complexity": "moderate",
+      "languageNotes": "Includes a Reference section linking to upstream TypeScript and Node.js style guides; has a scope-sharing relationship with vue-reviewer."
+    },
+    {
+      "id": "document:agents/vue-reviewer.md",
+      "type": "document",
+      "name": "vue-reviewer.md",
+      "filePath": "agents/vue-reviewer.md",
+      "summary": "Defines the Vue.js code reviewer agent, a subagent that handles Vue-specific review concerns (reactivity, composables, Router, Pinia, SSR/Nuxt) and explicitly delegates TypeScript-layer issues to the typescript-reviewer agent to avoid duplication.",
+      "tags": ["documentation", "agent", "vue", "code-review", "frontend"],
+      "complexity": "complex",
+      "languageNotes": "Explicitly scoped against typescript-reviewer — Vue-only concerns here; includes a Related section cross-referencing typescript-reviewer and a Scope section clarifying the boundary."
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:agents/vue-reviewer.md",
+      "target": "document:agents/typescript-reviewer.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}
