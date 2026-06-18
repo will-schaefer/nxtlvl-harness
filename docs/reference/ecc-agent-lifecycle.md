@@ -4,6 +4,8 @@
 > distills what ecc *actually* does, then links to the `nxtlvl` decision (ADR) it produced.
 > Companion to [`ecc-agent-vs-skill-scoping.md`](ecc-agent-vs-skill-scoping.md). The decisions
 > live in [`../decisions/`](../decisions/); this doc is the *source distillation* behind them.
+> This review covers ecc; the same adopt/adapt/reject method is the template for reviewing other
+> harnesses later (see the build method in [`../intent/personal-harness.md`](../intent/personal-harness.md)).
 
 The six phases: **Design → Author → Evaluate → Debug → Orchestrate → Operate.**
 

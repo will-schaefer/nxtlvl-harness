@@ -31,6 +31,17 @@
 - **Why now:** Deliberate rebuild after wiping `~/.claude`. I want a harness I own and
   understand to the metal, not one I merely configure.
 
+## Method: review harnesses to shape nxtlvl
+
+Part of how nxtlvl is built is by **systematically reviewing existing agent harnesses** and
+deciding, area by area, what to **adopt / adapt / reject** — primarily the **ecc** plugin
+(vendored at `reference/ECC-main/`, kept installed-but-dormant per
+[ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md)), with **other harnesses
+brought in as references over time**. This is deliberate and ongoing — reviewing ecc is the
+intended method, not a dependency to hide. Each review produces an ADR-recorded decision plus a
+distillation under [`../reference/`](../reference/). The gated agent-lifecycle review is the
+current instance, and agents working the build should expect it.
+
 ## The build, in two layers with opposite strategies
 
 **Plumbing layer → reconstruct (this is where the learning lives).** The machinery
