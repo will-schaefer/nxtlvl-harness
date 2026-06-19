@@ -45,8 +45,8 @@ composition ours; ADR-003 keeps the runtime native.
    through the intake gate ([ADR-008](ADR-008-reactive-growth-intake-gate.md)).
 3. **Adapt the composition-side patterns.** Self-contained delegation briefs — acceptance
    criteria and an inherited scope-guard, no "open the plan doc" dependency (plan-orchestrate
-   Phase 3), which is skill injection ([ADR-018](ADR-018-agent-authoring-method.md)) plus a clear
-   task. Parallel fan-out with result synthesis (agreements / conflicts / next steps) for
+   Phase 3), which is the skill-load dependency ([ADR-018](ADR-018-agent-authoring-method.md))
+   plus a clear task. Parallel fan-out with result synthesis (agreements / conflicts / next steps) for
    genuinely independent work, on the native Agent tool. Dynamic discovery of the roster over
    hardcoded lists. Per-phase quality and recovery come from
    [ADR-019](ADR-019-agent-evaluation-model.md) self-evaluation and

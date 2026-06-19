@@ -56,7 +56,7 @@ unchanged.
 ## Alternatives Considered
 
 ### Fat executor (knowledge baked into the agent/command, no skill split)
-- Pros: one file, nothing to inject.
+- Pros: one file, nothing to load.
 - Cons: knowledge can't be reused across callers; duplicates across specialists; bloats context.
 - Rejected: violates the one-way dependency and ADR-007; the split is what makes knowledge
   caller-agnostic.

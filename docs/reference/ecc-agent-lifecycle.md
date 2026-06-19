@@ -141,8 +141,8 @@ formal eval-suite discipline, and a tool to compare agent products head-to-head.
 - **Reject:** `agent-eval` — a product bake-off, out of scope for one operator on Claude Code;
   its consistency-across-runs nugget is covered by pass^k if ever needed.
 - **Result — a layered, non-overlapping quality model:** per-task self-check (advisory) → code
-  via `review`, prose via stop-slop → promotion audit (the only block, ADR-009) → fallback ×
-  quality north-star (ADR-005).
+  via `review`, prose via stop-slop → promotion audit (the only block, ADR-009) → the
+  fallback-log readouts (ADR-005/ADR-013).
 
 ---
 
