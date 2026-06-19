@@ -1,7 +1,41 @@
 {
   "permissions": {
     "allow": [
-      "Skill(update-config)"
+      "Skill(update-config)",
+      "Bash(git add *)",
+      "Bash(git commit --amend -m 'Finalize context-and-memory lifecycle spec; add doubt-reviewer agent; align decision record' -m 'Resolves the stash-pop conflict that left markers in ADR-007/008 and the *)",
+      "Bash(git push *)",
+      "Bash(git rev-list *)",
+      "Bash(echo \"ahead/behind \\(HEAD...origin/main\\): $\\(git rev-list --left-right --count HEAD...origin/main\\)\")",
+      "Bash(claude --version)",
+      "Bash(python3 -c 'import ast,sys; src=open\\('\\\\''/Users/willschaefer/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown/skills/skill-creator/scripts/run_loop.py'\\\\''\\).read\\(\\); print\\('\\\\''\\\\n'\\\\''.join\\([l for l in src.splitlines\\(\\) if '\\\\''add_argument'\\\\'' in l]\\)\\)')",
+      "Bash(claude -p --model claude-opus-4-8)",
+      "Bash(python3 -m scripts.run_loop --eval-set __TRACKED_VAR__/trigger-eval.json --skill-path /Users/willschaefer/Developer/plugins/nxtlvl/skills/nxtlvl-router --model claude-opus-4-8 --max-iterations 5 --results-dir __TRACKED_VAR__/desc-opt --report auto --verbose)",
+      "Bash(git worktree *)",
+      "Bash(git branch *)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('.claude-plugin/marketplace.json'\\)\\); print\\('plugins:', [p['name'] for p in d['plugins']]\\)\")",
+      "Bash(git apply *)",
+      "Bash(git ls-tree *)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('.claude/settings.local.json'\\)\\); print\\('enabledPlugins:', d.get\\('enabledPlugins'\\)\\)\")",
+      "Bash(python3 -c \"import json;print\\('agent-dev' in [p['name'] for p in json.load\\(open\\('.claude-plugin/marketplace.json'\\)\\)['plugins']]\\)\")",
+      "Bash(echo \"marketplace agent-dev registered: $\\(python3 -c \"import json;print\\('agent-dev' in [p['name'] for p in json.load\\(open\\('.claude-plugin/marketplace.json'\\)\\)['plugins']]\\)\"\\)\")",
+      "Bash(git stash *)",
+      "Bash(git show *)",
+      "Read(//tmp/**)",
+      "Bash(git reflog *)",
+      "Bash(git fsck *)",
+      "Bash(git check-ignore *)",
+      "Bash(git commit -m 'Register agent-dev plugin in the nxtlvl-dev marketplace *)",
+      "Bash(git checkout *)",
+      "Bash(diff config/claude/output-styles/co-builder.md .claude/worktrees/ctx-adr008/config/claude/output-styles/co-builder.md)",
+      "Bash(head -12 config/claude/output-styles/co-builder.md)",
+      "Bash(git commit -m ' *)",
+      "Bash(gh pr create --base main --head add-nxtlvl-router-skill --title 'Add nxtlvl-router meta-skill \\(precedence router over agent-skills\\)' --body ' *)",
+      "Bash(gh pr *)"
     ]
+  },
+  "enabledPlugins": {
+    "agent-dev@nxtlvl-dev": true,
+    "ecc@ecc": false
   }
 }
