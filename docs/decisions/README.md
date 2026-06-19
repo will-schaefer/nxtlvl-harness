@@ -22,3 +22,4 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [010](ADR-010-global-decision-rule.md) | A global decision rule governs how decisions are made + recorded; ADR-worthy tier first | Accepted |
 | [011](ADR-011-prose-quality-stop-slop.md) | Prose quality governed harness-wide by a vendored stop-slop skill + a condensed always-on chat convention | Accepted |
 | [012](ADR-012-agents-execute-skills-hold-knowledge.md) | Agents execute, skills hold knowledge; agent definitions point to a skill as single source of truth (don't restate it) | Accepted |
+| [013](ADR-013-confident-core-capability-domains.md) | Pre-build a bounded confident-core of capability domains (Python, TS/JS, Rust, Frontend, Backend); intake gate governs the rest — amends ADR-008 | Accepted |
