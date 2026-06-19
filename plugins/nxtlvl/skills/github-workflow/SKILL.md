@@ -5,7 +5,7 @@ description: nxtlvl GitHub workflow — the standardized branch → commit → P
 
 # GitHub Workflow (nxtlvl)
 
-Vendored from `git-workflow` + `github-ops` and refined for fit (see `docs/decisions/ADR-012`). **Self-contained** for the everyday loop — it does *not* call the upstream skills. The exhaustive long-tail (GitFlow, mergetool, stash recipes, release tooling) stays a pointer into `reference/ECC-main/skills/git-workflow/SKILL.md`; this skill carries only the path agents actually walk.
+Vendored from `git-workflow` + `github-ops` and refined for fit (compose-not-reconstruct, ADR-003); the seed knowledge layer of the `git-workflows` workflow domain — see the plan in `docs/plan/nxtlvl-git-workflows-domain-handoff.md`. **Self-contained** for the everyday loop — it does *not* call the upstream skills. The exhaustive long-tail (GitFlow, mergetool, stash recipes, release tooling) stays a pointer into `reference/ECC-main/skills/git-workflow/SKILL.md`; this skill carries only the path agents actually walk.
 
 One coherent thing — the spine of every change that reaches GitHub:
 
@@ -22,7 +22,7 @@ branch → commit → PR (draft) → review → CI → merge
 
 ## 2. Commit — Conventional Commits
 
-The nxtlvl standard is **Conventional Commits** (chosen over this repo's historical sentence-case — see ADR-012):
+The nxtlvl standard is **Conventional Commits** (chosen over this repo's historical sentence-case):
 
 ```
 <type>(<scope>): <subject>
@@ -44,7 +44,7 @@ The nxtlvl standard is **Conventional Commits** (chosen over this repo's histori
 | `ci` | CI/CD | `ci: add postgres service` |
 
 - Subject: imperative, no trailing period, ≤50 chars. Scope optional, lowercase.
-- **No attribution trailers.** Commits are clean — no `Co-Authored-By`, no agent signature (nxtlvl default; ADR-012).
+- **No attribution trailers.** Commits are clean — no `Co-Authored-By`, no agent signature (nxtlvl default).
 - One logical change per commit; link issues with `Closes #N` in the footer.
 
 ## 3. Pull request — draft first
