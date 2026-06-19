@@ -25,7 +25,7 @@ filler**, and the distillation's first job is to separate the two.
 | **Hooks** | 13 lifecycle scripts (`hooks/*.py`) + 4 `validators/` + `utils/{llm,tts}` | **High signal** — the core of the repo |
 | **Agents** | `meta-agent`, `team/{builder,validator}`, `work-completion-summary`, `crypto/*` (×12), `hello-world`, `llm-ai-agents-and-eng-research` | Mixed — patterns signal, crypto/hello-world demo |
 | **Commands** | `prime`/`prime_tts`, `plan_w_team`, `build`, `all_tools`, `question`, `git_status` + `cook`/`sentient`/`crypto_research*` | Mixed — `prime`/`plan_w_team` signal, rest demo |
-| **Output styles** | 8 (`output-styles/*.md`) | Mostly validation (you already run one) |
+| **Output styles** | 8 (`output-styles/*.md`) | Mostly confirmation — you already run one |
 | **Status lines** | 9 versions (`status_lines/status_line*.py`) | v6/v9 signal (context-window HUD) |
 | **Docs/specs** | `ai_docs/*` (verbatim upstream-doc scrapes + `legacy/`), `specs/*`, `apps/*` | `ai_docs`/`specs` patterns; `apps/` is demo |
 
@@ -115,8 +115,7 @@ the thing I wanted."
 the outcome… because you've templated the format") is compatible with nxtlvl — but nxtlvl already
 buys predictability *upstream*, through house formats (spec → plan → ADR, the review rubric), not
 *at runtime* through forcing hooks. Same goal (predictable agent output), opposite mechanism:
-**template the inputs, don't compel the outputs.** That reframing is the headline takeaway, and the
-thread §6's ledger pulls on.
+**template the inputs, don't compel the outputs.** That reframing is the headline takeaway; §6's ledger is where it gets applied, item by item.
 
 ---
 
@@ -126,7 +125,7 @@ The hooks are the repo's core and its most reusable knowledge. All wiring is in
 `.claude/settings.json:24-167`; every event uses an empty `matcher: ""` (fires on all tools)
 except `UserPromptSubmit`.
 
-### 3.1 Lifecycle inventory (13 events, "11/13 validated" per `README.md:169`)
+### 3.1 Lifecycle inventory (13 events; `README.md:169` claims "11/13 validated" — its phrase for "exercised in the demo", unrelated to the §4 *validator* agents)
 
 | Event | Script | Blocks? | Role in the demo |
 |-------|--------|---------|------------------|
@@ -149,7 +148,8 @@ log-only or unused — the gap between capability and deployment that §2 leans 
 
 ### 3.2 Flow-control reference (the keystone — `README.md:290-468`)
 
-The genuinely portable, language-agnostic platform knowledge. Three control channels:
+The genuinely portable, language-agnostic platform knowledge. Three control channels —
+**but read the 8-vs-13 caveat at the foot of this section before copying any table verbatim:**
 
 **(a) Exit codes** (`:298-302`):
 
@@ -170,9 +170,13 @@ The genuinely portable, language-agnostic platform knowledge. Three control chan
 **(c) JSON output control** (`:363-408`) — richer than exit codes. Common fields:
 `{"continue": bool, "stopReason": str, "suppressOutput": bool}`. Decision fields: PreToolUse
 `"approve"|"block"`, PostToolUse `"block"`, Stop `"block"`. **Priority order** (`:410-417`):
-`continue:false` ▶ `decision:block` ▶ `exit 2` ▶ other.
+`continue:false` ▶ `decision:block` ▶ `exit 2` ▶ other. (Note a second, uncatalogued schema: the
+Stop-event *artifact* validators in §3.4 emit a sibling `{"result":"block"}` key, **not**
+`decision` — this README documents only the `decision` family, so verify against source before
+relying on either spelling.)
 
-> ⚠️ **Caveat:** this table is the older **8-event** model. The lifecycle list claims **13**
+> ⚠️ **Caveat (the "8-vs-13 gap", referenced elsewhere by that name):** this table is the older
+> **8-event** model. The lifecycle list claims **13**
 > events (adds SessionEnd, PermissionRequest, PostToolUseFailure, SubagentStart, Setup) but the
 > flow-control table was never updated for the 5 newer ones. Treat the table as authoritative for
 > the classic 8; cross-check the newer events against the vendored
@@ -244,7 +248,7 @@ This maps directly onto nxtlvl's ideation agents: **`design-critic` and `context
 capability-constrained read-only** (a Read/Grep/Glob allowlist, or `disallowedTools` on write
 tools), not merely instructed to be advisory. It also sharpens the scoping doctrine
 ([ecc-agent-vs-skill-scoping.md](ecc-agent-vs-skill-scoping.md)): read-only-ness is a *first-class
-scoping decision*, the same opus-over-the-codebase role split into doer vs judge by tool surface
+scoping decision* — one opus-over-the-codebase role, split into doer vs. judge by tool surface
 alone. (Schema nit: `validator.md` uses `disallowedTools`; `plan_w_team.md` uses
 `disallowed-tools` — verify the current CC spelling before copying either.)
 
@@ -261,8 +265,9 @@ frozen snapshot. (Minor internal bug: step 3 says set a `color`, but the output 
 ### 4.3 Model-tier rig — reframed for Max (latency/quality, not cost)
 
 The `crypto/*` agents come in `-haiku`/`-sonnet`/`-opus` triplets that are **~9-line stubs**
-differing *only* in `model:`; the whole behavioral spec lives in one shared prompt file the stub
-points at (`Read and Execute: …agent_prompts/<name>.md`). `/crypto_research` fans out all 12 and
+differing *only* in `model:`; the whole behavioral spec lives in a single prompt file *per
+agent-name* — shared across that name's three tier-stubs — which each stub points at
+(`Read and Execute: …agent_prompts/<name>.md`). `/crypto_research` fans out all 12 and
 writes each output to a tier-segregated dir — a **side-by-side quality diff for an identical task**.
 Two transferable kernels:
 - **Body-as-pointer** — behavior defined once, the agent file is a thin binding of (model, tools,
@@ -301,7 +306,7 @@ wants ambient "done" signals.
 
 ## 5. Context engineering & periphery — prime, status lines, output styles, ai_docs
 
-**The `prime` ritual (relevant to C&M).** Priming is treated as a *first-class, repeatable*
+**The `prime` ritual (relevant to the Context & Memory subsystem — "C&M" hereafter).** Priming is treated as a *first-class, repeatable*
 context-load. `prime.md` is Execute→Read→Report (run `git ls-files`, read README + curated
 `ai_docs/*`, summarize). `prime_tts.md` is the sharper version — it uses CC's eager command/file
 injection (`` !`git ls-files` ``, `@README.md`, `@ai_docs/...`) so context is materialized *at
@@ -319,7 +324,7 @@ stdin parse, always `exit 0` with a fallback line, never crash the HUD. For nxtl
 *passive* complement to the *active* context-alert hook: render the bar against the **150–200K
 degradation band**, not a generic 0–100%.
 
-**Output styles (8) — mostly validation.** Each is a thin system-prompt rewrite changing *format
+**Output styles (8) — mostly confirmation.** Each is a thin system-prompt rewrite changing *format
 only* (tables, bullets, ultra-concise, etc.). nxtlvl already runs an explanatory style, so this is
 confirmation, not new capability — the one genuinely interesting member is **`yaml-structured`**
 (machine-parseable agent output) if a future agent needs structured stdout.
@@ -344,7 +349,7 @@ output" thesis (§2) made concrete; nxtlvl achieves the same via its spec/plan/A
 | From hooks-mastery | Verdict | nxtlvl surface → action |
 |--------------------|---------|--------------------------|
 | Hook flow-control reference (§3.2) | **Adopt** | This doc *is* the adoption — citable reference for hook work; prefer it over re-reading upstream, but heed the 8-vs-13 caveat. |
-| Read-only-by-withheld-tools (validator) | **Adopt** | Make `design-critic` + `context-scout` capability-constrained read-only (not instructed). Highest-value takeaway. |
+| Read-only-by-withheld-tools (validator) | **Adopt** | Make `design-critic` + `context-scout` capability-constrained read-only (not instructed). Highest-value takeaway. **Verify the `disallowedTools` vs `disallowed-tools` spelling first (§4.1) or the constraint silently won't bind.** |
 | Fail-open `exit 0` discipline | **Adopt (confirm)** | Confirms context-alert fail-toward-silence + dangerous-bash kill-switch posture. Keep. |
 | `additionalContext` injection channel (SessionStart/Setup) | **Adopt (pattern)** | The non-blocking "inform" channel if the context-alert FYI ever needs to *inject* a note, not just notify. |
 | `@`/`` ! `` eager-injection `prime` ritual | **Adapt** | C&M: a named "rehydrate" command; drop the TTS tail. |
@@ -357,6 +362,8 @@ output" thesis (§2) made concrete; nxtlvl achieves the same via its spec/plan/A
 | Planner-lead → DAG → terminal validate loop | **Adapt (trim)** | Orchestration shape is sound; trim heavy `TaskCreate` bookkeeping to what's needed. |
 | Completion-signal sink discipline | **Adapt (maybe)** | Only if ambient "done" signals wanted; keep "1 sentence, locked toolset", drop TTS. |
 | `ai_docs/legacy/` versioning | **Adapt** | Mirror keep-don't-overwrite (already have it via superseded ADRs). |
+| `yaml-structured` output style (§5) | **Adapt (maybe)** | Only if a future agent needs machine-parseable stdout; the other 7 styles are confirmation, not new capability. |
+| Self-validatable `specs/` template + `all_tools`/`question` command idioms (§5) | **Adapt** | "Templated format = predictable output" (§2) made concrete; nxtlvl already gets this upstream via spec/plan/ADR house formats + the review rubric. Borrow the *self-checkable template* discipline, not the files. |
 | uv / PEP-723 packaging | **Reject** | nxtlvl is Node; port contracts, re-express packaging as `process.argv` dispatch. |
 | Force-continuation hook apps (Stop-block, prescriptive self-correction) | **Reject (doctrine)** | Conflicts with "hooks inform, don't force"; already settled. |
 | Unbounded `logs/<event>.json` store | **Reject** | Race-prone, no rotation; nxtlvl fallback-log is better. |
@@ -377,7 +384,9 @@ Per the decision rule's ADR-worthy test (architectural *and* expensive to revers
 here are **applications of decisions nxtlvl already made** — they route to spec/plan/amendment, not
 new ADRs (curation beats dilution).
 
-**Genuine decision points:**
+**Genuine decision points** — decision-*shaped* findings. Note the routing: of the three, #1 lands
+as an **amendment** to an existing doctrine, #2 as a **deferred** ADR (write it when the design
+locks), #3 only **if/when built**. None is a fresh standalone ADR to write today.
 1. **Independent-check agents must be capability-constrained read-only.** If adopted as a
    cross-cutting convention (every critic/scout/validator gets write tools *withheld*, not just
    instructed), record it — most naturally as an **amendment to the scoping doctrine**
@@ -391,7 +400,9 @@ new ADRs (curation beats dilution).
    decision; record only if/when built.
 
 **Concrete next actions:**
-- [ ] Apply read-only tool constraints to `design-critic` + `context-scout` (sandbox/ or plugin).
+- [ ] Apply read-only tool constraints to `design-critic` + `context-scout` (sandbox/ or plugin) —
+  confirm the current CC `disallowedTools`/`disallowed-tools` spelling first (§4.1), or the
+  constraint silently won't bind.
 - [ ] Fold the PreCompact findings into the C&M lifecycle plan (Hook 2 / Phase 2).
 - [ ] Diff the dangerous-`rm` regex set against nxtlvl's gate for gaps (trim over-broad paths).
 - [ ] Stage-3 reader-test this distillation with a fresh sub-agent, then it's done.

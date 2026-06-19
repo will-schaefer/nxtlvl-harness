@@ -9,7 +9,9 @@
 > nxtlvl build, so harness-component decisions cite a comparison instead of re-running the scan.
 > Companion to the **ecc** distillations ([ecc-main-map.md](ecc-main-map.md),
 > [ecc-agent-vs-skill-scoping.md](ecc-agent-vs-skill-scoping.md)) — ecc is the third reference
-> harness to triangulate against for any build decision.
+> harness to triangulate against for any build decision. For per-skill depth (every skill profiled
+> individually), see the standalone reports: [superpowers-distillation.md](superpowers-distillation.md)
+> and [agent-skills-distillation.md](agent-skills-distillation.md).
 
 ---
 
@@ -105,11 +107,16 @@ Verdicts 1–5 are from head-to-head deep reads; 6–9 are judged complementary 
 | Portability | Single-platform (assumes one harness) | Cross-runtime: 6 per-platform tool-mapping refs (Claude Code/Codex/Copilot/Gemini/Pi/antigravity) |
 | Shared idioms | Three-tier "Always / Ask-first / Never" boundary system recurs (security + spec) | Context-hygiene thesis ("never inherit session context — construct exactly what's needed") recurs |
 
-**Quality defects to fix on adoption (agent-skills):** 6 skills cite `references/*.md` files that **do
-not exist** in the cache — dangling "See Also" links in `code-review-and-quality`,
-`frontend-ui-engineering`, `performance-optimization`, `security-and-hardening`, `shipping-and-launch`,
-`test-driven-development`. `idea-refine` hardcodes a `/mnt/skills/user/...` path that won't resolve in
-a plugin-cache install. superpowers skills are more self-contained (support files actually ship).
+**Quality defects to fix on adoption (agent-skills):** 7 skills cite `references/*.md` via **bare
+relative paths that break on resolution** — corrected from an earlier "files do not exist" reading:
+the checklists *do* exist, but at the **plugin root** (`<root>/references/*.md` + the `agents/` roster),
+while the SKILL.md links resolve to `skills/<name>/references/*.md`, where they don't. Affected:
+`code-review-and-quality`, `frontend-ui-engineering`, `performance-optimization`, `security-and-hardening`,
+`shipping-and-launch`, `test-driven-development`, `doubt-driven-development`. Any skill lifted out of the
+tree orphans its support content — re-path on adopt. `idea-refine` separately hardcodes a
+`/mnt/skills/user/...` path that won't resolve in a plugin-cache install, and `shipping-and-launch` cites
+a nonexistent `npx prisma migrate rollback` command. superpowers skills are more self-contained (support
+files ship in each skill's own dir).
 
 **superpowers caveat:** its main flowcharts are raw graphviz `dot` blocks that don't render in-context
 (it ships `render-graphs.js` to convert offline); agent-skills' rendered ASCII flowcharts are more
