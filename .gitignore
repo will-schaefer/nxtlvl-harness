@@ -11,7 +11,7 @@
 # Nested editor-config repos with their own git history — keep out of this bundle
 config/helix/
 
-# Vendored references — large, machine-local "books on the shelf".
+# Vendored references — large, machine-local "books on the shelf" (e.g. ECC-main ~49MB).
 # reference/ECC-main is vendored in-repo intentionally and IS tracked; everything else
 # under reference/ (and any nested .DS_Store) stays local. Our own analysis lives in docs/reference/.
 /reference/*
@@ -19,3 +19,7 @@ config/helix/
 
 # Packaged skill bundles — built artifacts; rebuild from source, don't track.
 *.skill
+
+# Claude Code local settings — the per-machine layer the tool auto-writes on every
+# permission approval. Durable, portable config lives in .claude/settings.json (tracked).
+.claude/settings.local.json

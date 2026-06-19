@@ -1,0 +1,65 @@
+{
+  "env": {
+    "ECC_GATEGUARD": "off"
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "enabledPlugins": {
+    "auth0@claude-plugins-official": false,
+    "agent-skills@addy-agent-skills": true,
+    "skill-creator@claude-plugins-official": true,
+    "ecc@ecc": false,
+    "plugin-dev@claude-plugins-official": true,
+    "nxtlvl@nxtlvl-dev": true,
+    "playground@claude-plugins-official": true,
+    "understand-anything@understand-anything": true,
+    "explanatory-output-style@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "addy-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "addyosmani/agent-skills"
+      }
+    },
+    "ecc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/ECC.git"
+      }
+    },
+    "nxtlvl-dev": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/willschaefer/Developer"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Egonex-AI/Understand-Anything.git"
+      }
+    }
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.githubusercontent.com",
+        "*.npmjs.org",
+        "registry.npmjs.org",
+        "pypi.org",
+        "*.pythonhosted.org"
+      ]
+    }
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
+  "theme": "light",
+  "autoScrollEnabled": false,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
+}
