@@ -119,8 +119,8 @@ agent, …) when there are many, or a single deep agent when there are few (see
 [`references/domain-review.md`](references/domain-review.md) §1).
 
 **Phase 3 — Parallel fan-out analysis.** Dispatch one `general-purpose` agent per domain, **all in
-one message** (compose `superpowers:dispatching-parallel-agents`). Every agent prompt — in either
-mode — MUST carry these shared elements:
+one message** (compose `superpowers:dispatching-parallel-agents`). Every agent prompt — in any of the three
+modes — MUST carry these shared elements:
 1. **Read-only mandate** — "modify nothing; your output is a digest the main session synthesizes."
 2. **Scoped target** — the exact files/dirs this agent owns + the absolute repo path.
 3. **Claims-vs-wiring discipline** — separate what the docs *claim* from what the code *ships*; trust
