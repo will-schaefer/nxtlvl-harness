@@ -57,13 +57,13 @@ justifies the executor agent. Don't re-litigate that — build the domain.
 
 - Knowledge → `reference/ECC-main/skills/git-workflow/SKILL.md` (branching, commits, merge/rebase,
   PR, conflicts, releases) and `reference/ECC-main/skills/github-ops/SKILL.md` (PR mgmt, CI, releases, security).
-- Command templates → `reference/ECC-main/commands/pr.md` (create-PR, phased VALIDATE→…, `--draft`,
-  `[base-branch]`), `commands/prp-commit.md` (smart commit, natural-language staging, ASSESS→STAGE),
-  `commands/review-pr.md` (multi-agent review entry), `commands/go-review.md` (the canonical
+- Command templates (all under `reference/ECC-main/commands/`) → `pr.md` (create-PR, phased
+  VALIDATE→…, `--draft`, `[base-branch]`), `prp-commit.md` (smart commit, natural-language staging,
+  ASSESS→STAGE), `review-pr.md` (multi-agent review entry), `go-review.md` (the canonical
   command→agent template).
-- Executor-agent templates → `reference/ECC-main/agents/go-reviewer.md` (85 lines: read-only
-  `tools: ["Read","Grep","Glob","Bash"]`, `model: sonnet`, ends with a `see skill:` pointer — the
-  shape to copy) and `agents/pr-test-analyzer.md` (PR-specific executor).
+- Executor-agent templates (all under `reference/ECC-main/agents/`) → `go-reviewer.md` (85 lines:
+  read-only `tools: ["Read","Grep","Glob","Bash"]`, `model: sonnet`, ends with a `see skill:` pointer
+  — the shape to copy) and `pr-test-analyzer.md` (PR-specific executor).
 
 **New session only (the primary source for the skill):** `agent-skills` via `/skill-creator` —
 generate the git-workflows knowledge skill from agent-skills + the ECC materials above, then refine
