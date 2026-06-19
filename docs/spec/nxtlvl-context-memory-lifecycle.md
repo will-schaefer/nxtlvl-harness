@@ -49,7 +49,7 @@ living **outside `~/.claude`**.
   ║  DURING — capture (floor)          ║   append → observation log             │
   ║  • live hook: every tool call,     ║   (durable, crash-safe substrate;      │
   ║    async, fail-open, scrub secrets ║    auto-purge >30d / 10MB)             │
-  ║  • observer: one-shot Haiku /20obs ║   → instincts (4 patterns, conf+decay) │
+  ║  • observer: one-shot Sonnet /20obs║   → instincts (4 patterns, conf+decay) │
   ║    skip subagents / automated      ║   separate store, outside ~/.claude    │
   ╚═══════════════════╤═══════════════╝                                        │
                       ▼                                                         │
@@ -84,7 +84,7 @@ living **outside `~/.claude`**.
 |---|---|---|---|---|
 | **Briefing** | SessionStart hook | session start | inject git line + newest bookmark (+ staleness flag) + quality-gated instincts | fail-open (no briefing) |
 | **Live capture** | PreToolUse + PostToolUse hook | every tool call | truncate, scrub secrets (input+output, fail-closed), append raw observation | fail-open (exit 0); scrub failure drops the observation |
-| **Observer** | one-shot subprocess (Haiku) | every 20 observations | read new observations → create/update instincts (confidence + decay) | fail-open (no distill) |
+| **Observer** | one-shot subprocess (`claude-sonnet-4-6`) | every 20 observations | read new observations → create/update instincts (confidence + decay) | fail-open (no distill) |
 | **context-alert** | PostToolUse hook | ~200K / ~325K tokens | nudge before context pressure (kept **as-is**) | fail-open |
 | **PreCompact steer** | PreCompact hook | compaction | preserve task/bookmark pointer + next step + open files in the summary | fail-open |
 | **Close** | SessionEnd hook | clean session end | if non-trivial: write dated bookmark; record fallback-rate | fail-open (no bookmark) |
@@ -121,8 +121,8 @@ Injects three blocks **on top of** what Claude Code already auto-loads (`CLAUDE.
   persisted raw (§7). "Best-effort" is the honest claim — no scrubber is omniscient; the *guarantee*
   is fail-closed, not zero-leakage.
 - **Distillation = one-shot, not a daemon.** When the observation count hits **20**, spawn a fresh
-  **Haiku** pass that reads new entries, updates instincts, and exits. (Deliberately avoids ecc's
-  PID/lock/runaway-process machinery and macOS lock juggling.)
+  **Sonnet** (`claude-sonnet-4-6`) pass that reads new entries, updates instincts, and exits.
+  (Deliberately avoids ecc's PID/lock/runaway-process machinery and macOS lock juggling.)
 - Observer detects ecc's **four patterns**: corrections, error→fix, repeated workflows, tool prefs.
 - **Skip guards:** never observe subagents, automated/non-interactive sessions, or the observer's
   own runs (prevents a self-watching loop).
@@ -365,8 +365,8 @@ count (the best-first list is already assembled, so the names cost nothing).
   env-var kill switch. Truncates (~5k), scrubs secrets **best-effort + fail-closed** (input *and*
   output, named-format regexes + entropy redactor; a scrub failure drops the observation rather than
   persisting it raw), appends to durable log.
-- **Distillation = one-shot, not a daemon.** At 20 observations, spawn a fresh Haiku pass that
-  updates instincts and exits. Avoids ecc's PID/lock/runaway machinery.
+- **Distillation = one-shot, not a daemon.** At 20 observations, spawn a fresh Sonnet
+  (`claude-sonnet-4-6`) pass that updates instincts and exits. Avoids ecc's PID/lock/runaway machinery.
 - Observer detects ecc's four patterns: corrections, error→fix, repeated workflows, tool prefs.
 - **Instinct format** (ecc shape): `id / trigger / confidence / domain / scope / evidence`
   (+ Action, Evidence); frequency-based confidence with decay. **Scope:** project + global.
@@ -465,3 +465,13 @@ count (the best-first list is already assembled, so the names cost nothing).
   constraints (no longer deferred): outside `~/.claude` (sensitive-path guard) **and outside any
   sync/backup root** (a syncing filesystem racing atomic renames corrupts append-only JSONL).
   **Recommended location: `$XDG_STATE_HOME/nxtlvl`.** Only the exact path remains a `/plan` detail.
+- **X7 (observer model tier) — AMENDED at `/plan` (2026-06-19) = `claude-sonnet-4-6`** *(supersedes
+  this spec's original Haiku design, §3/§4.2/Stage-2 above, now updated).* The original Haiku pick was
+  **cost/latency-motivated**, but both reasons are void here: the user is on **Max with cost machinery
+  dropped**, and the observer runs **detached in the background at SessionEnd** (X5), so its latency
+  never blocks the hands-on path. Since the observer is the one component that *manufactures*
+  instincts — its extraction quality determines the whole subsystem's quality, and a weak instinct
+  steers future sessions (the silent-write-then-steer risk in X2) — the **quality-first lens governs**
+  and the tier goes up. Not ADR-worthy: a model-id string is cheaply reversible, so this folds into
+  the spec (no new ADR). (Rejected: Haiku — cost-era default, reasons void on Max; Opus — overkill for
+  structured extraction over 20 observations, marginal gain over Sonnet doesn't justify a slower pass.)
