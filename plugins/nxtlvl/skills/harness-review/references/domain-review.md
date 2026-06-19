@@ -30,6 +30,19 @@ specialist rubrics cite nxtlvl's own hard-won lessons (inform-don't-force, singl
 fail-open-for-session-hooks) as **rationale for why a checkpoint matters** — never as the bar a
 reviewed harness is scored against. *Judge the harness, not its resemblance to nxtlvl.*
 
+**When the ask names a *feature*, not a component type.** Sometimes the subsystem the user wants
+audited (e.g. "the brainstorm/ideation domain", "the memory subsystem") is a **capability that spans
+several component types** — a skill *and* a behavioral rule *and* a command *and* an agent. Don't
+force-fit it to one registry row. Instead: pick the **capability-bearing component as the scoring
+spine** (the artifact that actually delivers the capability — usually the skill or agent) and score it
+on that domain's rubric; **assess the supporting components via their own rubrics' dominant
+dimensions** (the rule via `rules.md`'s activation dimension, the command via `commands.md`'s
+does-it-do-what-it-says dimension), without full separate scorecards; and **treat the cross-wiring
+between them — or its absence — as the central composition finding.** A feature encoded four times
+with no single source of truth and no routing between the copies is itself the headline judgment, and
+this is how you surface it. State the spanning set in the header's Scope line (`DOMAIN=<spine> ·
+FOCUS=<feature>`).
+
 **Phase 2 forks here.** Instead of partitioning the *whole harness* into domains, Mode C partitions
 **within** the chosen domain so the fan-out still parallelizes:
 - **Few artifacts** (≲ 4 hook scripts / agents / etc.) → a **single deep agent** over the whole
