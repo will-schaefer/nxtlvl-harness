@@ -12,7 +12,7 @@ The six phases: **Design → Author → Evaluate → Debug → Orchestrate → O
 | # | Phase | Status | Decision |
 |---|-------|--------|----------|
 | 1 | Design | ✅ reviewed | [ADR-012](../decisions/ADR-012-agent-design-contract.md) |
-| 2 | Author | ⏳ pending | — |
+| 2 | Author | ✅ reviewed | [ADR-013](../decisions/ADR-013-agent-authoring-method.md) |
 | 3 | Evaluate | ⏳ pending | — |
 | 4 | Debug | ⏳ pending | — |
 | 5 | Orchestrate | ⏳ pending | — |
@@ -67,3 +67,38 @@ silent-failure-hunter, tdd-guide, refactor-cleaner, doc-updater, performance-opt
 - **Realization test:** native agent + injected skill by default; custom agent only when isolated
   context / restricted tools / a distinct model tier forces it.
 - **Adopted wholesale:** the lean agent contract and the harness-construction authoring checklist.
+
+---
+
+## Phase 2 — Author
+
+**What "author" means in ecc:** the method for writing an executor (command/agent) and the skill
+it leans on — eval-first, model-routed, with knowledge injected from a caller-agnostic skill.
+
+**Sources read:**
+- `reference/ECC-main/skills/agentic-engineering/SKILL.md:12-64`
+- `reference/ECC-main/commands/code-review.md`, `reference/ECC-main/commands/build-fix.md`
+- `reference/ECC-main/CLAUDE.md` (the skill-injection convention)
+
+### ecc's doctrine
+1. **Injection contract.** Knowledge lives in the skill; the executor is lean and receives the
+   skill's conventions at spawn ("pass conventions from the skill into the agent's prompt").
+   One-way: skill → executor.
+2. **agentic-engineering disciplines.** Done-condition first (eval-first); independently-
+   verifiable units (the 15-min rule); model routing (haiku=narrow, sonnet=implement,
+   opus=architecture/root-cause); escalate a tier only on a clear reasoning-gap failure; compact
+   at milestones, not mid-debug; review AI code for invariants/edges/security, not lint-enforced
+   style.
+3. **Command shape.** Explicit phases → severity table → binary decision rule → deterministic
+   output schema, plus stop-and-ask guardrails.
+
+### nxtlvl decision → [ADR-013](../decisions/ADR-013-agent-authoring-method.md)
+- **Adopt:** one-way skill→lean-executor injection (the orchestrator injects the skill at
+  delegation); done-condition-first; explicit stop-and-ask guardrails; phased structure +
+  deterministic output + a binary decision rule.
+- **Adapt:** model-routing heuristic (tiers per ADR-012, escalate only on a reasoning-gap); the
+  "15-min unit" → agent-sized / independently-verifiable / one-dominant-risk / clear-done-
+  condition; compact at phase boundaries + delegate to isolate context.
+- **Reject:** ecc's per-task cost ledger (our metric is fallback × quality, ADR-005);
+  re-deriving review/dev substance + gh-coupled command internals.
+- Formal eval suites deferred to Phase 3.
