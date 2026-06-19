@@ -9,10 +9,11 @@ Thin alias into the **deep interrogation** tier of the ideation domain — the h
 `/interview-me`. Use it when you want a plan or design stress-tested hard, one branch of the decision tree
 at a time, until the thinking holds.
 
-**Invoke the `grill-me` skill** (Skill tool) on the main thread. By the router's precedence
-(`nxtlvl:` → upstream → native), the nxtlvl-refined version is used once it's authored; until then this
-resolves to the upstream `grill-me`. The interrogation is interactive, so it runs on the main thread —
-never as an agent.
+**Invoke the `grill-me` skill** (Skill tool) on the main thread. The router's precedence is
+`nxtlvl:` → native ([ADR-027](../../../docs/decisions/ADR-027-router-endorses-only-established-items.md));
+`grill-me` is one of its **named interim exceptions** — its nxtlvl-refined body isn't authored yet, so this
+resolves to the upstream `grill-me` for now, and that pointer retires once the ◆ version ships. The
+interrogation is interactive, so it runs on the main thread — never as an agent.
 
 ## When to use
 

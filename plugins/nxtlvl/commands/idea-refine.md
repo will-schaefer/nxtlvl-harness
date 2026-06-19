@@ -8,9 +8,11 @@ argument-hint: "[the rough concept to refine] (optional)"
 Thin alias into the **variant-generation** sub-skill of the ideation domain. Use it when the concept itself
 is still unfixed and you want divergent options — and a convergent pass — before committing to a direction.
 
-**Invoke the `idea-refine` skill** (Skill tool) on the main thread. By the router's precedence
-(`nxtlvl:` → `agent-skills:` → native), the nxtlvl-refined version is used once it's authored; until then
-this resolves to the upstream `idea-refine`. It runs on the main thread.
+**Invoke the `idea-refine` skill** (Skill tool) on the main thread. The router's precedence is
+`nxtlvl:` → native ([ADR-027](../../../docs/decisions/ADR-027-router-endorses-only-established-items.md));
+`idea-refine` is one of its **named interim exceptions** — its nxtlvl-refined body isn't authored yet, so
+this resolves to the upstream `idea-refine` for now, and that pointer retires once the ◆ version ships. It
+runs on the main thread.
 
 ## When to use
 
