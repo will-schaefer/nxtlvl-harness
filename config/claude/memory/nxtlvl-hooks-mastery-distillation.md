@@ -18,7 +18,7 @@ everywhere else — so it *corroborates* nxtlvl's "inform, don't force"
 ([[harness-hooks-inform-not-force]]). Synthesis: **template the inputs, don't compel the outputs.**
 
 **Highest-value adopt:** read-only-by-*withheld-tools* (validator uses `disallowedTools: Write,
-Edit, NotebookEdit`) → make `design-critic`/`context-scout` mechanically read-only, not merely
+Edit, NotebookEdit`) → make `idea-critic`/`context-scout` mechanically read-only, not merely
 instructed. Verify `disallowedTools` vs `disallowed-tools` spelling first or the constraint won't
 bind. Also reference-grade: §3.2 hook flow-control table (exit codes / which events `exit 2`
 blocks / JSON priority) — but heed the **8-vs-13-event caveat** (table covers only the classic 8).

@@ -183,4 +183,4 @@ Fix what it surfaces.
 - Partition: 3 domains (hooks · agents/orchestration · philosophy/periphery).
 - Spine: "deterministic control" vs "inform, don't force" — a contrast that *validated* nxtlvl's
   doctrine (shipped config blocks on exactly one event; fail-open everywhere else).
-- Highest-value adopt: read-only validator via withheld write tools → nxtlvl `design-critic`.
+- Highest-value adopt: read-only validator via withheld write tools → nxtlvl `idea-critic`.
