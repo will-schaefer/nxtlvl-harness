@@ -7,7 +7,7 @@ date: 2026-06-16
 
 # ADR-008: Reactive growth governed by a written membership/intake gate
 
-> **Amended by [ADR-012](ADR-012-confident-core-capability-domains.md)** (2026-06-18): the
+> **Amended by [ADR-013](ADR-013-confident-core-capability-domains.md)** (2026-06-18): the
 > membership-test classification below is amended for a **bounded confident-core** of five
 > capability domains (Python · TypeScript/JavaScript · Rust · Frontend & UI ·
 > Backend/Architecture), which move *reactive → build-now*. The intake gate and harden trigger
