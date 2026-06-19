@@ -1,14 +1,16 @@
 # Harness Review Workflow — vendor → fan-out → distill
 
-> Drafted 2026-06-19 as the design doc for a reusable skill. Generalizes the method run on
-> `disler/claude-code-hooks-mastery` (see [hooks-mastery-distillation.md](hooks-mastery-distillation.md))
-> so the same pipeline can be applied to the 10+ other harnesses queued for review. This is the
-> **process**; each run's *output* is a distillation in `docs/reference/`.
+> Deep-dive reference for the **`harness-review` skill** (`SKILL.md` is the executable spine; this
+> is the rationale, full phase detail, lessons, and worked example). Drafted 2026-06-19, generalizing
+> the method run on `disler/claude-code-hooks-mastery` (see
+> `docs/reference/hooks-mastery-distillation.md`) so the same pipeline applies to the 10+ other
+> harnesses queued for review. This is the **process**; each run's *output* is a distillation in
+> `docs/reference/`.
 >
 > **Build-method anchor:** nxtlvl is shaped by *systematically reviewing existing harnesses and
 > deciding, area by area, adopt / adapt / reject* (see `CLAUDE.md`). This workflow is the
 > mechanical realization of that method. It **composes** existing skills rather than reinventing
-> them — `superpowers:dispatching-parallel-agents` (Phase 3), `doc-coauthoring` (Phase 5), and the
+> them — `superpowers:dispatching-parallel-agents` (Phase 3) and the
 > decision rule / `nxtlvl:documentation-and-adrs` (Phase 7).
 
 ---
@@ -38,7 +40,7 @@ self-limiting: a repo with no transferable patterns simply produces a short ledg
 **Outputs**
 - `reference/<repo>-main/` — the vendored clone (**gitignored**; machine-local).
 - `docs/reference/<repo>-distillation.md` — the **tracked** artifact (house distillation format).
-- A `MEMORY.md` pointer + auto-memory file (per `distill-reusable-to-doc-plus-memory`).
+- A `MEMORY.md` pointer + auto-memory file (per the `distill-reusable-to-doc-plus-memory` memory note).
 - Zero or more **ADR candidates** when a finding rises to an architectural decision.
 
 ---
@@ -52,7 +54,7 @@ self-limiting: a repo with no transferable patterns simply produces a short ledg
 | **2** | **Structural map** | subsystem inventory + the fan-out partition (independent domains) |
 | **3** | **Parallel fan-out analysis** | N structured digests, each ending in Adopt/Adapt/Reject + `file:line` |
 | **4** | **Synthesize** | the cross-cutting spine (headline finding); signal-vs-demo split |
-| **5** | **Distill** (doc-coauthoring) | `docs/reference/<repo>-distillation.md`, section-by-section |
+| **5** | **Distill** | `docs/reference/<repo>-distillation.md`, section-by-section |
 | **6** | **Reader-test** | fresh-context agent confirms the doc stands alone |
 | **7** | **Land it** | memory pointer + `MEMORY.md` line + ADR candidates raised |
 
@@ -76,11 +78,9 @@ du -sh reference/<repo>-main             # capture size
   **local-only by design**. Do *not* add a tracking exception; the distillation is the durable
   artifact. (ECC-main is the one tracked exception, per ADR-002 dormant-backstop.)
 - **Sandbox:** the clone needs network — run it with the sandbox disabled.
-- **GateGuard:** the first Bash call triggers a fact-force gate; the `rm -rf` triggers a
-  destructive-command gate. Both are satisfied by stating facts once, then retrying (see §6).
 
 ### Phase 2 — Structural map
-`find <repo>-main -maxdepth 3` + read the README intro. Identify the subsystems and **partition
+`find reference/<repo>-main -maxdepth 3` + read the README intro. Identify the subsystems and **partition
 them into independent domains** for the fan-out. The partition is the key design choice of this
 phase — domains must be independently analyzable (no shared state) so they can run in parallel.
 For a `.claude/`-style harness the natural partition is roughly:
@@ -110,7 +110,7 @@ nxtlvl decision** (for hooks-mastery: "deterministic control" vs "inform, don't 
 separate **signal from demo** — teaching/demo repos carry deliberate filler (demo domains, toy
 apps) that must not be mistaken for craft.
 
-### Phase 5 — Distill (compose `doc-coauthoring`)
+### Phase 5 — Distill
 Write `docs/reference/<repo>-distillation.md` in the **house distillation format**:
 - Dated blockquote header (what it is, what was analyzed, **Purpose**, companion links).
 - Numbered `##` sections; verbatim quotes with `file:line` citations throughout.
@@ -120,14 +120,14 @@ Write `docs/reference/<repo>-distillation.md` in the **house distillation format
 Default to **section-by-section** drafting (scaffold all headers with placeholders, then fill and
 review each). Lead with the spine from Phase 4 as the headline section.
 
-### Phase 6 — Reader-test (doc-coauthoring Stage 3)
+### Phase 6 — Reader-test
 Dispatch a fresh-context agent to read the finished distillation cold and report: does it stand
 alone, are the adopt/adapt/reject calls actionable, any unsupported claim or missing citation.
 Fix what it surfaces.
 
 ### Phase 7 — Land it
-- Add an auto-memory pointer + a one-line `MEMORY.md` index entry (per
-  `distill-reusable-to-doc-plus-memory`).
+- Add an auto-memory pointer + a one-line `MEMORY.md` index entry (per the
+  `distill-reusable-to-doc-plus-memory` memory note).
 - For any finding that is **architectural and expensive to reverse**, raise an **ADR candidate**
   via the decision rule (`/interview-me`→`/grill-me`→`/spec`→`/plan`→`nxtlvl:documentation-and-adrs`).
   Curate hard — most findings are notes, not ADRs.
@@ -149,12 +149,6 @@ Fix what it surfaces.
 
 ## 6. Gotchas & lessons (from the hooks-mastery run)
 
-- **GateGuard (ECC) is the main friction.** Three gates fire: (a) first-Bash-of-session
-  fact-force, (b) destructive-command (`rm -rf`) fact-force, (c) edit/write fact-force. Each is
-  satisfied by stating the requested facts once and retrying; (c) fires **once per file per
-  session**, then is quiet. For a multi-file doc session, offer to disable just
-  `pre:edit-write:gateguard-fact-force` via `ECC_DISABLED_HOOKS` to cut friction — the
-  dangerous-bash block stays live.
 - **Clone needs the sandbox off** (network egress); the in-repo `rm -rf .git` is safe (only the
   fresh clone's own `.git`).
 - **Edit wrapped prose carefully** — read the exact line before an `Edit`; soft-wrapped paragraphs
@@ -173,18 +167,18 @@ Fix what it surfaces.
 ## 7. Composes (don't reconstruct)
 
 - **Phase 3** → `superpowers:dispatching-parallel-agents` (independent-domain fan-out).
-- **Phase 5/6** → `doc-coauthoring` (scaffold → section-by-section → reader-test).
 - **Phase 7** → the decision rule (`~/.claude/rules/decisions.md`) +
-  `nxtlvl:documentation-and-adrs`; `distill-reusable-to-doc-plus-memory` for the memory pointer.
-- **Cross-run** → `triangulate-three-harnesses-build-decisions`: when a *build decision* (not a
-  repo review) is on the table, review how 3 harnesses each do it. This workflow feeds that —
-  every distillation is one of the three voices.
+  `nxtlvl:documentation-and-adrs`; the `distill-reusable-to-doc-plus-memory` memory note for the
+  memory-pointer pattern.
+- **Cross-run** → the `triangulate-three-harnesses-build-decisions` memory note: when a *build
+  decision* (not a repo review) is on the table, review how 3 harnesses each do it. This workflow
+  feeds that — every distillation is one of the three voices.
 
 ---
 
 ## 8. Worked example
 
-`disler/claude-code-hooks-mastery`, run 2026-06-19 → [hooks-mastery-distillation.md](hooks-mastery-distillation.md).
+`disler/claude-code-hooks-mastery`, run 2026-06-19 → `docs/reference/hooks-mastery-distillation.md`.
 - LENS: context-alert hook · dangerous-bash gate · C&M / PreCompact Hook 2 · ideation agents.
 - Partition: 3 domains (hooks · agents/orchestration · philosophy/periphery).
 - Spine: "deterministic control" vs "inform, don't force" — a contrast that *validated* nxtlvl's
