@@ -21,7 +21,7 @@ nxtlvl:<skill>   →   agent-skills:<skill>   →   native (handle it directly, 
 
 A nxtlvl-refined skill is **self-contained** — it does *not* call its upstream parent, it replaces it. So when the map marks a phase ◆, invoke the nxtlvl one and stop; don't also reach for the agent-skills version. Where there's no ◆, the upstream skill is the floor — use it directly. And not every task needs a skill: a one-line fix or a pure lookup is handled natively. Skills exist to prevent recurring mistakes, not to ceremonialize trivial work.
 
-**One naming wrinkle.** The labels below are the literal skill names — *except* `review`. Its upstream is the `agent-skills:code-review-and-quality` *skill* (`review` is only that skill's command alias). So `nxtlvl:review` supersedes `code-review-and-quality`, and the fallthrough for that one row is `code-review-and-quality`, not a skill literally named `review`. Every other row's label is both the map name and the resolved skill name.
+**Two naming wrinkles.** The labels below are the literal skill names — *except* `review` and `github-workflow`, where the nxtlvl skill carries a different name than its upstream parent, so the ◆ label and the fallthrough name diverge. (1) `nxtlvl:review` supersedes the `agent-skills:code-review-and-quality` *skill* (`review` is only that skill's command alias). (2) `nxtlvl:github-workflow` supersedes `agent-skills:git-workflow-and-versioning` — refined in place and renamed for its GitHub/`gh` focus ([ADR-024](../../../../docs/decisions/ADR-024-git-workflows-domain-command-agent-skill.md)). For both rows the map label is the nxtlvl skill name and the fallthrough is the differently-named upstream; every other row's label is both the map name and the resolved skill name.
 
 ## Discovery map
 
@@ -47,7 +47,7 @@ Task arrives
     │   ├── Too complex? ───────────────────→ code-simplification
     │   ├── Security concerns? ─────────────→ security-and-hardening
     │   └── Performance concerns? ──────────→ performance-optimization
-    ├── Committing/branching? ──────────────→ git-workflow-and-versioning
+    ├── Committing/branching? ──────────────→ ◆ github-workflow
     ├── CI/CD pipeline work? ───────────────→ ci-cd-and-automation
     ├── Deprecating/migrating? ─────────────→ deprecation-and-migration
     ├── Writing docs / recording a decision?→ ◆ documentation-and-adrs
@@ -64,6 +64,7 @@ Multiple skills routinely apply in sequence: a feature is often `spec-driven-dev
 
 Skills hold knowledge; **agents execute it** (ADR-012). When a phase has a dedicated nxtlvl agent, the agent is the executor and the skill is its single source of truth — don't restate the skill into the agent's request.
 
+- **`nxtlvl:git-workflow-runner`** (agent / `/git-workflow`) executes `◆ github-workflow` — walks the branch → commit → PR → review → CI → merge loop in isolation, composing `◆ review` at the review step. It has `Bash` but no `Write`/`Edit`, so it commits and pushes yet is structurally incapable of touching source — code fixes hand back to you ([ADR-024](../../../../docs/decisions/ADR-024-git-workflows-domain-command-agent-skill.md)). Reach for the agent to drive a change to a reviewed PR; reach for the skill to do it inline.
 - **`nxtlvl:doc-keeper`** (agent / `/doc-keeper`) executes `◆ documentation-and-adrs` — records the *why*, writes/supersedes ADRs, keeps the index honest. Reach for the agent when you want the documentation pass *done*; reach for the skill when you want to do it inline.
 
 ## Core operating behaviors
@@ -95,7 +96,8 @@ These hold across every skill the router dispatches to. The two house convention
 | Verify | test-driven-development · browser-testing-with-devtools · debugging-and-error-recovery | upstream |
 | Review | **review** — five-axis review, refined for my conventions | ◆ nxtlvl |
 | Review | code-simplification · security-and-hardening · performance-optimization | upstream |
-| Ship | git-workflow-and-versioning · ci-cd-and-automation · deprecation-and-migration · observability-and-instrumentation · shipping-and-launch | upstream |
+| Ship | ci-cd-and-automation · deprecation-and-migration · observability-and-instrumentation · shipping-and-launch | upstream |
+| Ship | **github-workflow** — standardized GitHub loop, GitHub/`gh`-focused (exec: `nxtlvl:git-workflow-runner` / `/git-workflow`) | ◆ nxtlvl |
 | Ship | **documentation-and-adrs** — record the *why*, house ADR format (exec: `nxtlvl:doc-keeper`) | ◆ nxtlvl |
 | Build-method | **harness-review** — vendor an external harness → fan-out → distill into adopt/adapt/reject (native, no upstream) | ◆ nxtlvl |
 
