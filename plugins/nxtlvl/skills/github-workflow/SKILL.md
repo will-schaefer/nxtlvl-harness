@@ -1,6 +1,6 @@
 ---
 name: github-workflow
-description: nxtlvl GitHub workflow — the standardized branch → commit → PR → review → CI → merge loop for agents. Vendored from agent-skills/ECC `git-workflow` + `github-ops` and refined for fit (Conventional Commits, draft-PR-first, no attribution, pointers-over-dumps). Use when starting work that will land on GitHub, committing, opening or updating a PR, or driving a change to merge. Executed by the `nxtlvl:github-workflow` agent; composes `nxtlvl:review` at the review stage.
+description: nxtlvl GitHub workflow — the standardized branch → commit → PR → review → CI → merge loop for agents. Vendored from agent-skills/ECC `git-workflow` + `github-ops` and refined for fit (Conventional Commits, draft-PR-first, no attribution, pointers-over-dumps). Use when starting work that will land on GitHub, committing, opening or updating a PR, or driving a change to merge. Runs in-context and spawns the `nxtlvl:review` agent at the review stage.
 ---
 
 # GitHub Workflow (nxtlvl)
@@ -72,7 +72,7 @@ Notable implementation choices worth a reviewer's attention.
 
 ## 4. Review — compose `nxtlvl:review`
 
-**Don't reconstruct review here.** Run the five-axis pass via `nxtlvl:review` (correctness, readability, architecture, security, performance), pulling the **language-appropriate** reviewer for the changed files (Next.js / Python / Rust) rather than one generic pass. Self-review and resolve findings *before* requesting a human review. Surface any assumption you made about intent or environment so a wrong one is visible.
+**Don't reconstruct review here.** Spawn the `nxtlvl:review` agent for the five-axis pass (correctness, readability, architecture, security, performance), pulling the **language-appropriate** reviewer for the changed files (Next.js / Python / Rust) rather than one generic pass — isolation lives in that read-only agent, not here. Self-review and resolve findings *before* requesting a human review. Surface any assumption you made about intent or environment so a wrong one is visible.
 
 ## 5. CI — investigate, don't just re-run
 
