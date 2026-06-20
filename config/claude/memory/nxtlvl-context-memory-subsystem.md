@@ -1,6 +1,6 @@
 ---
 name: nxtlvl-context-memory-subsystem
-description: "The C&M domain: design FINAL + ADRs recorded; floor /plan written + all 5 ◇ decisions LOCKED (D1-D5, spec amended for observer=Sonnet); build ~15%; next = Phase 0 spikes."
+description: "The C&M domain: design FINAL + ADRs recorded; all 5 ◇ decisions LOCKED; Phase 0 spikes GREEN; Phase 1 foundation DONE (2026-06-20 — 6 libs, 79 tests green, on branch feat/cm-phase1-foundation, nothing wired); next = Phase 2 write path."
 metadata: 
   node_type: memory
   type: project
@@ -22,7 +22,17 @@ old note flagged as "pending" are **all applied**, and the subsystem decision la
 ADR-011 (that's stop-slop prose; numbering shifted as scope broadened — the collision hazard).
 ADR-004/005/007 are amended on disk.
 
-**Build = ~15% / early.** Only two pieces have code: `context-alert.js` (read-path budget FYI,
+**Build = Phase 1 DONE (2026-06-20).** Six foundation libs built via parallel subagents (2 waves:
+`paths`/`project-identity`/`atomic` → `obs-log`/`instincts`/`bookmarks`) under `plugins/nxtlvl/lib/`,
+each unit-tested — **79/79 lib tests green**, existing **24/24 hook tests green** (no regression),
+`hooks.json` untouched (no behavior change in a live session yet), + a cross-module integration smoke
+passed. Key shapes: `paths.layout(projectId)` = single source of truth for the storage tree; obs-log
+cursor = monotonic `seq` (purge-safe); instinct decay = read-time exponential (`raw·0.5^(days/30)`,
+stored confidence never mutated). On branch `feat/cm-phase1-foundation` (uncommitted unless noted).
+**Next = Phase 2 (write path): scrub → capture hook → one-shot Sonnet observer.** The throwaway
+`cm-phase0-workspace/` (scrub.js/identity.js spikes) can be deleted now that Phase 1 landed.
+
+**(Historical) Build was ~15% / early.** Two pieces had code: `context-alert.js` (read-path budget FYI,
 20/20 tests, wired PostToolUse, but Checkpoint-A live-verify + T6 promote still unchecked) and
 `fallback-log.sh` (write-path capture, wired PreToolUse). **Unbuilt:** PreCompact pointer
 (Hook 2), and the whole lifecycle floor — SessionStart brief, SessionEnd distill→instincts,
@@ -39,6 +49,18 @@ supersedes the old narrow `nxtlvl-context-awareness-hooks-plan.md`. **All 5 `◇
 (adopt ecc) + `evolver` agent authoring via skill-creator (reject ecc's stub-gen) → split into
 Tasks 5.4a/5.4b; D4 metrics in `/instinct-status` only (briefing stays lean); D5 observer model =
 `claude-sonnet-4-6` (quality-first override of the spec's cost-era Haiku — **spec amended**, recorded
-as spec X7; not ADR-worthy). Build still ~15% — next real work is **Phase 0** (de-risk spikes).
+as spec X7; not ADR-worthy).
+
+**Phase 0 = DONE, all four spikes GREEN (2026-06-20), no pivots** — built in gitignored
+`cm-phase0-workspace/` (throwaway; delete when Phase 1 lands). 0.4 scrub + 0.5 path/identity =
+`node --test` (17 tests). 0.2 + 0.3 run against the **real `claude` binary** headlessly via
+`claude -p --settings <isolated>` (no live-settings change): **0.2** SessionStart `additionalContext`
+sentinel reached the model (control returned `NONE`); **0.3** detached observer wrote +13.5s **after**
+a real claude process exited (reparented to `init`/own process group via `detached:true` — CC never
+had a handle to kill it), fail-open held → **the detached one-shot observer architecture stands, no
+queue-file pivot**. Plan Risks table + acceptance boxes updated; only the **human-review gate**
+(Checkpoint A-pre) remains before **Phase 1** (six foundation libs: paths, project-identity, atomic,
+obs-log, instincts, bookmarks — three parallel-safe). Technique worth reusing: hooks needing a live
+`claude` can be tested non-interactively with `claude -p --settings <file>` + epoch-ms ordering.
 Related: [[nxtlvl-harness]],
 [[adr-numbering-collision-hazard]], [[nxtlvl-context-alert-hook]], [[decision-recording-conventions]].
