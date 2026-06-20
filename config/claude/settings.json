@@ -48,6 +48,12 @@
         "source": "git",
         "url": "https://github.com/Egonex-AI/Understand-Anything.git"
       }
+    },
+    "ruflo": {
+      "source": {
+        "source": "github",
+        "repo": "ruvnet/ruflo"
+      }
     }
   },
   "sandbox": {
