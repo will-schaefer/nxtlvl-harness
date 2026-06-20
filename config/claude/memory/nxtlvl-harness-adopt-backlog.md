@@ -27,6 +27,8 @@ cross-linkable from memory, plans, and ADRs.
   Most rows never graduate — they're hygiene/tactics, and that's fine.
 - **Curate hard** — its value is being short and live; a dump of every finding stops being actionable.
 
-Seeded 2026-06-20 with ruflo-adr **RADR-01** (DFS cycle detector) / **RADR-02** (two-tier exit
-contract) under §5 ADR-integrity audit, and **RADR-03** (code-ADR drift detection) under §5
-WARNING-tier — all `open`.
+Seeded 2026-06-20 with ruflo-adr **RUFLO-01..05** — RUFLO-01 (DFS cycle detector) / RUFLO-02 (two-tier
+exit contract) / RUFLO-05 (cross-link sanitizer) under §5 ADR-integrity audit; RUFLO-03 (code-ADR
+drift detection) under §5 WARNING-tier; RUFLO-04 (typed `depends-on`/`amends` fields) under house
+ADR format (§3) — all `open`. Also carries a Trellis review (TREL-01..15) and a doctrine-notes
+section (recurring REJECT contrasts confirmed across ≥2 harnesses).

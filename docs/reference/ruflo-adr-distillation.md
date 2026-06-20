@@ -160,26 +160,26 @@ can't.
 
 ### ADOPT — port the algorithm/idiom, drop the backend
 
-> Backlog IDs (`docs/plan/nxtlvl-harness-adopt-backlog.md`): the two §5-audit rows are **RADR-01**,
-> **RADR-02**; the ADAPT drift-detection row is **RADR-03**. The finer tactical adopts below
-> (sanitizer, argv-array, typed fields) remain build-time notes — promote to the backlog only if/when
-> worth tracking as standalone work items.
+> Backlog IDs (`docs/plan/nxtlvl-harness-adopt-backlog.md`): **RUFLO-01**/**02** (§5 audit),
+> **RUFLO-03** (§5 WARNING-tier drift detection), **RUFLO-04** (house-format typed fields), **RUFLO-05**
+> (§5 cross-link sanitizer). The one remaining `—` row (argv-array `spawnSync`) stays a build-time
+> note — too tactical to track as a standalone work item.
 
 | ID | Item | nxtlvl surface | Rationale | Evidence |
 |---|---|---|---|---|
-| **RADR-01** | **DFS supersede-cycle detector** | §5 ADR-integrity audit | Correct, self-contained; maps 1:1 onto "superseded ADRs form no impossible loop." Run over edges parsed from **markdown frontmatter**, not a keystore. Objective+binary → may BLOCK. | `verify.mjs:62-82` |
-| **RADR-02** | **Two-tier exit contract** (block on cycles / warn on dangling unless STRICT) | §5 audit exit discipline | Already expresses block-on-facts / warn-on-the-rest. | `verify.mjs:118-121` |
-| — | **Issue-number false-positive sanitizer** (strip `#N`/`PR N`/commit/backticks before `ADR-NNN`) | doc-keeper / audit cross-link parsing | nxtlvl parses the same cross-links and hits the identical `#1697`→`ADR-1697` trap. | `import.mjs:169-182` |
+| **RUFLO-01** | **DFS supersede-cycle detector** | §5 ADR-integrity audit | Correct, self-contained; maps 1:1 onto "superseded ADRs form no impossible loop." Run over edges parsed from **markdown frontmatter**, not a keystore. Objective+binary → may BLOCK. | `verify.mjs:62-82` |
+| **RUFLO-02** | **Two-tier exit contract** (block on cycles / warn on dangling unless STRICT) | §5 audit exit discipline | Already expresses block-on-facts / warn-on-the-rest. | `verify.mjs:118-121` |
+| **RUFLO-05** | **Issue-number false-positive sanitizer** (strip `#N`/`PR N`/commit/backticks before `ADR-NNN`) | §5 audit cross-link parsing | nxtlvl parses the same cross-links and hits the identical `#1697`→`ADR-1697` trap. | `import.mjs:169-182` |
 | — | **`spawnSync` argv-array (never shell-string) idiom** | audit, when it shells `git`/`gh` | Injection-safe by construction; ADR titles/paths can't break the call. | `import.mjs:185-190` |
-| — | **Typed `depends-on` (optional frontmatter field)** | house format (§3) | nxtlvl already cross-links ADRs but untyped; typing the dependency edge is pure gain, no DB needed. | `REFERENCE.md:81-84` |
+| **RUFLO-04** | **Typed `depends-on` (optional frontmatter field)** | house format (§3) | nxtlvl already cross-links ADRs but untyped; typing the dependency edge is pure gain, no DB needed. | `REFERENCE.md:81-84` |
 
 ### ADAPT — borrow the idea, reject the plumbing
 
 | ID | Item | nxtlvl surface | Rationale | Evidence |
 |---|---|---|---|---|
-| **RADR-03** | **Code-ADR drift detection** (grep ADR IDs in source + git-blame-vs-acceptance-date) | §5 invoked audit check | A real capability nxtlvl's documentary ADRs lack — but implement as a plain script against `docs/decisions/`, no AgentDB, and a regex that matches nxtlvl's actual `ADR-NNN` slug (theirs is broken). | `REFERENCE.md:86-101` |
+| **RUFLO-03** | **Code-ADR drift detection** (grep ADR IDs in source + git-blame-vs-acceptance-date) | §5 invoked audit check | A real capability nxtlvl's documentary ADRs lack — but implement as a plain script against `docs/decisions/`, no AgentDB, and a regex that matches nxtlvl's actual `ADR-NNN` slug (theirs is broken). | `REFERENCE.md:86-101` |
 | — | **Dangling-ref + status-mismatch checks** | §5 audit | Keep the checks; source the id-set/edges from the **filesystem** (glob `docs/decisions/`, parse frontmatter), not a keystore. | `verify.mjs:59-60`; `import.mjs:227-232` |
-| — | **`amends` as a named relationship** | §1 amend-existing-ADR guidance | §1 already says resolved questions "amend that ADR" but has no field/marker; record in-file (`amended-by:`), reject out-of-band edge storage. | `REFERENCE.md:83` |
+| **RUFLO-04** | **`amends` as a named relationship** | §1 amend-existing-ADR guidance | §1 already says resolved questions "amend that ADR" but has no field/marker; record in-file (`amended-by:`), reject out-of-band edge storage. (Paired with `depends-on` under RUFLO-04.) | `REFERENCE.md:83` |
 | — | **Frontmatter-first / body-fallback parser robustness** | doc-keeper (legacy ingest only) | nxtlvl is single-format, but the parse *ordering* is sane if doc-keeper ever ingests legacy ADRs. | `import.mjs:69-130` |
 
 ### REJECT — confirms a locked nxtlvl position

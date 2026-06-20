@@ -38,6 +38,7 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [025](ADR-025-project-identity-observer-concurrency.md) | Project identity = git common directory; atomic writes (tmp + rename) + per-session single-flight observer guard | Accepted (impl. deferred) |
 | [026](ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md) | Ideation phase = three-layer domain with a main-thread orchestrator skill + isolated read-only agents (inverts [024](ADR-024-git-workflows-domain-command-agent-skill.md)) | Accepted |
 | [027](ADR-027-router-endorses-only-established-items.md) | Router endorses only established nxtlvl items; delist the agent-skills fallthrough floor (precedence collapses to `nxtlvl → native`, dark at unowned phases, `spec`/`plan` kept as interim exceptions) — amends [003](ADR-003-compose-not-reconstruct.md) | Accepted |
+| [028](ADR-028-project-management-domain-manage-and-see.md) | Ship a Project Management workflow/process domain (not a capability domain — does not trip ADR-016's brake) as a manage-and-see layer: standalone interactive dashboard + single-writer state library; execution delegated to domain agents | Accepted (impl. deferred — phased build) |
 
 > **Numbering note:** the git-workflows decisions are recorded as ADR-023 (skill + conventions,
 > superseded) and ADR-024 (the three-layer domain). They were originally drafted as ADR-012 →

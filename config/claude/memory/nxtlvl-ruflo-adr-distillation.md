@@ -32,3 +32,8 @@ forbids), and the logged numbering-collision hazard (working-tree-only `Glob`).
 (`:27`) — nxtlvl's audit must fail LOUD. Gaps ruflo doesn't cover (nxtlvl builds itself):
 numbering gaps/dupes, README-index-vs-disk reconciliation. **No ADR** — audit-tactics + format-field
 harvest; fold adopts into the future-audit plan when that work starts.
+
+Promoted to the adopt backlog [[nxtlvl-harness-adopt-backlog]] as **RUFLO-01..05**: 01/02/05 under §5
+ADR-integrity audit (DFS cycle detector / two-tier exit contract / cross-link sanitizer), 03 under §5
+WARNING-tier (code-ADR drift detection), 04 under house ADR format §3 (typed `depends-on`/`amends`
+fields). All `open`.

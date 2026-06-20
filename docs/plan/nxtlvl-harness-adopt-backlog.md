@@ -13,7 +13,10 @@ REJECT here *only* as a one-line **doctrine note** when the same contrast recurs
 (that recurrence is itself the signal — e.g. "files-over-DB confirmed by ecc, ruflo, ruflo-adr").
 
 **ID** — `<HARNESS-ABBREV>-NN`, assigned once, **never reused**. The stable anchor memory, plans, and
-ADRs cross-link to. (ruflo-adr → `RADR`.)
+ADRs cross-link to. The abbrev is **harness-level**, not plugin-level — every finding from anywhere in
+a harness shares one prefix and one number sequence; the row's **Source** field records which
+sub-plugin/file it came from. (The whole ruflo/claude-flow harness → `RUFLO`, including its `ruflo-adr`
+plugin.)
 
 **Status is a lifecycle, not a checkbox** — burn it down, don't let it become a graveyard:
 - `open` — harvested, not yet acted on
@@ -31,21 +34,27 @@ being actionable — the same failure mode as an ADR set with no threshold.
 
 ## Abbrev registry
 
-| Harness | Abbrev | Distillation |
+| Harness | Abbrev | Distillation(s) |
 |---|---|---|
-| ruflo-adr | `RADR` | [`docs/reference/ruflo-adr-distillation.md`](../reference/ruflo-adr-distillation.md) |
+| ruflo (claude-flow) | `RUFLO` | per-plugin: [`ruflo-adr-distillation.md`](../reference/ruflo-adr-distillation.md); harness-level: [`ruflo-distillation.md`](../reference/ruflo-distillation.md), [`ruflo-discovery-review.md`](../reference/ruflo-discovery-review.md) |
 | Trellis | `TREL` | [`docs/reference/trellis-distillation.md`](../reference/trellis-distillation.md) |
+| CodeWhale | `CW` | [`docs/reference/codewhale-scripts-review.md`](../reference/codewhale-scripts-review.md) |
 
 ---
 
 ## Target: §5 ADR-integrity audit
 
-- **[RADR-01]** · ADOPT · **DFS supersede-cycle detector** · ruflo-adr `verify.mjs:62-82` · `open` · [→](../reference/ruflo-adr-distillation.md)
-- **[RADR-02]** · ADOPT · **two-tier exit contract** (block on cycles / warn on dangling unless `VERIFY_STRICT`) · ruflo-adr `verify.mjs:118-121` · `open` · [→](../reference/ruflo-adr-distillation.md)
+- **[RUFLO-01]** · ADOPT · **DFS supersede-cycle detector** · ruflo-adr `verify.mjs:62-82` · `open` · [→](../reference/ruflo-adr-distillation.md)
+- **[RUFLO-02]** · ADOPT · **two-tier exit contract** (block on cycles / warn on dangling unless `VERIFY_STRICT`) · ruflo-adr `verify.mjs:118-121` · `open` · [→](../reference/ruflo-adr-distillation.md)
+- **[RUFLO-05]** · ADOPT · **issue-number false-positive sanitizer** (strip `#N`/`PR N`/commit-hash/backtick spans *before* matching `ADR-NNN`) — for the audit's "resolvable cross-links" check · ruflo-adr `import.mjs:169-182` · `open` · [→](../reference/ruflo-adr-distillation.md)
 
 ## Target: §5 audit — softer / WARNING-tier
 
-- **[RADR-03]** · ADAPT · **code-ADR drift detection** (grep ADR-IDs in source + git-blame-vs-acceptance-date; plain script, **fixed regex** — theirs misses 4-digit IDs) · ruflo-adr `REFERENCE.md:86-101` · `open` · [→](../reference/ruflo-adr-distillation.md)
+- **[RUFLO-03]** · ADAPT · **code-ADR drift detection** (grep ADR-IDs in source + git-blame-vs-acceptance-date; plain script, **fixed regex** — theirs misses 4-digit IDs) · ruflo-adr `REFERENCE.md:86-101` · `open` · [→](../reference/ruflo-adr-distillation.md)
+
+## Target: house ADR format (§3)
+
+- **[RUFLO-04]** · ADOPT · **typed `depends-on` / `amends` frontmatter fields** (in-file edge, no DB) — types nxtlvl's currently-untyped prose cross-links; `amends` gives §1's "resolved question → amend that ADR" guidance an actual marker · ruflo-adr `REFERENCE.md:81-84` · `open` · [→](../reference/ruflo-adr-distillation.md)
 
 ---
 
@@ -62,6 +71,10 @@ being actionable — the same failure mode as an ADR set with no threshold.
 
 - **[TREL-02]** · ADOPT · **single-source markdown breadcrumb, parser-only hook, no fallback dict, degrade-to-visible** — could drive a per-turn pipeline-phase breadcrumb (brainstorm→spec→plan→build) · Trellis `inject-workflow-state.py:174-197`, `workflow-state-contract.md:113-128` · `open` · [→](../reference/trellis-distillation.md)
 - **[TREL-14]** · ADAPT · **marker-checked hook injection with prose fallback** (check `<!-- injected -->` marker, else self-load) — hook-agnostic graceful degradation · Trellis `trellis-implement.md:21-24` · `open` · [→](../reference/trellis-distillation.md)
+
+## Target: Dangerous-bash gate / command-policy
+
+- **[CW-01]** · ADAPT · **arity-aware command classification** for the dangerous-bash gate — a flag-stripping tokenizer + a static arity table classify a command to its canonical *positional* prefix (`git branch -f main` → `git branch`; flags are recognized, never substring-matched), replacing the substring/regex deny-matching that produced the recorded `git branch -f main` false-positive. The portable shape is **two matchers, two jobs**: word-boundary deny matching that *keeps* flags (blocks the specific invocation — `git push --force` ≠ `--force-with-lease`) paired with flag-insensitive arity allow matching (trust a whole command family). Port the *idea* into the Node hook (it's a compiled Rust crate, not liftable); their test suite is a ready-made spec. · CodeWhale `bash_arity.rs:304-378` (table :27-259) + deny word-boundary `lib.rs:358-372`, tests `bash_arity.rs:404-578` · `open` · [→](../reference/codewhale-scripts-review.md)
 
 ## Target: Spec→plan pipeline / scoped read-contracts
 
