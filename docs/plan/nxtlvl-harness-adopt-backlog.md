@@ -85,7 +85,7 @@ being actionable — the same failure mode as an ADR set with no threshold.
 ## Doctrine notes (recurring contrasts — REJECTs confirmed across ≥2 harnesses)
 
 - **Tool-withholding-not-prose** — a read-only agent must *physically lack* Write, not be asked via a prose "FORBIDDEN" list. Confirmed by ruflo, superclaude, **Trellis** (`trellis-research.md:65-80` grants Write then forbids in prose; secondary-runtime agents declare no `tools:` → inherit all).
-- **Single-source, no N-copy fan-out** — encoding a capability across N hand-maintained per-target copies drifts. Confirmed by ruflo (byte-triplication), superclaude (src/↔plugins/ stale copy), **Trellis** (caught mid-drift: codex agent v0.6.2↔v0.6.3; one skill divergent in name/desc/length across 5 roots).
+- **Single-source, no N-copy fan-out** — encoding a capability across N hand-maintained per-target copies drifts. Confirmed by ruflo (byte-triplication), superclaude (src/↔plugins/ stale copy), **Trellis** (caught mid-drift: codex `.toml` carries a 25-line block its template dropped; brainstorm skill divergent in name/desc/length installed↔codex-template).
 
 ---
 
