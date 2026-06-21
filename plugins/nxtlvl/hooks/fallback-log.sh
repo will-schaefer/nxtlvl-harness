@@ -1,34 +1,48 @@
 #!/usr/bin/env bash
-# nxtlvl fallback-log hook  —  PreToolUse matcher: Skill|Task
+# nxtlvl fallback-log hook  —  PreToolUse matcher: Skill|Task|Agent
 #
 # FAIL-OPEN IS ABSOLUTE. This hook must NEVER block or alter a session.
 # Every path exits 0 and emits no decision output. Any internal error is swallowed.
 #
-# M0 scope (this milestone): fail-open skeleton + the stdin SPIKE capture.
-#   SPIKE on  -> dump the raw PreToolUse stdin to spike-stdin.json (Task 5),
-#                so the exact field carrying the invoked name can be identified.
-#                Triggered by EITHER `NXTLVL_SPIKE=1` in the env OR the presence of
-#                the sentinel file ~/.claude/nxtlvl/.spike-on (ergonomic: toggle the
-#                spike inside a live session with `touch`/`rm`, no relaunch needed).
-#   normal    -> NO-OP. The ecc-detection append is intentionally deferred to
-#                M6/M7 (Task 12/13), AFTER the spike confirms the stdin field.
-#                Writing append logic now would mean guessing the field.
+# Role (ADR-005): the NORTH-STAR fallback log. When an `ecc:`-prefixed Skill/Task/Agent
+# fires, append ONE JSONL line to the GLOBAL log ~/.claude/nxtlvl/fallback-log.jsonl:
+#   { ts, session, ecc_thing, task }
+# Non-ecc invocations append nothing. The log is global (spans all work, survives reinstall)
+# and powers /instinct-status's fallback-rate readout (lib/metrics.js).
 #
-# Do NOT add the ecc append here until the spike passes (spec platform-facts row is GATED).
+# The invoked name lives in ONE of two stdin fields (M0 spike, resolved 2026-06-17):
+#   Skill            -> .tool_input.skill
+#   Task/Agent       -> .tool_input.subagent_type
+# Branch on which is present; append iff it starts with "ecc:".
 
 # No `set -e`/`set -u`: a non-zero step must not abort the hook.
 NXTLVL_DIR="${HOME}/.claude/nxtlvl"
-SPIKE_SENTINEL="${NXTLVL_DIR}/.spike-on"
+LOG="${NXTLVL_DIR}/fallback-log.jsonl"
 
-# Consume stdin once (the PreToolUse event JSON). Never fail if it is empty.
+# Observer subprocess never counts as a fallback session (symmetry with the other hooks).
+if [ -n "${NXTLVL_CM_OBSERVER:-}" ]; then exit 0; fi
+
+# jq is required for injection-safe parsing; without it, fail open silently.
+command -v jq >/dev/null 2>&1 || exit 0
+
+# Consume stdin once. Never fail if it is empty.
 input="$(cat 2>/dev/null)" || input=""
+[ -n "${input}" ] || exit 0
 
-if [ "${NXTLVL_SPIKE:-}" = "1" ] || [ -f "${SPIKE_SENTINEL}" ]; then
-  # SPIKE: capture the raw payload for field discovery (Task 5). Best-effort only.
+ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null)" || ts=""
+
+# jq: pull the invoked name from whichever field carries it; emit a compact JSON line
+# ONLY when it starts with "ecc:". Otherwise jq's `select` yields no output -> nothing appended.
+line="$(printf '%s' "${input}" | jq -c --arg ts "${ts}" '
+  (.tool_input.skill // .tool_input.subagent_type // "") as $name
+  | select($name | type == "string" and (startswith("ecc:")))
+  | { ts: $ts, session: (.session_id // null), ecc_thing: $name, task: (.tool_input.description // .tool_name // null) }
+' 2>/dev/null)" || line=""
+
+if [ -n "${line}" ]; then
   mkdir -p "${NXTLVL_DIR}" 2>/dev/null
-  printf '%s' "${input}" > "${NXTLVL_DIR}/spike-stdin.json" 2>/dev/null
+  # Single >> of a compact one-line JSON is atomic under PIPE_BUF (best-effort north-star log).
+  printf '%s\n' "${line}" >> "${LOG}" 2>/dev/null
 fi
-
-# Normal path: no-op until Task 12 thickens this with the spike-confirmed field.
 
 exit 0

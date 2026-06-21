@@ -2,10 +2,12 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Skill|Task",
+        "matcher": "Skill|Task|Agent",
         "hooks": [
           { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/hooks/fallback-log.sh" }
-        ]
+        ],
+        "description": "C&M north-star: log every `ecc:`-prefixed Skill/Task/Agent invocation to the global fallback-log.jsonl for the fallback-rate readout; injection-safe (jq); absolute fail-open; skips the observer.",
+        "id": "pre:fallback-log"
       },
       {
         "matcher": "Bash",
