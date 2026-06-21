@@ -1,6 +1,6 @@
 # Spec: nxtlvl Context & Memory + Session Lifecycle
 
-> **Status: FINAL (design).** Ready for `/plan`.
+> **Status: BUILT (Phases 1–6 agent-verifiable tasks complete).** Manual install-observe checkpoints A–D and Task 6.3 remain.
 > **Supersedes** `docs/spec/nxtlvl-context-memory-subsystem.md` and
 > `docs/spec/context-awareness-hooks.md` (both retired by this document).
 > Produced via `/brainstorming` (2026-06-18 → 2026-06-19). The end-to-end design is in §1–§9;

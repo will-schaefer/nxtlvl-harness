@@ -3,6 +3,7 @@ id: ADR-007
 title: "Context assembly as a budgeted injection policy — pointers over content, organized by lifetime"
 status: Accepted
 date: 2026-06-16
+amended: 2026-06-19
 amended-by: [ADR-013, ADR-014]
 ---
 
