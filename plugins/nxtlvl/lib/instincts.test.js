@@ -155,6 +155,71 @@ test('readById finds a written instinct and returns null when missing', () => {
   assert.equal(missing, null);
 });
 
+// --- SECURITY: id trust boundary (path traversal / arbitrary file write) -----
+// op.id flows from UNTRUSTED model output into the instinct filename. A hostile
+// id like "../../../../ESCAPED" must NOT write outside the instinct dir. The
+// guard lives at the lib/instincts trust boundary so EVERY caller is covered.
+
+const HOSTILE_IDS = [
+  '../../../../ESCAPED_EVIL',
+  '..',
+  '../sibling',
+  'a/b',           // contains a slash
+  'a\\b',          // contains a backslash
+  '.hidden',       // starts with a dot
+  '.',             // bare dot
+  '',              // empty
+];
+
+test('write THROWS on a hostile id and writes NOTHING outside the dir', () => {
+  const env = freshEnv();
+  const root = env.XDG_STATE_HOME; // the tmp store root
+  for (const badId of HOSTILE_IDS) {
+    const inst = projectInstinct({ id: badId });
+    assert.throws(
+      () => write(inst, env, HOME),
+      /id/i,
+      `write should throw for hostile id ${JSON.stringify(badId)}`,
+    );
+  }
+  // Empirically: nothing landed anywhere outside the tmp store root. The classic
+  // "../../../../ESCAPED_EVIL" target would resolve well above `root`; assert no
+  // such file exists anywhere up the tree from root.
+  let probe = path.resolve(root);
+  for (let i = 0; i < 8; i++) {
+    assert.equal(
+      fs.existsSync(path.join(probe, 'ESCAPED_EVIL.md')),
+      false,
+      `no escaped file at ${probe}`,
+    );
+    probe = path.dirname(probe);
+  }
+});
+
+test('write with a normal id still round-trips after the guard', () => {
+  const env = freshEnv();
+  const filepath = write(projectInstinct({ id: 'normal-id_123' }), env, HOME);
+  assert.equal(path.basename(filepath), 'normal-id_123.md');
+  assert.equal(read(filepath).id, 'normal-id_123');
+});
+
+test('readById THROWS on a hostile id (no existence probe outside the dir)', () => {
+  const env = freshEnv();
+  for (const badId of HOSTILE_IDS) {
+    assert.throws(
+      () => readById(badId, { scope: 'project', projectId: 'a1b2c3d4e5f6' }, env, HOME),
+      /id/i,
+      `readById should throw for hostile id ${JSON.stringify(badId)}`,
+    );
+  }
+});
+
+test('readById with a normal missing id returns null (not throw)', () => {
+  const env = freshEnv();
+  const got = readById('totally-absent', { scope: 'project', projectId: 'a1b2c3d4e5f6' }, env, HOME);
+  assert.equal(got, null);
+});
+
 // --- reinforce --------------------------------------------------------------
 
 test('reinforce: 0.5 → 0.6 (RATE 0.2), bumps reinforcements + updated', () => {

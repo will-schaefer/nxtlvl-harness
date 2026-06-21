@@ -184,6 +184,44 @@ function frontmatterValueFor(instinct, key) {
   }
 }
 
+// --- Id trust boundary (SECURITY) -------------------------------------------
+// An instinct id becomes a filename (`<id>.md`). The observer feeds ids straight
+// from UNTRUSTED model output, so a hostile id like "../../../../ESCAPED" would
+// otherwise let atomicWrite's recursive mkdir place a file OUTSIDE the store.
+// This is THE trust boundary: every id-derived path (write AND read) flows
+// through here. Surface checks reject the obvious shapes; the caller then ALSO
+// asserts the resolved final path stays within the resolved instinct dir
+// (defense that holds even if a surface check is ever missed).
+function assertSafeId(id) {
+  if (typeof id !== 'string' || id.length === 0) {
+    throw new Error(`instinct id must be a non-empty string (got ${JSON.stringify(id)})`);
+  }
+  if (id.includes('/') || id.includes('\\')) {
+    throw new Error(`instinct id must not contain a path separator: ${JSON.stringify(id)}`);
+  }
+  if (id.includes('..')) {
+    throw new Error(`instinct id must not contain "..": ${JSON.stringify(id)}`);
+  }
+  if (id.startsWith('.')) {
+    throw new Error(`instinct id must not start with ".": ${JSON.stringify(id)}`);
+  }
+  return id;
+}
+
+// Build the `<id>.md` path under `dir`, validate the id, then enforce the
+// resolved-path-within-dir invariant explicitly (resolve both and require the
+// file path to start with the resolved dir + separator). Throws on any breach.
+function safeFileIn(dir, id) {
+  assertSafeId(id);
+  const filepath = path.join(dir, `${id}.md`);
+  const resolvedDir = path.resolve(dir) + path.sep;
+  const resolvedFile = path.resolve(filepath);
+  if (!resolvedFile.startsWith(resolvedDir)) {
+    throw new Error(`instinct id escapes its directory: ${JSON.stringify(id)}`);
+  }
+  return filepath;
+}
+
 // --- Directory routing ------------------------------------------------------
 // scope=project → layout(projectId).projectInstinctsDir; scope=global → globalInstinctsDir.
 function dirFor(instinct, env, home) {
@@ -197,7 +235,7 @@ function dirFor(instinct, env, home) {
 }
 
 function fileFor(instinct, env, home) {
-  return path.join(dirFor(instinct, env, home), `${instinct.id}.md`);
+  return safeFileIn(dirFor(instinct, env, home), instinct.id);
 }
 
 // --- Public API -------------------------------------------------------------
@@ -224,10 +262,12 @@ function read(filepath) {
 }
 
 // readById(id, { scope, projectId }, env?, home?) -> instinct | null.
+// Throws on a hostile id (same trust boundary as write) — a malicious id must
+// not even probe for existence OUTSIDE the intended instinct dir.
 function readById(id, { scope, projectId } = {}, env, home) {
   const l = layout(projectId || '_global_', env, home);
   const dir = scope === 'global' ? l.globalInstinctsDir : l.projectInstinctsDir;
-  const filepath = path.join(dir, `${id}.md`);
+  const filepath = safeFileIn(dir, id);
   if (!fs.existsSync(filepath)) return null;
   return read(filepath);
 }
