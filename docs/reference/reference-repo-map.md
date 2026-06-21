@@ -27,7 +27,7 @@ not the deep read itself. Per-repo deep dives live in the linked `*-distillation
 | **agents-main** (wshobson) | Multi-harness plugin marketplace — 84 plugins, one md source → 5 harnesses | md/JSON | ✅ `.claude-plugin` | 9.4M | ⬜ un-reviewed |
 | **claude-code-sub-agents** | Agent collection — 33 SDLC subagents, plain `agents/` tree | md only | ➖ no markers (bare `agents/`) | 8.0M | ⬜ un-reviewed |
 | **deepagents** | LangChain "batteries-included" Python agent harness | Python | ➖ `.mcp.json` only (code framework) | 45M | ⬜ un-reviewed |
-| **hive** (OpenHive/Aden) | Zero-setup multi-agent DAG runtime, role-based memory | Python/TSX | ➖ `.claude` present, but a Python runtime | 22M | ⬜ un-reviewed |
+| **hive** (OpenHive/Aden) | Zero-setup multi-agent DAG runtime, role-based memory | Python/TSX | ➖ `.claude` present, but a Python runtime | 22M | ✅ reviewed (Mode A → `hive-analysis.md`) |
 | **CowAgent** | Python multi-channel "super assistant" — plans, self-evolves, runs Skills | Python | ➖ none (own skill system) | 7.4M | ⬜ un-reviewed |
 | **CodeWhale** | Rust terminal coding agent (TUI/CLI), 25 providers | Rust | ➖ none | 18M | ⬜ un-reviewed |
 
@@ -109,10 +109,15 @@ contrast-by-architecture (the harness lives in code, not markdown).
   defaults. Weak ideation surface; valuable as a *non-markdown* harness contrast (planning/todo tooling
   in code).
 
-- **hive** (OpenHive / Aden, YC) — *un-reviewed.* Zero-setup, model-agnostic runtime that compiles an
-  objective into a **graph-based execution DAG** of specialized agents, backed by role-based evolving
-  memory. Python (911 `.py`) + a TSX frontend; `.claude` present but the orchestration is the Python
-  runtime. Contrast for "DAG-compiled topology" vs nxtlvl's skill-composed flow.
+- **hive** (OpenHive / Aden, YC) — *reviewed (Mode A → [`hive-analysis.md`](hive-analysis.md)).*
+  Zero-setup, model-agnostic runtime that compiles an objective into a **two-tier graph-of-agents**:
+  a typed-DAG actor-model worker engine whose nodes are multi-turn LLM loops governed by an internal
+  ACCEPT/RETRY/ESCALATE judge escalating to a "queen" overseer; curated-`.md` memory with LLM
+  recall/reflection (not vectors); model-agnostic via litellm. Python + a real React frontend;
+  `.claude` present but the orchestration is the Python runtime. **Verdict ~3.5–3.8/5:** reference-grade
+  execution engine + tool/skills surface, *capped* by a single-tenant-trusted-by-default security
+  substrate (no auth, no agent isolation, key co-located with ciphertext) + god-files + doc drift.
+  Contrast for "DAG-compiled topology" vs nxtlvl's skill-composed flow.
 
 - **CowAgent** — *un-reviewed.* A Python multi-channel ("super assistant") harness: proactively plans
   tasks, controls the computer + external services, runs its own Skills, builds long-term memory, and
@@ -131,7 +136,8 @@ contrast-by-architecture (the harness lives in code, not markdown).
 - **Pick deep-review targets by kind, not by curiosity.** Bucket A repos (esp. **Trellis**) are peers
   worth a full `harness-review`; bucket C repos are short architectural-contrast notes; **CodeWhale** is
   a skip-or-skim.
-- **Un-reviewed set (7):** Trellis, agents-main, claude-code-sub-agents, deepagents, hive, CowAgent,
+- **Un-reviewed set (5):** Trellis, agents-main, claude-code-sub-agents, CowAgent,
   CodeWhale — in rough descending order of mining value for a markdown-harness like nxtlvl.
+  (deepagents and hive are now reviewed — Mode A each.)
 - Deep findings land in `docs/reference/*-distillation.md` (Mode B) / `*-review.md` (Mode C); adopt/adapt
   items graduate to [`docs/plan/nxtlvl-harness-adopt-backlog.md`](../plan/nxtlvl-harness-adopt-backlog.md).

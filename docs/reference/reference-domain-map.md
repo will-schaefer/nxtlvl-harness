@@ -101,8 +101,11 @@ Each: **spine** (defining domain) · strong elsewhere · notable gap · mining n
   real strengths, invisible to name-scan. Mine: the *planning-as-builtin* and *filesystem-as-memory*
   patterns — architectural contrast to nxtlvl's skill-composed flow.
 - **hive** (OpenHive) — *spine: DAG-compiled multi-agent topology + role-based evolving memory.* Both
-  in Python. Mine: the "objective → strict execution DAG" model and persistent role-memory as a
-  contrast to nxtlvl's composition layer.
+  in Python. **Reviewed Mode A → [`hive-analysis.md`](hive-analysis.md):** the role-memory is curated
+  `.md` files with LLM recall/reflection (NOT vectors) — corrects the "role-based evolving" label;
+  reference-grade engine + tools, capped by trusted-localhost security. Mine: the "objective → strict
+  execution DAG" model, the curated-`.md` memory with recall-selector/reflection-agent, and the
+  file-state-cache + hash-anchored-edit FS tooling — as contrasts to nxtlvl's composition layer.
 - **CowAgent** — *spine: a self-evolving multi-channel personal assistant* (plans, long-term memory,
   runs its own Skills, IM channels). Mine: the self-evolution + long-term-memory loop; otherwise
   out-of-shape (personal-assistant, not dev-harness).
