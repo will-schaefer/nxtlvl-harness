@@ -73,6 +73,7 @@ function defaultGitLine(cwd) {
       cwd,
       encoding: 'utf8',
       stdio: ['ignore', 'pipe', 'ignore'],
+      timeout: 3000, // a hung git must not stall SessionStart (harness 10s backstops)
     }).trim();
 
     if (!branch || branch === 'HEAD') {
@@ -89,6 +90,7 @@ function defaultGitLine(cwd) {
         cwd,
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'ignore'],
+        timeout: 3000, // a hung git must not stall SessionStart (harness 10s backstops)
       });
       changes = status.split('\n').filter(l => l.trim()).length;
     } catch {
@@ -260,6 +262,8 @@ function run(rawInput, env = process.env, deps = {}) {
 if (require.main === module) {
   let data = '';
   process.stdin.setEncoding('utf8');
+  // Absolute fail-open: a stdin stream error must not throw past run()'s guard.
+  process.stdin.on('error', () => process.exit(0));
   process.stdin.on('data', chunk => {
     if (data.length < MAX_STDIN) data += chunk.substring(0, MAX_STDIN - data.length);
   });

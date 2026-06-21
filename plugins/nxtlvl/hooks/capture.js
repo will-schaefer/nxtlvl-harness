@@ -158,6 +158,8 @@ function run(rawInput, env = process.env, scrubFn = safeScrubObservation) {
 if (require.main === module) {
   let data = '';
   process.stdin.setEncoding('utf8');
+  // Absolute fail-open: a stdin stream error must not throw past run()'s guard.
+  process.stdin.on('error', () => process.exit(0));
   process.stdin.on('data', chunk => {
     if (data.length < MAX_STDIN) data += chunk.substring(0, MAX_STDIN - data.length);
   });
