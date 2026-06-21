@@ -80,10 +80,14 @@ Match the existing nxtlvl agent/command idiom exactly. Agent frontmatter mirrors
 ---
 name: deepwiki-scout
 description: The read-only DeepWiki orientation scout that harness-review spawns at Phase 2 ...
-tools: mcp__deepwiki__read_wiki_structure, mcp__deepwiki__read_wiki_contents, mcp__deepwiki__ask_question, WebFetch
+tools: mcp__plugin_nxtlvl_deepwiki__read_wiki_structure, mcp__plugin_nxtlvl_deepwiki__read_wiki_contents, mcp__plugin_nxtlvl_deepwiki__ask_question, WebFetch
 model: sonnet
 ---
 ```
+
+> **Corrected post-build (2026-06-21):** a plugin-bundled MCP server is namespaced
+> `mcp__plugin_<plugin>_<server>__<tool>`, so the grant uses `mcp__plugin_nxtlvl_deepwiki__*`, **not**
+> the bare `mcp__deepwiki__*` originally specced below. Bare form grants nothing for plugin servers.
 
 - **Read-only by withheld tools** — the scout gets *only* the DeepWiki tools + WebFetch; no
   Read/Write/Edit/Bash/Glob/Grep. It cannot touch the tree or the artifact.
@@ -130,7 +134,9 @@ No unit-test harness exists for prompt artifacts; verification is structural + d
 
 ## Resolved Decisions (was Open Questions)
 
-1. **MCP tool namespace** — `mcp__deepwiki__*` (server named `deepwiki` in `.mcp.json`). ✅
+1. **MCP tool namespace** — server named `deepwiki` in `.mcp.json`. ✅ **Corrected post-build:** the
+   live ids are `mcp__plugin_nxtlvl_deepwiki__*` (plugin-bundled servers are namespaced
+   `mcp__plugin_<plugin>_<server>__`); the original `mcp__deepwiki__*` assumption was wrong.
 2. **`ask_question` budget** — **3–5** targeted questions per run, seeded by the chosen mode. ✅
 3. **Router placement** — `/harness-review` stays the **command surface of the existing skill
    entry**; no new router-table row, just one index/discoverability pointer. ✅

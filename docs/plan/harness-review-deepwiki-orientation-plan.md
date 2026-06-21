@@ -177,7 +177,7 @@ as-is (command is the surface of the existing skill entry — **no** new router-
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| MCP tool-id prefix differs from `mcp__deepwiki__*` | Med | Confirm at Task 1 smoke test; the agent `tools:` list is the only place to fix. |
+| MCP tool-id prefix differs from `mcp__deepwiki__*` | Med | **MATERIALIZED & FIXED (2026-06-21):** plugin-bundled servers are namespaced → live ids are `mcp__plugin_nxtlvl_deepwiki__*`; the agent `tools:` grant was corrected to that form. Caught by the first post-promote dogfood (scout fell back to WebFetch). |
 | DeepWiki claim leaks into an artifact as evidence | High | Read-only-by-withheld-tools (scout can't write) + lead-stamp + Task 7 dogfood asserts zero DeepWiki citations. |
 | DeepWiki unreachable / wiki not generated for a repo | Low | WebFetch fallback, then silent skip — never a hard dependency. |
 | Wiki staleness vs vendored SHA misleads the partition | Low | Staleness note in the brief; partition is verified by Phase-3 fan-out regardless. |

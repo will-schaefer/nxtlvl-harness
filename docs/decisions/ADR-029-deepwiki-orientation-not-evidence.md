@@ -40,8 +40,8 @@ produces **leads, not evidence.**
 - **Every claim is a stamped lead.** The `deepwiki-scout` brief stamps each claim
   `LEAD — verify at source` with a where-to-verify pointer into the clone. An unstamped claim is a bug.
 - **Read-only by withheld tools** (per [ADR-026](ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md)'s isolated-agent pattern). `deepwiki-scout` holds *only* the three
-  `mcp__deepwiki__*` tools + `WebFetch` — no Read/Write/Edit/Bash/Glob/Grep. A leaked DeepWiki
-  citation is made **structurally impossible**: the scout cannot write the tree or the artifact.
+  `mcp__plugin_nxtlvl_deepwiki__*` tools + `WebFetch` — no Read/Write/Edit/Bash/Glob/Grep. A leaked
+  DeepWiki citation is made **structurally impossible**: the scout cannot write the tree or the artifact.
 - **Graceful degradation, never a hard dependency.** Public GitHub `REPO` → DeepWiki on; local path
   or private `REPO` → skipped silently, Phase 2 behaves exactly as before. Unreachable/un-indexed →
   `WebFetch` fallback, then silent skip.
@@ -90,9 +90,13 @@ formats are untouched.
   Phase-3 verifies the partition regardless.
 - **A reusable doctrine.** "Secondary sources orient, primary sources testify" generalizes beyond
   DeepWiki to any future auto-generated or third-party knowledge source the harness might consult.
-- **Verification note:** the live `mcp__deepwiki__*` smoke test and full dogfood run are gated on a
-  `/plugin` promotion (the installed plugin is a SHA-pinned cache snapshot), so they run post-promote;
-  structural validation + WebFetch reachability are confirmed at build time.
+- **Verification outcome (2026-06-21, post-promote):** the live MCP smoke test passed
+  (`read_wiki_structure` returned a full wiki for a public repo). The first dogfood spawn surfaced a
+  real defect — the scout's `tools:` grant used the bare `mcp__deepwiki__*` form, but a
+  plugin-bundled MCP server is namespaced `mcp__plugin_nxtlvl_deepwiki__*`, so the grant resolved to
+  nothing and the scout fell back to `WebFetch`. This *validated graceful degradation* (the fallback
+  produced a correct lead-stamped brief with zero artifact citations) and was fixed by granting the
+  namespaced tool ids. Re-verification of the native MCP path is gated on a fresh `/plugin` promote.
 - Recorded per the global decision rule ([ADR-010](ADR-010-global-decision-rule.md)). Reuses the
   isolated read-only-agent pattern of [ADR-026](ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md)
   ([`context-scout`](../../plugins/nxtlvl/agents/context-scout.md) is the sibling).

@@ -13,8 +13,15 @@ The `harness-review` domain gained two surfaces (built 2026-06-21, executing
   entry per [[nxtlvl-ideation-domain-status]]'s pattern). Takes `mode (A/B/C) + REPO + mode extras`.
 - **DeepWiki Phase-2 orientation accelerator** — the plugin's **first `.mcp.json`** registers the
   no-auth `deepwiki` server (`https://mcp.deepwiki.com/mcp`, 3 tools); a read-only `deepwiki-scout`
-  agent (only the 3 `mcp__deepwiki__*` tools + WebFetch, read-only-by-withheld-tools) is spawned at
-  Phase 2 on **public GitHub repos only** to accelerate the structural map & partition.
+  agent (only the 3 `mcp__plugin_nxtlvl_deepwiki__*` tools + WebFetch, read-only-by-withheld-tools)
+  is spawned at Phase 2 on **public GitHub repos only** to accelerate the structural map & partition.
+
+  ⚠️ **Plugin-MCP namespace gotcha (cost us a round-trip):** a plugin-bundled MCP server's tools are
+  namespaced `mcp__plugin_<plugin>_<server>__<tool>` — here `mcp__plugin_nxtlvl_deepwiki__*`. The
+  agent `tools:` grant MUST use that full form; the bare `mcp__deepwiki__*` form grants **nothing**
+  (only user/project-scoped servers use the bare form). claude-code-guide got this wrong; the
+  authoritative source is the official `plugin-dev:mcp-integration` skill. The first post-promote
+  dogfood caught this live — scout silently fell back to WebFetch — confirming graceful degradation.
 
 **Governing principle — ADR-029 (orientation-not-evidence):** *a secondary source may orient a
 primary-source process but never testify in it.* DeepWiki gives **leads, not evidence** — every claim
@@ -22,7 +29,9 @@ stamped `LEAD — verify at source`, **zero** DeepWiki citations in any artifact
 Phase-3 fan-out stay the sole source of every `file:line`. Local/private `REPO` degrades silently to
 the pre-existing manual map; DeepWiki is never a hard dependency.
 
-**Live-verification caveat** (see [[nxtlvl-install-promotion]]): the live `mcp__deepwiki__*` smoke
-test + full dogfood run are gated on a `/plugin` promote (installed plugin is a SHA-pinned cache
-snapshot); structural validation + WebFetch reachability are confirmed at build time. Contract +
-caveats: `plugins/nxtlvl/skills/harness-review/references/deepwiki-orientation.md`.
+**Verification status (2026-06-21):** post-promote, the live MCP smoke test PASSED
+(`read_wiki_structure` returned a full public-repo wiki). The first dogfood spawn caught the
+namespace bug above (scout fell back to WebFetch, still produced a valid zero-citation brief). Fix
+landed; **native-MCP-path re-verification awaits a fresh `/plugin` promote** (see
+[[nxtlvl-install-promotion]] — installed plugin is a SHA-pinned cache snapshot). Contract + caveats:
+`plugins/nxtlvl/skills/harness-review/references/deepwiki-orientation.md`.

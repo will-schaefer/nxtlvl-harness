@@ -20,12 +20,17 @@ any finished artifact. **Zero DeepWiki claims reach the artifact.** This is reco
 
 ## The three tools (server `deepwiki`, registered in `plugins/nxtlvl/.mcp.json`)
 
-- `mcp__deepwiki__read_wiki_structure` — the wiki's page/section map for a repo. The orientation
-  skeleton: how DeepWiki thinks the harness partitions.
-- `mcp__deepwiki__read_wiki_contents` — the prose of a section. Pull only the one or two that most
-  clarify the partition; never dump the whole wiki.
-- `mcp__deepwiki__ask_question` — grounded Q&A against the repo. Budget: **3–5** targeted questions
-  per run, seeded by the mode (A: components/orchestration; B: the `LENS`; C: the `DOMAIN`).
+A plugin-bundled MCP server is namespaced, so the live tool ids carry the
+`mcp__plugin_<plugin>_<server>__` prefix — here `mcp__plugin_nxtlvl_deepwiki__*`. The agent's
+`tools:` grant must use that full form (the bare `mcp__deepwiki__*` form grants nothing).
+
+- `mcp__plugin_nxtlvl_deepwiki__read_wiki_structure` — the wiki's page/section map for a repo. The
+  orientation skeleton: how DeepWiki thinks the harness partitions.
+- `mcp__plugin_nxtlvl_deepwiki__read_wiki_contents` — the prose of a section. Pull only the one or
+  two that most clarify the partition; never dump the whole wiki.
+- `mcp__plugin_nxtlvl_deepwiki__ask_question` — grounded Q&A against the repo. Budget: **3–5**
+  targeted questions per run, seeded by the mode (A: components/orchestration; B: the `LENS`;
+  C: the `DOMAIN`).
 - Fallback: `WebFetch` on `https://deepwiki.com/<owner>/<repo>` if the MCP tools don't resolve.
 
 ## The discipline (non-negotiable)
@@ -34,7 +39,8 @@ any finished artifact. **Zero DeepWiki claims reach the artifact.** This is reco
 - **Staleness:** DeepWiki indexes upstream HEAD, which may differ from the vendored SHA. Note it; the
   Phase-3 fan-out verifies the partition regardless, so a stale lead costs nothing but a redirect.
 - **Hallucination:** DeepWiki can invent. Treat output as a hypothesis; confirm before trusting.
-- **Read-only by withheld tools:** `deepwiki-scout` holds only the three `mcp__deepwiki__*` tools +
+- **Read-only by withheld tools:** `deepwiki-scout` holds only the three
+  `mcp__plugin_nxtlvl_deepwiki__*` tools +
   `WebFetch` — no Read/Write/Edit/Bash/Glob/Grep. A leaked DeepWiki citation is structurally
   impossible because the scout cannot write the tree or the artifact.
 
