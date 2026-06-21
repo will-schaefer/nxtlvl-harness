@@ -58,6 +58,15 @@
         "description": "Auto-title each session as \"<folder> · <branch>\" (folder-only when not on a branch), refreshed on every prompt so the title tracks branch changes mid-session. Never blocks the prompt. Kill switch: NXTLVL_SESSION_TITLE=off.",
         "id": "session:title"
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/hooks/briefing.js", "timeout": 10 }
+        ],
+        "description": "C&M read path: at session start, inject a \"where you left off\" briefing on top of CLAUDE.md/MEMORY.md — fresh git line, newest bookmark (with a staleness flag when the observation log is newer), and quality-gated strong instincts (naming any that didn't fit the ceiling → /evolve). additionalContext channel; absolute fail-open; skips the observer/subagents. Kill switch: NXTLVL_CM_BRIEFING=off.",
+        "id": "session:cm-briefing"
+      }
     ]
   }
 }
