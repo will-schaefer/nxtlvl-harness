@@ -4,7 +4,7 @@
 > engineering into its **atoms** — the smallest independently-specifiable units a harness is
 > built, configured, or composed from — with a column mapping each atom to **nxtlvl's** reality.
 >
-> **Two jobs ([per the framing it was commissioned under]):**
+> **Two jobs:**
 > 1. **Foundational reference** — the harness-agnostic map of *what there is to build out of*,
 >    independent of what nxtlvl chooses to build. Where the
 >    [domain map](nxtlvl-domain-map.md) scopes *down* (most cells deliberately empty), this maps
