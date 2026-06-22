@@ -1,6 +1,6 @@
 ---
 name: nxtlvl-context-memory-subsystem
-description: "The C&M domain: design FINAL + build COMPLETE (all 🤖 Phases 2–6 built/reviewed/committed, final whole-branch review done, 396 tests green @ tip on main); only the USER's manual install-observe batch (Checkpoints A–D + /plugin promote) remains."
+description: "The C&M domain: design FINAL + build COMPLETE + PROMOTED & LIVE-CONFIRMED (2026-06-22). Installed snapshot == repo HEAD (byte-identical); all 6 hook events wired & firing; Checkpoints A–D all empirically verified against the live store. Only deferred follow-ups C2/C3 + a future /evolve --generate dispatch (waits for a cluster) remain."
 metadata: 
   node_type: memory
   type: project
@@ -34,14 +34,22 @@ storage root / determinism (evolve+metrics). Final review fixed C1 (all 5 Node h
 `'error'` listener — the one fail-open escape) + C4 (git timeouts); deferred C2 (non-interactive-skip
 asymmetry) + C3 (lock-TTL not code-enforced, defaults safe). All carried Minors triaged, zero blockers.
 
-**REMAINING = USER MANUAL BATCH ONLY (🧑)** — I cannot do these (need a live install + real sessions):
-Checkpoint A (write-path live-observe: obs log fills, observer writes instincts), B (briefing shows on
-SessionStart), C (bookmark on non-trivial session / survives /compact), D (commands vs a seeded store +
-`/evolve --generate` live agent dispatch), and **Task 6.3 = `/plugin` PROMOTE** then whole-floor live
-confirmation. NOTE: the installed nxtlvl is a SHA-pinned cache snapshot — committed work needs a manual
-promote to go live (see [[nxtlvl-install-promotion]]). Durable recovery map = the git-ignored SDD ledger
-`.superpowers/sdd/progress.md` (per-task commit tips + the deferred-follow-up list: C2/C3 + T3.2 ⚠-text +
-T4.1 tail-read perf + T2.1/T5.4a test-coverage gaps).
+**PROMOTED & LIVE-CONFIRMED (2026-06-22).** Task 6.3 done: the installed cache snapshot is pinned to
+`40c1b01` = repo HEAD and is **byte-identical** to HEAD for close.js/recall.js/hooks.json; all 6 hook
+events wired (PreToolUse fallback-log+capture, PostToolUse capture+observe, SessionStart briefing,
+SessionEnd close, PreCompact precompact). The floor has been running for days — no separate manual
+promote was needed (epitaxy/auto-update already advanced the snapshot to HEAD). **All Checkpoints
+empirically verified against the live store** (project key `24c59a845f421f40`, root
+`~/.local/state/nxtlvl/projects/`): A (write path) — 2309 observations.jsonl lines + 63 distilled
+instincts; B (briefing) — THIS session's SessionStart "Instincts loaded" block is the briefing+recall
+reading that store; C (bookmark) — `bookmarks/main.jsonl`, latest the SessionEnd close hook; D (commands)
+— `/instinct-status` (63 proj, dist mean 84%, 47/63 in top band), `/prune` (correctly nothing stale),
+`/promote` (lists 19+ above the 0.8 bar), `/evolve` (considered 49/65, 0 clusters). North-star
+**fallback rate = 0/137 sessions, 0 ecc invocations** — the floor has fully displaced the ecc backstop.
+ONLY remaining: `/evolve --generate` live agent dispatch (legitimately waits — 0 candidate clusters meet
+the strong-bar clustering threshold yet) + the deferred-follow-up list in the SDD ledger
+`.superpowers/sdd/progress.md` (C2 non-interactive-skip asymmetry + C3 lock-TTL-not-code-enforced; both
+behavior-touching, defaults safe). See [[nxtlvl-install-promotion]].
 
 Related: [[nxtlvl-harness]], [[nxtlvl-install-promotion]], [[adr-numbering-collision-hazard]],
 [[nxtlvl-context-alert-hook]], [[decision-recording-conventions]].
