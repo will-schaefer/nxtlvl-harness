@@ -2,9 +2,12 @@
 
 - [User: builder domain](user-builder-domain.md) — multi-language app dev (Next/Python/Rust) + agentic engineering & agent-building.
 - [User: Max subscription](user-max-subscription.md) — on Claude Max; per-token cost tracking is irrelevant — drop cost machinery by default.
+- [TypeScript over JavaScript](typescript-over-javascript-default.md) — standing default: always TS over JS (no new JS); polyglot Python/Rust when genuinely best; nxtlvl runs native type-stripping (ADR-034 + docs/plan/nxtlvl-typescript-migration-plan.md).
 - [nxtlvl harness](nxtlvl-harness.md) — the user's personal CC agent-harness plugin; anchor doc at docs/intent/personal-harness.md; ADRs at docs/decisions/ (ADR-001…011); dissect-as-we-go = reactive vendoring, intake log at docs/plan/nxtlvl-skill-intake-backlog.md.
+- [Agent runtime primer](agent-runtime-primer.md) — runtime anatomy + native-vs-DIY ledger + MVR at docs/reference/agent-runtime-primer.md; headline: instruction assembly is the only component owning the loop doesn't change → nxtlvl's substance lives ABOVE the loop, so composing keeps it.
 - [nxtlvl install/promotion](nxtlvl-install-promotion.md) — installed nxtlvl is a SHA-pinned cache snapshot, NOT a live repo read; committed work needs a manual /plugin promote to go live; repo HEAD runs ahead of the daily-driver.
-- [agents-lab status](nxtlvl-agents-lab-status.md) — incubation tier BUILT (T1–T11+T13, 63 tests, gate doubt-reviewed); NOT a standalone plugin (dogfood as project skills, .claude/skills→../cells); pointer-summary graduated to plugins/nxtlvl/skills; manual dogfood + commit remain.
+- [harness-lab status](nxtlvl-harness-lab-status.md) — incubation tier BUILT (T1–T11+T13, 63 tests, gate doubt-reviewed); NOT a standalone plugin (dogfood as project skills, .claude/skills→../cells); pointer-summary graduated to plugins/nxtlvl/skills; manual dogfood + commit remain.
+- [harness-lab: quality over simplicity](harness-lab-quality-over-simplicity.md) — agent quality is the top priority; heavier machinery OK when it raises quality; don't YAGNI the gate down at quality's expense (gate still objective-only).
 - [Decision-recording conventions](decision-recording-conventions.md) — now formalized as the global decision rule at ~/.claude/rules/decisions.md (trigger in ~/.claude/CLAUDE.md); ADRs in docs/decisions/, YAML frontmatter, curated.
 - [Grill branch-by-branch](grill-branch-by-branch.md) — wants exhaustive multi-pass, one-question-at-a-time design interrogation.
 - [Terse confirms = momentum](terse-confirms-momentum.md) — one-word locks; acknowledge in one line and advance.
