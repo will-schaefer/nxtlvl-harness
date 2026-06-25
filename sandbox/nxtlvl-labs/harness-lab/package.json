@@ -1,8 +1,8 @@
 {
-  "name": "nxtlvl-agents-lab",
+  "name": "nxtlvl-harness-lab",
   "version": "0.1.0",
   "private": true,
-  "description": "agents-lab — the nxtlvl agent-capability incubation pipeline (cells incubate, then graduate into the nxtlvl plugin).",
+  "description": "harness-lab — the nxtlvl agent-capability incubation pipeline (cells incubate, then graduate into the nxtlvl plugin).",
   "type": "commonjs",
   "scripts": {
     "new-cell": "node bin/new-cell.js",

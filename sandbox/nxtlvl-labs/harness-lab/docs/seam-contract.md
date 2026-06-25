@@ -1,6 +1,6 @@
 # Lab ↔ evals-lab seam contract
 
-> The single interface that keeps `agents-lab` and the (later) `evals-lab` decoupled. This spec
+> The single interface that keeps `harness-lab` and the (later) `evals-lab` decoupled. This spec
 > fixes only the **shape** — `{ eval spec } → engine → { scorecard }`. The concrete scoring is
 > co-designed with the `evals-lab` cycle. Until that engine exists, `bin/eval.js` backs the seam
 > with a **deterministic stub** that returns a scorecard in exactly this shape. `bin/graduate.js`

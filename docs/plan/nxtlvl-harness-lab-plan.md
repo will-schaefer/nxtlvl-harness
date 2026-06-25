@@ -1,7 +1,7 @@
-# Implementation Plan: `agents-lab` — the agent-capability incubation pipeline
+# Implementation Plan: `harness-lab` — the agent-capability incubation pipeline
 
 > SDD Phase: **Plan**. Implements the spec
-> [`docs/spec/nxtlvl-agents-lab.md`](../spec/nxtlvl-agents-lab.md) (DRAFT → approve before build).
+> [`docs/spec/nxtlvl-harness-lab.md`](../spec/nxtlvl-harness-lab.md) (DRAFT → approve before build).
 > 🤖 = agent-verifiable · 🧑 = manual gate · ◇ = decision to lock at plan review.
 > **Status: BUILT (2026-06-22).** T1–T11 implemented & verified (63 node:test green; gate
 > doubt-reviewed); T13 graduation of the `pointer-summary` cell done (→ `plugins/nxtlvl/skills/`).
@@ -11,10 +11,10 @@
 
 ## 1. Framing
 
-The spec defines a **tracked subdir of the `Developer` repo** (`agents-lab`, ships as `nxtlvl:agents-lab`)
-living at `sandbox/nxtlvl-labs/agents-lab/` — under the off-discovery `sandbox/` staging tree, beside its
+The spec defines a **tracked subdir of the `Developer` repo** (`harness-lab`, ships as `nxtlvl:harness-lab`)
+living at `sandbox/nxtlvl-labs/harness-lab/` — under the off-discovery `sandbox/` staging tree, beside its
 sibling `evals-lab/`. It is the upstream-most tier of the promotion ladder:
-`agents-lab → nxtlvl plugin → installed ~/.claude`. This plan orders the build of that workspace's
+`harness-lab → nxtlvl plugin → installed ~/.claude`. This plan orders the build of that workspace's
 skeleton, its three machinery scripts (`new-cell`, `ledger`, `graduate`), the evals-lab seam **stub**, the
 installable-plugin wiring, and one capability graduated end-to-end into `plugins/nxtlvl/` via in-repo
 `git mv`. *(Home relocated 2026-06-22 from the original `~/agent-lab` separate-repo design; see ◇ D1.)*
@@ -39,7 +39,7 @@ Three constraints shape every task:
 ## 2. Architecture decisions (plan-level — surfaced for review)
 
 - **A self-contained Node subproject with its own `package.json`.** Unlike the in-plugin builds
-  (`plugins/nxtlvl/lib/*`), `agents-lab` carries its own `package.json`, `npm run` scripts (`eval` /
+  (`plugins/nxtlvl/lib/*`), `harness-lab` carries its own `package.json`, `npm run` scripts (`eval` /
   `graduate` / `ledger`), and `node:test` — matching the spec's Commands section — but it is **tracked
   within the `Developer` repo**, sharing its git history rather than running a separate `git init`.
 - **One shared manifest module is the contract.** `bin/lib/manifest.js` (pure: `text → parsed manifest`
@@ -58,8 +58,8 @@ Three constraints shape every task:
 
 | ◇ | Decision | Resolution |
 |---|----------|------------|
-| **D1** | Lab home path + topology | **RE-LOCKED 2026-06-22: `Developer/sandbox/nxtlvl-labs/agents-lab/`** — a tracked subdir of the `Developer` repo (under off-discovery `sandbox/`, beside `evals-lab/`), *not* a separate `~/agent-lab` repo. Supersedes the earlier `~/agent-lab` lock. The `Developer/nxtlvl-lab` placeholder is already gone; the empty `sandbox/nxtlvl-labs/{agents-lab,evals-lab}/` dirs already exist. |
-| **D2** | **YAML parsing strategy** — `manifest.yaml` needs a parser; Node has none built in, and the nxtlvl house style is zero-dep. | **LOCKED: pin `js-yaml`** in the lab's own `package.json`. `agents-lab` is a self-contained Node subproject with its own `package.json` (distinct from the plugin), so a single controlled, pinned dep is acceptable and round-trips cleanly for `new-cell` writes + `graduate`/`ledger` reads. |
+| **D1** | Lab home path + topology | **RE-LOCKED 2026-06-22: `Developer/sandbox/nxtlvl-labs/harness-lab/`** — a tracked subdir of the `Developer` repo (under off-discovery `sandbox/`, beside `evals-lab/`), *not* a separate `~/agent-lab` repo. Supersedes the earlier `~/agent-lab` lock. The `Developer/nxtlvl-lab` placeholder is already gone; the empty `sandbox/nxtlvl-labs/{harness-lab,evals-lab}/` dirs already exist. |
+| **D2** | **YAML parsing strategy** — `manifest.yaml` needs a parser; Node has none built in, and the nxtlvl house style is zero-dep. | **LOCKED: pin `js-yaml`** in the lab's own `package.json`. `harness-lab` is a self-contained Node subproject with its own `package.json` (distinct from the plugin), so a single controlled, pinned dep is acceptable and round-trips cleanly for `new-cell` writes + `graduate`/`ledger` reads. |
 | **D3** | Vendored-snapshot re-sync cadence (on-demand vs periodic) | **LOCKED: on-demand only**, triggered by the documented `vendor/SOURCES.md` procedure; no scheduler. |
 
 ---
@@ -72,7 +72,7 @@ Phase 0  DECISIONS & PRE-FLIGHT (no machinery code)
   T2  Confirm .claude-plugin/ manifest shape + install cmd vs live docs 🤖
         │
 Phase 1  REPO SKELETON + MANIFEST CONTRACT (foundation)
-  T3  Scaffold sandbox/nxtlvl-labs/agents-lab: tree · package.json ·     🤖(sandboxed)
+  T3  Scaffold sandbox/nxtlvl-labs/harness-lab: tree · package.json ·     🤖(sandboxed)
       README · docs/ · seed inbox.md · empty ledger.md · vendor/SOURCES.md stub
         │
   T4  manifest.yaml schema + bin/lib/manifest.js (parse + validate) + tests
@@ -109,7 +109,7 @@ Sizes: XS (<30 min) · S (~1 hr) · M (~half day). Each task is an independently
 
 #### T1 — Record the three ADRs *(S, 🤖)*
 - **Steps:** Via `nxtlvl:doc-keeper`, record the three architectural decisions the spec names: (1)
-  labs-in-sandbox topology (incubation `agents-lab` vs standing `evals-lab`, both tracked subdirs under
+  labs-in-sandbox topology (incubation `harness-lab` vs standing `evals-lab`, both tracked subdirs under
   `sandbox/nxtlvl-labs/`), (2) cells + installable-as-plugin
   architecture (stage-as-data manifests), (3) the three-part objective graduation contract. **Verify
   ADR numbering against the committed/remote tree first** (collision hazard — memory: doc-keeper globs
@@ -131,18 +131,18 @@ Sizes: XS (<30 min) · S (~1 hr) · M (~half day). Each task is an independently
 
 ### Phase 1 — Repo skeleton + manifest contract (foundation)
 
-#### T3 — Scaffold the `agents-lab` workspace *(M, 🤖 — sandboxed; writes under `Developer/sandbox/`)*
-- **Steps:** At the locked path (D1, `sandbox/nxtlvl-labs/agents-lab/`): create the spec's tree (`cells/`,
+#### T3 — Scaffold the `harness-lab` workspace *(M, 🤖 — sandboxed; writes under `Developer/sandbox/`)*
+- **Steps:** At the locked path (D1, `sandbox/nxtlvl-labs/harness-lab/`): create the spec's tree (`cells/`,
   `vendor/`, `bin/`, `docs/`, `.claude/`, `.claude-plugin/`); `package.json` with `scripts` for
   `eval`/`graduate`/`ledger` + `node --test 'bin/*.test.js'`; `README.md`; `docs/` lab-process stubs;
   **seed `inbox.md` once** from the Developer backlogs (`docs/plan/nxtlvl-skill-intake-backlog.md`,
   `…-harness-adopt-backlog.md` — pointers, not copies); empty `ledger.md`; `vendor/SOURCES.md` skeleton.
   **No `git init`** — the workspace is tracked by the surrounding `Developer` repo.
 - **Acceptance:** the tree matches the spec §Project Structure; `package.json` scripts present; the
-  workspace is populated under `sandbox/nxtlvl-labs/agents-lab/` and shows up in `git status` (tracked by
+  workspace is populated under `sandbox/nxtlvl-labs/harness-lab/` and shows up in `git status` (tracked by
   Developer).
-- **Verify (agent):** `ls -R sandbox/nxtlvl-labs/agents-lab` matches the spec tree;
-  `node -e "require('./sandbox/nxtlvl-labs/agents-lab/package.json')"`; `git status --short` lists the new
+- **Verify (agent):** `ls -R sandbox/nxtlvl-labs/harness-lab` matches the spec tree;
+  `node -e "require('./sandbox/nxtlvl-labs/harness-lab/package.json')"`; `git status --short` lists the new
   files under that path.
 - **Depends on:** D1 locked. **Files:** workspace skeleton (many, but all scaffold). **Scope:** M.
 
@@ -249,7 +249,7 @@ Sizes: XS (<30 min) · S (~1 hr) · M (~half day). Each task is an independently
 - **Depends on:** T6, T7, T8. **Files:** `cells/<sample>/*`. **Scope:** M.
 
 #### T12 — Dogfood as a project skill *(S, 🧑)* — **AMENDED 2026-06-22**
-- **Steps (as amended):** Work with `agents-lab` as your project directory so its cells load as
+- **Steps (as amended):** Work with `harness-lab` as your project directory so its cells load as
   project skills (via `.claude/skills → ../cells`); exercise the sample cell on a real task. No
   `/plugin` install — the lab is not a standalone plugin. (For a cell that has already graduated into
   `plugins/nxtlvl/`, dogfood it via the nxtlvl plugin instead.)
@@ -260,7 +260,7 @@ Sizes: XS (<30 min) · S (~1 hr) · M (~half day). Each task is an independently
 
 #### T13 — Graduate the cell end-to-end *(S, 🧑🤖)*
 - **Steps:** Run the gate; on pass, promote the capability by an **in-repo `git mv`** from
-  `sandbox/nxtlvl-labs/agents-lab/cells/<cell>/…` straight to its `target:` under `plugins/nxtlvl/<type>/`,
+  `sandbox/nxtlvl-labs/harness-lab/cells/<cell>/…` straight to its `target:` under `plugins/nxtlvl/<type>/`,
   **carrying its `evals/` alongside**. (The lab already lives under `sandbox/`, so there is no
   intermediate hop.) Mark the spec built; confirm the three ADRs (T1) cover it (no new ADR).
 - **Acceptance:** the capability lands under `plugins/nxtlvl/<type>/<name>/` with its `evals/` (spec
@@ -318,7 +318,7 @@ Sizes: XS (<30 min) · S (~1 hr) · M (~half day). Each task is an independently
 - [x] No task touches more than ~5 files (T3 is scaffold-only).
 - [x] Checkpoints between phases (machinery checkpoint; the gate is regression-locked).
 - [x] 🤖/🧑 seam explicit; all build steps sandboxed (lab now inside the write-allowlist).
-- [x] ◇ D1–D3 locked (D1 **re-locked 2026-06-22**): `sandbox/nxtlvl-labs/agents-lab` · pin `js-yaml` ·
+- [x] ◇ D1–D3 locked (D1 **re-locked 2026-06-22**): `sandbox/nxtlvl-labs/harness-lab` · pin `js-yaml` ·
       on-demand re-sync.
 - [x] Human has reviewed and approved this plan. *(Approved 2026-06-22; implemented T1–T13 except the
       T12 manual install/dogfood, which is the user's.)*

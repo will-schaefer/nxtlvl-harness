@@ -68,7 +68,7 @@ function m_str(v) {
 
 /** Pure: rows -> ledger markdown. Deterministic. */
 function renderLedger(cells) {
-  const lines = [HEADER, '# agents-lab ledger', ''];
+  const lines = [HEADER, '# harness-lab ledger', ''];
   if (cells.length === 0) {
     lines.push('_No cells yet. Scaffold one with `node bin/new-cell.js <name> --type=<type>`, then run `npm run ledger`._');
     lines.push('');

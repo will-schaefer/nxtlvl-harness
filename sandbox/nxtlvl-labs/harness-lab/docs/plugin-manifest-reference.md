@@ -1,6 +1,6 @@
 # Plugin manifest & local-marketplace reference (confirmed vs live CC docs)
 
-> **SUPERSEDED 2026-06-22 (decision change):** `agents-lab` is **no longer a standalone plugin** —
+> **SUPERSEDED 2026-06-22 (decision change):** `harness-lab` is **no longer a standalone plugin** —
 > it is a dev workspace whose cells graduate **into the nxtlvl plugin**, and in-flight cells are
 > dogfooded as **project-scoped skills** (`.claude/skills → ../cells`; see [`../.claude/README.md`](../.claude/README.md)),
 > not via a separate `.claude-plugin/` + local marketplace. The §2 "Local-marketplace install"
@@ -41,8 +41,8 @@
 
 ```json
 {
-  "name": "nxtlvl-agents-lab",
-  "description": "agents-lab incubation pipeline — installable for dogfooding",
+  "name": "nxtlvl-harness-lab",
+  "description": "harness-lab incubation pipeline — installable for dogfooding",
   "version": "0.1.0"
 }
 ```
@@ -59,7 +59,7 @@ local `source:` path:
   "name": "nxtlvl-labs-local",
   "owner": { "name": "will-schaefer" },
   "plugins": [
-    { "name": "nxtlvl-agents-lab", "source": "./agents-lab", "description": "incubation pipeline" }
+    { "name": "nxtlvl-harness-lab", "source": "./harness-lab", "description": "incubation pipeline" }
   ]
 }
 ```
@@ -68,14 +68,14 @@ local `source:` path:
 
 ```bash
 /plugin marketplace add ./<marketplace-dir>      # register the local marketplace
-/plugin install nxtlvl-agents-lab@nxtlvl-labs-local
+/plugin install nxtlvl-harness-lab@nxtlvl-labs-local
 /plugin list                                     # verify
 /plugin marketplace update nxtlvl-labs-local     # after changes
 ```
 
 Non-interactive CLI equivalents: `claude plugin marketplace add ./<dir>` ·
 `claude plugin install <name>@<marketplace>` · `claude plugin marketplace update <marketplace>`.
-Direct-load (bypass marketplace): `claude --plugin-dir ./agents-lab`.
+Direct-load (bypass marketplace): `claude --plugin-dir ./harness-lab`.
 
 > **T10/T12 note:** the agent authors the on-disk manifest + wiring (T10); the actual `/plugin`
 > calls are a **manual gate** (T12) — the agent cannot run `/plugin`.

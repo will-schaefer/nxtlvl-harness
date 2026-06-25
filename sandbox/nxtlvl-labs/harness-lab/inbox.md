@@ -1,4 +1,4 @@
-# `agents-lab` intake queue
+# `harness-lab` intake queue
 
 > The lab-local queue of capability candidates. Seeded once (2026-06-22) from the Developer
 > backlogs as **pointers, not copies** — the backlogs remain the source of truth; this file is

@@ -1,4 +1,4 @@
-# `agents-lab` process
+# `harness-lab` process
 
 Lab-local conventions for incubating a capability cell from conception to graduation.
 

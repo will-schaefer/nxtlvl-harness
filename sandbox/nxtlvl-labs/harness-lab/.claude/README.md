@@ -1,8 +1,8 @@
 # `.claude/` — lab-as-CC-project (the dogfood mechanism)
 
-`agents-lab` is **not** a standalone plugin. It is a development workspace inside the nxtlvl repo
+`harness-lab` is **not** a standalone plugin. It is a development workspace inside the nxtlvl repo
 whose cells graduate **into the nxtlvl plugin**. In-flight cells are dogfooded by treating the lab
-as a **live Claude Code project**: when you work with `agents-lab` as your project directory, its
+as a **live Claude Code project**: when you work with `harness-lab` as your project directory, its
 cells are auto-discovered as **project-scoped skills**.
 
 ## How it works

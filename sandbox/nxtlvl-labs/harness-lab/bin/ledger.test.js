@@ -31,7 +31,7 @@ test('renderLedger produces the exact golden markdown for the fixture set', () =
   const cells = readCells(FIXTURE_CELLS);
   const expected = [
     HEADER,
-    '# agents-lab ledger',
+    '# harness-lab ledger',
     '',
     '| Cell | Type | Stage | Target | Manifest |',
     '|------|------|-------|--------|----------|',

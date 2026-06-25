@@ -1,11 +1,11 @@
-# `agents-lab` — the agent-capability incubation pipeline
+# `harness-lab` — the agent-capability incubation pipeline
 
-> Ships as `nxtlvl:agents-lab`. A self-contained R&D workspace where new agent
+> Ships as `nxtlvl:harness-lab`. A self-contained R&D workspace where new agent
 > capabilities — skills, agents, commands, hooks — are **incubated to production
 > quality and then graduate into the `nxtlvl` plugin.**
 
-Spec: [`docs/spec/nxtlvl-agents-lab.md`](../../../docs/spec/nxtlvl-agents-lab.md) ·
-Plan: [`docs/plan/nxtlvl-agents-lab-plan.md`](../../../docs/plan/nxtlvl-agents-lab-plan.md) ·
+Spec: [`docs/spec/nxtlvl-harness-lab.md`](../../../docs/spec/nxtlvl-harness-lab.md) ·
+Plan: [`docs/plan/nxtlvl-harness-lab-plan.md`](../../../docs/plan/nxtlvl-harness-lab-plan.md) ·
 Decisions: [ADR-031](../../../docs/decisions/ADR-031-labs-in-sandbox-topology.md) ·
 [ADR-032](../../../docs/decisions/ADR-032-cells-installable-as-plugin-architecture.md) ·
 [ADR-033](../../../docs/decisions/ADR-033-three-part-objective-graduation-contract.md)
@@ -13,12 +13,12 @@ Decisions: [ADR-031](../../../docs/decisions/ADR-031-labs-in-sandbox-topology.md
 ## The 3-tier promotion ladder
 
 ```
-agents-lab                       →   nxtlvl plugin        →   installed ~/.claude
+harness-lab                       →   nxtlvl plugin        →   installed ~/.claude
 (sandbox/nxtlvl-labs/, highest       (the workbench,           (stable daily driver)
  churn, lowest pressure)              Developer repo)
 ```
 
-This lab lives **inside** the `Developer` working tree at `sandbox/nxtlvl-labs/agents-lab/`,
+This lab lives **inside** the `Developer` working tree at `sandbox/nxtlvl-labs/harness-lab/`,
 under the off-discovery `sandbox/` staging tree — so in-flight cells are never loaded,
 routed to, or warned about by the live plugin. It is tracked by the `Developer` repo (not a
 separate repo). Graduation is an **in-repo `git mv`** from a cell to its `target:` under
@@ -48,7 +48,7 @@ Run a cell's evals:  npm run eval -- <cell>          # delegates to evals-lab vi
 Graduation check:    npm run graduate -- <cell>      # the objective gate; exit 2 = block, 0 = pass/warn
 Update/view ledger:  npm run ledger                  # regenerates ledger.md from all manifests
 Test the machinery:  npm test                        # node --test 'bin/*.test.js'
-Dogfood a cell:      work with agents-lab as your project dir → skill cells load as project skills
+Dogfood a cell:      work with harness-lab as your project dir → skill cells load as project skills
                      (via .claude/skills -> ../cells). No plugin install; the lab is not a plugin.
 ```
 

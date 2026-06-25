@@ -26,7 +26,7 @@ Re-syncing is an **"ask first"** action. To refresh a vendored item to a new pin
 ### External toolkits (`agent-dev`, `skill-creator`, `plugin-dev`)
 
 ```bash
-# From the lab root: sandbox/nxtlvl-labs/agents-lab/
+# From the lab root: sandbox/nxtlvl-labs/harness-lab/
 # 1. Pick the upstream repo + the plugin subpath, and resolve the SHA you want to pin:
 REPO=https://github.com/anthropics/claude-plugins-official   # (agent-dev: its own marketplace repo)
 SHA=$(git ls-remote "$REPO" HEAD | awk '{print $1}')          # or pin a specific SHA deliberately
