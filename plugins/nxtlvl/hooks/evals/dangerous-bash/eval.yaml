@@ -1,0 +1,8 @@
+name: dangerous-bash
+sut: { adapter: ./adapter.js }    # adapter exports run(command) -> the gate's exit code
+grader: exact-match               # registry key; only exact-match is built in this seed
+corpus: ./corpus.jsonl
+criteria:                         # each maps to a graduation_criteria bar the capability declares
+  - { id: block-recall,    select: { tag: block }, metric: pass-rate, bar: 1.0 }
+  - { id: allow-precision, select: { tag: allow }, metric: pass-rate, bar: 1.0 }
+  - { id: warn-recall,     select: { tag: warn },  metric: pass-rate, bar: 1.0 }

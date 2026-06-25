@@ -1,0 +1,37 @@
+{
+  "eval": "dangerous-bash",
+  "engine": "evals-lab@0.1.0",
+  "status": "ok",
+  "results": [
+    {
+      "id": "block-recall",
+      "passed": true,
+      "score": 1,
+      "detail": "19/19 cases"
+    },
+    {
+      "id": "allow-precision",
+      "passed": true,
+      "score": 1,
+      "detail": "12/12 cases"
+    },
+    {
+      "id": "warn-recall",
+      "passed": true,
+      "score": 1,
+      "detail": "4/4 cases"
+    }
+  ],
+  "summary": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "allPassed": true
+  },
+  "cases": {
+    "total": 35,
+    "passed": 35,
+    "failed": 0
+  },
+  "failures": []
+}
