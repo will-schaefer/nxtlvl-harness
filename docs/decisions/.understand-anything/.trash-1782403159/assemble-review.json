@@ -1,0 +1,17 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 20,
+  "crossBatchEdgesAdded": 20,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Merge report fully corroborated: 46 batch nodes -> 44 assembled (36 document + 8 concept). The 2 deduplicated nodes were concept:compose-not-reconstruct and concept:objective-gate, both legitimately emitted by two batches (10 concept nodes across batches -> 8 unique). No data loss.",
+    "Could-not-fix section was empty and verified empty against batches: 0 nodes missing id, 0 unknown node types (only document/concept), 0 unknown complexity values (only simple/moderate/complex). No nodes to recover.",
+    "Fixed section sane: no ID-correction skew, complexity well-distributed (24 moderate, 13 simple, 7 complex). No upstream-quality flags.",
+    "All 35 ADRs (001-035) + README present as document nodes; all 8 concept nodes present. No orphan nodes. No dangling edges before or after fixes.",
+    "All 6 known relationship edges verified present and correctly directed: ADR-024 supersedes 023, ADR-035 supersedes 003, ADR-027 amends 003, ADR-013 supersedes 008, ADR-026 inverts 024, ADR-030 inverse 029.",
+    "Cross-batch gap found and fixed: README is the index for all 35 ADRs (verified in README.md source - it links ADR-001..035), but the assembled graph only carried README 'documents' edges for ADR-021..035. The batch that analyzed README alongside ADR-001..020 omitted those 20 index edges. Restored 20 README -> ADR-001..020 'documents' edges (type 'documents', direction 'forward', weight 0.5), matching the existing edge shape. These are backed by the source index table, not speculative. Edge total 177 -> 197.",
+    "importMap is empty as expected (all-markdown corpus, no code imports); no import-edge work performed."
+  ]
+}

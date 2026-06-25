@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 36,
+  "totalBatches": 2,
+  "exportsByPath": {},
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "ADR-001-plugin-local-marketplace-packaging.md",
+          "language": "markdown",
+          "sizeLines": 68,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-002-ecc-dormant-reference-backstop.md",
+          "language": "markdown",
+          "sizeLines": 67,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-003-compose-not-reconstruct.md",
+          "language": "markdown",
+          "sizeLines": 91,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-004-extend-native-memory.md",
+          "language": "markdown",
+          "sizeLines": 100,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-005-fallback-log-dual-metric.md",
+          "language": "markdown",
+          "sizeLines": 107,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-006-hook-fail-open-gated-blocking.md",
+          "language": "markdown",
+          "sizeLines": 94,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-007-context-budgeted-injection.md",
+          "language": "markdown",
+          "sizeLines": 117,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-008-reactive-growth-intake-gate.md",
+          "language": "markdown",
+          "sizeLines": 107,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-009-objective-invoked-audit-gate.md",
+          "language": "markdown",
+          "sizeLines": 65,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-010-global-decision-rule.md",
+          "language": "markdown",
+          "sizeLines": 90,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-011-prose-quality-stop-slop.md",
+          "language": "markdown",
+          "sizeLines": 99,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-012-agents-execute-skills-hold-knowledge.md",
+          "language": "markdown",
+          "sizeLines": 75,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-013-floor-on-demand-backbone.md",
+          "language": "markdown",
+          "sizeLines": 150,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-014-quality-first-over-leanness.md",
+          "language": "markdown",
+          "sizeLines": 136,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+          "language": "markdown",
+          "sizeLines": 109,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-016-confident-core-capability-domains.md",
+          "language": "markdown",
+          "sizeLines": 80,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-017-agent-design-contract.md",
+          "language": "markdown",
+          "sizeLines": 121,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-018-agent-authoring-method.md",
+          "language": "markdown",
+          "sizeLines": 86,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-019-agent-evaluation-model.md",
+          "language": "markdown",
+          "sizeLines": 98,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-020-agent-debugging-model.md",
+          "language": "markdown",
+          "sizeLines": 95,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "ADR-001-plugin-local-marketplace-packaging.md": [],
+        "ADR-002-ecc-dormant-reference-backstop.md": [],
+        "ADR-003-compose-not-reconstruct.md": [],
+        "ADR-004-extend-native-memory.md": [],
+        "ADR-005-fallback-log-dual-metric.md": [],
+        "ADR-006-hook-fail-open-gated-blocking.md": [],
+        "ADR-007-context-budgeted-injection.md": [],
+        "ADR-008-reactive-growth-intake-gate.md": [],
+        "ADR-009-objective-invoked-audit-gate.md": [],
+        "ADR-010-global-decision-rule.md": [],
+        "ADR-011-prose-quality-stop-slop.md": [],
+        "ADR-012-agents-execute-skills-hold-knowledge.md": [],
+        "ADR-013-floor-on-demand-backbone.md": [],
+        "ADR-014-quality-first-over-leanness.md": [],
+        "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md": [],
+        "ADR-016-confident-core-capability-domains.md": [],
+        "ADR-017-agent-design-contract.md": [],
+        "ADR-018-agent-authoring-method.md": [],
+        "ADR-019-agent-evaluation-model.md": [],
+        "ADR-020-agent-debugging-model.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "ADR-021-agent-orchestration-model.md",
+          "language": "markdown",
+          "sizeLines": 105,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-022-agent-operation-model.md",
+          "language": "markdown",
+          "sizeLines": 118,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-023-github-workflow-skill-and-conventions.md",
+          "language": "markdown",
+          "sizeLines": 107,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-024-git-workflows-domain-command-agent-skill.md",
+          "language": "markdown",
+          "sizeLines": 94,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-025-project-identity-observer-concurrency.md",
+          "language": "markdown",
+          "sizeLines": 99,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+          "language": "markdown",
+          "sizeLines": 112,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-027-router-endorses-only-established-items.md",
+          "language": "markdown",
+          "sizeLines": 117,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-028-project-management-domain-manage-and-see.md",
+          "language": "markdown",
+          "sizeLines": 110,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-029-deepwiki-orientation-not-evidence.md",
+          "language": "markdown",
+          "sizeLines": 105,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+          "language": "markdown",
+          "sizeLines": 127,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-031-labs-in-sandbox-topology.md",
+          "language": "markdown",
+          "sizeLines": 106,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-032-cells-installable-as-plugin-architecture.md",
+          "language": "markdown",
+          "sizeLines": 155,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-033-three-part-objective-graduation-contract.md",
+          "language": "markdown",
+          "sizeLines": 147,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-034-typescript-default-native-type-stripping.md",
+          "language": "markdown",
+          "sizeLines": 186,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "ADR-035-compose-substance-defer-own-orchestration.md",
+          "language": "markdown",
+          "sizeLines": 133,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 56,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "ADR-021-agent-orchestration-model.md": [],
+        "ADR-022-agent-operation-model.md": [],
+        "ADR-023-github-workflow-skill-and-conventions.md": [],
+        "ADR-024-git-workflows-domain-command-agent-skill.md": [],
+        "ADR-025-project-identity-observer-concurrency.md": [],
+        "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md": [],
+        "ADR-027-router-endorses-only-established-items.md": [],
+        "ADR-028-project-management-domain-manage-and-see.md": [],
+        "ADR-029-deepwiki-orientation-not-evidence.md": [],
+        "ADR-030-context7-testifies-primary-sources-version-pinned.md": [],
+        "ADR-031-labs-in-sandbox-topology.md": [],
+        "ADR-032-cells-installable-as-plugin-architecture.md": [],
+        "ADR-033-three-part-objective-graduation-contract.md": [],
+        "ADR-034-typescript-default-native-type-stripping.md": [],
+        "ADR-035-compose-substance-defer-own-orchestration.md": [],
+        "README.md": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

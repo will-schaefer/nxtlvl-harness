@@ -1,0 +1,367 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "f8bb012bafb7f3a48c7f3bc7e9ced18881c6eab9",
+  "generatedAt": "2026-06-25T15:59:04.131Z",
+  "files": {
+    "ADR-001-plugin-local-marketplace-packaging.md": {
+      "filePath": "ADR-001-plugin-local-marketplace-packaging.md",
+      "contentHash": "40877e73cb06c15762e8ccc3f64e141ae3993e0ba8e6c925deadc5dff5ca6610",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-002-ecc-dormant-reference-backstop.md": {
+      "filePath": "ADR-002-ecc-dormant-reference-backstop.md",
+      "contentHash": "8e67031da8f29344dd254840986f007a19acf6fb77f68aa07879e3759ae0be0a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 68,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-003-compose-not-reconstruct.md": {
+      "filePath": "ADR-003-compose-not-reconstruct.md",
+      "contentHash": "a5b28f13df893921ad15d01cd30ca4f62c3d3e621e8611af0c3937c033187c2d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 92,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-004-extend-native-memory.md": {
+      "filePath": "ADR-004-extend-native-memory.md",
+      "contentHash": "9b5ce1ab346bd44c4f43a52094fd15ef77259321e5ffe2068892f9a024145f1a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 101,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-005-fallback-log-dual-metric.md": {
+      "filePath": "ADR-005-fallback-log-dual-metric.md",
+      "contentHash": "57d185cf891d7c371ea19333b5230770b1686ea5d217368ff611cc5da1595b79",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-006-hook-fail-open-gated-blocking.md": {
+      "filePath": "ADR-006-hook-fail-open-gated-blocking.md",
+      "contentHash": "5f221bb2c45fd5d14588ddcd6ae74c37440901698b0d68966621bdd335dbfd3b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 95,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-007-context-budgeted-injection.md": {
+      "filePath": "ADR-007-context-budgeted-injection.md",
+      "contentHash": "1583125ee243d03db84acf4ffba4455657d7889d51ddc113cfef609d0e1de412",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 118,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-008-reactive-growth-intake-gate.md": {
+      "filePath": "ADR-008-reactive-growth-intake-gate.md",
+      "contentHash": "b6919ba94205ef5489cde8e748200bace651199fc473b6ad735267e39941ace6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-009-objective-invoked-audit-gate.md": {
+      "filePath": "ADR-009-objective-invoked-audit-gate.md",
+      "contentHash": "ff2e8bb42efb023cfbf20d6ceb27eb3b097de74a51c1a969649124034f8f7978",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 66,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-010-global-decision-rule.md": {
+      "filePath": "ADR-010-global-decision-rule.md",
+      "contentHash": "7e7f21bd65cb3ae4cb4f53c7d07ee41744239002697f122b15454e16454b9a07",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-011-prose-quality-stop-slop.md": {
+      "filePath": "ADR-011-prose-quality-stop-slop.md",
+      "contentHash": "6cd7ccad41b84d5400d3f5050cda731829fd13108b92d283a18a345f69437e07",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 100,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-012-agents-execute-skills-hold-knowledge.md": {
+      "filePath": "ADR-012-agents-execute-skills-hold-knowledge.md",
+      "contentHash": "d863261d8e8426eea6d18a62841f0727efb43cd8481dba4cede36e3d010b6499",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-013-floor-on-demand-backbone.md": {
+      "filePath": "ADR-013-floor-on-demand-backbone.md",
+      "contentHash": "642094659101b60d598ffa443b829514fc2f1e10212135e156daa04c9dc46909",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 151,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-014-quality-first-over-leanness.md": {
+      "filePath": "ADR-014-quality-first-over-leanness.md",
+      "contentHash": "b6103339c52f31be7c5107be4d6caa98f267b35cc2ed6d39126730f32348e619",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 137,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md": {
+      "filePath": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "contentHash": "8e923e29f1ad445fb0edf64387494617f1905e84f5c9f9fbdf4fe48cd16595f5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 110,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-016-confident-core-capability-domains.md": {
+      "filePath": "ADR-016-confident-core-capability-domains.md",
+      "contentHash": "491f42a493af8a23b72fe2400e92129386bdca7708675d8652ed88588dd8651a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 81,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-017-agent-design-contract.md": {
+      "filePath": "ADR-017-agent-design-contract.md",
+      "contentHash": "c5cf8295d5a66e17677c9af3acdd3192b0641ca20fffb8bc5a939157c89469ae",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 122,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-018-agent-authoring-method.md": {
+      "filePath": "ADR-018-agent-authoring-method.md",
+      "contentHash": "89c471049ad0a9e7ce0ea382468e5d3ec34708f83529a3c49686009667ec4848",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 87,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-019-agent-evaluation-model.md": {
+      "filePath": "ADR-019-agent-evaluation-model.md",
+      "contentHash": "5cf5704ad0639774cc1715a541e9aed3bd716e6967be4ef2d3c7b77bf8ac497d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 99,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-020-agent-debugging-model.md": {
+      "filePath": "ADR-020-agent-debugging-model.md",
+      "contentHash": "0c81e189fb0cd742181cb8868f1946aede11ff9ad2d911aee595d89d1e8d5ab8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 96,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-021-agent-orchestration-model.md": {
+      "filePath": "ADR-021-agent-orchestration-model.md",
+      "contentHash": "b72eaef226f19b9ae8dce35a10a6aa7ebd93f837cb649ea2aeb0935de51445f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-022-agent-operation-model.md": {
+      "filePath": "ADR-022-agent-operation-model.md",
+      "contentHash": "e86898549f6deeb42dde008ddb331e2f150217f1b0f052a395ed8f659961499a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-023-github-workflow-skill-and-conventions.md": {
+      "filePath": "ADR-023-github-workflow-skill-and-conventions.md",
+      "contentHash": "c6216995643c357206e372f77584f8b7bec4ac9d19ffee6b5ef4e1e05a2ed253",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-024-git-workflows-domain-command-agent-skill.md": {
+      "filePath": "ADR-024-git-workflows-domain-command-agent-skill.md",
+      "contentHash": "76b30cd5d60ad0adaa6a56cc739a418e634089f5fbfb1c67f0a2e08244ab86f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 95,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-025-project-identity-observer-concurrency.md": {
+      "filePath": "ADR-025-project-identity-observer-concurrency.md",
+      "contentHash": "6c6159865e7a80785d689ddf90932360afecbb74478fd576e40ba957304e818d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 100,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md": {
+      "filePath": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "contentHash": "71d92ea2782bfacf1f2afe0593e16190fede2d1542190a91a1a81e5d3f1b99ec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-027-router-endorses-only-established-items.md": {
+      "filePath": "ADR-027-router-endorses-only-established-items.md",
+      "contentHash": "a378346289bc94b76c23c9ee459adc52e74bb2f3050d935d6f38588657904a69",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 118,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-028-project-management-domain-manage-and-see.md": {
+      "filePath": "ADR-028-project-management-domain-manage-and-see.md",
+      "contentHash": "267848de07381905d347e98ea1a5e99598c3e2c968728ab39f92d09af182cd5a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 111,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-029-deepwiki-orientation-not-evidence.md": {
+      "filePath": "ADR-029-deepwiki-orientation-not-evidence.md",
+      "contentHash": "12fa2aa40def21106c439db8d16af78c2bd5dd54111098d643ecf2626240cdcd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-030-context7-testifies-primary-sources-version-pinned.md": {
+      "filePath": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "contentHash": "243c5122fa192f1747703ac19cd95d40cde8903647598419c99031ea97f799a7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 128,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-031-labs-in-sandbox-topology.md": {
+      "filePath": "ADR-031-labs-in-sandbox-topology.md",
+      "contentHash": "566f50445199b5d48e6826dd4aec569708281437a8534c81549efe8df35c73f1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 107,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-032-cells-installable-as-plugin-architecture.md": {
+      "filePath": "ADR-032-cells-installable-as-plugin-architecture.md",
+      "contentHash": "beac9d559c8d151bd1427a37d532462fc161507c036b3ae5f9a407786107cb10",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 156,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-033-three-part-objective-graduation-contract.md": {
+      "filePath": "ADR-033-three-part-objective-graduation-contract.md",
+      "contentHash": "8372b45b03277cb1eb6e084c8d346e609f5c07304e656092c002ecdeb27253a8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 148,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-034-typescript-default-native-type-stripping.md": {
+      "filePath": "ADR-034-typescript-default-native-type-stripping.md",
+      "contentHash": "ed661c50ff13d30bf2925bb4c6f0fbe3e06c8b86d61284ecb1e73e38d61aa7b6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 187,
+      "hasStructuralAnalysis": true
+    },
+    "ADR-035-compose-substance-defer-own-orchestration.md": {
+      "filePath": "ADR-035-compose-substance-defer-own-orchestration.md",
+      "contentHash": "9f67aebc420cf5a6ff7ad9836c63d48e546dcb936c6dacc1bd066e66b93b66ef",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 134,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "404e1464a8f8dfc01639785066874ae8460d0a805e4c0bf5b078ceee5f220bcb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

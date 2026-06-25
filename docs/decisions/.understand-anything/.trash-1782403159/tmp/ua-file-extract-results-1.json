@@ -1,0 +1,1187 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 20,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "ADR-001-plugin-local-marketplace-packaging.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 68,
+      "nonEmptyLines": 58,
+      "sections": [
+        {
+          "heading": "ADR-001: Package `nxtlvl` as a Claude Code plugin installed via a local marketplace",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 38
+        },
+        {
+          "heading": "Hand-edit `~/.claude` directly (no plugin)",
+          "level": 3,
+          "line": 40
+        },
+        {
+          "heading": "Hand-rolled installer / sync script",
+          "level": 3,
+          "line": 46
+        },
+        {
+          "heading": "Loose collection of skills/agents without plugin packaging",
+          "level": 3,
+          "line": 52
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 58
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-002-ecc-dormant-reference-backstop.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 67,
+      "nonEmptyLines": 57,
+      "sections": [
+        {
+          "heading": "ADR-002: Keep `ecc` installed-but-dormant as reference + backstop",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 34
+        },
+        {
+          "heading": "Uninstall ecc entirely",
+          "level": 3,
+          "line": 36
+        },
+        {
+          "heading": "Keep ecc active",
+          "level": 3,
+          "line": 42
+        },
+        {
+          "heading": "`ECC_GATEGUARD=off` env-var band-aid (neutralize hooks only)",
+          "level": 3,
+          "line": 48
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 53
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-003-compose-not-reconstruct.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 91,
+      "nonEmptyLines": 79,
+      "sections": [
+        {
+          "heading": "ADR-003: Compose on native + agent-skills; reconstruct only the plumbing; never reconstruct orchestration",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 36
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 56
+        },
+        {
+          "heading": "Reconstruct everything (including orchestration)",
+          "level": 3,
+          "line": 58
+        },
+        {
+          "heading": "Compose everything (reconstruct nothing)",
+          "level": 3,
+          "line": 65
+        },
+        {
+          "heading": "Fork ecc and trim it",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 77
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-004-extend-native-memory.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 100,
+      "nonEmptyLines": 86,
+      "sections": [
+        {
+          "heading": "ADR-004: Extend native Claude Code file-memory; build no new memory system",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 62
+        },
+        {
+          "heading": "Build a custom memory store (DB / bespoke files / embeddings index)",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "Vendor ecc's continuous-learning / observation-capture memory",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Keep everything inside `~/.claude`",
+          "level": 3,
+          "line": 80
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 86
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-005-fallback-log-dual-metric.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 107,
+      "nonEmptyLines": 89,
+      "sections": [
+        {
+          "heading": "ADR-005: Measure success with a hook-written fallback log and a dual fallback-rate × quality metric",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 62
+        },
+        {
+          "heading": "Manual fallback log",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "\"Audit-delta\" as the north star",
+          "level": 3,
+          "line": 71
+        },
+        {
+          "heading": "Single metric (fallback-rate alone)",
+          "level": 3,
+          "line": 76
+        },
+        {
+          "heading": "Project-local log",
+          "level": 3,
+          "line": 83
+        },
+        {
+          "heading": "Whole-session quality score (human-rated or auto-inferred) — amendment-era rejection",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-006-hook-fail-open-gated-blocking.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 94,
+      "nonEmptyLines": 76,
+      "sections": [
+        {
+          "heading": "ADR-006: Hook safety — fail-open on error (absolute); deliberate blocking only via the intake gate, with kill switches",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 43
+        },
+        {
+          "heading": "Fail-closed gates (block on error)",
+          "level": 3,
+          "line": 45
+        },
+        {
+          "heading": "Blanket \"no session hook may ever block\"",
+          "level": 3,
+          "line": 50
+        },
+        {
+          "heading": "No kill switch (rely on rollback for escape)",
+          "level": 3,
+          "line": 56
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 61
+        },
+        {
+          "heading": "Clarifying Note (2026-06-19) — carve-out, not a reversal",
+          "level": 2,
+          "line": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-007-context-budgeted-injection.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 117,
+      "nonEmptyLines": 99,
+      "sections": [
+        {
+          "heading": "ADR-007: Context assembly as a budgeted injection policy — pointers over content, organized by lifetime",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 17
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 26
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "Firehose (inject everything that might be relevant)",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Hand-built per-prompt retriever",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "No structured policy (ad hoc injection per hook)",
+          "level": 3,
+          "line": 80
+        },
+        {
+          "heading": "Size-first truncation for instincts — amendment-era rejection",
+          "level": 3,
+          "line": 85
+        },
+        {
+          "heading": "Pointer to bookmark (instead of actual words) — amendment-era rejection",
+          "level": 3,
+          "line": 93
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 100
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-008-reactive-growth-intake-gate.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 107,
+      "nonEmptyLines": 89,
+      "sections": [
+        {
+          "heading": "ADR-008: Reactive growth governed by a written membership/intake gate",
+          "level": 1,
+          "line": 19
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Hook-layer corollary",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 79
+        },
+        {
+          "heading": "Proactive breadth (pre-build for anticipated needs)",
+          "level": 3,
+          "line": 81
+        },
+        {
+          "heading": "Vibe-based reactive additions (add when it feels useful)",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Never grow past Phase 0",
+          "level": 3,
+          "line": 92
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 97
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-009-objective-invoked-audit-gate.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 65,
+      "nonEmptyLines": 56,
+      "sections": [
+        {
+          "heading": "ADR-009: Promotion gated by an objective, binary, *invoked* audit (not a self-tunable score, not a session hook)",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 40
+        },
+        {
+          "heading": "ecc's `harness-audit`",
+          "level": 3,
+          "line": 42
+        },
+        {
+          "heading": "Single self-tunable quality score",
+          "level": 3,
+          "line": 47
+        },
+        {
+          "heading": "Continuous session-hook audit",
+          "level": 3,
+          "line": 52
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 57
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-010-global-decision-rule.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 90,
+      "nonEmptyLines": 79,
+      "sections": [
+        {
+          "heading": "ADR-010: A global decision rule governs how decisions are made and recorded; ADR-worthy tier first",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 43
+        },
+        {
+          "heading": "Scope: full spectrum now, or ADR-only forever",
+          "level": 3,
+          "line": 45
+        },
+        {
+          "heading": "Composition: vendor `/documentation-and-adrs` now, or restate the process",
+          "level": 3,
+          "line": 52
+        },
+        {
+          "heading": "Artifact: inline CLAUDE.md section, or `@import` the rule file",
+          "level": 3,
+          "line": 59
+        },
+        {
+          "heading": "Layering: global-only (no override), or per-project (no global)",
+          "level": 3,
+          "line": 65
+        },
+        {
+          "heading": "Enforcement: block on completeness, or pure-advisory forever",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-011-prose-quality-stop-slop.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 99,
+      "nonEmptyLines": 88,
+      "sections": [
+        {
+          "heading": "ADR-011: Prose quality is governed harness-wide by a vendored stop-slop skill, with a condensed always-on chat convention",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 20
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 47
+        },
+        {
+          "heading": "Shape: vendored-skill-only, pipeline-step, hook/gate, or intake-first",
+          "level": 3,
+          "line": 49
+        },
+        {
+          "heading": "Chat mechanism: condensed convention, warn-only Stop hook, on-demand, or cut",
+          "level": 3,
+          "line": 59
+        },
+        {
+          "heading": "Face B sync: literal copy + audit check, or `@import` a single source",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "Refinement: tune-to-voice now, or vendor-faithful-then-reactive",
+          "level": 3,
+          "line": 73
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 78
+        },
+        {
+          "heading": "Implementation",
+          "level": 2,
+          "line": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-012-agents-execute-skills-hold-knowledge.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 75,
+      "nonEmptyLines": 66,
+      "sections": [
+        {
+          "heading": "ADR-012: Agents execute, skills hold knowledge; agent definitions point to a skill as single source of truth",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 27
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 40
+        },
+        {
+          "heading": "Bake the full domain rules into the agent prompt",
+          "level": 3,
+          "line": 42
+        },
+        {
+          "heading": "No agent — skill only, invoked directly",
+          "level": 3,
+          "line": 51
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 59
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 7
+      }
+    },
+    {
+      "path": "ADR-013-floor-on-demand-backbone.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 150,
+      "nonEmptyLines": 133,
+      "sections": [
+        {
+          "heading": "ADR-013: Session-lifecycle backbone — always-on automatic floor plus on-demand commands; no close ritual",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 48
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 78
+        },
+        {
+          "heading": "Floor + ceiling (the original two-layer design)",
+          "level": 3,
+          "line": 80
+        },
+        {
+          "heading": "Thin \"wrap up\" button (lightweight ceiling)",
+          "level": 3,
+          "line": 89
+        },
+        {
+          "heading": "Keep continuous-learning deferred (preserve ADR-008 as-is)",
+          "level": 3,
+          "line": 96
+        },
+        {
+          "heading": "Auto-fire evolution on a schedule (cron or session-count trigger)",
+          "level": 3,
+          "line": 107
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 114
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-014-quality-first-over-leanness.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 136,
+      "nonEmptyLines": 120,
+      "sections": [
+        {
+          "heading": "ADR-014: Quality first — size and leanness are backstops, never the objective",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 26
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 65
+        },
+        {
+          "heading": "Leave the framing as-is (\"lean\" everywhere)",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "Drop size budgets entirely (pure quality, no number)",
+          "level": 3,
+          "line": 74
+        },
+        {
+          "heading": "Re-expand breadth now that \"lean\" isn't the goal",
+          "level": 3,
+          "line": 82
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 89
+        },
+        {
+          "heading": "Follow-up (personal-harness.md read-through — confirmed 2026-06-19)",
+          "level": 2,
+          "line": 119
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 109,
+      "nonEmptyLines": 88,
+      "sections": [
+        {
+          "heading": "ADR-015: Agents that front a skill load it only when they run the skill to completion; spawn-target agents must not",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 39
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 58
+        },
+        {
+          "heading": "Have doubt-reviewer load doubt-driven-development, rely on the skill's own warning to suppress Step 3",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "Apply ADR-012 uniformly with no exception (all agents load their skill)",
+          "level": 3,
+          "line": 69
+        },
+        {
+          "heading": "No dedicated agent — orchestrator pastes adversarial prompt onto a generic subagent each time",
+          "level": 3,
+          "line": 77
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 89
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-016-confident-core-capability-domains.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 80,
+      "nonEmptyLines": 69,
+      "sections": [
+        {
+          "heading": "ADR-016: Pre-build a bounded confident-core of capability domains; intake gate governs the rest",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 25
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 49
+        },
+        {
+          "heading": "Keep all capability growth reactive (status-quo ADR-008)",
+          "level": 3,
+          "line": 51
+        },
+        {
+          "heading": "Drop the intake gate entirely (\"build whatever I think I'll use\")",
+          "level": 3,
+          "line": 57
+        },
+        {
+          "heading": "Pre-build the whole active map (§2a, ~12 domains)",
+          "level": 3,
+          "line": 63
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-017-agent-design-contract.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 121,
+      "nonEmptyLines": 107,
+      "sections": [
+        {
+          "heading": "ADR-017: Main session orchestrates; agents are scoped specialists on a lean ECC-style contract",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 46
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 84
+        },
+        {
+          "heading": "Recreate ecc's per-language / per-domain agent matrix",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Agents as a last resort (skills + native agents only; custom agents rare)",
+          "level": 3,
+          "line": 94
+        },
+        {
+          "heading": "Pin per-agent model IDs now",
+          "level": 3,
+          "line": 101
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 106
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-018-agent-authoring-method.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 86,
+      "nonEmptyLines": 76,
+      "sections": [
+        {
+          "heading": "ADR-018: Authoring method — caller-agnostic skill loaded by a lean executor; eval-first disciplines, scoped",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 56
+        },
+        {
+          "heading": "Fat executor (knowledge baked into the agent/command, no skill split)",
+          "level": 3,
+          "line": 58
+        },
+        {
+          "heading": "Re-derive review/dev substance (own checklists/rules from scratch)",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "Adopt ECC's cost ledger + GitHub-coupled command internals wholesale",
+          "level": 3,
+          "line": 69
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 76
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-019-agent-evaluation-model.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 98,
+      "nonEmptyLines": 87,
+      "sections": [
+        {
+          "heading": "ADR-019: Evaluation — agent-self-evaluation as an advisory per-task done-condition check; formal eval suites stay reactive; gates unchanged",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 53
+        },
+        {
+          "heading": "Adopt agent-self-evaluation as a delivery gate (block on a minimum score)",
+          "level": 3,
+          "line": 55
+        },
+        {
+          "heading": "Stand up eval-harness now (capability/regression suites, pass@k in CI)",
+          "level": 3,
+          "line": 61
+        },
+        {
+          "heading": "Adopt agent-eval (head-to-head coding-agent comparison)",
+          "level": 3,
+          "line": 69
+        },
+        {
+          "heading": "Author a new nxtlvl five-axis rubric distinct from the review skill",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 80
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-020-agent-debugging-model.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 95,
+      "nonEmptyLines": 86,
+      "sections": [
+        {
+          "heading": "ADR-020: Debugging — adopt the introspection self-debug loop; scope the architecture audit to owned layers; diagnostic, never a gate",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 28
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 59
+        },
+        {
+          "heading": "Adopt the full 12-layer architecture audit with the JSON report envelope",
+          "level": 3,
+          "line": 61
+        },
+        {
+          "heading": "Make the debug audit a promotion gate (or fold it into ADR-009)",
+          "level": 3,
+          "line": 68
+        },
+        {
+          "heading": "Build a runtime self-healing loop (auto-retry/repair agent)",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 83
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    }
+  ]
+}

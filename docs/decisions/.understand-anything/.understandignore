@@ -1,0 +1,5 @@
+# .understandignore — ADR knowledge graph scope
+# Keep: ADR-*.md (the 35 decisions) + README.md (the index).
+# Exclude generated/non-ADR artifacts:
+graph.html
+.understand-anything/

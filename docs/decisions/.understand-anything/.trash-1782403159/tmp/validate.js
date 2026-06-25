@@ -1,0 +1,10 @@
+const tour = require('../intermediate/tour.json');
+const r = require('./ua-tour-results.json');
+const ids = new Set(Object.keys(r.nodeSummaryIndex));
+const bad = [];
+tour.forEach(s => s.nodeIds.forEach(id => { if (ids.has(id) === false) bad.push(id); }));
+const orders = tour.map(s => s.order);
+console.log('steps', tour.length);
+console.log('orders ok', JSON.stringify(orders) === JSON.stringify(orders.map((_, i) => i + 1)));
+console.log('empty nodeIds', tour.some(s => s.nodeIds.length === 0));
+console.log('invalid ids', bad.length ? bad : 'NONE');

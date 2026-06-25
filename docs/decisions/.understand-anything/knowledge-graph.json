@@ -1,0 +1,2254 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "nxtlvl ADRs",
+    "languages": [
+      "markdown"
+    ],
+    "frameworks": [],
+    "description": "Architecture Decision Records for nxtlvl, a personal Claude Code agent harness — 35 sequentially-numbered, heavily cross-linked markdown decision documents (with YAML frontmatter) capturing the significant, expensive-to-reverse choices behind the harness, plus a README index table. Superseded decisions are kept and marked rather than deleted.",
+    "analyzedAt": "2026-06-25T15:57:37Z",
+    "gitCommitHash": "f8bb012bafb7f3a48c7f3bc7e9ced18881c6eab9"
+  },
+  "nodes": [
+    {
+      "id": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "document",
+      "name": "Prose quality is governed harness-wide by a vendored stop-slop skill, with a condensed always-on chat convention",
+      "filePath": "ADR-011-prose-quality-stop-slop.md",
+      "summary": "Governs prose quality harness-wide via a vendored stop-slop skill plus a condensed always-on chat convention, rather than a hook/gate or intake-first mechanism.",
+      "tags": [
+        "prose-quality",
+        "stop-slop",
+        "skill",
+        "convention"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "document",
+      "name": "Agents execute, skills hold knowledge; agent definitions point to a skill as single source of truth",
+      "filePath": "ADR-012-agents-execute-skills-hold-knowledge.md",
+      "summary": "Separates concerns so agents execute while skills hold knowledge, with agent definitions pointing to a skill as single source of truth rather than baking rules into the prompt.",
+      "tags": [
+        "agents",
+        "skills",
+        "single-source-of-truth",
+        "separation-of-concerns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "document",
+      "name": "Session-lifecycle backbone — always-on automatic floor plus on-demand commands; no close ritual",
+      "filePath": "ADR-013-floor-on-demand-backbone.md",
+      "summary": "Defines the session-lifecycle backbone as an always-on automatic floor plus on-demand commands with no close ritual; supersedes ADR-008 and amends ADR-004/005/006/007.",
+      "tags": [
+        "session-lifecycle",
+        "floor",
+        "on-demand",
+        "hooks",
+        "supersedes"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "document",
+      "name": "Quality first — size and leanness are backstops, never the objective",
+      "filePath": "ADR-014-quality-first-over-leanness.md",
+      "summary": "Reframes quality as the objective with size/leanness only as backstops; amends ADR-007 (token budget as soft ceiling) and ADR-008 (gate optimizes for quality).",
+      "tags": [
+        "quality-first",
+        "leanness",
+        "principle",
+        "amends"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "document",
+      "name": "Agents that front a skill load it only when they run the skill to completion; spawn-target agents must not",
+      "filePath": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "summary": "Refines ADR-012: an agent loads its fronting skill only when it runs that skill to completion; spawn-target agents (e.g. doubt-reviewer) must not load the spawning skill.",
+      "tags": [
+        "agents",
+        "skills",
+        "load-rule",
+        "spawn-target"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "document",
+      "name": "Pre-build a bounded confident-core of capability domains; intake gate governs the rest",
+      "filePath": "ADR-016-confident-core-capability-domains.md",
+      "summary": "Pre-builds a bounded confident-core of five capability domains while the intake gate governs the rest; amends ADR-008 by moving languages from reactive to build-now.",
+      "tags": [
+        "capability-domains",
+        "confident-core",
+        "intake-gate",
+        "amends"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-017-agent-design-contract.md",
+      "type": "document",
+      "name": "Main session orchestrates; agents are scoped specialists on a lean ECC-style contract",
+      "filePath": "ADR-017-agent-design-contract.md",
+      "summary": "Keeps the main session as orchestrator and agents as scoped specialists on a lean ECC-style contract, rejecting a per-language/per-domain agent matrix and deferring per-agent model pinning.",
+      "tags": [
+        "agents",
+        "orchestration",
+        "design-contract",
+        "scoped-specialists"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-018-agent-authoring-method.md",
+      "type": "document",
+      "name": "Authoring method — caller-agnostic skill loaded by a lean executor; eval-first disciplines, scoped",
+      "filePath": "ADR-018-agent-authoring-method.md",
+      "summary": "Sets the agent authoring method: a caller-agnostic skill loaded by a lean executor, with eval-first disciplines scoped rather than reconstructing review/dev substance or adopting ECC internals wholesale.",
+      "tags": [
+        "agents",
+        "authoring-method",
+        "skill",
+        "eval-first"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-019-agent-evaluation-model.md",
+      "type": "document",
+      "name": "Evaluation — agent-self-evaluation as advisory per-task done-condition check; formal eval suites stay reactive; gates unchanged",
+      "filePath": "ADR-019-agent-evaluation-model.md",
+      "summary": "Adopts agent-self-evaluation as an advisory per-task done-condition check, keeps formal eval suites reactive, and leaves promotion gates unchanged.",
+      "tags": [
+        "agents",
+        "evaluation",
+        "advisory",
+        "self-evaluation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-020-agent-debugging-model.md",
+      "type": "document",
+      "name": "Debugging — adopt the introspection self-debug loop; scope the architecture audit to owned layers; diagnostic, never a gate",
+      "filePath": "ADR-020-agent-debugging-model.md",
+      "summary": "Adopts an introspection self-debug loop and scopes the architecture audit to owned layers, keeping it diagnostic and never a gate.",
+      "tags": [
+        "agents",
+        "debugging",
+        "introspection",
+        "diagnostic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "document",
+      "name": "Package nxtlvl as a Claude Code plugin installed via a local marketplace",
+      "filePath": "ADR-001-plugin-local-marketplace-packaging.md",
+      "summary": "Decides nxtlvl ships as a Claude Code plugin installed through a local marketplace rather than hand-edited config, a sync script, or a loose skill collection — making install/uninstall atomic and reproducible.",
+      "tags": [
+        "packaging",
+        "plugin",
+        "marketplace",
+        "foundation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "document",
+      "name": "Keep ecc installed-but-dormant as reference + backstop",
+      "filePath": "ADR-002-ecc-dormant-reference-backstop.md",
+      "summary": "Keeps the ecc plugin installed but dormant (hooks neutralized) so it serves as a reference harness and fallback backstop instead of being uninstalled or left active.",
+      "tags": [
+        "ecc",
+        "reference",
+        "dormant",
+        "backstop"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "document",
+      "name": "Compose on native + agent-skills; reconstruct only the plumbing; never reconstruct orchestration",
+      "filePath": "ADR-003-compose-not-reconstruct.md",
+      "summary": "Establishes the founding three-tier build rule — compose on native + agent-skills, reconstruct only plumbing, never reconstruct orchestration. Superseded by ADR-035 and amended by ADR-027.",
+      "tags": [
+        "composition",
+        "compose-not-reconstruct",
+        "orchestration",
+        "foundation",
+        "superseded"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-004-extend-native-memory.md",
+      "type": "document",
+      "name": "Extend native Claude Code file-memory; build no new memory system",
+      "filePath": "ADR-004-extend-native-memory.md",
+      "summary": "Extends native Claude Code file-memory and builds no new store, with later amendments adding a separate nxtlvl instinct store and provenance as the ownership boundary.",
+      "tags": [
+        "memory",
+        "native-extension",
+        "instinct-store",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "document",
+      "name": "Measure success with a hook-written fallback log and a dual fallback-rate × quality metric",
+      "filePath": "ADR-005-fallback-log-dual-metric.md",
+      "summary": "Measures harness success via a hook-written fallback log and a dual fallback-rate × quality metric; the session-level manual quality score was later retired in favor of instinct-confidence distribution.",
+      "tags": [
+        "metrics",
+        "fallback-log",
+        "measurement",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "document",
+      "name": "Hook safety — fail-open on error; deliberate blocking only via the intake gate, with kill switches",
+      "filePath": "ADR-006-hook-fail-open-gated-blocking.md",
+      "summary": "Mandates absolute fail-open on hook error, permitting deliberate blocking only through the intake gate and always with kill switches; a 2026-06-19 clarifying note adds a carve-out without reversing the rule.",
+      "tags": [
+        "hooks",
+        "fail-open",
+        "gating",
+        "safety",
+        "kill-switch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-007-context-budgeted-injection.md",
+      "type": "document",
+      "name": "Context assembly as a budgeted injection policy — pointers over content, organized by lifetime",
+      "filePath": "ADR-007-context-budgeted-injection.md",
+      "summary": "Treats context assembly as a budgeted injection policy favoring pointers over content and organized by lifetime; amended by ADR-014 (quality-gated recall) and ADR-013.",
+      "tags": [
+        "context",
+        "injection",
+        "pointers-over-content",
+        "budget",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "document",
+      "name": "Reactive growth governed by a written membership/intake gate",
+      "filePath": "ADR-008-reactive-growth-intake-gate.md",
+      "summary": "Governs harness growth reactively through a written membership/intake gate. Superseded by ADR-013 and amended by ADR-016 (confident-core) and ADR-014 (quality-first).",
+      "tags": [
+        "growth",
+        "intake-gate",
+        "reactive",
+        "membership",
+        "superseded"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "document",
+      "name": "Promotion gated by an objective, binary, invoked audit (not a self-tunable score, not a session hook)",
+      "filePath": "ADR-009-objective-invoked-audit-gate.md",
+      "summary": "Gates promotion behind an objective, binary, explicitly-invoked audit rather than a self-tunable score or continuous session hook; concrete rubric deferred to Phase ≥1.",
+      "tags": [
+        "gating",
+        "audit",
+        "objective-gate",
+        "promotion",
+        "invoked"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-010-global-decision-rule.md",
+      "type": "document",
+      "name": "A global decision rule governs how decisions are made and recorded; ADR-worthy tier first",
+      "filePath": "ADR-010-global-decision-rule.md",
+      "summary": "Establishes a global decision rule composing the interview→spec→plan→doc pipeline and an ADR-worthy threshold, layered global-default with per-project override.",
+      "tags": [
+        "decision-rule",
+        "adr",
+        "process",
+        "governance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "concept:compose-not-reconstruct",
+      "type": "concept",
+      "name": "Compose, Not Reconstruct",
+      "summary": "The founding build doctrine that nxtlvl reconstructs only the plumbing and composes workflow substance from reviewed harnesses, leaving orchestration native — learn-by-reconstruction applies to the harness, not the SDLC content.",
+      "tags": [
+        "composition",
+        "build-strategy",
+        "doctrine"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:fail-open",
+      "type": "concept",
+      "name": "fail-open",
+      "summary": "The recurring safety stance that hooks and gates fail open on error, with deliberate blocking confined to invoked gates plus kill switches.",
+      "tags": [
+        "principle",
+        "safety",
+        "hooks",
+        "gating"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:objective-gate",
+      "type": "concept",
+      "name": "Objective Gate (block on facts, never on taste)",
+      "summary": "The discipline that promotion/graduation gates block only on objective, binary criteria (integrity, declared evals, justification) and never on taste or quality, with crashes failing open and deliberate blocks signalled by exit 2.",
+      "tags": [
+        "objective-gate",
+        "graduation",
+        "fail-open"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:agents-execute-skills-hold-knowledge",
+      "type": "concept",
+      "name": "agents-execute-skills-hold-knowledge",
+      "summary": "The recurring separation where agents execute and skills hold knowledge, agent definitions pointing to a skill as single source of truth.",
+      "tags": [
+        "principle",
+        "agents",
+        "skills",
+        "separation-of-concerns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:quality-first",
+      "type": "concept",
+      "name": "quality-first",
+      "summary": "The recurring stance that quality is the objective and size/leanness are backstops, governing context budgets, growth, and prose.",
+      "tags": [
+        "principle",
+        "quality",
+        "leanness"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:reactive-growth-intake-gate",
+      "type": "concept",
+      "name": "reactive-growth-intake-gate",
+      "summary": "The recurring governance model where the harness grows reactively through a written membership/intake gate rather than proactive breadth.",
+      "tags": [
+        "principle",
+        "growth",
+        "intake-gate",
+        "governance"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-021-agent-orchestration-model.md",
+      "type": "document",
+      "name": "ADR-021: Agent Orchestration Model",
+      "filePath": "ADR-021-agent-orchestration-model.md",
+      "summary": "Adopts a gated delegate-don't-inline orchestration pipeline where nxtlvl owns the composition but never the dispatch runtime, with a scoped agent roster. Rejects pre-building the full orchestration command family up front.",
+      "tags": [
+        "orchestration",
+        "agents",
+        "composition",
+        "gating",
+        "delegation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-022-agent-operation-model.md",
+      "type": "document",
+      "name": "ADR-022: Agent Operation Model",
+      "filePath": "ADR-022-agent-operation-model.md",
+      "summary": "Establishes that nxtlvl runs as gated, interactive, single-operator sessions with an automatic observation floor, rejecting autonomous, continuous, and enterprise runtimes. Reuses existing metric, gate, and kill switches rather than new operational machinery.",
+      "tags": [
+        "agents",
+        "operation",
+        "gating",
+        "single-operator",
+        "kill-switch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "document",
+      "name": "ADR-023: GitHub Workflow Skill and Conventions",
+      "filePath": "ADR-023-github-workflow-skill-and-conventions.md",
+      "summary": "Standardizes the GitHub workflow as a vendored skill that composes the review agent, adopting Conventional Commits with no attribution. Superseded by ADR-024, which re-ships the workflow as a three-layer domain.",
+      "tags": [
+        "git-workflow",
+        "composition",
+        "conventions",
+        "superseded",
+        "review"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "document",
+      "name": "ADR-024: git-workflows Domain (command -> agent -> skill)",
+      "filePath": "ADR-024-git-workflows-domain-command-agent-skill.md",
+      "summary": "Ships the GitHub workflow as a three-layer git-workflows domain (command -> agent -> skill) with an isolated, edit-less executor that can commit and push but never rewrite source. Supersedes ADR-023's single in-context skill shape.",
+      "tags": [
+        "git-workflow",
+        "three-layer-domain",
+        "agents",
+        "isolation",
+        "supersedes"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "document",
+      "name": "ADR-025: Project Identity & Observer Concurrency",
+      "filePath": "ADR-025-project-identity-observer-concurrency.md",
+      "summary": "Defines project identity as the git common directory and protects observer state with atomic writes (tmp + rename) plus a per-session single-flight guard. Rejects folder-path identity and ecc's PID/lock/daemon machinery.",
+      "tags": [
+        "concurrency",
+        "observer",
+        "memory",
+        "atomic-writes",
+        "git-workflow"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "type": "document",
+      "name": "ADR-026: Ideation Domain (orchestrator skill + isolated agents)",
+      "filePath": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "summary": "Ships the ideation phase as a three-layer domain with a main-thread orchestrator skill plus isolated read-only agents, inverting ADR-024's isolated-executor shape because the interview must stay interactive on the main thread.",
+      "tags": [
+        "ideation",
+        "three-layer-domain",
+        "orchestration",
+        "agents",
+        "inverts"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "document",
+      "name": "ADR-027: Router Endorses Only Established Items",
+      "filePath": "ADR-027-router-endorses-only-established-items.md",
+      "summary": "The nxtlvl router endorses only established nxtlvl items and delists the agent-skills fallthrough floor, collapsing precedence to nxtlvl -> native and going dark at unowned phases. Amends ADR-003's compose-on-native-plus-agent-skills strategy.",
+      "tags": [
+        "router",
+        "orchestration",
+        "composition",
+        "amends",
+        "agent-skills"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "type": "document",
+      "name": "ADR-028: Project Management Domain (manage-and-see)",
+      "filePath": "ADR-028-project-management-domain-manage-and-see.md",
+      "summary": "Ships a Project Management workflow domain as a manage-and-see layer with a standalone interactive dashboard over a single-writer state library, delegating execution to domain agents. Classified as a process domain so it does not trip ADR-016's capability-domain brake.",
+      "tags": [
+        "project-management",
+        "three-layer-domain",
+        "dashboard",
+        "state",
+        "agents"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "document",
+      "name": "ADR-029: DeepWiki Orients but Never Testifies",
+      "filePath": "ADR-029-deepwiki-orientation-not-evidence.md",
+      "summary": "DeepWiki accelerates harness-review Phase 2 as an orientation source only — leads, not evidence — with every claim verified at source, a scout read-only by withheld tools, zero DeepWiki citations in artifacts, and silent degradation for local/private repos.",
+      "tags": [
+        "deepwiki",
+        "harness-review",
+        "read-only-by-withheld-tools",
+        "orientation",
+        "fail-open"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "type": "document",
+      "name": "ADR-030: Context7 Testifies (primary sources, version-pinned)",
+      "filePath": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "summary": "Context7 produces evidence rather than mere leads (the inverse of ADR-029): every claim is cite-stamped with an official doc URL and resolved version, never Context7 itself, served by a scout read-only by withheld tools with graceful degradation and bounded spend.",
+      "tags": [
+        "context7",
+        "evidence",
+        "read-only-by-withheld-tools",
+        "version-pinned",
+        "grounding"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "document",
+      "name": "ADR-031: Labs in Sandbox Topology",
+      "filePath": "ADR-031-labs-in-sandbox-topology.md",
+      "summary": "harness-lab and evals-lab live as tracked subdirs under Developer/sandbox/nxtlvl-labs/ — not separate repos, not gitignored scratch — where graduation is an in-repo git mv. Records the 2026-06-22 relocation away from the original separate-repo design.",
+      "tags": [
+        "labs",
+        "sandbox",
+        "topology",
+        "git-workflow",
+        "incubation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "document",
+      "name": "ADR-032: Cells Installable as Plugin Architecture",
+      "filePath": "ADR-032-cells-installable-as-plugin-architecture.md",
+      "summary": "Capability cells use stage-as-data manifests (a stage: field changes; the cell never moves directories, avoiding files-as-state) and the lab is installable as a CC plugin for high-fidelity dogfooding in a scratch profile.",
+      "tags": [
+        "cells",
+        "plugin-architecture",
+        "manifest",
+        "dogfooding",
+        "stage-as-data"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "type": "document",
+      "name": "ADR-033: Three-Part Objective Graduation Contract",
+      "filePath": "ADR-033-three-part-objective-graduation-contract.md",
+      "summary": "A cell graduates only when all three objective criteria pass — integrity, declared evals meeting pre-committed graduation_criteria, and intake justification present — with taste/quality warning only, crash failing open (exit 0), and deliberate block at exit 2. Honors ADR-009's objective gate and ADR-006's fail-open rule.",
+      "tags": [
+        "graduation",
+        "objective-gate",
+        "cells",
+        "fail-open",
+        "contract"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "type": "document",
+      "name": "ADR-034: TypeScript Default via Native Type-Stripping",
+      "filePath": "ADR-034-typescript-default-native-type-stripping.md",
+      "summary": "TypeScript becomes the default harness language (no new JavaScript), run via native Node type-stripping with no build step, erasable-syntax-only, and a typecheck-only tsconfig; other languages stay first-class when justified and capability domains are untouched.",
+      "tags": [
+        "typescript",
+        "type-stripping",
+        "tooling",
+        "language-default",
+        "build-system"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "document",
+      "name": "ADR-035: Compose Substance, Defer Own Orchestration",
+      "filePath": "ADR-035-compose-substance-defer-own-orchestration.md",
+      "summary": "Reconstruct only the plumbing and compose the workflow substance from any reviewed harness (agent-skills is one source among many, no privileged floor), orchestrating on native through the build-out with nxtlvl's own runtime a deferred exploration. Supersedes ADR-003 and generalizes ADR-027.",
+      "tags": [
+        "composition",
+        "orchestration",
+        "build-strategy",
+        "supersedes",
+        "agent-skills"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "ADR Index (README)",
+      "filePath": "README.md",
+      "summary": "Index table for all 35 nxtlvl Architecture Decision Records, listing each ADR's decision summary and status (including supersede/amend relationships) and pointing at the intent/spec/plan anchors the ADRs consume.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "index",
+        "overview",
+        "adr"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:three-layer-domain",
+      "type": "concept",
+      "name": "Three-Layer Domain (command -> agent -> skill)",
+      "summary": "The recurring nxtlvl domain shape where a command fronts an isolated executor agent that loads a single-source-of-truth skill, with variations such as a main-thread orchestrator skill when interactivity is required.",
+      "tags": [
+        "three-layer-domain",
+        "agents",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:read-only-by-withheld-tools",
+      "type": "concept",
+      "name": "Read-Only by Withheld Tools",
+      "summary": "The pattern of enforcing a scout's read-only discipline structurally — by withholding write tools from its tool grant — rather than relying on prompt instructions alone.",
+      "tags": [
+        "read-only-by-withheld-tools",
+        "scout",
+        "isolation"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 supersedes ADR-008"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-004"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-005"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-007"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 clarifies ADR-006"
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-014 amends ADR-007"
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-014 amends ADR-008"
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-016 amends ADR-008"
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-015 refines ADR-012"
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-003 superseded by ADR-035"
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-003 amended by ADR-027"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 superseded by ADR-013"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 amended by ADR-016"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 amended by ADR-014"
+    },
+    {
+      "source": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:fail-open",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:fail-open",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-020-agent-debugging-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:reactive-growth-intake-gate",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:reactive-growth-intake-gate",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-027-router-endorses-only-established-items.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "target": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "target": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-021-agent-orchestration-model.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-022-agent-operation-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-021-agent-orchestration-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-022-agent-operation-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-027-router-endorses-only-established-items.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-021-agent-orchestration-model.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "target": "concept:read-only-by-withheld-tools",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "target": "concept:read-only-by-withheld-tools",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "concept:objective-gate",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-022-agent-operation-model.md",
+      "target": "concept:objective-gate",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-020-agent-debugging-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:foundation-packaging",
+      "name": "Foundation & Packaging",
+      "description": "Groups the founding packaging and reference-harness decisions plus the ADR index that frame how nxtlvl is shipped and bootstrapped.",
+      "nodeIds": [
+        "document:ADR-001-plugin-local-marketplace-packaging.md",
+        "document:ADR-002-ecc-dormant-reference-backstop.md",
+        "document:README.md"
+      ]
+    },
+    {
+      "id": "layer:composition-governance",
+      "name": "Composition Strategy & Governance",
+      "description": "Groups the compose-not-reconstruct build doctrine, its supersessions, the router endorsement rule, the decision-recording rule, and the reactive-growth governance model.",
+      "nodeIds": [
+        "document:ADR-003-compose-not-reconstruct.md",
+        "document:ADR-010-global-decision-rule.md",
+        "document:ADR-011-prose-quality-stop-slop.md",
+        "document:ADR-027-router-endorses-only-established-items.md",
+        "document:ADR-035-compose-substance-defer-own-orchestration.md",
+        "concept:compose-not-reconstruct",
+        "concept:reactive-growth-intake-gate"
+      ]
+    },
+    {
+      "id": "layer:context-memory",
+      "name": "Context & Memory",
+      "description": "Groups the decisions on extending native memory, context-budgeted injection, success metrics, the session-lifecycle floor, and quality-first over leanness.",
+      "nodeIds": [
+        "document:ADR-004-extend-native-memory.md",
+        "document:ADR-005-fallback-log-dual-metric.md",
+        "document:ADR-007-context-budgeted-injection.md",
+        "document:ADR-013-floor-on-demand-backbone.md",
+        "document:ADR-014-quality-first-over-leanness.md",
+        "concept:quality-first"
+      ]
+    },
+    {
+      "id": "layer:hooks-gating",
+      "name": "Hooks & Gating",
+      "description": "Groups the hook-safety fail-open rule, the reactive intake gate, and the objective invoked audit gate that govern when the harness may block.",
+      "nodeIds": [
+        "document:ADR-006-hook-fail-open-gated-blocking.md",
+        "document:ADR-008-reactive-growth-intake-gate.md",
+        "document:ADR-009-objective-invoked-audit-gate.md",
+        "concept:fail-open",
+        "concept:objective-gate"
+      ]
+    },
+    {
+      "id": "layer:agent-model",
+      "name": "Agent Model",
+      "description": "Groups the decisions defining how agents and skills divide labor — design contract, authoring, evaluation, debugging, orchestration, and operation.",
+      "nodeIds": [
+        "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+        "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+        "document:ADR-017-agent-design-contract.md",
+        "document:ADR-018-agent-authoring-method.md",
+        "document:ADR-019-agent-evaluation-model.md",
+        "document:ADR-020-agent-debugging-model.md",
+        "document:ADR-021-agent-orchestration-model.md",
+        "document:ADR-022-agent-operation-model.md",
+        "concept:agents-execute-skills-hold-knowledge"
+      ]
+    },
+    {
+      "id": "layer:capability-workflow-domains",
+      "name": "Capability & Workflow Domains",
+      "description": "Groups the decisions that ship concrete three-layer capability and workflow domains — confident-core, git-workflows, project identity, ideation, and project management.",
+      "nodeIds": [
+        "document:ADR-016-confident-core-capability-domains.md",
+        "document:ADR-023-github-workflow-skill-and-conventions.md",
+        "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+        "document:ADR-025-project-identity-observer-concurrency.md",
+        "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+        "document:ADR-028-project-management-domain-manage-and-see.md",
+        "concept:three-layer-domain"
+      ]
+    },
+    {
+      "id": "layer:docs-grounding-reference",
+      "name": "Docs-Grounding & Reference",
+      "description": "Groups the decisions on external knowledge sources — DeepWiki orientation-only versus Context7 version-pinned evidence — and the read-only-by-withheld-tools scout pattern.",
+      "nodeIds": [
+        "document:ADR-029-deepwiki-orientation-not-evidence.md",
+        "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+        "concept:read-only-by-withheld-tools"
+      ]
+    },
+    {
+      "id": "layer:labs-build-tooling",
+      "name": "Labs, Build & Tooling",
+      "description": "Groups the incubation-lab topology, cell plugin architecture, objective graduation contract, and the TypeScript-by-type-stripping language and build decisions.",
+      "nodeIds": [
+        "document:ADR-031-labs-in-sandbox-topology.md",
+        "document:ADR-032-cells-installable-as-plugin-architecture.md",
+        "document:ADR-033-three-part-objective-graduation-contract.md",
+        "document:ADR-034-typescript-default-native-type-stripping.md"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "The ADR Index",
+      "description": "Start at the README — the index table for all 35 nxtlvl Architecture Decision Records. It is the single entry point that lists each decision's summary and live status, including which ADRs supersede or amend others, and points back to the intent/spec/plan anchors the decisions consume. Critically, superseded ADRs are kept, never deleted: the record preserves the project's reasoning history, so this tour reads the decisions not as a flat list but as an evolving argument.",
+      "nodeIds": [
+        "document:README.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Founding: Packaging & Reference",
+      "description": "The harness's two founding decisions establish how nxtlvl ships and how it learns. ADR-001 packages nxtlvl as a Claude Code plugin installed through a local marketplace, making install/uninstall atomic instead of hand-edited config. ADR-002 keeps the ecc harness installed-but-dormant as a reference and fallback backstop. Together with the `compose-not-reconstruct` concept, they encode the spine of the whole corpus: study existing harnesses, reconstruct only the plumbing, and compose the substance rather than rebuilding it.",
+      "nodeIds": [
+        "document:ADR-001-plugin-local-marketplace-packaging.md",
+        "document:ADR-002-ecc-dormant-reference-backstop.md",
+        "concept:compose-not-reconstruct"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "The Compose Spine, Re-Cut",
+      "description": "ADR-003 is the most-referenced decision in the corpus (fan-in 18): the founding three-tier rule — compose on native + agent-skills, reconstruct only plumbing, never reconstruct orchestration. Watch it evolve. ADR-027 first amends it, stripping the agent-skills 'fallthrough floor' so the router endorses only established items. Then ADR-035 supersedes it entirely, generalizing the rule to 'compose substance from any reviewed harness' with no privileged source. This is the clearest worked example of how a core strategy gets re-cut while its lineage stays on the record.",
+      "nodeIds": [
+        "document:ADR-003-compose-not-reconstruct.md",
+        "document:ADR-027-router-endorses-only-established-items.md",
+        "document:ADR-035-compose-substance-defer-own-orchestration.md"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "Governance & Principles",
+      "description": "Before the harness can grow, two meta-decisions set the rules of the game. ADR-010 establishes a global decision rule — the interview → spec → plan → doc pipeline plus an ADR-worthy threshold — that governs which decisions even become ADRs (this very corpus is its output). ADR-014 reframes the project's value function: quality is the objective, and size/leanness are only backstops, never the goal. It amends the earlier context-budget and intake-gate decisions to bend them toward quality-first.",
+      "nodeIds": [
+        "document:ADR-010-global-decision-rule.md",
+        "document:ADR-014-quality-first-over-leanness.md",
+        "concept:quality-first"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "Context & Memory",
+      "description": "How the harness remembers and what it injects. ADR-004 extends native Claude Code file-memory rather than building a new store. ADR-007 (fan-in 13) treats context assembly as a budgeted injection policy — pointers over content, organized by lifetime. ADR-013 then ties these together into a session-lifecycle backbone: an always-on automatic floor plus on-demand commands, superseding the old intake gate and amending the memory, metric, context, and hook decisions at once — the single biggest consolidating move in the corpus.",
+      "nodeIds": [
+        "document:ADR-004-extend-native-memory.md",
+        "document:ADR-007-context-budgeted-injection.md",
+        "document:ADR-013-floor-on-demand-backbone.md"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "Hooks & Gating",
+      "description": "When is the harness allowed to block you? ADR-006 sets the absolute rule: hooks fail open on error, and deliberate blocking is permitted only through an invoked gate, always with a kill switch. ADR-009 makes any promotion gate objective and binary — it blocks on facts (integrity, declared evals), never on taste. ADR-008, the original reactive-growth intake gate, is the corpus's highest fan-in node (20) precisely because so much pointed at it — and it was later superseded by ADR-013's floor, showing how a load-bearing decision can be retired without erasing it.",
+      "nodeIds": [
+        "document:ADR-006-hook-fail-open-gated-blocking.md",
+        "document:ADR-009-objective-invoked-audit-gate.md",
+        "document:ADR-008-reactive-growth-intake-gate.md",
+        "concept:fail-open"
+      ]
+    },
+    {
+      "order": 7,
+      "title": "The Agent Model",
+      "description": "The largest cluster of decisions defines how agents and skills divide labor. ADR-012 sets the load-bearing rule — agents execute, skills hold knowledge — with agent definitions pointing to a skill as single source of truth. ADR-017 keeps the main session as orchestrator and agents as scoped specialists on a lean contract. ADR-021 adopts a gated delegate-don't-inline orchestration pipeline, and ADR-022 fixes the operating mode: gated, interactive, single-operator sessions, not autonomous runtimes. This is the architecture that every workflow domain later instantiates.",
+      "nodeIds": [
+        "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+        "document:ADR-017-agent-design-contract.md",
+        "document:ADR-021-agent-orchestration-model.md",
+        "document:ADR-022-agent-operation-model.md",
+        "concept:agents-execute-skills-hold-knowledge"
+      ]
+    },
+    {
+      "order": 8,
+      "title": "Workflow Domains",
+      "description": "With the agent model fixed, nxtlvl ships concrete capability domains, each as a three-layer command → agent → skill stack. ADR-024 ships git-workflows with an isolated, edit-less executor that can commit and push but never rewrite source. ADR-026 ships ideation — but inverts the shape, putting the orchestrator skill on the main thread because the interview must stay interactive. ADR-028 adds project management as a 'manage-and-see' dashboard layer. The shared `three-layer-domain` concept is the template; each domain bends it to fit.",
+      "nodeIds": [
+        "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+        "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+        "document:ADR-028-project-management-domain-manage-and-see.md",
+        "concept:three-layer-domain"
+      ]
+    },
+    {
+      "order": 9,
+      "title": "Docs-Grounding: Leads vs. Evidence",
+      "description": "Two near-identical decisions reach opposite conclusions — a sharp lesson in matching policy to source trust. ADR-029 lets DeepWiki accelerate harness-review as an orientation source only: leads, never evidence, with zero DeepWiki citations allowed in any artifact. ADR-030 is the deliberate inverse: Context7 testifies, producing cite-stamped evidence pinned to an official doc URL and version. Both share the `read-only-by-withheld-tools` pattern — a scout enforced read-only by withholding write tools structurally, not by prompt instruction.",
+      "nodeIds": [
+        "document:ADR-029-deepwiki-orientation-not-evidence.md",
+        "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+        "concept:read-only-by-withheld-tools"
+      ]
+    },
+    {
+      "order": 10,
+      "title": "Labs, Build & Tooling",
+      "description": "The newest layer governs how capabilities incubate and which language the harness is built in. ADR-031 places the labs as tracked subdirs where graduation is an in-repo `git mv`. ADR-032 makes cells installable as plugins using stage-as-data manifests to avoid files-as-state, and ADR-034 makes TypeScript the default language via native Node type-stripping — no build step, erasable-syntax-only. Each honors the older principles: the labs reuse ADR-009's objective gate and ADR-006's fail-open rule rather than inventing new machinery.",
+      "nodeIds": [
+        "document:ADR-031-labs-in-sandbox-topology.md",
+        "document:ADR-032-cells-installable-as-plugin-architecture.md",
+        "document:ADR-034-typescript-default-native-type-stripping.md"
+      ]
+    },
+    {
+      "order": 11,
+      "title": "How Decisions Evolve",
+      "description": "The tour closes on the relationships themselves — the supersede/amend chains that make this a living architecture rather than a static spec. ADR-003 → ADR-035 re-cut the compose strategy; ADR-023 → ADR-024 re-shipped the git workflow from an in-context skill to a three-layer domain; ADR-008 → ADR-013 retired the intake gate in favor of the session floor. In every case the superseded ADR is preserved with a live pointer forward, so the corpus teaches not just what nxtlvl decided, but why each decision changed.",
+      "nodeIds": [
+        "document:ADR-003-compose-not-reconstruct.md",
+        "document:ADR-035-compose-substance-defer-own-orchestration.md",
+        "document:ADR-023-github-workflow-skill-and-conventions.md",
+        "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+        "document:ADR-008-reactive-growth-intake-gate.md",
+        "document:ADR-013-floor-on-demand-backbone.md"
+      ]
+    }
+  ]
+}

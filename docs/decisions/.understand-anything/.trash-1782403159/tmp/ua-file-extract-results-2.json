@@ -1,0 +1,948 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 16,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "ADR-021-agent-orchestration-model.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 105,
+      "nonEmptyLines": 94,
+      "sections": [
+        {
+          "heading": "ADR-021: Orchestration — adopt the gated delegate-don't-inline pipeline; own the composition, never the dispatch runtime; scoped roster",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 30
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 61
+        },
+        {
+          "heading": "Adopt plan-orchestrate's chain emitter + the /orchestrate chain-runner",
+          "level": 3,
+          "line": 63
+        },
+        {
+          "heading": "Adopt team-agent-orchestration's Kanban control pane and card runtime",
+          "level": 3,
+          "line": 71
+        },
+        {
+          "heading": "Adopt team-builder's interactive picker as the routing surface",
+          "level": 3,
+          "line": 79
+        },
+        {
+          "heading": "Pre-build the full orch-* family (five operations) up front",
+          "level": 3,
+          "line": 84
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-022-agent-operation-model.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 118,
+      "nonEmptyLines": 108,
+      "sections": [
+        {
+          "heading": "ADR-022: Operation — nxtlvl runs as gated, interactive, single-operator sessions; reject autonomous/continuous/enterprise runtimes; reuse the existing metric, gate, and kill switches",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 38
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 76
+        },
+        {
+          "heading": "Adopt autonomous-agent-harness as nxtlvl's operating mode",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "Adopt the continuous-agent-loop runtime + production stack",
+          "level": 3,
+          "line": 89
+        },
+        {
+          "heading": "Adopt enterprise-agent-ops (fleet observability, lifecycle, rollout/rollback, PM2/systemd)",
+          "level": 3,
+          "line": 96
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 105
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-023-github-workflow-skill-and-conventions.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 107,
+      "nonEmptyLines": 92,
+      "sections": [
+        {
+          "heading": "ADR-023: Standardize the GitHub workflow as a vendored skill that composes the review agent — Conventional Commits, no attribution",
+          "level": 1,
+          "line": 16
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 18
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 42
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 63
+        },
+        {
+          "heading": "Standalone `github-workflow` agent (the ECC shape)",
+          "level": 3,
+          "line": 65
+        },
+        {
+          "heading": "Keep imperative sentence-case (match existing history)",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "Reconstruct review inside the workflow skill",
+          "level": 3,
+          "line": 82
+        },
+        {
+          "heading": "Full github-ops scope (issues, releases, stale, security)",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-024-git-workflows-domain-command-agent-skill.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 94,
+      "nonEmptyLines": 78,
+      "sections": [
+        {
+          "heading": "ADR-024: Ship the GitHub workflow as a three-layer git-workflows domain — command → agent → skill — with an isolated, edit-less executor",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 56
+        },
+        {
+          "heading": "Keep it a single in-context skill (ADR-023's shape)",
+          "level": 3,
+          "line": 58
+        },
+        {
+          "heading": "Read-only executor (analyze + recommend; main thread commits/pushes)",
+          "level": 3,
+          "line": 66
+        },
+        {
+          "heading": "Several commands (`/git-commit`, `/git-pr`, `/git-review`) mirroring ECC",
+          "level": 3,
+          "line": 73
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 79
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-025-project-identity-observer-concurrency.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 99,
+      "nonEmptyLines": 83,
+      "sections": [
+        {
+          "heading": "ADR-025: Project identity = git common directory; atomic writes + single-flight observer guard",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 28
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 51
+        },
+        {
+          "heading": "Folder-path identity",
+          "level": 3,
+          "line": 53
+        },
+        {
+          "heading": "ecc's PID/lock/daemon machinery",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "Non-atomic in-place writes",
+          "level": 3,
+          "line": 68
+        },
+        {
+          "heading": "Per-session lockfile (without atomicity)",
+          "level": 3,
+          "line": 74
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 81
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 112,
+      "nonEmptyLines": 95,
+      "sections": [
+        {
+          "heading": "ADR-026: Ship the ideation phase as a three-layer domain with a main-thread orchestrator skill and isolated read-only agents",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 65
+        },
+        {
+          "heading": "Front-door orchestrator that delegates to *upstream* ideation skills",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "Full-inline fork of `interview-me` into `brainstorming`",
+          "level": 3,
+          "line": 74
+        },
+        {
+          "heading": "Run the interview as an isolated agent (ADR-024's literal shape)",
+          "level": 3,
+          "line": 80
+        },
+        {
+          "heading": "Single in-context skill, no agents (ADR-023's old anti-agent stance)",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-027-router-endorses-only-established-items.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 117,
+      "nonEmptyLines": 98,
+      "sections": [
+        {
+          "heading": "ADR-027: Router endorses only established nxtlvl items; delist the agent-skills fallthrough floor",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "Keep the floor, demote it (map shows only owned; quiet fallthrough remains)",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "Just fix the staleness (keep full upstream enumeration; only mark ideation `◆`)",
+          "level": 3,
+          "line": 77
+        },
+        {
+          "heading": "Hard-disable upstream (uninstall agent-skills / blocking hook)",
+          "level": 3,
+          "line": 83
+        },
+        {
+          "heading": "Let `spec`/`plan` go dark too (fully literal floor removal)",
+          "level": 3,
+          "line": 89
+        },
+        {
+          "heading": "Build `◆` spec/plan first, then remove the floor",
+          "level": 3,
+          "line": 95
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 100
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-028-project-management-domain-manage-and-see.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 110,
+      "nonEmptyLines": 81,
+      "sections": [
+        {
+          "heading": "ADR-028: Ship a Project Management workflow domain as a manage-and-see layer with a standalone interactive dashboard over a single-writer state library",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 25
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 55
+        },
+        {
+          "heading": "PM as a sixth capability domain",
+          "level": 3,
+          "line": 57
+        },
+        {
+          "heading": "PM as a meta-PM surface only (manage the nxtlvl build, nothing more)",
+          "level": 3,
+          "line": 62
+        },
+        {
+          "heading": "Keep an \"Execute\" capability / `pm-runner` executor agent",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "State backend = GitHub issues (ecc epic-* style)",
+          "level": 3,
+          "line": 73
+        },
+        {
+          "heading": "State backend = plan files only, no live surface",
+          "level": 3,
+          "line": 78
+        },
+        {
+          "heading": "Visual tool = inline native widget (primary surface)",
+          "level": 3,
+          "line": 83
+        },
+        {
+          "heading": "View-only dashboard (no write-back)",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 93
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "ADR-029-deepwiki-orientation-not-evidence.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 105,
+      "nonEmptyLines": 89,
+      "sections": [
+        {
+          "heading": "ADR-029: DeepWiki orients `harness-review` but never testifies — leads, not evidence",
+          "level": 1,
+          "line": 8
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 10
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 55
+        },
+        {
+          "heading": "Let DeepWiki citations into the artifact (treat it as a source)",
+          "level": 3,
+          "line": 57
+        },
+        {
+          "heading": "Trust the scout's discipline by prompt alone (give it normal tools)",
+          "level": 3,
+          "line": 63
+        },
+        {
+          "heading": "Make DeepWiki a required step (no degradation path)",
+          "level": 3,
+          "line": 69
+        },
+        {
+          "heading": "Don't use DeepWiki at all (status quo manual map)",
+          "level": 3,
+          "line": 75
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 80
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 127,
+      "nonEmptyLines": 100,
+      "sections": [
+        {
+          "heading": "ADR-030: Context7 testifies — primary sources, version-pinned",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 35
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 69
+        },
+        {
+          "heading": "Treat Context7 as leads-only (same posture as DeepWiki)",
+          "level": 3,
+          "line": 71
+        },
+        {
+          "heading": "Cite \"Context7\" as the source",
+          "level": 3,
+          "line": 79
+        },
+        {
+          "heading": "Give the scout normal tools; trust prompt discipline",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Make Context7 a required dependency",
+          "level": 3,
+          "line": 93
+        },
+        {
+          "heading": "Don't adopt Context7",
+          "level": 3,
+          "line": 99
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 106
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "ADR-031-labs-in-sandbox-topology.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 106,
+      "nonEmptyLines": 85,
+      "sections": [
+        {
+          "heading": "ADR-031: Labs live as tracked subdirs under Developer/sandbox/nxtlvl-labs/, not as separate repos",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 44
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 65
+        },
+        {
+          "heading": "Separate repo at `~/agent-lab` (the original design)",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "Gitignored scratch directory inside `Developer`",
+          "level": 3,
+          "line": 76
+        },
+        {
+          "heading": "Submodule linking `~/agent-lab` into `Developer`",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 94
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-032-cells-installable-as-plugin-architecture.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 155,
+      "nonEmptyLines": 128,
+      "sections": [
+        {
+          "heading": "ADR-032: Capability cells use stage-as-data manifests; in-flight cells are dogfooded as project skills",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 32
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 62
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 97
+        },
+        {
+          "heading": "Directories as stage (files-as-state)",
+          "level": 3,
+          "line": 99
+        },
+        {
+          "heading": "No dogfood install (rely on manual invocation only)",
+          "level": 3,
+          "line": 112
+        },
+        {
+          "heading": "Per-cell plugin manifests (one plugin per cell)",
+          "level": 3,
+          "line": 126
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 138
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "ADR-033-three-part-objective-graduation-contract.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 147,
+      "nonEmptyLines": 116,
+      "sections": [
+        {
+          "heading": "ADR-033: Graduation requires all three objective criteria: integrity, declared-evals pass, and intake justification present",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 75
+        },
+        {
+          "heading": "A quality/taste score as an additional blocker",
+          "level": 3,
+          "line": 77
+        },
+        {
+          "heading": "Fewer criteria — integrity check only",
+          "level": 3,
+          "line": 91
+        },
+        {
+          "heading": "More criteria — require a human sign-off flag in the manifest",
+          "level": 3,
+          "line": 103
+        },
+        {
+          "heading": "Crash → exit 2 (strict: any error is a block)",
+          "level": 3,
+          "line": 114
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 126
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-034-typescript-default-native-type-stripping.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 186,
+      "nonEmptyLines": 162,
+      "sections": [
+        {
+          "heading": "ADR-034: TypeScript is the default harness language (no new JavaScript), run via native Node type-stripping",
+          "level": 1,
+          "line": 10
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 12
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 68
+        },
+        {
+          "heading": "Build step (`tsc → dist/`, ship compiled JS)",
+          "level": 3,
+          "line": 70
+        },
+        {
+          "heading": "`tsx` / `bun` as the hook runtime (`tsx hook.ts`)",
+          "level": 3,
+          "line": 82
+        },
+        {
+          "heading": "Stay on JavaScript (status quo)",
+          "level": 3,
+          "line": 92
+        },
+        {
+          "heading": "TypeScript everywhere (mandate TS, retire polyglot)",
+          "level": 3,
+          "line": 100
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "ADR-035-compose-substance-defer-own-orchestration.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 133,
+      "nonEmptyLines": 113,
+      "sections": [
+        {
+          "heading": "ADR-035: Reconstruct only the plumbing; compose the substance from any reviewed harness; orchestrate on native first",
+          "level": 1,
+          "line": 9
+        },
+        {
+          "heading": "Context",
+          "level": 2,
+          "line": 11
+        },
+        {
+          "heading": "Decision",
+          "level": 2,
+          "line": 41
+        },
+        {
+          "heading": "Alternatives Considered",
+          "level": 2,
+          "line": 77
+        },
+        {
+          "heading": "Amend ADR-003 instead of superseding it",
+          "level": 3,
+          "line": 79
+        },
+        {
+          "heading": "Keep a privileged upstream library (the agent-skills floor)",
+          "level": 3,
+          "line": 87
+        },
+        {
+          "heading": "Reconstruct orchestration now (own the runtime up front)",
+          "level": 3,
+          "line": 95
+        },
+        {
+          "heading": "Compose everything / reconstruct nothing",
+          "level": 3,
+          "line": 105
+        },
+        {
+          "heading": "Consequences",
+          "level": 2,
+          "line": 111
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 9
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 56,
+      "nonEmptyLines": 51,
+      "sections": [
+        {
+          "heading": "Architecture Decision Records",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    }
+  ]
+}

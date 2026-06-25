@@ -1,0 +1,102 @@
+[
+  {
+    "id": "layer:foundation-packaging",
+    "name": "Foundation & Packaging",
+    "description": "Groups the founding packaging and reference-harness decisions plus the ADR index that frame how nxtlvl is shipped and bootstrapped.",
+    "nodeIds": [
+      "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "document:README.md"
+    ]
+  },
+  {
+    "id": "layer:composition-governance",
+    "name": "Composition Strategy & Governance",
+    "description": "Groups the compose-not-reconstruct build doctrine, its supersessions, the router endorsement rule, the decision-recording rule, and the reactive-growth governance model.",
+    "nodeIds": [
+      "document:ADR-003-compose-not-reconstruct.md",
+      "document:ADR-010-global-decision-rule.md",
+      "document:ADR-011-prose-quality-stop-slop.md",
+      "document:ADR-027-router-endorses-only-established-items.md",
+      "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "concept:compose-not-reconstruct",
+      "concept:reactive-growth-intake-gate"
+    ]
+  },
+  {
+    "id": "layer:context-memory",
+    "name": "Context & Memory",
+    "description": "Groups the decisions on extending native memory, context-budgeted injection, success metrics, the session-lifecycle floor, and quality-first over leanness.",
+    "nodeIds": [
+      "document:ADR-004-extend-native-memory.md",
+      "document:ADR-005-fallback-log-dual-metric.md",
+      "document:ADR-007-context-budgeted-injection.md",
+      "document:ADR-013-floor-on-demand-backbone.md",
+      "document:ADR-014-quality-first-over-leanness.md",
+      "concept:quality-first"
+    ]
+  },
+  {
+    "id": "layer:hooks-gating",
+    "name": "Hooks & Gating",
+    "description": "Groups the hook-safety fail-open rule, the reactive intake gate, and the objective invoked audit gate that govern when the harness may block.",
+    "nodeIds": [
+      "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "document:ADR-008-reactive-growth-intake-gate.md",
+      "document:ADR-009-objective-invoked-audit-gate.md",
+      "concept:fail-open",
+      "concept:objective-gate"
+    ]
+  },
+  {
+    "id": "layer:agent-model",
+    "name": "Agent Model",
+    "description": "Groups the decisions defining how agents and skills divide labor — design contract, authoring, evaluation, debugging, orchestration, and operation.",
+    "nodeIds": [
+      "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "document:ADR-017-agent-design-contract.md",
+      "document:ADR-018-agent-authoring-method.md",
+      "document:ADR-019-agent-evaluation-model.md",
+      "document:ADR-020-agent-debugging-model.md",
+      "document:ADR-021-agent-orchestration-model.md",
+      "document:ADR-022-agent-operation-model.md",
+      "concept:agents-execute-skills-hold-knowledge"
+    ]
+  },
+  {
+    "id": "layer:capability-workflow-domains",
+    "name": "Capability & Workflow Domains",
+    "description": "Groups the decisions that ship concrete three-layer capability and workflow domains — confident-core, git-workflows, project identity, ideation, and project management.",
+    "nodeIds": [
+      "document:ADR-016-confident-core-capability-domains.md",
+      "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "document:ADR-025-project-identity-observer-concurrency.md",
+      "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "document:ADR-028-project-management-domain-manage-and-see.md",
+      "concept:three-layer-domain"
+    ]
+  },
+  {
+    "id": "layer:docs-grounding-reference",
+    "name": "Docs-Grounding & Reference",
+    "description": "Groups the decisions on external knowledge sources — DeepWiki orientation-only versus Context7 version-pinned evidence — and the read-only-by-withheld-tools scout pattern.",
+    "nodeIds": [
+      "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "concept:read-only-by-withheld-tools"
+    ]
+  },
+  {
+    "id": "layer:labs-build-tooling",
+    "name": "Labs, Build & Tooling",
+    "description": "Groups the incubation-lab topology, cell plugin architecture, objective graduation contract, and the TypeScript-by-type-stripping language and build decisions.",
+    "nodeIds": [
+      "document:ADR-031-labs-in-sandbox-topology.md",
+      "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "document:ADR-033-three-part-objective-graduation-contract.md",
+      "document:ADR-034-typescript-default-native-type-stripping.md"
+    ]
+  }
+]

@@ -1,0 +1,469 @@
+{
+  "nodes": [
+    {
+      "id": "document:ADR-021-agent-orchestration-model.md",
+      "type": "document",
+      "name": "ADR-021: Agent Orchestration Model",
+      "filePath": "ADR-021-agent-orchestration-model.md",
+      "summary": "Adopts a gated delegate-don't-inline orchestration pipeline where nxtlvl owns the composition but never the dispatch runtime, with a scoped agent roster. Rejects pre-building the full orchestration command family up front.",
+      "tags": ["orchestration", "agents", "composition", "gating", "delegation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-022-agent-operation-model.md",
+      "type": "document",
+      "name": "ADR-022: Agent Operation Model",
+      "filePath": "ADR-022-agent-operation-model.md",
+      "summary": "Establishes that nxtlvl runs as gated, interactive, single-operator sessions with an automatic observation floor, rejecting autonomous, continuous, and enterprise runtimes. Reuses existing metric, gate, and kill switches rather than new operational machinery.",
+      "tags": ["agents", "operation", "gating", "single-operator", "kill-switch"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "document",
+      "name": "ADR-023: GitHub Workflow Skill and Conventions",
+      "filePath": "ADR-023-github-workflow-skill-and-conventions.md",
+      "summary": "Standardizes the GitHub workflow as a vendored skill that composes the review agent, adopting Conventional Commits with no attribution. Superseded by ADR-024, which re-ships the workflow as a three-layer domain.",
+      "tags": ["git-workflow", "composition", "conventions", "superseded", "review"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "document",
+      "name": "ADR-024: git-workflows Domain (command -> agent -> skill)",
+      "filePath": "ADR-024-git-workflows-domain-command-agent-skill.md",
+      "summary": "Ships the GitHub workflow as a three-layer git-workflows domain (command -> agent -> skill) with an isolated, edit-less executor that can commit and push but never rewrite source. Supersedes ADR-023's single in-context skill shape.",
+      "tags": ["git-workflow", "three-layer-domain", "agents", "isolation", "supersedes"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "document",
+      "name": "ADR-025: Project Identity & Observer Concurrency",
+      "filePath": "ADR-025-project-identity-observer-concurrency.md",
+      "summary": "Defines project identity as the git common directory and protects observer state with atomic writes (tmp + rename) plus a per-session single-flight guard. Rejects folder-path identity and ecc's PID/lock/daemon machinery.",
+      "tags": ["concurrency", "observer", "memory", "atomic-writes", "git-workflow"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "type": "document",
+      "name": "ADR-026: Ideation Domain (orchestrator skill + isolated agents)",
+      "filePath": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "summary": "Ships the ideation phase as a three-layer domain with a main-thread orchestrator skill plus isolated read-only agents, inverting ADR-024's isolated-executor shape because the interview must stay interactive on the main thread.",
+      "tags": ["ideation", "three-layer-domain", "orchestration", "agents", "inverts"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "document",
+      "name": "ADR-027: Router Endorses Only Established Items",
+      "filePath": "ADR-027-router-endorses-only-established-items.md",
+      "summary": "The nxtlvl router endorses only established nxtlvl items and delists the agent-skills fallthrough floor, collapsing precedence to nxtlvl -> native and going dark at unowned phases. Amends ADR-003's compose-on-native-plus-agent-skills strategy.",
+      "tags": ["router", "orchestration", "composition", "amends", "agent-skills"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "type": "document",
+      "name": "ADR-028: Project Management Domain (manage-and-see)",
+      "filePath": "ADR-028-project-management-domain-manage-and-see.md",
+      "summary": "Ships a Project Management workflow domain as a manage-and-see layer with a standalone interactive dashboard over a single-writer state library, delegating execution to domain agents. Classified as a process domain so it does not trip ADR-016's capability-domain brake.",
+      "tags": ["project-management", "three-layer-domain", "dashboard", "state", "agents"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "document",
+      "name": "ADR-029: DeepWiki Orients but Never Testifies",
+      "filePath": "ADR-029-deepwiki-orientation-not-evidence.md",
+      "summary": "DeepWiki accelerates harness-review Phase 2 as an orientation source only — leads, not evidence — with every claim verified at source, a scout read-only by withheld tools, zero DeepWiki citations in artifacts, and silent degradation for local/private repos.",
+      "tags": ["deepwiki", "harness-review", "read-only-by-withheld-tools", "orientation", "fail-open"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "type": "document",
+      "name": "ADR-030: Context7 Testifies (primary sources, version-pinned)",
+      "filePath": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "summary": "Context7 produces evidence rather than mere leads (the inverse of ADR-029): every claim is cite-stamped with an official doc URL and resolved version, never Context7 itself, served by a scout read-only by withheld tools with graceful degradation and bounded spend.",
+      "tags": ["context7", "evidence", "read-only-by-withheld-tools", "version-pinned", "grounding"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "document",
+      "name": "ADR-031: Labs in Sandbox Topology",
+      "filePath": "ADR-031-labs-in-sandbox-topology.md",
+      "summary": "harness-lab and evals-lab live as tracked subdirs under Developer/sandbox/nxtlvl-labs/ — not separate repos, not gitignored scratch — where graduation is an in-repo git mv. Records the 2026-06-22 relocation away from the original separate-repo design.",
+      "tags": ["labs", "sandbox", "topology", "git-workflow", "incubation"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "document",
+      "name": "ADR-032: Cells Installable as Plugin Architecture",
+      "filePath": "ADR-032-cells-installable-as-plugin-architecture.md",
+      "summary": "Capability cells use stage-as-data manifests (a stage: field changes; the cell never moves directories, avoiding files-as-state) and the lab is installable as a CC plugin for high-fidelity dogfooding in a scratch profile.",
+      "tags": ["cells", "plugin-architecture", "manifest", "dogfooding", "stage-as-data"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "type": "document",
+      "name": "ADR-033: Three-Part Objective Graduation Contract",
+      "filePath": "ADR-033-three-part-objective-graduation-contract.md",
+      "summary": "A cell graduates only when all three objective criteria pass — integrity, declared evals meeting pre-committed graduation_criteria, and intake justification present — with taste/quality warning only, crash failing open (exit 0), and deliberate block at exit 2. Honors ADR-009's objective gate and ADR-006's fail-open rule.",
+      "tags": ["graduation", "objective-gate", "cells", "fail-open", "contract"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "type": "document",
+      "name": "ADR-034: TypeScript Default via Native Type-Stripping",
+      "filePath": "ADR-034-typescript-default-native-type-stripping.md",
+      "summary": "TypeScript becomes the default harness language (no new JavaScript), run via native Node type-stripping with no build step, erasable-syntax-only, and a typecheck-only tsconfig; other languages stay first-class when justified and capability domains are untouched.",
+      "tags": ["typescript", "type-stripping", "tooling", "language-default", "build-system"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "document",
+      "name": "ADR-035: Compose Substance, Defer Own Orchestration",
+      "filePath": "ADR-035-compose-substance-defer-own-orchestration.md",
+      "summary": "Reconstruct only the plumbing and compose the workflow substance from any reviewed harness (agent-skills is one source among many, no privileged floor), orchestrating on native through the build-out with nxtlvl's own runtime a deferred exploration. Supersedes ADR-003 and generalizes ADR-027.",
+      "tags": ["composition", "orchestration", "build-strategy", "supersedes", "agent-skills"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "ADR Index (README)",
+      "filePath": "README.md",
+      "summary": "Index table for all 35 nxtlvl Architecture Decision Records, listing each ADR's decision summary and status (including supersede/amend relationships) and pointing at the intent/spec/plan anchors the ADRs consume.",
+      "tags": ["documentation", "entry-point", "index", "overview", "adr"],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:compose-not-reconstruct",
+      "type": "concept",
+      "name": "Compose, Not Reconstruct",
+      "summary": "The founding build doctrine that nxtlvl reconstructs only the plumbing and composes workflow substance from reviewed harnesses, leaving orchestration native — learn-by-reconstruction applies to the harness, not the SDLC content.",
+      "tags": ["composition", "build-strategy", "doctrine"],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:three-layer-domain",
+      "type": "concept",
+      "name": "Three-Layer Domain (command -> agent -> skill)",
+      "summary": "The recurring nxtlvl domain shape where a command fronts an isolated executor agent that loads a single-source-of-truth skill, with variations such as a main-thread orchestrator skill when interactivity is required.",
+      "tags": ["three-layer-domain", "agents", "orchestration"],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:read-only-by-withheld-tools",
+      "type": "concept",
+      "name": "Read-Only by Withheld Tools",
+      "summary": "The pattern of enforcing a scout's read-only discipline structurally — by withholding write tools from its tool grant — rather than relying on prompt instructions alone.",
+      "tags": ["read-only-by-withheld-tools", "scout", "isolation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:objective-gate",
+      "type": "concept",
+      "name": "Objective Gate (block on facts, never on taste)",
+      "summary": "The discipline that promotion/graduation gates block only on objective, binary criteria (integrity, declared evals, justification) and never on taste or quality, with crashes failing open and deliberate blocks signalled by exit 2.",
+      "tags": ["objective-gate", "graduation", "fail-open"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-027-router-endorses-only-established-items.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "target": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "target": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-021-agent-orchestration-model.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-022-agent-operation-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-021-agent-orchestration-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-022-agent-operation-model.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-023-github-workflow-skill-and-conventions.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-031-labs-in-sandbox-topology.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-032-cells-installable-as-plugin-architecture.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-034-typescript-default-native-type-stripping.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-027-router-endorses-only-established-items.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-021-agent-orchestration-model.md",
+      "target": "concept:compose-not-reconstruct",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-024-git-workflows-domain-command-agent-skill.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-028-project-management-domain-manage-and-see.md",
+      "target": "concept:three-layer-domain",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-029-deepwiki-orientation-not-evidence.md",
+      "target": "concept:read-only-by-withheld-tools",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "target": "concept:read-only-by-withheld-tools",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-033-three-part-objective-graduation-contract.md",
+      "target": "concept:objective-gate",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-022-agent-operation-model.md",
+      "target": "concept:objective-gate",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

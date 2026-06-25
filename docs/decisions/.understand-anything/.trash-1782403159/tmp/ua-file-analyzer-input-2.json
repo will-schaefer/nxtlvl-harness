@@ -1,0 +1,22 @@
+{
+  "projectRoot": "/Users/willschaefer/Developer/docs/decisions",
+  "batchFiles": [
+    {"path": "ADR-021-agent-orchestration-model.md", "language": "markdown", "sizeLines": 105, "fileCategory": "docs"},
+    {"path": "ADR-022-agent-operation-model.md", "language": "markdown", "sizeLines": 118, "fileCategory": "docs"},
+    {"path": "ADR-023-github-workflow-skill-and-conventions.md", "language": "markdown", "sizeLines": 107, "fileCategory": "docs"},
+    {"path": "ADR-024-git-workflows-domain-command-agent-skill.md", "language": "markdown", "sizeLines": 94, "fileCategory": "docs"},
+    {"path": "ADR-025-project-identity-observer-concurrency.md", "language": "markdown", "sizeLines": 99, "fileCategory": "docs"},
+    {"path": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md", "language": "markdown", "sizeLines": 112, "fileCategory": "docs"},
+    {"path": "ADR-027-router-endorses-only-established-items.md", "language": "markdown", "sizeLines": 117, "fileCategory": "docs"},
+    {"path": "ADR-028-project-management-domain-manage-and-see.md", "language": "markdown", "sizeLines": 110, "fileCategory": "docs"},
+    {"path": "ADR-029-deepwiki-orientation-not-evidence.md", "language": "markdown", "sizeLines": 105, "fileCategory": "docs"},
+    {"path": "ADR-030-context7-testifies-primary-sources-version-pinned.md", "language": "markdown", "sizeLines": 127, "fileCategory": "docs"},
+    {"path": "ADR-031-labs-in-sandbox-topology.md", "language": "markdown", "sizeLines": 106, "fileCategory": "docs"},
+    {"path": "ADR-032-cells-installable-as-plugin-architecture.md", "language": "markdown", "sizeLines": 155, "fileCategory": "docs"},
+    {"path": "ADR-033-three-part-objective-graduation-contract.md", "language": "markdown", "sizeLines": 147, "fileCategory": "docs"},
+    {"path": "ADR-034-typescript-default-native-type-stripping.md", "language": "markdown", "sizeLines": 186, "fileCategory": "docs"},
+    {"path": "ADR-035-compose-substance-defer-own-orchestration.md", "language": "markdown", "sizeLines": 133, "fileCategory": "docs"},
+    {"path": "README.md", "language": "markdown", "sizeLines": 56, "fileCategory": "docs"}
+  ],
+  "batchImportData": {}
+}

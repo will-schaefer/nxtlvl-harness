@@ -1,0 +1,576 @@
+{
+  "nodes": [
+    {
+      "id": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "document",
+      "name": "Prose quality is governed harness-wide by a vendored stop-slop skill, with a condensed always-on chat convention",
+      "filePath": "ADR-011-prose-quality-stop-slop.md",
+      "summary": "Governs prose quality harness-wide via a vendored stop-slop skill plus a condensed always-on chat convention, rather than a hook/gate or intake-first mechanism.",
+      "tags": [
+        "prose-quality",
+        "stop-slop",
+        "skill",
+        "convention"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "document",
+      "name": "Agents execute, skills hold knowledge; agent definitions point to a skill as single source of truth",
+      "filePath": "ADR-012-agents-execute-skills-hold-knowledge.md",
+      "summary": "Separates concerns so agents execute while skills hold knowledge, with agent definitions pointing to a skill as single source of truth rather than baking rules into the prompt.",
+      "tags": [
+        "agents",
+        "skills",
+        "single-source-of-truth",
+        "separation-of-concerns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "document",
+      "name": "Session-lifecycle backbone — always-on automatic floor plus on-demand commands; no close ritual",
+      "filePath": "ADR-013-floor-on-demand-backbone.md",
+      "summary": "Defines the session-lifecycle backbone as an always-on automatic floor plus on-demand commands with no close ritual; supersedes ADR-008 and amends ADR-004/005/006/007.",
+      "tags": [
+        "session-lifecycle",
+        "floor",
+        "on-demand",
+        "hooks",
+        "supersedes"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "document",
+      "name": "Quality first — size and leanness are backstops, never the objective",
+      "filePath": "ADR-014-quality-first-over-leanness.md",
+      "summary": "Reframes quality as the objective with size/leanness only as backstops; amends ADR-007 (token budget as soft ceiling) and ADR-008 (gate optimizes for quality).",
+      "tags": [
+        "quality-first",
+        "leanness",
+        "principle",
+        "amends"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "document",
+      "name": "Agents that front a skill load it only when they run the skill to completion; spawn-target agents must not",
+      "filePath": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "summary": "Refines ADR-012: an agent loads its fronting skill only when it runs that skill to completion; spawn-target agents (e.g. doubt-reviewer) must not load the spawning skill.",
+      "tags": [
+        "agents",
+        "skills",
+        "load-rule",
+        "spawn-target"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "document",
+      "name": "Pre-build a bounded confident-core of capability domains; intake gate governs the rest",
+      "filePath": "ADR-016-confident-core-capability-domains.md",
+      "summary": "Pre-builds a bounded confident-core of five capability domains while the intake gate governs the rest; amends ADR-008 by moving languages from reactive to build-now.",
+      "tags": [
+        "capability-domains",
+        "confident-core",
+        "intake-gate",
+        "amends"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-017-agent-design-contract.md",
+      "type": "document",
+      "name": "Main session orchestrates; agents are scoped specialists on a lean ECC-style contract",
+      "filePath": "ADR-017-agent-design-contract.md",
+      "summary": "Keeps the main session as orchestrator and agents as scoped specialists on a lean ECC-style contract, rejecting a per-language/per-domain agent matrix and deferring per-agent model pinning.",
+      "tags": [
+        "agents",
+        "orchestration",
+        "design-contract",
+        "scoped-specialists"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:ADR-018-agent-authoring-method.md",
+      "type": "document",
+      "name": "Authoring method — caller-agnostic skill loaded by a lean executor; eval-first disciplines, scoped",
+      "filePath": "ADR-018-agent-authoring-method.md",
+      "summary": "Sets the agent authoring method: a caller-agnostic skill loaded by a lean executor, with eval-first disciplines scoped rather than reconstructing review/dev substance or adopting ECC internals wholesale.",
+      "tags": [
+        "agents",
+        "authoring-method",
+        "skill",
+        "eval-first"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-019-agent-evaluation-model.md",
+      "type": "document",
+      "name": "Evaluation — agent-self-evaluation as advisory per-task done-condition check; formal eval suites stay reactive; gates unchanged",
+      "filePath": "ADR-019-agent-evaluation-model.md",
+      "summary": "Adopts agent-self-evaluation as an advisory per-task done-condition check, keeps formal eval suites reactive, and leaves promotion gates unchanged.",
+      "tags": [
+        "agents",
+        "evaluation",
+        "advisory",
+        "self-evaluation"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-020-agent-debugging-model.md",
+      "type": "document",
+      "name": "Debugging — adopt the introspection self-debug loop; scope the architecture audit to owned layers; diagnostic, never a gate",
+      "filePath": "ADR-020-agent-debugging-model.md",
+      "summary": "Adopts an introspection self-debug loop and scopes the architecture audit to owned layers, keeping it diagnostic and never a gate.",
+      "tags": [
+        "agents",
+        "debugging",
+        "introspection",
+        "diagnostic"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 supersedes ADR-008"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-004"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-005"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 amends ADR-007"
+    },
+    {
+      "source": "document:ADR-013-floor-on-demand-backbone.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-013 clarifies ADR-006"
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-014 amends ADR-007"
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-014 amends ADR-008"
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-016 amends ADR-008"
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-015 refines ADR-012"
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-011-prose-quality-stop-slop.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-010-global-decision-rule.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-014-quality-first-over-leanness.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-016-confident-core-capability-domains.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-017-agent-design-contract.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-018-agent-authoring-method.md",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-019-agent-evaluation-model.md",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-020-agent-debugging-model.md",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

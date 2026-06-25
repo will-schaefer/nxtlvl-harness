@@ -1,0 +1,764 @@
+{
+  "nodes": [
+    {
+      "id": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "document",
+      "name": "Package nxtlvl as a Claude Code plugin installed via a local marketplace",
+      "filePath": "ADR-001-plugin-local-marketplace-packaging.md",
+      "summary": "Decides nxtlvl ships as a Claude Code plugin installed through a local marketplace rather than hand-edited config, a sync script, or a loose skill collection — making install/uninstall atomic and reproducible.",
+      "tags": [
+        "packaging",
+        "plugin",
+        "marketplace",
+        "foundation"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "document",
+      "name": "Keep ecc installed-but-dormant as reference + backstop",
+      "filePath": "ADR-002-ecc-dormant-reference-backstop.md",
+      "summary": "Keeps the ecc plugin installed but dormant (hooks neutralized) so it serves as a reference harness and fallback backstop instead of being uninstalled or left active.",
+      "tags": [
+        "ecc",
+        "reference",
+        "dormant",
+        "backstop"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "document",
+      "name": "Compose on native + agent-skills; reconstruct only the plumbing; never reconstruct orchestration",
+      "filePath": "ADR-003-compose-not-reconstruct.md",
+      "summary": "Establishes the founding three-tier build rule — compose on native + agent-skills, reconstruct only plumbing, never reconstruct orchestration. Superseded by ADR-035 and amended by ADR-027.",
+      "tags": [
+        "composition",
+        "compose-not-reconstruct",
+        "orchestration",
+        "foundation",
+        "superseded"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-004-extend-native-memory.md",
+      "type": "document",
+      "name": "Extend native Claude Code file-memory; build no new memory system",
+      "filePath": "ADR-004-extend-native-memory.md",
+      "summary": "Extends native Claude Code file-memory and builds no new store, with later amendments adding a separate nxtlvl instinct store and provenance as the ownership boundary.",
+      "tags": [
+        "memory",
+        "native-extension",
+        "instinct-store",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "document",
+      "name": "Measure success with a hook-written fallback log and a dual fallback-rate × quality metric",
+      "filePath": "ADR-005-fallback-log-dual-metric.md",
+      "summary": "Measures harness success via a hook-written fallback log and a dual fallback-rate × quality metric; the session-level manual quality score was later retired in favor of instinct-confidence distribution.",
+      "tags": [
+        "metrics",
+        "fallback-log",
+        "measurement",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "document",
+      "name": "Hook safety — fail-open on error; deliberate blocking only via the intake gate, with kill switches",
+      "filePath": "ADR-006-hook-fail-open-gated-blocking.md",
+      "summary": "Mandates absolute fail-open on hook error, permitting deliberate blocking only through the intake gate and always with kill switches; a 2026-06-19 clarifying note adds a carve-out without reversing the rule.",
+      "tags": [
+        "hooks",
+        "fail-open",
+        "gating",
+        "safety",
+        "kill-switch"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-007-context-budgeted-injection.md",
+      "type": "document",
+      "name": "Context assembly as a budgeted injection policy — pointers over content, organized by lifetime",
+      "filePath": "ADR-007-context-budgeted-injection.md",
+      "summary": "Treats context assembly as a budgeted injection policy favoring pointers over content and organized by lifetime; amended by ADR-014 (quality-gated recall) and ADR-013.",
+      "tags": [
+        "context",
+        "injection",
+        "pointers-over-content",
+        "budget",
+        "amended"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "document",
+      "name": "Reactive growth governed by a written membership/intake gate",
+      "filePath": "ADR-008-reactive-growth-intake-gate.md",
+      "summary": "Governs harness growth reactively through a written membership/intake gate. Superseded by ADR-013 and amended by ADR-016 (confident-core) and ADR-014 (quality-first).",
+      "tags": [
+        "growth",
+        "intake-gate",
+        "reactive",
+        "membership",
+        "superseded"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "document",
+      "name": "Promotion gated by an objective, binary, invoked audit (not a self-tunable score, not a session hook)",
+      "filePath": "ADR-009-objective-invoked-audit-gate.md",
+      "summary": "Gates promotion behind an objective, binary, explicitly-invoked audit rather than a self-tunable score or continuous session hook; concrete rubric deferred to Phase ≥1.",
+      "tags": [
+        "gating",
+        "audit",
+        "objective-gate",
+        "promotion",
+        "invoked"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:ADR-010-global-decision-rule.md",
+      "type": "document",
+      "name": "A global decision rule governs how decisions are made and recorded; ADR-worthy tier first",
+      "filePath": "ADR-010-global-decision-rule.md",
+      "summary": "Establishes a global decision rule composing the interview→spec→plan→doc pipeline and an ADR-worthy threshold, layered global-default with per-project override.",
+      "tags": [
+        "decision-rule",
+        "adr",
+        "process",
+        "governance"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "concept:compose-not-reconstruct",
+      "type": "concept",
+      "name": "compose-not-reconstruct",
+      "summary": "The recurring principle of composing on native + upstream capability and reconstructing only plumbing, never reconstructing orchestration.",
+      "tags": [
+        "principle",
+        "composition",
+        "orchestration"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:fail-open",
+      "type": "concept",
+      "name": "fail-open",
+      "summary": "The recurring safety stance that hooks and gates fail open on error, with deliberate blocking confined to invoked gates plus kill switches.",
+      "tags": [
+        "principle",
+        "safety",
+        "hooks",
+        "gating"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:objective-gate",
+      "type": "concept",
+      "name": "objective-gate",
+      "summary": "The recurring discipline that gates are objective, binary, and explicitly invoked — never self-tunable scores or continuous session hooks.",
+      "tags": [
+        "principle",
+        "gating",
+        "audit",
+        "objective"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:agents-execute-skills-hold-knowledge",
+      "type": "concept",
+      "name": "agents-execute-skills-hold-knowledge",
+      "summary": "The recurring separation where agents execute and skills hold knowledge, agent definitions pointing to a skill as single source of truth.",
+      "tags": [
+        "principle",
+        "agents",
+        "skills",
+        "separation-of-concerns"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:quality-first",
+      "type": "concept",
+      "name": "quality-first",
+      "summary": "The recurring stance that quality is the objective and size/leanness are backstops, governing context budgets, growth, and prose.",
+      "tags": [
+        "principle",
+        "quality",
+        "leanness"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "concept:reactive-growth-intake-gate",
+      "type": "concept",
+      "name": "reactive-growth-intake-gate",
+      "summary": "The recurring governance model where the harness grows reactively through a written membership/intake gate rather than proactive breadth.",
+      "tags": [
+        "principle",
+        "growth",
+        "intake-gate",
+        "governance"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-035-compose-substance-defer-own-orchestration.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-003 superseded by ADR-035"
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-027-router-endorses-only-established-items.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-003 amended by ADR-027"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 superseded by ADR-013"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 amended by ADR-016"
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6,
+      "summary": "ADR-008 amended by ADR-014"
+    },
+    {
+      "source": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-003-compose-not-reconstruct.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-004-extend-native-memory.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-005-fallback-log-dual-metric.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "target": "document:ADR-025-project-identity-observer-concurrency.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-007-context-budgeted-injection.md",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-005-fallback-log-dual-metric.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-008-reactive-growth-intake-gate.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-009-objective-invoked-audit-gate.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:ADR-010-global-decision-rule.md",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-001-plugin-local-marketplace-packaging.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-002-ecc-dormant-reference-backstop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-003-compose-not-reconstruct.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-004-extend-native-memory.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:compose-not-reconstruct",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:fail-open",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:fail-open",
+      "target": "document:ADR-013-floor-on-demand-backbone.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-006-hook-fail-open-gated-blocking.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-009-objective-invoked-audit-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-019-agent-evaluation-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:objective-gate",
+      "target": "document:ADR-020-agent-debugging-model.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-012-agents-execute-skills-hold-knowledge.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-017-agent-design-contract.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:agents-execute-skills-hold-knowledge",
+      "target": "document:ADR-018-agent-authoring-method.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-007-context-budgeted-injection.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-011-prose-quality-stop-slop.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:quality-first",
+      "target": "document:ADR-014-quality-first-over-leanness.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:reactive-growth-intake-gate",
+      "target": "document:ADR-008-reactive-growth-intake-gate.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "concept:reactive-growth-intake-gate",
+      "target": "document:ADR-016-confident-core-capability-domains.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

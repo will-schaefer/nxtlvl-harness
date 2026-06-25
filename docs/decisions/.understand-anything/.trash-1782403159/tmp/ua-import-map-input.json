@@ -1,0 +1,185 @@
+{
+  "projectRoot": "/Users/willschaefer/Developer/docs/decisions",
+  "files": [
+    {
+      "path": "ADR-001-plugin-local-marketplace-packaging.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-002-ecc-dormant-reference-backstop.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-003-compose-not-reconstruct.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-004-extend-native-memory.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-005-fallback-log-dual-metric.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-006-hook-fail-open-gated-blocking.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-007-context-budgeted-injection.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-008-reactive-growth-intake-gate.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-009-objective-invoked-audit-gate.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-010-global-decision-rule.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-011-prose-quality-stop-slop.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-012-agents-execute-skills-hold-knowledge.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-013-floor-on-demand-backbone.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-014-quality-first-over-leanness.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-015-agent-skill-load-rule-methodology-vs-spawn-target.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-016-confident-core-capability-domains.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-017-agent-design-contract.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-018-agent-authoring-method.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-019-agent-evaluation-model.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-020-agent-debugging-model.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-021-agent-orchestration-model.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-022-agent-operation-model.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-023-github-workflow-skill-and-conventions.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-024-git-workflows-domain-command-agent-skill.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-025-project-identity-observer-concurrency.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-026-ideation-domain-orchestrator-skill-isolated-agents.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-027-router-endorses-only-established-items.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-028-project-management-domain-manage-and-see.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-029-deepwiki-orientation-not-evidence.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-030-context7-testifies-primary-sources-version-pinned.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-031-labs-in-sandbox-topology.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-032-cells-installable-as-plugin-architecture.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-033-three-part-objective-graduation-contract.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-034-typescript-default-native-type-stripping.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "ADR-035-compose-substance-defer-own-orchestration.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs"
+    }
+  ]
+}
