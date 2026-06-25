@@ -1,0 +1,18 @@
+{
+  "name": "nxtlvl-adr-tooling",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Repo-local CLI to locate, review, and audit nxtlvl's own ADRs (docs/decisions/). Not a plugin; serves this repo only.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "@types/node": "^24.0.0"
+  },
+  "engines": {
+    "node": ">=24.12"
+  }
+}
