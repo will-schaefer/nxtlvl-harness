@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-'use strict';
 /**
- * new-cell.js — scaffold a capability cell from a --type.
+ * new-cell.ts — scaffold a capability cell from a --type.
  *
- *   node bin/new-cell.js <name> --type=skill|agent|command|hook
+ *   node bin/new-cell.ts <name> --type=skill|agent|command|hook
  *
  * Creates cells/<name>/ with:
  *   - manifest.yaml   stage: develop, intake placeholder (empty), graduation_criteria: []
@@ -13,23 +12,23 @@
  *   - a type-correct capability stub (SKILL.md | <name>.md | hooks.json + <name>.js)
  *
  * Refuses to clobber an existing cell. Validates name + type. This is plain tooling, not the
- * graduation gate — a usage error exits 1 (the deliberate exit-2 block belongs to graduate.js).
+ * graduation gate — a usage error exits 1 (the deliberate exit-2 block belongs to graduate.ts).
  *
  * Split for testability:
  *   planFiles(name, type) -> { relPath: content }   pure; throws on bad name/type
  *   createCell(name, type, cellsDir) -> { dir, files }   writes; refuses clobber
  */
 
-const fs = require('fs');
-const path = require('path');
-const m = require('./lib/manifest.js');
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as m from './lib/manifest.ts';
 
-const LAB_ROOT = path.join(__dirname, '..');
-const CELLS_DIR = path.join(LAB_ROOT, 'cells');
+const LAB_ROOT = path.join(import.meta.dirname, '..');
+export const CELLS_DIR = path.join(LAB_ROOT, 'cells');
 
 const NAME_RE = /^[a-z0-9][a-z0-9-]*$/;
 
-function assertValidName(name) {
+function assertValidName(name: string): void {
   if (typeof name !== 'string' || !NAME_RE.test(name)) {
     throw new Error(
       `invalid cell name ${JSON.stringify(name)} — use kebab-case (lowercase letters, digits, hyphens; must start alphanumeric)`
@@ -37,13 +36,13 @@ function assertValidName(name) {
   }
 }
 
-function assertValidType(type) {
+function assertValidType(type: string): void {
   if (!m.TYPES.includes(type)) {
     throw new Error(`invalid --type ${JSON.stringify(type)} — expected one of ${m.TYPES.join('|')}`);
   }
 }
 
-function manifestYaml(name, type) {
+function manifestYaml(name: string, type: string): string {
   const dir = m.TYPE_DIR[type];
   return [
     `name: ${name}`,
@@ -65,7 +64,7 @@ function manifestYaml(name, type) {
   ].join('\n');
 }
 
-function runMd(name, type) {
+function runMd(name: string, type: string): string {
   return [
     `# Running \`${name}\` (${type})`,
     '',
@@ -86,7 +85,7 @@ function runMd(name, type) {
   ].join('\n');
 }
 
-function capabilityStub(name, type) {
+function capabilityStub(name: string, type: string): Record<string, string> {
   switch (type) {
     case 'skill':
       return {
@@ -174,7 +173,7 @@ function capabilityStub(name, type) {
 }
 
 /** Pure: returns a map of relative-path -> content for a new cell. Throws on bad name/type. */
-function planFiles(name, type) {
+export function planFiles(name: string, type: string): Record<string, string> {
   assertValidName(name);
   assertValidType(type);
   return {
@@ -186,7 +185,7 @@ function planFiles(name, type) {
 }
 
 /** Writes a new cell under cellsDir. Refuses to clobber an existing cell. */
-function createCell(name, type, cellsDir) {
+export function createCell(name: string, type: string, cellsDir: string): { dir: string; files: string[] } {
   const files = planFiles(name, type);
   const cellDir = path.join(cellsDir, name);
   if (fs.existsSync(cellDir)) {
@@ -200,8 +199,8 @@ function createCell(name, type, cellsDir) {
   return { dir: cellDir, files: Object.keys(files) };
 }
 
-function parseArgs(argv) {
-  const args = { name: null, type: null };
+export function parseArgs(argv: string[]): { name: string | null; type: string | null } {
+  const args: { name: string | null; type: string | null } = { name: null, type: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a.startsWith('--type=')) {
@@ -215,10 +214,10 @@ function parseArgs(argv) {
   return args;
 }
 
-function main(argv) {
+function main(argv: string[]): void {
   const { name, type } = parseArgs(argv);
   if (!name || !type) {
-    process.stderr.write('usage: node bin/new-cell.js <name> --type=skill|agent|command|hook\n');
+    process.stderr.write('usage: node bin/new-cell.ts <name> --type=skill|agent|command|hook\n');
     process.exit(1);
   }
   try {
@@ -229,13 +228,12 @@ function main(argv) {
     process.stdout.write('\nnext: fill manifest.yaml intake + declare graduation_criteria (eval-first), then `npm run ledger`.\n');
     process.exit(0);
   } catch (e) {
-    process.stderr.write(`error: ${e.message}\n`);
+    const message = e instanceof Error ? e.message : String(e);
+    process.stderr.write(`error: ${message}\n`);
     process.exit(1);
   }
 }
 
-if (require.main === module) {
+if (import.meta.main) {
   main(process.argv.slice(2));
 }
-
-module.exports = { planFiles, createCell, parseArgs, CELLS_DIR };

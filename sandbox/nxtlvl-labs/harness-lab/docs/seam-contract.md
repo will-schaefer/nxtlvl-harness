@@ -2,8 +2,8 @@
 
 > The single interface that keeps `harness-lab` and the (later) `evals-lab` decoupled. This spec
 > fixes only the **shape** — `{ eval spec } → engine → { scorecard }`. The concrete scoring is
-> co-designed with the `evals-lab` cycle. Until that engine exists, `bin/eval.js` backs the seam
-> with a **deterministic stub** that returns a scorecard in exactly this shape. `bin/graduate.js`
+> co-designed with the `evals-lab` cycle. Until that engine exists, `bin/eval.ts` backs the seam
+> with a **deterministic stub** that returns a scorecard in exactly this shape. `bin/graduate.ts`
 > reads the scorecard and **must not know** whether a stub or the real engine produced it.
 
 ```
@@ -12,7 +12,7 @@
 
 ## Eval spec (input)
 
-Built by `bin/eval.js` from the cell's `manifest.yaml` + `evals/`:
+Built by `bin/eval.ts` from the cell's `manifest.yaml` + `evals/`:
 
 ```jsonc
 {
@@ -65,7 +65,7 @@ behavioral:
   `"no eval case declared"` (a missing eval is a failure, never a silent pass).
 - **Determinism:** `score(spec)` is pure — same spec in, same scorecard out. No timestamps in the
   scorecard, so it is byte-stable and golden-testable.
-- **Gate consumption:** `graduate.js` criterion 2 ("Declared evals pass") reads `summary.allPassed`
+- **Gate consumption:** `graduate.ts` criterion 2 ("Declared evals pass") reads `summary.allPassed`
   *and* re-checks that every declared criterion id appears as a passed result — it does not trust a
   summary alone.
 - **Changing this seam is an "ask first" boundary** (spec §Boundaries). The `evals-lab` cycle will

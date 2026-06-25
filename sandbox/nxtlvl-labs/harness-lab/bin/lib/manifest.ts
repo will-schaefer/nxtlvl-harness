@@ -1,6 +1,5 @@
-'use strict';
 /**
- * manifest.js — the shared cell-manifest contract.
+ * manifest.ts — the shared cell-manifest contract.
  *
  * One module, two pure & total functions, depended on by every script in bin/:
  *
@@ -24,26 +23,51 @@
  * fills them in (declared eval-first):  E_INTAKE_INCOMPLETE, E_CRITERIA_EMPTY.
  */
 
-const yaml = require('js-yaml');
+import * as yaml from 'js-yaml';
 
-const TYPES = ['skill', 'agent', 'command', 'hook'];
-const STAGES = ['develop', 'review', 'pressure-test', 'refine', 'graduation-ready', 'graduated'];
+/** A structured validation finding: a stable `code` callers can FILTER on, plus a human message. */
+export interface Finding {
+  code: string;
+  message: string;
+}
+
+/** parse() result — `manifest` is whatever YAML produced (untrusted), `error` set only on failure. */
+export interface ParseResult {
+  manifest: unknown;
+  error: string | null;
+}
+
+/** validate() result — structured findings; `warnings` are taste/soft, never blockers. */
+export interface ValidateResult {
+  errors: Finding[];
+  warnings: string[];
+}
+
+/** validateText() result — parse + validate folded into one total call. */
+export interface ValidateTextResult {
+  manifest: unknown;
+  errors: Finding[];
+  warnings: string[];
+}
+
+export const TYPES: string[] = ['skill', 'agent', 'command', 'hook'];
+export const STAGES: string[] = ['develop', 'review', 'pressure-test', 'refine', 'graduation-ready', 'graduated'];
 // Where each cell type lands under plugins/nxtlvl/ on graduation.
-const TYPE_DIR = { skill: 'skills', agent: 'agents', command: 'commands', hook: 'hooks' };
-const TARGET_ROOT = 'plugins/nxtlvl/';
+export const TYPE_DIR: Record<string, string> = { skill: 'skills', agent: 'agents', command: 'commands', hook: 'hooks' };
+export const TARGET_ROOT = 'plugins/nxtlvl/';
 
 // Codes a fresh scaffold may carry until the author completes the eval-first contract.
-const AUTHOR_OWED_CODES = ['E_INTAKE_INCOMPLETE', 'E_CRITERIA_EMPTY'];
+export const AUTHOR_OWED_CODES: string[] = ['E_INTAKE_INCOMPLETE', 'E_CRITERIA_EMPTY'];
 
-function nonEmptyStr(v) {
+function nonEmptyStr(v: unknown): v is string {
   return typeof v === 'string' && v.trim().length > 0;
 }
 
-function isMapping(v) {
+function isMapping(v: unknown): v is Record<string, unknown> {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
 }
 
-function err(code, message) {
+function err(code: string, message: string): Finding {
   return { code, message };
 }
 
@@ -52,12 +76,13 @@ function err(code, message) {
  *   manifest: the parsed JS object, or null on YAML failure / empty document.
  *   error:    a YAML error message string, or null on success.
  */
-function parse(text) {
+export function parse(text: string): ParseResult {
   try {
     const data = yaml.load(text);
     return { manifest: data === undefined ? null : data, error: null };
   } catch (e) {
-    return { manifest: null, error: String((e && e.message) || e) };
+    const message = e instanceof Error ? e.message : String(e);
+    return { manifest: null, error: message };
   }
 }
 
@@ -65,9 +90,9 @@ function parse(text) {
  * validate(manifest) — total. Returns { errors, warnings }.
  * Accepts whatever parse() produced (including null); never throws.
  */
-function validate(manifest) {
-  const errors = [];
-  const warnings = [];
+export function validate(manifest: unknown): ValidateResult {
+  const errors: Finding[] = [];
+  const warnings: string[] = [];
 
   if (!isMapping(manifest)) {
     errors.push(err('E_NOT_MAPPING', 'manifest is empty or not a YAML mapping'));
@@ -82,14 +107,14 @@ function validate(manifest) {
   // type
   if (manifest.type === undefined || manifest.type === null || manifest.type === '') {
     errors.push(err('E_TYPE_MISSING', 'missing: type'));
-  } else if (!TYPES.includes(manifest.type)) {
+  } else if (!TYPES.includes(manifest.type as string)) {
     errors.push(err('E_TYPE', `unknown type ${JSON.stringify(manifest.type)} (expected one of ${TYPES.join('|')})`));
   }
 
   // stage
   if (manifest.stage === undefined || manifest.stage === null || manifest.stage === '') {
     errors.push(err('E_STAGE_MISSING', 'missing: stage'));
-  } else if (!STAGES.includes(manifest.stage)) {
+  } else if (!STAGES.includes(manifest.stage as string)) {
     errors.push(err('E_STAGE', `unknown stage ${JSON.stringify(manifest.stage)} (expected one of ${STAGES.join('|')})`));
   }
 
@@ -117,7 +142,7 @@ function validate(manifest) {
   } else if (gc.length === 0) {
     errors.push(err('E_CRITERIA_EMPTY', 'graduation_criteria is empty (declare eval-first, author-owed)'));
   } else {
-    gc.forEach((c, i) => {
+    gc.forEach((c: unknown, i: number) => {
       if (!isMapping(c) || !nonEmptyStr(c.id) || !nonEmptyStr(c.bar)) {
         errors.push(err('E_CRITERIA_ITEM', `graduation_criteria[${i}] needs a non-empty id + bar`));
       }
@@ -152,7 +177,7 @@ function validate(manifest) {
  * validateText(text) — parse + validate in one total call.
  * A YAML parse failure surfaces as a single E_PARSE error (and skips field validation).
  */
-function validateText(text) {
+export function validateText(text: string): ValidateTextResult {
   const { manifest, error } = parse(text);
   if (error) {
     return { manifest: null, errors: [err('E_PARSE', `YAML parse error: ${error}`)], warnings: [] };
@@ -162,18 +187,6 @@ function validateText(text) {
 }
 
 /** True when every error is an author-owed code (i.e. a fresh scaffold that just needs filling in). */
-function onlyAuthorOwed(errors) {
+export function onlyAuthorOwed(errors: Finding[]): boolean {
   return errors.length > 0 && errors.every((e) => AUTHOR_OWED_CODES.includes(e.code));
 }
-
-module.exports = {
-  parse,
-  validate,
-  validateText,
-  onlyAuthorOwed,
-  TYPES,
-  STAGES,
-  TYPE_DIR,
-  TARGET_ROOT,
-  AUTHOR_OWED_CODES,
-};

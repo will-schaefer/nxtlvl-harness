@@ -1,6 +1,5 @@
-'use strict';
 /**
- * Tests for new-cell.js. Run: node --test bin/new-cell.test.js
+ * Tests for new-cell.ts. Run: node --test bin/new-cell.test.ts
  *
  * - one case per --type (correct stub + manifest validates modulo author-owed fields)
  * - clobber-refusal
@@ -9,20 +8,20 @@
  * Filesystem cases write into a fresh mkdtemp under $TMPDIR (sandbox-writable), never the repo.
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import * as fs from 'node:fs';
+import * as os from 'node:os';
+import * as path from 'node:path';
 
-const nc = require('./new-cell.js');
-const m = require('./lib/manifest.js');
+import * as nc from './new-cell.ts';
+import * as m from './lib/manifest.ts';
 
-function tmpCellsDir() {
+function tmpCellsDir(): string {
   return fs.mkdtempSync(path.join(os.tmpdir(), 'agentslab-newcell-'));
 }
 
-const STUB_FILES = {
+const STUB_FILES: Record<string, string[]> = {
   skill: ['SKILL.md'],
   agent: ['demo-cell.md'],
   command: ['demo-cell.md'],

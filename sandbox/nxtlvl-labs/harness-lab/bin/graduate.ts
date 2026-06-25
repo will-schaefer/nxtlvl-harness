@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-'use strict';
 /**
- * graduate.js — the objective graduation gate (the lab's keystone; analog of nxtlvl:audit).
+ * graduate.ts — the objective graduation gate (the lab's keystone; analog of nxtlvl:audit).
  *
  *   npm run graduate -- <cell>
  *
@@ -24,17 +23,35 @@
  *   run(cellDir, {evaluate}) -> { code, blockers, warnings, failedOpen }   total; crash -> code 0
  */
 
-const fs = require('fs');
-const path = require('path');
-const { spawnSync } = require('child_process');
-const m = require('./lib/manifest.js');
-const evalSeam = require('./eval.js');
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { spawnSync } from 'node:child_process';
+import * as m from './lib/manifest.ts';
+import * as evalSeam from './eval.ts';
 
-const LAB_ROOT = path.join(__dirname, '..');
-const CELLS_DIR = path.join(LAB_ROOT, 'cells');
+/** The decision core's output: deliberate blockers + taste warnings. */
+export interface Evaluation {
+  blockers: string[];
+  warnings: string[];
+}
+
+/** run()'s total result. `code` is 0 (pass / fail-open) or 2 (deliberate block). */
+export interface RunResult {
+  code: number;
+  blockers: string[];
+  warnings: string[];
+  failedOpen: boolean;
+  error?: string;
+}
+
+type EvaluateFn = (cellDir: string) => Evaluation;
+type FrontmatterResult = { ok: true; data: Record<string, unknown> } | { ok: false; reason: string };
+
+const LAB_ROOT = path.join(import.meta.dirname, '..');
+export const CELLS_DIR = path.join(LAB_ROOT, 'cells');
 
 // Which criterion a manifest validation code belongs to. Each code routes to exactly one.
-const CRITERION_OF_CODE = {
+export const CRITERION_OF_CODE: Record<string, string> = {
   // 1 — integrity (manifest structural soundness)
   E_NOT_MAPPING: 'integrity', E_PARSE: 'integrity', E_NAME: 'integrity',
   E_TYPE_MISSING: 'integrity', E_TYPE: 'integrity', E_STAGE_MISSING: 'integrity',
@@ -47,26 +64,32 @@ const CRITERION_OF_CODE = {
   E_INTAKE_MISSING: 'intake', E_INTAKE_SHAPE: 'intake', E_INTAKE_INCOMPLETE: 'intake',
 };
 
+/** A secret signature: a low-false-positive pattern whose presence is an integrity blocker. */
+export interface SecretPattern {
+  name: string;
+  re: RegExp;
+}
+
 // Specific, low-false-positive secret signatures. Presence is an integrity blocker.
-const SECRET_PATTERNS = [
+export const SECRET_PATTERNS: SecretPattern[] = [
   { name: 'AWS access key id', re: /AKIA[0-9A-Z]{16}/ },
   { name: 'private key block', re: /-----BEGIN (?:RSA |EC |OPENSSH |DSA |PGP )?PRIVATE KEY-----/ },
   { name: 'GitHub token', re: /gh[pousr]_[A-Za-z0-9]{36,}/ },
   { name: 'Slack token', re: /xox[baprs]-[A-Za-z0-9-]{10,}/ },
 ];
 
-function readText(p) {
+function readText(p: string): string {
   return fs.readFileSync(p, 'utf8');
 }
 
 /** Hook smoke-test timeout (ms). Overridable via env so tests can exercise the timeout path fast. */
-function hookSmokeTimeoutMs() {
+function hookSmokeTimeoutMs(): number {
   const v = parseInt(process.env.NXTLVL_HOOK_SMOKE_TIMEOUT_MS || '', 10);
   return Number.isFinite(v) && v > 0 ? v : 5000;
 }
 
 /** Parse a leading `---` YAML frontmatter block. Returns { ok, data, reason }. */
-function parseFrontmatter(text) {
+export function parseFrontmatter(text: string): FrontmatterResult {
   if (!text.startsWith('---')) return { ok: false, reason: 'no leading frontmatter (--- block)' };
   const end = text.indexOf('\n---', 3);
   if (end === -1) return { ok: false, reason: 'unterminated frontmatter block' };
@@ -74,14 +97,14 @@ function parseFrontmatter(text) {
   const { manifest, error } = m.parse(body); // reuse the total YAML parse
   if (error) return { ok: false, reason: `frontmatter YAML error: ${error}` };
   if (!manifest || typeof manifest !== 'object') return { ok: false, reason: 'frontmatter is not a mapping' };
-  return { ok: true, data: manifest };
+  return { ok: true, data: manifest as Record<string, unknown> };
 }
 
 // ---- Criterion 1: Integrity (capability files) ----------------------------
 
-function checkIntegrity(cellDir, manifest, blockers, warnings) {
-  const type = manifest && manifest.type;
-  const name = (manifest && manifest.name) || path.basename(cellDir);
+function checkIntegrity(cellDir: string, manifest: Record<string, unknown>, blockers: string[], warnings: string[]): void {
+  const type = manifest.type;
+  const name = (typeof manifest.name === 'string' && manifest.name) || path.basename(cellDir);
 
   // capability file + frontmatter, per type
   if (type === 'skill') {
@@ -102,7 +125,7 @@ function checkIntegrity(cellDir, manifest, blockers, warnings) {
   scanSecrets(cellDir, blockers);
 }
 
-function requireFrontmatterFile(cellDir, file, requiredKeys, blockers) {
+function requireFrontmatterFile(cellDir: string, file: string, requiredKeys: string[], blockers: string[]): void {
   const p = path.join(cellDir, file);
   if (!fs.existsSync(p)) {
     blockers.push(`[integrity] missing capability file: ${file}`);
@@ -121,7 +144,7 @@ function requireFrontmatterFile(cellDir, file, requiredKeys, blockers) {
   }
 }
 
-function checkHook(cellDir, name, blockers) {
+function checkHook(cellDir: string, name: string, blockers: string[]): void {
   const hooksJson = path.join(cellDir, 'hooks.json');
   if (!fs.existsSync(hooksJson)) {
     blockers.push('[integrity] missing hooks.json');
@@ -129,7 +152,8 @@ function checkHook(cellDir, name, blockers) {
     try {
       JSON.parse(readText(hooksJson));
     } catch (e) {
-      blockers.push(`[integrity] hooks.json is not valid JSON: ${e.message}`);
+      const message = e instanceof Error ? e.message : String(e);
+      blockers.push(`[integrity] hooks.json is not valid JSON: ${message}`);
     }
   }
   const script = path.join(cellDir, `${name}.js`);
@@ -144,7 +168,7 @@ function checkHook(cellDir, name, blockers) {
   //   BLOCK, not a fail-open. (doubt-review F3)
   const res = spawnSync(process.execPath, [script], { input: '', timeout: hookSmokeTimeoutMs() });
   if (res.error) {
-    if (res.error.code === 'ETIMEDOUT') {
+    if ((res.error as NodeJS.ErrnoException).code === 'ETIMEDOUT') {
       blockers.push(`[integrity] hook ${name}.js did not exit within ${hookSmokeTimeoutMs()}ms on smoke test`);
       return;
     }
@@ -156,10 +180,10 @@ function checkHook(cellDir, name, blockers) {
   }
 }
 
-function listCellFiles(cellDir) {
-  const out = [];
-  const walk = (dir) => {
-    let entries;
+function listCellFiles(cellDir: string): string[] {
+  const out: string[] = [];
+  const walk = (dir: string): void => {
+    let entries: fs.Dirent[];
     try {
       entries = fs.readdirSync(dir, { withFileTypes: true });
     } catch (_e) {
@@ -176,10 +200,10 @@ function listCellFiles(cellDir) {
   return out;
 }
 
-function scanMarkdownRefs(cellDir, blockers, warnings) {
+function scanMarkdownRefs(cellDir: string, blockers: string[], warnings: string[]): void {
   for (const file of listCellFiles(cellDir)) {
     if (!file.endsWith('.md')) continue;
-    let text;
+    let text: string;
     try {
       text = readText(file);
     } catch (_e) {
@@ -190,7 +214,7 @@ function scanMarkdownRefs(cellDir, blockers, warnings) {
     }
     // intra-cell links only: `](name)` or `](./name)`, no scheme, no '/', no '..'
     const linkRe = /\]\((\.\/)?([^):?#\s]+)\)/g;
-    let m1;
+    let m1: RegExpExecArray | null;
     while ((m1 = linkRe.exec(text)) !== null) {
       const target = m1[2];
       if (/^[a-z]+:/i.test(target) || target.includes('/') || target.includes('..')) continue;
@@ -202,10 +226,10 @@ function scanMarkdownRefs(cellDir, blockers, warnings) {
   }
 }
 
-function scanSecrets(cellDir, blockers) {
+function scanSecrets(cellDir: string, blockers: string[]): void {
   for (const file of listCellFiles(cellDir)) {
     if (path.basename(file) === evalSeam.SCORECARD_NAME) continue; // generated artifact
-    let text;
+    let text: string;
     try {
       text = readText(file);
     } catch (_e) {
@@ -221,9 +245,11 @@ function scanSecrets(cellDir, blockers) {
 
 // ---- Criterion 2: Declared evals pass (scorecard) -------------------------
 
-function checkDeclaredEvals(cellDir, manifest, blockers, warnings) {
-  const declared = Array.isArray(manifest && manifest.graduation_criteria)
-    ? manifest.graduation_criteria.filter((c) => c && typeof c.id === 'string')
+function checkDeclaredEvals(cellDir: string, manifest: Record<string, unknown>, blockers: string[], warnings: string[]): void {
+  const declared = Array.isArray(manifest.graduation_criteria)
+    ? (manifest.graduation_criteria as unknown[]).filter(
+      (c): c is { id: string } => !!c && typeof (c as { id?: unknown }).id === 'string'
+    )
     : [];
   // If no valid criteria were declared, the manifest route already blocked under declared-evals.
   const scPath = evalSeam.scorecardPath(cellDir);
@@ -231,14 +257,15 @@ function checkDeclaredEvals(cellDir, manifest, blockers, warnings) {
     blockers.push('[declared-evals] no scorecard — run `npm run eval -- <cell>` first');
     return;
   }
-  let sc;
+  let sc: { results?: unknown; summary?: { allPassed?: unknown } };
   try {
     sc = JSON.parse(readText(scPath));
   } catch (e) {
-    blockers.push(`[declared-evals] scorecard is not valid JSON: ${e.message}`);
+    const message = e instanceof Error ? e.message : String(e);
+    blockers.push(`[declared-evals] scorecard is not valid JSON: ${message}`);
     return;
   }
-  const results = Array.isArray(sc.results) ? sc.results : [];
+  const results: Array<{ id?: unknown; passed?: unknown; detail?: unknown }> = Array.isArray(sc.results) ? sc.results : [];
   const byId = new Map(results.map((r) => [r.id, r]));
   // The DECLARED criteria are the bar (eval-first). Every declared criterion must have a passed
   // result — this is authoritative, not the summary. (doubt-review F2)
@@ -264,9 +291,9 @@ function checkDeclaredEvals(cellDir, manifest, blockers, warnings) {
 // ---- the decision core ----------------------------------------------------
 
 /** Reads the cell and returns { blockers, warnings }. The decision core. */
-function evaluateCell(cellDir) {
-  const blockers = [];
-  const warnings = [];
+export function evaluateCell(cellDir: string): Evaluation {
+  const blockers: string[] = [];
+  const warnings: string[] = [];
 
   const manifestPath = path.join(cellDir, 'manifest.yaml');
   if (!fs.existsSync(manifestPath)) {
@@ -284,8 +311,9 @@ function evaluateCell(cellDir) {
 
   // File-level checks need a known type; skip if the manifest didn't parse to a mapping.
   if (manifest && typeof manifest === 'object' && !Array.isArray(manifest)) {
-    checkIntegrity(cellDir, manifest, blockers, warnings);
-    checkDeclaredEvals(cellDir, manifest, blockers, warnings);
+    const mapping = manifest as Record<string, unknown>;
+    checkIntegrity(cellDir, mapping, blockers, warnings);
+    checkDeclaredEvals(cellDir, mapping, blockers, warnings);
   }
   // Criterion 3 (intake present) is satisfied by the absence of E_INTAKE_* errors above.
 
@@ -296,23 +324,24 @@ function evaluateCell(cellDir) {
  * run — total. Returns { code, blockers, warnings, failedOpen }.
  * Any exception in the decision core FAILS OPEN (code 0) — never a fake block.
  */
-function run(cellDir, opts = {}) {
+export function run(cellDir: string, opts: { evaluate?: EvaluateFn } = {}): RunResult {
   const evaluate = opts.evaluate || evaluateCell;
   try {
     const { blockers, warnings } = evaluate(cellDir);
     return { code: blockers.length ? 2 : 0, blockers, warnings, failedOpen: false };
   } catch (e) {
-    return { code: 0, blockers: [], warnings: [], failedOpen: true, error: e && e.message };
+    const message = e instanceof Error ? e.message : String(e);
+    return { code: 0, blockers: [], warnings: [], failedOpen: true, error: message };
   }
 }
 
-function main(argv) {
+function main(argv: string[]): void {
   const cell = argv.find((a) => !a.startsWith('-'));
   if (!cell) {
     process.stderr.write('usage: npm run graduate -- <cell>\n');
     process.exit(1); // usage error — not a gate decision
   }
-  let cellDir;
+  let cellDir: string;
   if (path.isAbsolute(cell)) {
     cellDir = cell; // absolute path explicitly allowed (tests, advanced use)
   } else if (!/^[a-z0-9][a-z0-9-]*$/.test(cell)) {
@@ -338,17 +367,6 @@ function main(argv) {
   process.exit(0);
 }
 
-if (require.main === module) {
+if (import.meta.main) {
   main(process.argv.slice(2));
 }
-
-module.exports = {
-  evaluateCell,
-  run,
-  parseFrontmatter,
-  checkIntegrity,
-  checkDeclaredEvals,
-  CRITERION_OF_CODE,
-  SECRET_PATTERNS,
-  CELLS_DIR,
-};

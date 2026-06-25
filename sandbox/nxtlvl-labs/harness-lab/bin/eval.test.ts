@@ -1,17 +1,17 @@
-'use strict';
 /**
- * Tests for the evals-lab seam stub (eval.js). Run: node --test bin/eval.test.js
+ * Tests for the evals-lab seam stub (eval.ts). Run: node --test bin/eval.test.ts
  *
  * Asserts the scorecard conforms to docs/seam-contract.md, is deterministic, and that a missing
  * eval case scores as a failure (never a silent pass).
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-const { score } = require('./eval.js');
+import { score } from './eval.ts';
+import type { EvalSpec, Scorecard } from './eval.ts';
 
-function spec(overrides = {}) {
+function spec(overrides: Partial<EvalSpec> = {}): EvalSpec {
   return {
     cell: 'demo',
     criteria: [
@@ -26,7 +26,7 @@ function spec(overrides = {}) {
   };
 }
 
-function assertScorecardShape(sc) {
+function assertScorecardShape(sc: Scorecard): void {
   assert.strictEqual(typeof sc.cell, 'string');
   assert.strictEqual(typeof sc.engine, 'string');
   assert.ok(Array.isArray(sc.results));
@@ -37,7 +37,7 @@ function assertScorecardShape(sc) {
     assert.strictEqual(typeof r.detail, 'string');
   }
   assert.ok(sc.summary && typeof sc.summary === 'object');
-  for (const k of ['total', 'passed', 'failed']) assert.strictEqual(typeof sc.summary[k], 'number');
+  for (const k of ['total', 'passed', 'failed'] as const) assert.strictEqual(typeof sc.summary[k], 'number');
   assert.strictEqual(typeof sc.summary.allPassed, 'boolean');
 }
 
@@ -58,12 +58,12 @@ test('one criterion declares fail -> allPassed false', () => {
   }));
   assert.strictEqual(sc.summary.allPassed, false);
   assert.strictEqual(sc.summary.failed, 1);
-  assert.strictEqual(sc.results.find((r) => r.id === 'trigger-accuracy').passed, false);
+  assert.strictEqual(sc.results.find((r) => r.id === 'trigger-accuracy')!.passed, false);
 });
 
 test('a criterion with no eval case scores as failure (never silent pass)', () => {
   const sc = score(spec({ cases: { behavioral: { stub_result: 'pass' } } }));
-  const ta = sc.results.find((r) => r.id === 'trigger-accuracy');
+  const ta = sc.results.find((r) => r.id === 'trigger-accuracy')!;
   assert.strictEqual(ta.passed, false);
   assert.strictEqual(ta.detail, 'no eval case declared');
   assert.strictEqual(sc.summary.allPassed, false);

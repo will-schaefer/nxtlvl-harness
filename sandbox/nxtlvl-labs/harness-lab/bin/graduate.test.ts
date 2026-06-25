@@ -1,6 +1,5 @@
-'use strict';
 /**
- * Regression lock for the graduation gate (graduate.js). Run: node --test bin/graduate.test.js
+ * Regression lock for the graduation gate (graduate.ts). Run: node --test bin/graduate.test.ts
  *
  * Same discipline that locked the dangerous-bash gate: for EACH of the three objective criteria,
  * prove it BLOCKS a bad cell and PASSES a clean one (3 pairs), prove taste only WARNS, and prove a
@@ -8,24 +7,24 @@
  * cell breaks exactly ONE criterion, so isolation is checkable.
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
+import { test } from 'node:test';
+import assert from 'node:assert';
+import * as fs from 'node:fs';
+import * as os from 'node:os';
+import * as path from 'node:path';
 
-const grad = require('./graduate.js');
+import * as grad from './graduate.ts';
 
-const GRAD = path.join(__dirname, '__fixtures__', 'grad');
+const GRAD = path.join(import.meta.dirname, '__fixtures__', 'grad');
 
-function evalCell(name) {
+function evalCell(name: string) {
   return grad.evaluateCell(path.join(GRAD, name));
 }
 // criterion tag of each blocker, e.g. "[integrity] ..." -> "integrity"
-function criteria(blockers) {
+function criteria(blockers: string[]): Array<string | undefined> {
   return blockers.map((b) => (b.match(/^\[([a-z-]+)\]/) || [])[1]);
 }
-function hasCriterion(blockers, c) {
+function hasCriterion(blockers: string[], c: string): boolean {
   return criteria(blockers).includes(c);
 }
 
@@ -120,7 +119,7 @@ test('a missing manifest is an integrity block, not a crash', () => {
 
 // --- hook smoke test (a real spawn path) ----------------------------------
 
-function writeHookCell(dir, exitCode) {
+function writeHookCell(dir: string, exitCode: number): void {
   fs.writeFileSync(path.join(dir, 'manifest.yaml'), [
     'name: hooky',
     'type: hook',

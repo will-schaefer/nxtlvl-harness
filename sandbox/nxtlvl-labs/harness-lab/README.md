@@ -43,16 +43,16 @@ graduated`), and `ledger.md` is regenerated.
 ## Commands
 
 ```
-Scaffold a cell:     node bin/new-cell.js <name> --type=skill|agent|command|hook
+Scaffold a cell:     node bin/new-cell.ts <name> --type=skill|agent|command|hook
 Run a cell's evals:  npm run eval -- <cell>          # delegates to evals-lab via the seam (stubbed)
 Graduation check:    npm run graduate -- <cell>      # the objective gate; exit 2 = block, 0 = pass/warn
 Update/view ledger:  npm run ledger                  # regenerates ledger.md from all manifests
-Test the machinery:  npm test                        # node --test 'bin/*.test.js'
+Test the machinery:  npm test                        # node --test 'bin/*.test.ts'
 Dogfood a cell:      work with harness-lab as your project dir → skill cells load as project skills
                      (via .claude/skills -> ../cells). No plugin install; the lab is not a plugin.
 ```
 
-## The graduation gate (`bin/graduate.js`)
+## The graduation gate (`bin/graduate.ts`)
 
 A cell graduates only when **all three** objective criteria pass — each pass/fail or
 presence, never a taste judgment (honors ADR-009):

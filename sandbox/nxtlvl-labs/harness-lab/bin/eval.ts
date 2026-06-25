@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-'use strict';
 /**
- * eval.js — the evals-lab seam (stub engine).
+ * eval.ts — the evals-lab seam (stub engine).
  *
  *   npm run eval -- <cell>
  *
  * Reads the cell's declared evals (manifest.graduation_criteria + evals/cases.yaml), hands them to
  * a DETERMINISTIC STUB engine, and writes a scorecard in the shape fixed by docs/seam-contract.md.
- * graduate.js reads that scorecard without knowing a stub produced it. When the real evals-lab
+ * graduate.ts reads that scorecard without knowing a stub produced it. When the real evals-lab
  * engine lands, only score() is replaced — the spec/scorecard shapes stay put.
  *
  * The stub does not *compute* outcomes; it echoes each case's declared `stub_result`. A criterion
@@ -18,30 +17,68 @@
  *   score(spec)         -> scorecard                    pure & deterministic (no timestamps)
  */
 
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
-const m = require('./lib/manifest.js');
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as yaml from 'js-yaml';
+import * as m from './lib/manifest.ts';
 
-const LAB_ROOT = path.join(__dirname, '..');
-const CELLS_DIR = path.join(LAB_ROOT, 'cells');
-const SCORECARD_NAME = 'scorecard.json';
-const ENGINE = 'stub';
+/** A declared graduation criterion (the eval-first bar). */
+export interface Criterion {
+  id: string;
+  bar?: string;
+}
+
+/** A single declared eval case (keyed by criterion id) in evals/cases.yaml. */
+export interface EvalCase {
+  stub_result?: string;
+  score?: number;
+  detail?: string;
+}
+
+/** The eval spec for a cell — what buildSpec() produces and score() consumes. */
+export interface EvalSpec {
+  cell: string;
+  criteria: Criterion[];
+  cases: Record<string, EvalCase>;
+}
+
+/** One per-criterion result in the scorecard. */
+export interface EvalResult {
+  id: string;
+  passed: boolean;
+  score: number | null;
+  detail: string;
+}
+
+/** The scorecard shape fixed by docs/seam-contract.md — graduate.ts reads this. */
+export interface Scorecard {
+  cell: string;
+  engine: string;
+  results: EvalResult[];
+  summary: { total: number; passed: number; failed: number; allPassed: boolean };
+}
+
+const LAB_ROOT = path.join(import.meta.dirname, '..');
+export const CELLS_DIR = path.join(LAB_ROOT, 'cells');
+export const SCORECARD_NAME = 'scorecard.json';
+export const ENGINE = 'stub';
 
 /** Build the eval spec for a cell. Never throws on missing/partial cases. */
-function buildSpec(cellDir) {
+export function buildSpec(cellDir: string): EvalSpec {
   const manifestPath = path.join(cellDir, 'manifest.yaml');
   const { manifest } = m.validateText(fs.readFileSync(manifestPath, 'utf8'));
-  const name = (manifest && typeof manifest.name === 'string' && manifest.name) || path.basename(cellDir);
-  const criteria = Array.isArray(manifest && manifest.graduation_criteria)
-    ? manifest.graduation_criteria.filter((c) => c && typeof c.id === 'string')
-    : [];
+  const mf = (manifest && typeof manifest === 'object' ? manifest : null) as Record<string, unknown> | null;
+  const name = (mf && typeof mf.name === 'string' && mf.name) || path.basename(cellDir);
+  const rawCriteria = mf && Array.isArray(mf.graduation_criteria) ? (mf.graduation_criteria as unknown[]) : [];
+  const criteria: Criterion[] = rawCriteria.filter(
+    (c): c is Criterion => !!c && typeof (c as { id?: unknown }).id === 'string'
+  );
 
-  let cases = {};
+  let cases: Record<string, EvalCase> = {};
   const casesPath = path.join(cellDir, 'evals', 'cases.yaml');
   try {
     const loaded = yaml.load(fs.readFileSync(casesPath, 'utf8'));
-    if (loaded && typeof loaded === 'object' && !Array.isArray(loaded)) cases = loaded;
+    if (loaded && typeof loaded === 'object' && !Array.isArray(loaded)) cases = loaded as Record<string, EvalCase>;
   } catch (_e) {
     cases = {}; // no cases file -> every criterion will score as a failure
   }
@@ -49,8 +86,8 @@ function buildSpec(cellDir) {
 }
 
 /** Pure, deterministic stub engine: spec -> scorecard (docs/seam-contract.md shape). */
-function score(spec) {
-  const results = (spec.criteria || []).map((crit) => {
+export function score(spec: EvalSpec): Scorecard {
+  const results: EvalResult[] = (spec.criteria || []).map((crit) => {
     const c = spec.cases && spec.cases[crit.id];
     if (!c || typeof c !== 'object') {
       return { id: crit.id, passed: false, score: null, detail: 'no eval case declared' };
@@ -73,15 +110,15 @@ function score(spec) {
   };
 }
 
-function scorecardPath(cellDir) {
+export function scorecardPath(cellDir: string): string {
   return path.join(cellDir, SCORECARD_NAME);
 }
 
-function writeScorecard(cellDir, scorecard) {
+export function writeScorecard(cellDir: string, scorecard: Scorecard): void {
   fs.writeFileSync(scorecardPath(cellDir), JSON.stringify(scorecard, null, 2) + '\n');
 }
 
-function main(argv) {
+function main(argv: string[]): void {
   const cell = argv.find((a) => !a.startsWith('-'));
   if (!cell) {
     process.stderr.write('usage: npm run eval -- <cell>\n');
@@ -102,8 +139,6 @@ function main(argv) {
   process.exit(0);
 }
 
-if (require.main === module) {
+if (import.meta.main) {
   main(process.argv.slice(2));
 }
-
-module.exports = { buildSpec, score, writeScorecard, scorecardPath, CELLS_DIR, SCORECARD_NAME, ENGINE };

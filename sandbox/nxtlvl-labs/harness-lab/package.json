@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "description": "harness-lab — the nxtlvl agent-capability incubation pipeline (cells incubate, then graduate into the nxtlvl plugin).",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
-    "new-cell": "node bin/new-cell.js",
-    "eval": "node bin/eval.js",
-    "graduate": "node bin/graduate.js",
-    "ledger": "node bin/ledger.js",
-    "test": "node --test 'bin/*.test.js'"
+    "new-cell": "node bin/new-cell.ts",
+    "eval": "node bin/eval.ts",
+    "graduate": "node bin/graduate.ts",
+    "ledger": "node bin/ledger.ts",
+    "test": "node --test 'bin/*.test.ts'",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "js-yaml": "4.1.0"
   },
+  "devDependencies": {
+    "@types/js-yaml": "4.0.9"
+  },
   "engines": {
-    "node": ">=18"
+    "node": ">=24.12"
   }
 }

@@ -1,9 +1,8 @@
-'use strict';
 /**
- * Unit tests for the shared manifest contract (bin/lib/manifest.js).
- * Run: node --test bin/manifest.test.js   (or `npm test` for the whole bin/ glob).
+ * Unit tests for the shared manifest contract (bin/lib/manifest.ts).
+ * Run: node --test bin/manifest.test.ts   (or `npm test` for the whole bin/ glob).
  *
- * Lives at bin/ top-level (not bin/lib/) so it matches the `bin/*.test.js` glob that
+ * Lives at bin/ top-level (not bin/lib/) so it matches the `bin/*.test.{js,ts}` glob that
  * `npm test` uses — the runner takes an explicit glob, not a directory arg.
  *
  * Coverage is two-sided per the dangerous-bash-gate discipline: every required-field /
@@ -11,13 +10,15 @@
  * The total contract is asserted explicitly — malformed YAML must NOT throw.
  */
 
-const { test } = require('node:test');
-const assert = require('node:assert');
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-const m = require('./lib/manifest.js');
+import * as m from './lib/manifest.ts';
+import type { Finding } from './lib/manifest.ts';
 
 // A known-good manifest object. Clone + override to build each negative case.
-function validManifest() {
+// Typed as a loose record so negative cases can `delete` / reassign fields freely.
+function validManifest(): Record<string, unknown> {
   return {
     name: 'example-skill',
     type: 'skill',
@@ -30,7 +31,7 @@ function validManifest() {
   };
 }
 
-function codes(result) {
+function codes(result: { errors: Finding[] }): string[] {
   return result.errors.map((e) => e.code);
 }
 
@@ -137,17 +138,17 @@ test('target subdir mismatching type -> warning, not error', () => {
 // --- totality: malformed input must NEVER throw ----------------------------
 
 test('malformed YAML does not throw; parse returns error, manifest null', () => {
-  let result;
+  let result: m.ParseResult | undefined;
   assert.doesNotThrow(() => { result = m.parse('name: [unclosed\n  bad: :'); });
-  assert.strictEqual(result.manifest, null);
-  assert.ok(typeof result.error === 'string' && result.error.length > 0);
+  assert.strictEqual(result!.manifest, null);
+  assert.ok(typeof result!.error === 'string' && result!.error.length > 0);
 });
 
 test('validateText on malformed YAML -> E_PARSE, no crash', () => {
-  let r;
+  let r: m.ValidateTextResult | undefined;
   assert.doesNotThrow(() => { r = m.validateText(': : not yaml ['); });
-  assert.ok(codes(r).includes('E_PARSE'));
-  assert.strictEqual(r.manifest, null);
+  assert.ok(codes(r!).includes('E_PARSE'));
+  assert.strictEqual(r!.manifest, null);
 });
 
 test('validate(null) -> E_NOT_MAPPING (no crash)', () => {
