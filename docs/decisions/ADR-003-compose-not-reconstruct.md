@@ -1,12 +1,23 @@
 ---
 id: ADR-003
 title: "Compose on native + agent-skills; reconstruct only the plumbing; never reconstruct orchestration"
-status: Accepted
+status: Superseded
 date: 2026-06-16
 amended: 2026-06-19
+superseded-by: ADR-035
 ---
 
 # ADR-003: Compose on native + agent-skills; reconstruct only the plumbing; never reconstruct orchestration
+
+> **Superseded by [ADR-035](ADR-035-compose-substance-defer-own-orchestration.md).** The three-tier
+> spine carries forward unchanged — reconstruct the plumbing, compose the substance, leave
+> orchestration native. What ADR-035 *re-leads*: (1) agent-skills is no longer a privileged "compose
+> on" floor — it is one reviewed source among many (the change [ADR-027](ADR-027-router-endorses-only-established-items.md)
+> began in the router, now generalized to the whole build strategy); (2) the reviewed reference
+> harnesses + the agents-wiki are named as the source-and-guidance substrate; and (3) orchestration
+> is native **through the build-out** rather than **permanently** — nxtlvl's own runtime/orchestration
+> becomes a *deferred exploration*, not a permanent exclusion. The original framing below is kept as
+> history.
 
 ## Context
 The whole point of `nxtlvl` is to **learn agent-harness architecture by rebuilding it** —

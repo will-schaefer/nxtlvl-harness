@@ -9,10 +9,10 @@ implementation: "Built 2026-06-22 (T4/T6 cell architecture + manifest). The dogf
 # ADR-032: Capability cells use stage-as-data manifests; in-flight cells are dogfooded as project skills
 
 > **Amendment (2026-06-22) — dogfooding is via project skills, NOT a standalone lab plugin.**
-> The original decision (recorded below, retained as history) made `agents-lab` installable as its
+> The original decision (recorded below, retained as history) made `harness-lab` installable as its
 > own CC plugin via a lab-local `.claude-plugin/` + a local marketplace. **This half is reversed.**
-> `agents-lab` is a development workspace inside the nxtlvl repo, not a distributable plugin; a
-> separate `nxtlvl-agents-lab` plugin identity competes with the one plugin we are building.
+> `harness-lab` is a development workspace inside the nxtlvl repo, not a distributable plugin; a
+> separate `nxtlvl-harness-lab` plugin identity competes with the one plugin we are building.
 > **Replacement:** the lab is a live CC **project**, and `.claude/skills` is a **symlink to
 > `../cells`**, so each skill-type cell (`cells/<name>/SKILL.md`) is auto-discovered as the
 > project skill `/<name>` when the lab is the working directory — no install, no marketplace, no
@@ -20,7 +20,7 @@ implementation: "Built 2026-06-22 (T4/T6 cell architecture + manifest). The dogf
 > cwd, so cells never leak into the main Developer session. The verified CC mechanics (project
 > skills live at `.claude/skills/<name>/SKILL.md`; no settings override for the path; symlinks are
 > followed) are recorded in the lab's `docs/` / `.claude/README.md`. The **stage-as-data** half of
-> this ADR is unchanged. Files removed: `agents-lab/.claude-plugin/plugin.json` and the
+> this ADR is unchanged. Files removed: `harness-lab/.claude-plugin/plugin.json` and the
 > `sandbox/nxtlvl-labs/.claude-plugin/marketplace.json` local marketplace.
 >
 > *Why the change is safe:* the dogfood *goal* (validate a cell's runtime discovery/routing before
@@ -31,7 +31,7 @@ implementation: "Built 2026-06-22 (T4/T6 cell architecture + manifest). The dogf
 
 ## Context
 
-`agents-lab` (see [ADR-031](ADR-031-labs-in-sandbox-topology.md) for topology) incubates
+`harness-lab` (see [ADR-031](ADR-031-labs-in-sandbox-topology.md) for topology) incubates
 one capability at a time. Two design questions had to be settled before any scaffolding:
 
 **1. How does a cell track its progress through the pipeline?**

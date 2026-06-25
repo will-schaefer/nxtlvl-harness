@@ -3,14 +3,14 @@ id: ADR-033
 title: "Graduation requires all three objective criteria: integrity, declared-evals pass, and intake justification present"
 status: Accepted
 date: 2026-06-22
-implementation: "Build in-progress — the graduation gate (graduate.js) is Phase 2 keystone task T8 in the plan at docs/plan/nxtlvl-agents-lab-plan.md"
+implementation: "Build in-progress — the graduation gate (graduate.js) is Phase 2 keystone task T8 in the plan at docs/plan/nxtlvl-harness-lab-plan.md"
 ---
 
 # ADR-033: Graduation requires all three objective criteria: integrity, declared-evals pass, and intake justification present
 
 ## Context
 
-`agents-lab` (topology: [ADR-031](ADR-031-labs-in-sandbox-topology.md); cell architecture:
+`harness-lab` (topology: [ADR-031](ADR-031-labs-in-sandbox-topology.md); cell architecture:
 [ADR-032](ADR-032-cells-installable-as-plugin-architecture.md)) is the incubation lab for new
 `nxtlvl` capabilities. The lab needs a graduation gate — a binary check that determines
 whether a cell may promote via `git mv` into `plugins/nxtlvl/`.
@@ -18,7 +18,7 @@ whether a cell may promote via `git mv` into `plugins/nxtlvl/`.
 The general shape of a promotion gate for `nxtlvl` was decided in
 [ADR-009](ADR-009-objective-invoked-audit-gate.md): **objective, binary, invoked** (not a
 continuous hook, not a taste score). ADR-009 deferred the concrete rubric because the harness
-didn't yet exist to be measured. `agents-lab` is where the first concrete gate is built, and
+didn't yet exist to be measured. `harness-lab` is where the first concrete gate is built, and
 the three criteria it must enforce need to be decided up front — before the gate is coded —
 because they shape the cell manifest schema, the eval-first discipline, and the lab's entire
 pressure-test pipeline.

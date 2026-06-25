@@ -3,7 +3,7 @@ id: ADR-031
 title: "Labs live as tracked subdirs under Developer/sandbox/nxtlvl-labs/, not as separate repos"
 status: Accepted
 date: 2026-06-22
-implementation: "Build in-progress — agents-lab scaffold is Phase 1 of the plan at docs/plan/nxtlvl-agents-lab-plan.md"
+implementation: "Build in-progress — harness-lab scaffold is Phase 1 of the plan at docs/plan/nxtlvl-harness-lab-plan.md"
 ---
 
 # ADR-031: Labs live as tracked subdirs under Developer/sandbox/nxtlvl-labs/, not as separate repos
@@ -12,9 +12,9 @@ implementation: "Build in-progress — agents-lab scaffold is Phase 1 of the pla
 
 `nxtlvl` needed an upstream incubation space — a place where capabilities are built at high
 churn under low promotion pressure, pressure-tested to a pre-declared bar, and then graduated
-into the `nxtlvl` plugin. The spec at `docs/spec/nxtlvl-agents-lab.md` defines two labs:
+into the `nxtlvl` plugin. The spec at `docs/spec/nxtlvl-harness-lab.md` defines two labs:
 
-- **`agents-lab`** — the incubation lab; capability cells develop here and graduate into
+- **`harness-lab`** — the incubation lab; capability cells develop here and graduate into
   `plugins/nxtlvl/`.
 - **`evals-lab`** — the standing measurement instrument; out of scope for this ADR except
   the topology (designed in a later cycle).
@@ -39,16 +39,16 @@ the write-allowlist.
 
 The relocation was decided on 2026-06-22, before any lab build began. Both the spec and plan
 (plan ◇ D1) carry the re-locked note. The `Developer/nxtlvl-lab` placeholder was already
-removed; the empty `sandbox/nxtlvl-labs/{agents-lab,evals-lab}/` directories already exist.
+removed; the empty `sandbox/nxtlvl-labs/{harness-lab,evals-lab}/` directories already exist.
 
 ## Decision
 
-Both labs (`agents-lab` and `evals-lab`) are **tracked subdirectories** of the `Developer`
+Both labs (`harness-lab` and `evals-lab`) are **tracked subdirectories** of the `Developer`
 repo, located at:
 
 ```
 Developer/sandbox/nxtlvl-labs/
-  agents-lab/   ← incubation lab
+  harness-lab/   ← incubation lab
   evals-lab/    ← measurement instrument (designed later)
 ```
 
@@ -57,7 +57,7 @@ Developer/sandbox/nxtlvl-labs/
 - **Off the plugin's discovery path** — `sandbox/` is already excluded; in-flight cells are
   never loaded or routed to by the live plugin.
 - **In-repo graduation** — a cell promotes by an in-repo `git mv` from
-  `sandbox/nxtlvl-labs/agents-lab/cells/<cell>/` to its `target:` under `plugins/nxtlvl/`,
+  `sandbox/nxtlvl-labs/harness-lab/cells/<cell>/` to its `target:` under `plugins/nxtlvl/`,
   carrying its `evals/`. No cross-repo hand-off, no history split.
 - **Every build step is sandboxed** — the path is inside the CC sandbox write-allowlist, so
   no `dangerouslyDisableSandbox` is needed during the build.
@@ -95,7 +95,7 @@ Developer/sandbox/nxtlvl-labs/
 
 - **Positive:** every build step runs sandboxed; graduation is a single `git mv`; both labs
   share `Developer`'s history and appear in `git log`; cross-lab references (e.g. the
-  `agents-lab`↔`evals-lab` seam) are in-repo paths.
+  `harness-lab`↔`evals-lab` seam) are in-repo paths.
 - **Constraint:** the `sandbox/` tree must remain off the plugin's discovery path — this is
   already enforced by `CLAUDE.md` and must be maintained if `sandbox/` is ever restructured.
 - **Constraint:** adding a third lab follows this same pattern (tracked subdir under
