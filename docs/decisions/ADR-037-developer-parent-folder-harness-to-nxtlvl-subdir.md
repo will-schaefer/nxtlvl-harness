@@ -3,7 +3,7 @@ id: ADR-037
 title: "Reframe ~/Developer as a parent workspace folder; relocate the harness repo to ~/Developer/nxtlvl/"
 status: Accepted
 date: 2026-06-25
-implementation: "Full runbook with verification checklist + rollback at docs/plan/nxtlvl-parent-folder-migration.md — execute after in-flight work is pushed"
+implementation: "Done 2026-06-27 — repo relocated to ~/Developer/nxtlvl/; ~/.claude symlinks, memory slug (-Users-willschaefer-Developer-nxtlvl), and plugin marketplace re-pointed; Phase 4 checklist passed. Runbook: docs/plan/nxtlvl-parent-folder-migration.md"
 ---
 
 # ADR-037: Reframe ~/Developer as a parent workspace folder; relocate the harness repo to ~/Developer/nxtlvl/
