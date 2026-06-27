@@ -57,6 +57,13 @@ Specifically:
   `-Users-willschaefer-Developer` project-memory path. Remote name and local directory name are
   allowed to differ.
 
+> **Note (2026-06-25):** The "local dir stays `~/Developer`" consequence above is superseded by
+> [ADR-037](ADR-037-developer-parent-folder-harness-to-nxtlvl-subdir.md), which reframes
+> `~/Developer` as a parent workspace folder and relocates the harness repo to
+> `~/Developer/nxtlvl/`. All other ADR-036 decisions (single published plugin, `config/claude/`
+> stays, dotfiles externalized, `agent-dev` dormant-but-tracked, remote name `nxtlvl-harness`)
+> remain in effect.
+
 Implementation committed as `b3c6da7 chore(repo): transition toward strict nxtlvl-harness repo`.
 
 ## Alternatives Considered
