@@ -19,8 +19,20 @@ an uncited "fact." Refuse if the repo is off-scope (non-agent-harness).
 3. **Capture.** Write an immutable `raw/<cluster>/<YYYY-MM-DD>-<repo>-reading.md`: URL,
    pinned SHA, the list of files actually read, and the distilled findings. **No vendored code** — describe and cite, do not paste source files.
 
-4. **Compile.** Synthesize into `wiki/<cluster>/` pages with **two citation lanes** that the
-   reconciliation rule ties together:
+4. **Compile.** First decide *what pages* the repo yields, then cite them.
+
+   **Decompose into the entity + the patterns it demonstrates.** Identify the concepts and
+   entities the repo touches, the way `/ingest` does for an article — don't collapse a repo into
+   one monolithic page. A harness repo almost always yields a **`type: entity` page for the repo
+   itself** *plus* a **`type: concept` page for each genuinely reusable pattern it demonstrates**
+   (e.g. `mini-swe-agent` → a `stateless-subprocess-action-execution` concept), cross-linked so
+   the pages form a connected cluster. The concept layer is where the wiki compounds: a pattern
+   page is reachable from every repo that shares it, so pulling it out of the repo page is what
+   makes the knowledge reusable beyond this one codebase. Calibrate to what's actually there — a
+   genuinely single-purpose repo with no transferable pattern can stay one entity page; decompose
+   by the ideas the source really contains, never manufacture filler concepts to hit a count.
+
+   Cite across **two citation lanes** that the reconciliation rule ties together:
    - **Code claims → SHA-pinned permalinks** `owner/repo@<SHA>/path#Lx-Ly`, in footnotes
      **only** — they have no `raw/` node, so they never appear in `sources:`.
    - **Orientation/synthesis claims → the reading note.** A repo page's framing, distilled
