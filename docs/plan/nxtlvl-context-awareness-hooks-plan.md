@@ -29,7 +29,7 @@ Two hard project constraints shape every task below:
   gate** the user runs in interactive `claude`. The agent does all *scriptable* verification
   (unit tests, fail-open smoke, 4-site grep) and stops at the gate.
 - **Fail-open is absolute for these hooks.** Both are observation-only (not exit-2 gates), so they
-  inherit the [ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md) contract: every path
+  inherit the [ADR-010](../decisions/ADR-010-hook-layer-contract.md) contract: every path
   exits 0, errors emit nothing, never block or alter a tool call. The `osascript` notification and
   the PreCompact emit must both fail open by *design*, not assertion.
 

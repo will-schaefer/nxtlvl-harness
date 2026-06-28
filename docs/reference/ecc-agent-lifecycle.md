@@ -11,11 +11,11 @@ The six phases: **Design → Author → Evaluate → Debug → Orchestrate → O
 
 | # | Phase | Status | Decision |
 |---|-------|--------|----------|
-| 1 | Design | ✅ reviewed | [ADR-017](../decisions/ADR-017-agent-design-contract.md) |
-| 2 | Author | ✅ reviewed | [ADR-018](../decisions/ADR-018-agent-authoring-method.md) |
+| 1 | Design | ✅ reviewed | [ADR-012](../decisions/ADR-012-agent-design-contract.md) |
+| 2 | Author | ✅ reviewed | [ADR-013](../decisions/ADR-013-skill-agent-authoring-model.md) |
 | 3 | Evaluate | ✅ reviewed | [ADR-021](../decisions/ADR-021-agent-evaluation-model.md) |
 | 4 | Debug | ✅ reviewed | [ADR-022](../decisions/ADR-022-agent-debugging-model.md) |
-| 5 | Orchestrate | ✅ reviewed | [ADR-021](../decisions/ADR-021-agent-orchestration-model.md) |
+| 5 | Orchestrate | ✅ reviewed | [ADR-016](../decisions/ADR-016-orchestration-model.md) |
 | 6 | Operate | ✅ reviewed | [ADR-023](../decisions/ADR-023-agent-operation-model.md) |
 
 ---
@@ -56,7 +56,7 @@ healthcare, marketing, seo, network ×3, homelab, a11y, mle, database). The genu
 set is smaller (planner, architect, code-reviewer, code-simplifier, security-reviewer,
 silent-failure-hunter, tdd-guide, refactor-cleaner, doc-updater, performance-optimizer, …).
 
-### nxtlvl decision → [ADR-017](../decisions/ADR-017-agent-design-contract.md)
+### nxtlvl decision → [ADR-012](../decisions/ADR-012-agent-design-contract.md)
 - **Operating model:** main session = lean orchestrator delegating to specialist subagents by
   task; specialists are first-class (not a last resort). Dispatch stays native; composition is
   ours.
@@ -93,7 +93,7 @@ it leans on — eval-first, model-routed, with knowledge injected from a caller-
 3. **Command shape.** Explicit phases → severity table → binary decision rule → deterministic
    output schema, plus stop-and-ask guardrails.
 
-### nxtlvl decision → [ADR-018](../decisions/ADR-018-agent-authoring-method.md)
+### nxtlvl decision → [ADR-013](../decisions/ADR-013-skill-agent-authoring-model.md)
 - **Adopt:** one-way skill→lean-executor dependency (the runner agent **loads** the skill it
   fronts per build ADR-012/ADR-013; a spawn-target agent takes a schema pointer instead);
   done-condition-first; explicit stop-and-ask guardrails; phased structure + deterministic output
@@ -231,7 +231,7 @@ makes the composition ours; ADR-003 keeps the runtime native. The orchestrator's
 own judgment over a small scoped roster + native description-triggered dispatch — not a tag→chain
 table, a `/orchestrate` chain-runner, or a Kanban board.
 
-### nxtlvl decision → [ADR-021](../decisions/ADR-021-agent-orchestration-model.md)
+### nxtlvl decision → [ADR-016](../decisions/ADR-016-orchestration-model.md)
 - **Adopt:** the gated, size-classified, delegate-don't-inline pipeline + the two human gates +
   security trigger (orch-pipeline), agent map narrowed to the scoped roster (ADR-017).
 - **Adapt:** self-contained delegation briefs (plan-orchestrate Ph3); parallel fan-out +

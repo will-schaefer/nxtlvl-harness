@@ -30,7 +30,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [Hook env propagation](cc-hook-env-propagation.md) — inline `VAR=x claude` may not reach the process; settings `env` field reaches hooks AND hot-reloads; secrets stripped.
 - [CLAUDE.md layering](cc-claudemd-layering-facts.md) — global always-on; @import inlines vs plain path = on-demand; project loads last & wins; arbitrary ~/.claude files not auto-loaded.
 - [Sandbox blocks localhost](cc-sandbox-localhost-blocked.md) — sandbox net allowlist blocks loopback too; curl to 127.0.0.1 = HTTP 000 until sandbox off.
-- [Sandbox blocks keychain auth](cc-sandbox-blocks-keychain-auth.md) — sandbox blocks macOS keychain → git push / gh "auth failed" are FALSE signals; re-run sandbox-off before re-authing.
+- [Sandbox blocks keychain auth](cc-sandbox-blocks-keychain-auth.md) — sandbox blocks macOS keychain → auth-touching git push/pull/gh: go sandbox-off on the FIRST attempt (in-sandbox try is a guaranteed false-fail); "could not read Username"/"invalid token" = sandbox biting, not bad creds.
 - [Workflow args not array](cc-workflow-args-not-array.md) — Workflow tool `args` may not arrive as a native array; generate the list in-script or guard with Array.isArray/JSON.parse.
 
 ## Environment & repo
@@ -41,6 +41,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 
 ## nxtlvl — project & subsystem status
 - [nxtlvl harness (anchor)](nxtlvl-harness.md) — the personal CC agent-harness plugin; intent doc docs/intent/personal-harness.md, ADRs docs/decisions/; reactive vendoring; hook stdin field shapes.
+- [Purpose reshape → commercial](nxtlvl-purpose-commercial-reshape.md) — intent re-derived 2026-06-28: nxtlvl = foundation for a potential AI agent company (job loss ~2026-06-21); learning demoted to method; 3 original mechanisms dropped; map-first/build-reactive posture.
 - [Agent runtime primer](agent-runtime-primer.md) — runtime anatomy + native-vs-DIY ledger (docs/reference/agent-runtime-primer.md); nxtlvl's substance lives ABOVE the loop, so composing keeps it.
 - [C&M subsystem status](nxtlvl-context-memory-subsystem.md) — C&M domain PROMOTED & LIVE (2026-06-22): installed snapshot==repo HEAD, all 6 hooks firing, Checkpoints A–D verified, fallback 0/137.
 - [C&M store path-keyed fork hazard](cm-store-path-keyed-fork-hazard.md) — store keyed on sha256(realpath(.git)); any repo relocation/new-path clone silently forks it (empty new store, stranded learning) → migrate instincts (rewrite project_id) + bookmarks; runbook Phase 3.5.

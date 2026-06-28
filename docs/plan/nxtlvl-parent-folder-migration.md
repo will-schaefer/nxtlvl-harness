@@ -3,8 +3,10 @@
 > **Status: planned, execution deferred** until the in-flight work is pushed (user's call).
 > Reframes `~/Developer` from *being* the git repo into a plain **parent workspace folder**
 > that holds the harness repo at `~/Developer/nxtlvl/` plus sibling repos (`llm-wiki/`).
-> This amends the "local dir stays `~/Developer`" clause of
-> [ADR-036](../decisions/ADR-036-repo-identity-nxtlvl-harness-only.md) — see the superseding ADR.
+> This realizes the three-plugin / three-repo family model of
+> [ADR-001](../decisions/ADR-001-plugin-local-marketplace-packaging.md): `nxtlvl-harness`,
+> `nxtlvl-labs`, and `nxtlvl-wiki` as sibling repos under the `~/Developer` parent workspace,
+> sharing one local marketplace — rather than one single-identity harness repo.
 
 ## Why this is delicate
 `~/.claude/*` symlinks point **into** `~/Developer/config/claude/*`, and the project-memory +

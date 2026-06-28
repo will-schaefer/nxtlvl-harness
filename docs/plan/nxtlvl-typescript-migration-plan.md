@@ -1,7 +1,7 @@
 # Implementation Plan: nxtlvl JavaScript → TypeScript migration
 
 > SDD Phase: **Plan**. Implements the decision in
-> [`docs/decisions/ADR-034-typescript-default-native-type-stripping.md`](../decisions/ADR-034-typescript-default-native-type-stripping.md).
+> [`docs/decisions/ADR-004-harness-internal-structure.md`](../decisions/ADR-004-harness-internal-structure.md).
 > 🤖 = agent-verifiable · 🧑 = manual gate · ◇ = decision (locked at plan review unless marked open).
 > **Status: PLANNED (not started).**
 
@@ -9,7 +9,7 @@
 
 ## 1. Framing
 
-[ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md) makes **TypeScript
+[ADR-004](../decisions/ADR-004-harness-internal-structure.md) makes **TypeScript
 the default harness language** and chooses **native Node type-stripping** as the runtime (no build
 step; `node hook.ts` runs directly on Node 24.12). This plan converts the existing JavaScript to
 TypeScript without changing any runtime behaviour. Per the grill (2026-06-24, spiked on Node
@@ -37,14 +37,14 @@ stripping.
   ([ADR-001](../decisions/ADR-001-plugin-local-marketplace-packaging.md)); the installed plugin is a
   SHA-pinned snapshot that runs the `.ts` directly. There is nothing to compile and nothing that can
   drift.
-- **Erasable syntax only** ([ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md)):
+- **Erasable syntax only** ([ADR-004](../decisions/ADR-004-harness-internal-structure.md)):
   type annotations, interfaces, type aliases, generics, `as`, `satisfies` — **no** enums,
   namespaces-with-runtime-code, parameter properties, or decorators. `tsconfig.json` is for
   `tsc --noEmit` + the editor only; **Node ignores it at runtime** (no path aliases).
 - **The fail-open hook path must never be left broken in a committable state.** Each hook is renamed
   **and** its `hooks.json` command flipped `.js`→`.ts` in the *same* commit, with a stdin smoke test,
   so the repo is never one promote away from a hook pointing at a missing file
-  ([ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md)).
+  ([ADR-010](../decisions/ADR-010-hook-layer-contract.md)).
 
 **Strategy:** incremental, **tests-green per module**, dependency-ordered (leaves first). `allowJs`
 lets `.ts` and `.js` coexist during the transition; CJS↔ESM interop (Node 24) lets the
@@ -63,7 +63,7 @@ half-converted tree run in both directions, and a **typeless repo-root `package.
 | D1 | Runtime | **Native Node type-stripping** — `node X.ts`, no build (ADR-034). |
 | D2 | Scope | **All nxtlvl-owned code** (table above); throwaway + vendored excluded. |
 | D3 | Sequencing | **Incremental, tests-green per module**, dependency-ordered. |
-| D4 | Module system | **Convert to ESM** (`import`/`export`). *Supersedes the original "keep CommonJS"; amends [ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md).* CJS `require('./x.ts')` types every cross-module import as `any` (verified); `import = require()` is type-safe but non-erasable (`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`); only ESM is both type-safe and erasable. |
+| D4 | Module system | **Convert to ESM** (`import`/`export`). *Supersedes the original "keep CommonJS"; amends [ADR-004](../decisions/ADR-004-harness-internal-structure.md).* CJS `require('./x.ts')` types every cross-module import as `any` (verified); `import = require()` is type-safe but non-erasable (`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`); only ESM is both type-safe and erasable. |
 | D5 | Test framework | **Keep `node:test`** — runs `.test.ts` via the same type-stripping; zero new dependency. |
 | D6 | Type-check gate | **`tsc --noEmit`** (dev-only). Candidate objective check for the ADR-009 audit. |
 | D7 | Dev-dependency home | A **repo-root `package.json`** (devDeps: `typescript`, `@types/node`) — `tsc`/types are dev tooling, not runtime; the two labs keep their own `package.json`. |
@@ -146,7 +146,7 @@ stay `#!/usr/bin/env node` (Node strips types). Update lab-local docs/READMEs th
 
 - **T3.1** evals-lab: `lib/engine`, `lib/graders`, `lib/scorecard`, `run-eval` (+ tests, `__fixtures__/sample-eval/adapter`).
 - **T3.2** harness-lab: `lib/manifest`, `new-cell`, `ledger`, `eval`, `graduate` (+ tests, JS fixtures).
-  These are the scripts named in [ADR-032](../decisions/ADR-032-cells-installable-as-plugin-architecture.md)/[ADR-033](../decisions/ADR-033-three-part-objective-graduation-contract.md);
+  These are the scripts named in [ADR-005](../decisions/ADR-005-labs-internal-structure.md);
   the ADRs are **not** edited (per ADR-034) — only the files and the lab's own docs.
 
 ### Phase 4 — Skill scripts

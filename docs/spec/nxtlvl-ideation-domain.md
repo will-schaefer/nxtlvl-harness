@@ -28,9 +28,9 @@ reference set, resolved per the project's decision method, not concluded here.
 (`superpowers:brainstorming` is the most relevant prior art — the only reference shipping a
 brainstorming front door — but no reference is a default or fallback.) It is a
 **user-directed, proactive domain build** (the user asked for the whole ideation phase), in the
-same category as the confident-core ([ADR-016](../decisions/ADR-016-confident-core-capability-domains.md))
+same category as the confident-core ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md))
 and the C&M subsystem — not a reactive un-deferral under the intake gate
-([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)), which still governs all
+([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)), which still governs all
 *other* growth.
 
 ## 2. The model — a three-layer domain with an inverted executor
@@ -76,7 +76,7 @@ a conversation, so its engine lives where the conversation is."
 
 ## 3. Skills — the knowledge layer (◆ refined, caller-agnostic)
 
-Four refined skills. Per [ADR-012](../decisions/ADR-012-agents-execute-skills-hold-knowledge.md)
+Four refined skills. Per [ADR-012](../decisions/ADR-012-agent-design-contract.md)
 and the scoping doctrine, knowledge is **factored out and caller-agnostic** — `interview-me`,
 `grill-me`, and `idea-refine` know nothing about `brainstorming`; the orchestrator depends on
 *them*, one-way.

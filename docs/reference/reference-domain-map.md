@@ -9,7 +9,7 @@ directly useful of the two.
 **Rows are nxtlvl's own taxonomy** (from [nxtlvl-domain-map.md](nxtlvl-domain-map.md)) — Layer-2
 workflows + Layer-3 subsystems — *not* a neutral catalog. That's deliberate: it makes the matrix
 answer a question nxtlvl has ("where are my mining candidates per surface?") instead of faithfully
-cataloguing ECC's 40+ domains, most of which are out-of-scope ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md) fallback-only).
+cataloguing ECC's 40+ domains, most of which are out-of-scope ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) fallback-only).
 
 ### Two caveats baked into every cell
 

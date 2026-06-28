@@ -174,10 +174,10 @@ All hooks also skip when `NXTLVL_CM_OBSERVER` is truthy (the observer's own sess
 
 ## Relevant ADRs / intent
 
-- [ADR-005](../../../docs/decisions/ADR-005-fallback-log-dual-metric.md) — fallback log and dual metric.
-- [ADR-006](../../../docs/decisions/ADR-006-hook-fail-open-gated-blocking.md) — hook fail-open + gated blocking.
-- [ADR-007](../../../docs/decisions/ADR-007-context-budgeted-injection.md) — context-budgeted injection policy.
-- [ADR-025](../../../docs/decisions/ADR-025-project-identity-observer-concurrency.md) — project identity and observer concurrency.
+- [ADR-011](../../../docs/decisions/ADR-011-observability-and-metrics.md) — observability & metrics (north-star open; prior fallback-rate model superseded). The lib still writes a fallback log.
+- [ADR-010](../../../docs/decisions/ADR-010-hook-layer-contract.md) — hook fail-open + gated blocking.
+- [ADR-008](../../../docs/decisions/ADR-008-context-assembly.md) — context-budgeted injection policy.
+- [ADR-007](../../../docs/decisions/ADR-007-memory-architecture.md) — project identity and observer concurrency.
 - [Intent](../../../docs/intent/personal-harness.md) — C&M subsystem, hook safety, fail-open contract.
 
 ## Open questions / TODOs

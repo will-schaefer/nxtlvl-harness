@@ -8,9 +8,9 @@
 >
 > **Anchor:** [`../intent/personal-harness.md`](../intent/personal-harness.md) (workload at
 > lines 191–202; reconstruction backlog at 52–61). **Governs:** which buckets `/spec` and the
-> intake gate ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)) file new
-> components into, and which stay dormant-in-ecc
-> ([ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md)).
+> scope/extension gate ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md))
+> file new components into, and which stay out of scope — covered only as ingested
+> reference-corpus material ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)).
 > **Purpose:** a *lens for filing and scoping*, not a build manifest — most cells below are
 > empty until the reactive loop earns them. For the **concrete inventory of what actually
 > ships** (which agents/skills/commands exist on disk today), see the companion
@@ -63,20 +63,24 @@ Next.js full-stack · Python · Rust · knowledge-base · LLM-wiki · agentic en
 | **D · Agentic / Meta** (differentiated *and* dogfooded) | Agentic Engineering / Agent Orchestration · Meta/Harness | Building agents *with* the harness — dogfooding is automatic. Meta/Harness = nxtlvl building itself (the learning target). |
 | **E · Quality** (cross-cutting — never standalone; applies across A–D) | Code Quality & Review · Testing · Security | Review is a core workflow; Testing is a build-loop stage; Security backs the audit's no-secrets gate. |
 
-> **Build-now confident-core** ([ADR-016](../decisions/ADR-016-confident-core-capability-domains.md),
+> **Build-now confident-core** ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md),
 > 2026-06-18): Python · TypeScript/JS · Rust (group A) + Frontend & UI · Backend/Architecture
 > (group B) are **pre-built now** — each ships the full §6 triad — rather than waiting for the
-> fallback signal. The membership test's *build-now* branch (`ADR-008:22`) authorizes them, and
+> fallback signal. The membership test's *build-now* branch (`ADR-015`) authorizes them, and
 > the **bounded five-domain list is the new brake** (a 6th build-now domain is itself an ADR).
 > The other group-B domains (Integrations & APIs, DevOps & Infra) remain **reactive**.
 
-### 2b. Domains deliberately *out* → dormant-in-ecc, reached only via the logged fallback
+### 2b. Domains deliberately *out* → covered only as ingested reference-corpus material
 
 Naming these **is** the scoping-down the intent insists on (`personal-harness.md:204-212`). Each
-is a candidate the intake gate ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md))
-must justify before it enters; until then it lives in dormant ecc
-([ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md), `personal-harness.md:73-80`)
-and every reach is logged ([ADR-005](../decisions/ADR-005-fallback-log-dual-metric.md)).
+is a candidate the scope/extension gate
+([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)) must justify before it
+enters; until then the runtime backstop is **native Claude Code** — ecc is *not* an installed
+dormant fallback but ingested reference-corpus material, reached via nxtlvl-wiki (the sole corpus),
+with recurring gaps routed to nxtlvl-labs ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md),
+`personal-harness.md:73-80`). The earlier fallback-rate north-star is superseded: coverage is now
+assessed deliberately against nxtlvl-wiki, and observability remains open
+([ADR-011](../decisions/ADR-011-observability-and-metrics.md), Draft).
 
 | Out-of-scope domains | Out-of-scope languages |
 |---|---|
@@ -104,7 +108,7 @@ Layer-1 capability domains on demand — *that* is what "language-plural" means 
 | **`review`** | agent-skills five-axis review, refined for fit | E (Quality) + the changed file's language (A) / shape (B) | Phase-0 (M0/M5) |
 | **`dev`** | agent-skills `/spec→/plan→/build→/test→/review` loop | A + B + E, per the change | Phase-0 (M2/M5) |
 | **`research`** | built fresh (`deep-research` as *structural ref only*) | C (Knowledge) | Phase-0 (M5) |
-| **`agent-building`** \* | TBD | D (Agentic/Meta) | **Reactive** — likely 4th workflow, not pre-built ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)) |
+| **`agent-building`** \* | TBD | D (Agentic/Meta) | **Reactive** — likely 4th workflow, not pre-built ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)) |
 
 \* Pre-building `agent-building` is exactly the "seems useful" move the intake gate forbids; it
 enters only when the fallback log proves repeat-need.
@@ -120,12 +124,12 @@ The reconstruction backlog (`personal-harness.md:52-61`) as internal domains. St
 | Subsystem | Strategy | Governing ADR | Phase-0 milestone |
 |---|---|---|---|
 | Layered config + packaging | reconstruct | [ADR-001](../decisions/ADR-001-plugin-local-marketplace-packaging.md) | M0/M1 |
-| Context assembly/injection | reconstruct (budgeted, pointers>content) | [ADR-007](../decisions/ADR-007-context-budgeted-injection.md) | M4 |
-| Memory | **extend native**, no new store | [ADR-004](../decisions/ADR-004-extend-native-memory.md) | M3 |
+| Context assembly/injection | reconstruct (budgeted, pointers>content) | [ADR-008](../decisions/ADR-008-context-assembly.md) | M4 |
+| Memory | **extend native**, no new store | [ADR-007](../decisions/ADR-007-memory-architecture.md) | M3 |
 | Composition layer | reconstruct (when skills fire, how agents chain) | [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md) | expressed via M2/M5 |
-| Hooks | reconstruct (lean, fail-open, flat-per-lane) | [ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md) | M6 |
-| Audit | reconstruct (objective, binary, *invoked*) | [ADR-009](../decisions/ADR-009-objective-invoked-audit-gate.md) | deferred (Phase ≥1) |
-| Fallback-log + metric | reconstruct (north-star substrate) | [ADR-005](../decisions/ADR-005-fallback-log-dual-metric.md) | M7 |
+| Hooks | reconstruct (lean, fail-open, flat-per-lane) | [ADR-010](../decisions/ADR-010-hook-layer-contract.md) | M6 |
+| Audit | reconstruct (objective, binary, *invoked*) | [ADR-014](../decisions/ADR-014-audit-gate.md) | deferred (Phase ≥1) |
+| Observability + metric | superseded north-star; metric OPEN (coverage assessed vs nxtlvl-wiki, [ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) | [ADR-011](../decisions/ADR-011-observability-and-metrics.md) (Draft) | M7 |
 
 > **The "never reconstruct" boundary** ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)):
 > skill routing, agent dispatch, the tool-use loop, and context-window assembly live below the
@@ -181,18 +185,18 @@ pattern lives; awareness pings = hooks; ask-vs-proceed posture = a rule.
 
 - Layer-1 domains are **filing buckets**, not commitments — most stay empty until a real task
   fills them.
-- **Exception — the confident-core** ([ADR-016](../decisions/ADR-016-confident-core-capability-domains.md)):
+- **Exception — the confident-core** ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)):
   Python · TS/JS · Rust · Frontend & UI · Backend/Architecture are **build-now**, not reactive.
   The bounded five-domain list *is* the brake; everything outside it (including Integrations &
   APIs and DevOps & Infra) still needs the one-line intake entry.
 - A new component enters **only** via the written intake gate
-  ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)): a one-line backlog entry
+  ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)): a one-line backlog entry
   naming *the task that required it* and *the existing thing that failed*. Fed by the fallback
   log; an out-of-scope domain (§2b) crossing into scope is the same gate, just bigger.
 - **Harden trigger:** the same logged miss N≈2–3× turns a workflow (L2) into a revision ticket.
 - Hooks (L3) register **flat, one per event+matcher lane**; a consolidating dispatcher is
   itself reactive machinery, admitted only once a lane carries ≥2 hooks
-  ([ADR-008 hook-layer corollary](../decisions/ADR-008-reactive-growth-intake-gate.md)).
+  ([ADR-015 hook-layer corollary](../decisions/ADR-015-scope-determination-and-extension-gate.md)).
 
 The through-line: **the map defines the shape; the fallback log decides what actually grows
 into it.**

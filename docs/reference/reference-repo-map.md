@@ -59,7 +59,7 @@ contrast-by-architecture (the harness lives in code, not markdown).
 
 ### A. Curated CC-native harnesses (peers — richest mining)
 
-- **ECC** — the deliberately-dormant reference backstop ([ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md)).
+- **ECC** — ingested reference-corpus material only, surfaced via nxtlvl-wiki (the sole reference corpus, [ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)); it is **not** an installed/dormant backstop — the runtime backstop is native Claude Code.
   CC-native triple marker (`.claude` + `.claude-plugin` + `.mcp.json`). Everything: `agents/`,
   `commands/`, `hooks/`, `skills` across `plugins/`, plus a second-gen `ecc2/` tree (the source of
   count inflation). The most-mined repo here; start from [ecc-main-map.md](ecc-main-map.md), don't re-scan.

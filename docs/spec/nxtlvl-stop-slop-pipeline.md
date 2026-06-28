@@ -3,9 +3,9 @@
 > Design artifact produced via `/brainstorming` (2026-06-17). Consumes the confirmed intent
 > [`docs/intent/personal-harness.md`](../intent/personal-harness.md) and the standing decisions
 > [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md) (compose/vendor-and-refine),
-> [ADR-007](../decisions/ADR-007-context-budgeted-injection.md) (pointers over content),
-> [ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md) (reactive growth),
-> [ADR-009](../decisions/ADR-009-objective-invoked-audit-gate.md) (objective audit).
+> [ADR-008](../decisions/ADR-008-context-assembly.md) (pointers over content),
+> [ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) (reactive growth),
+> [ADR-014](../decisions/ADR-014-audit-gate.md) (objective audit).
 > The decision this spec implements is recorded in
 > [ADR-024](../decisions/ADR-024-prose-quality-stop-slop.md).
 > Status: **DRAFT — awaiting human review.**
@@ -73,14 +73,14 @@ A condensed core-rules block (target ≤ 15 lines) added to global `~/.claude/CL
 loaded, so chat prose is shaped from the first token. It is marked as an extract of the vendored
 skill and carries a pointer back to `nxtlvl:stop-slop` for the full rules + references.
 
-**Why content, not a pointer.** [ADR-007](../decisions/ADR-007-context-budgeted-injection.md) and
+**Why content, not a pointer.** [ADR-008](../decisions/ADR-008-context-assembly.md) and
 the decision rule (`~/.claude/rules/decisions.md`) both reject inlining content into always-on
 context. This is the deliberate exception: a pointer cannot shape prose unless the skill loads, and
 chat has no trigger that reliably loads it. The condensed block earns its always-on tokens because
 prose-shaping is impossible without them. The mitigation is a size cap — a *soft densification
 target*, not a hard line that drops a rule: its floor is **coverage of every core rule**, and it
 stays a tight, dense extract (never the full skill) that still covers all of them
-([ADR-014](../decisions/ADR-014-quality-first-over-leanness.md)).
+(the quality-first doctrine).
 
 **Sync model — literal copy + audit check** (chosen over `@import`). The block is a literal copy in
 the global layer; the audit verifies it still matches the skill's core rules. This keeps the
@@ -93,13 +93,13 @@ A new objective check: the condensed block in global `CLAUDE.md` still **covers*
 core rules — comparison is by rule *coverage* (each core rule represented in the block), not literal
 text, since the block is a condensed extract. Coverage is binary and mechanical, so it sits in the
 audit's **block-tier**, not the taste/warning tier
-([ADR-009](../decisions/ADR-009-objective-invoked-audit-gate.md)). Built when the audit exists
+([ADR-014](../decisions/ADR-014-audit-gate.md)). Built when the audit exists
 (Phase ≥1); until then, drift is caught by eye at promotion.
 
 ### 5. Reactive refinement
 Vendor faithfully now; tune a rule only when the fallback log / real use shows it fighting a surface
 (for example, a rule that mangles a legitimate ADR phrasing). Each edit is recorded via the intake
-gate — a one-line entry naming the task and the rule that failed ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)).
+gate — a one-line entry naming the task and the rule that failed ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)).
 
 **Anticipated first trigger.** stop-slop core rule 6 ("no em dashes") collides with the em-dash-heavy
 ADR/spec house style. It is resolved at the dogfood run — the first real use — as a logged intake

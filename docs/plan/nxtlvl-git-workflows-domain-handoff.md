@@ -32,7 +32,7 @@ single-skill approach already on the branch (see "Where we are").
    (see the Resolution note above).
 4. **The seed skill already built:** `plugins/nxtlvl/skills/github-workflow/SKILL.md`.
 5. **House ADR format + lifecycle:** `plugins/nxtlvl/skills/documentation-and-adrs/SKILL.md`.
-6. **Intake gate:** `docs/plan/nxtlvl-skill-intake-backlog.md` + `docs/decisions/ADR-008-reactive-growth-intake-gate.md`.
+6. **Intake gate:** `docs/plan/nxtlvl-skill-intake-backlog.md` + `docs/decisions/ADR-015-scope-determination-and-extension-gate.md`.
 
 ## Where we are (branch `claude/magical-newton-uoss1i`, draft PR #10)
 

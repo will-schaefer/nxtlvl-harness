@@ -46,7 +46,7 @@ runtime** (a restart took effect). Re-enabling ecc is an ask-first act. `ECC_GAT
 ineffective; full dormancy is the fix (memory `disable-ecc-active-hooks-dev`).
 
 ## Locked decisions (the plan's 5 open questions — all defaults accepted)
-1. Context-injection token budget (M4) = **≤ ~300 tokens (~20 lines)** — a *soft backstop*, not a hard cap; densify first, shed only non-earning blocks ([ADR-014](../decisions/ADR-014-quality-first-over-leanness.md)). Cut order: fallback-digest → task-pointer → git-line.
+1. Context-injection token budget (M4) = **≤ ~300 tokens (~20 lines)** — a *soft backstop*, not a hard cap; densify first, shed only non-earning blocks ([ADR-008](../decisions/ADR-008-context-assembly.md)). Cut order: fallback-digest → task-pointer → git-line.
 2. Hook wiring = **incremental** (PreToolUse@M0 ✓, SessionStart@M4, SessionEnd@M6).
 3. Spike ecc-prefix confirmation = done live (both paths confirmed with real `ecc:` payloads). No further ecc re-enable needed.
 4. `nxtlvl:dev` = **composes** the agent-skills loop, vendors nothing.
@@ -68,7 +68,7 @@ ineffective; full dormancy is the fix (memory `disable-ecc-active-hooks-dev`).
 ## Operating rules / gotchas
 - **Fail-open on *error* is absolute** for all hooks (gates included): no `set -e`, explicit `exit 0`
   on every error path, swallow all errors. A crash must never block. **Deliberate blocking (`exit 2`)
-  is now permitted for named, gated gates** ([ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md));
+  is now permitted for named, gated gates** ([ADR-010](../decisions/ADR-010-hook-layer-contract.md));
   see the gate backlog (`docs/plan/nxtlvl-hook-gate-backlog.md`). All Phase-0 *session* hooks
   (fallback-log, session-context, session-metrics) remain observation-only → absolute fail-open.
   First gates: `dangerous-bash` (building, own session) + `config-protection` (committed future).

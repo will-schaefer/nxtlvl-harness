@@ -1,9 +1,9 @@
 # nxtlvl — Hook Gate Backlog
 
 > Blocking **gates** only (exit-2 hooks). Observation/context hooks live in the Phase-0 plan.
-> Governed by [ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md) (fail-open on
+> Governed by [ADR-010](../decisions/ADR-010-hook-layer-contract.md) (fail-open on
 > error, absolute; deliberate blocking permitted but gated) and the reactive intake gate
-> ([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)). Every gate here obeys the
+> ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)). Every gate here obeys the
 > uniform contract:
 >
 > - **Errors fail open, always** — no `set -e`, explicit `exit 0` on every path, errors swallowed.
@@ -12,7 +12,7 @@
 > - A gate is **built in the repo workbench**; install + live-test is a manual step in
 >   interactive `claude` (the agent cannot run `/plugin`).
 
-These first two gates pass [ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)'s
+These first two gates pass [ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)'s
 **universal membership test** ("would I want this no matter what I'm working on this week?") on
 the spot — both are pure, task-independent *safety*, not workflow flavor — so they need no logged
 near-miss to qualify. ADR-008 governs how *later*, task-flavored gates earn admission.

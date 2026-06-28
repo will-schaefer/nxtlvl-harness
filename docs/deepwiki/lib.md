@@ -198,10 +198,10 @@ Hook-specific env vars are documented in [Hooks](hooks.md).
 
 ## Relevant ADRs / intent
 
-- [ADR-004](../../../docs/decisions/ADR-004-extend-native-memory.md) — extend native memory, no fourth system.
-- [ADR-005](../../../docs/decisions/ADR-005-fallback-log-dual-metric.md) — fallback log + dual metric.
-- [ADR-025](../../../docs/decisions/ADR-025-project-identity-observer-concurrency.md) — project identity + observer concurrency.
-- [ADR-034](../../../docs/decisions/ADR-034-typescript-default-native-type-stripping.md) — TypeScript default native type-stripping.
+- [ADR-007](../../../docs/decisions/ADR-007-memory-architecture.md) — extend native memory, no fourth system.
+- [ADR-011](../../../docs/decisions/ADR-011-observability-and-metrics.md) — observability & metrics (north-star open; prior fallback-rate model superseded). The lib still writes a fallback log.
+- [ADR-007](../../../docs/decisions/ADR-007-memory-architecture.md) — project identity + observer concurrency.
+- [ADR-004](../../../docs/decisions/ADR-004-harness-internal-structure.md) — TypeScript default native type-stripping.
 - [Intent](../../../docs/intent/personal-harness.md) — C&M subsystem design, storage layout, reactive growth.
 
 ## Open questions / TODOs

@@ -2,7 +2,7 @@
 
 > A concrete inventory of every domain that **actually ships components today**, grouped as the
 > harness organizes them: each domain is a `COMMAND → AGENT → SKILL` bundle
-> ([ADR-016](../decisions/ADR-016-confident-core-capability-domains.md) §Decision).
+> ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) §Decision).
 >
 > **Companion, not duplicate.** [`nxtlvl-domain-map.md`](nxtlvl-domain-map.md) is the *abstract
 > filing lens* (3 layers; most cells deliberately empty — "a lens for filing and scoping, not a
@@ -104,7 +104,7 @@ fan-out subagents and lands findings via the decision rule, rather than shipping
 
 ## 7. Confident-core capability domains — committed, **not yet built**
 
-[ADR-016](../decisions/ADR-016-confident-core-capability-domains.md) commits five capability
+[ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) commits five capability
 domains to a full `COMMAND → AGENT → SKILL` triad (15 components), tracked one GitHub issue per
 domain. **None ship files yet** — listed here so the catalog is honest about scope. Adding a
 sixth build-now domain is itself an ADR-worthy decision (the boundary is the brake).
@@ -118,7 +118,7 @@ sixth build-now domain is itself an ADR-worthy decision (the boundary is the bra
 | Backend / Architecture | cmd + agent + skill | committed, unbuilt |
 
 Everything beyond these five stays governed by the reactive intake gate
-([ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md)) — built only when a real task
+([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)) — built only when a real task
 proves the need.
 
 ---

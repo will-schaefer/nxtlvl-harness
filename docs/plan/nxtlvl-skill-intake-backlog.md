@@ -1,6 +1,6 @@
 # nxtlvl — Skill/Workflow Intake Backlog
 
-> Interim home for [ADR-008](../decisions/ADR-008-reactive-growth-intake-gate.md) intake entries
+> Interim home for [ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) intake entries
 > until M7 lands the runtime `fallback-log.jsonl` — which *is* the canonical intake backlog and
 > un-defer trigger (spec [`nxtlvl-phase-0-mvh.md`](../spec/nxtlvl-phase-0-mvh.md)). Every
 > skill/workflow added to `nxtlvl` logs **one entry** here naming **the task that required it** and
@@ -29,9 +29,10 @@
   refined for fit ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)) with the §3 format
   baked into the template; dropped the live `agent-skills:` call; repointed the canonical name to
   `/nxtlvl:documentation-and-adrs` in `~/.claude/CLAUDE.md` and `~/.claude/rules/decisions.md`.
-- **Upstream disposition:** `agent-skills` stays installed and untouched — dormant-not-deleted
-  endpoint per [ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md) once enough of it
-  is vendored.
+- **Upstream disposition:** the upstream `agent-skills` skill is reference-corpus material, ingested
+  via `nxtlvl-wiki` ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — not an
+  installed fallback plugin. The runtime backstop is native Claude Code; recurring gaps go to
+  `nxtlvl-labs`.
 
 ## 2. `github-workflow` (skill) — VENDORED (2026-06-18)
 
@@ -52,8 +53,9 @@
   it; per the agent-vs-skill axis ([`ecc-agent-vs-skill-scoping.md`](../reference/ecc-agent-vs-skill-scoping.md) §5)
   the write-and-push loop is a skill, not a standalone agent. Dropped the live upstream calls;
   long-tail recipes stay a pointer into `reference/ECC-main/skills/git-workflow`.
-- **Upstream disposition:** `agent-skills`/ECC stay installed and untouched — dormant-not-deleted
-  per [ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md).
+- **Upstream disposition:** `agent-skills`/ECC are reference-corpus material, ingested via
+  `nxtlvl-wiki` ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — not an installed
+  fallback plugin; the runtime backstop is native Claude Code, with recurring gaps going to `nxtlvl-labs`.
 
 ## 3. `git-workflows` domain (command + agent) — BUILT (2026-06-19)
 
@@ -73,5 +75,6 @@
   [`github-workflow`](../../plugins/nxtlvl/skills/github-workflow/SKILL.md) skill in place to stay
   caller-agnostic. The executor composes `nxtlvl:review` at the review step. Recorded as
   [ADR-017](../decisions/ADR-017-git-workflows-domain.md).
-- **Upstream disposition:** `agent-skills`/ECC stay installed and untouched — dormant-not-deleted
-  per [ADR-002](../decisions/ADR-002-ecc-dormant-reference-backstop.md).
+- **Upstream disposition:** `agent-skills`/ECC are reference-corpus material, ingested via
+  `nxtlvl-wiki` ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — not an installed
+  fallback plugin; the runtime backstop is native Claude Code, with recurring gaps going to `nxtlvl-labs`.

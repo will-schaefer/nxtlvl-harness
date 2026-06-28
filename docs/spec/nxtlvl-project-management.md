@@ -205,6 +205,6 @@ settled ground:
    (ADR-019), no collision risk.
 4. **Write side stays deferred to Phase 2.** The atomic, **versioned** write path + optimistic
    concurrency is *not* in Phase 1 (read-only). This is where the
-   [ADR-025](../decisions/ADR-025-project-identity-observer-concurrency.md) atomic-write cross-link
+   [ADR-007](../decisions/ADR-007-memory-architecture.md) atomic-write cross-link
    the doc-keeper flagged becomes load-bearing. If the Phase-2 write contract diverges from ADR-025's
    model, amend ADR-025 or open a new ADR (per the doc-keeper's note).

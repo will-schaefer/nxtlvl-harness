@@ -6,9 +6,9 @@
 > in-session render + `--html` opt-in viewer).
 > A fresh session can pick this up cold.
 > **Runtime: LOCKED → TypeScript**, run via native Node type-stripping
-> ([ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md)). No build step.
+> ([ADR-004](../decisions/ADR-004-harness-internal-structure.md)). No build step.
 > **Decision anchors it implements:** the objective audit shape of
-> [ADR-009](../decisions/ADR-009-objective-invoked-audit-gate.md) and **§5 of the global decision
+> [ADR-014](../decisions/ADR-014-audit-gate.md) and **§5 of the global decision
 > rule** (`~/.claude/rules/decisions.md`). **This tool is NOT itself ADR-worthy** — it *implements*
 > already-recorded decisions, so it gets no new ADR.
 
@@ -72,7 +72,7 @@ default (in-session render); `--html` is an opt-in standalone viewer over the sa
 ## 5. The audit contract (load-bearing — build this first and test it hardest)
 
 `adr audit` is **two-tier**, mirroring the dangerous-bash gate and the cell-graduation contract
-([ADR-033](../decisions/ADR-033-three-part-objective-graduation-contract.md)) — *block on facts,
+([ADR-014](../decisions/ADR-014-audit-gate.md)) — *block on facts,
 warn on taste, fail open on bugs*.
 
 ### Block-tier — Integrity (objective/binary; **any failure → exit 2**)
@@ -100,7 +100,7 @@ ADR-worthiness is taste, and the gate must never encode taste.
 ### Fail-open (absolute)
 
 Any **internal exception** in the audit itself → print a one-line `stderr` note and **exit 0**.
-A bug in the tool must never block. Per [ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md)
+A bug in the tool must never block. Per [ADR-010](../decisions/ADR-010-hook-layer-contract.md)
 / ADR-033 / the dangerous-bash precedent.
 
 ### Exit codes
@@ -118,7 +118,7 @@ shape applied to ADRs. Read it before writing the audit.
 
 ## 6. Runtime & build (TypeScript — the locked decision, with the one real gotcha)
 
-Governed by [ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md) and the
+Governed by [ADR-004](../decisions/ADR-004-harness-internal-structure.md) and the
 [TS migration plan](nxtlvl-typescript-migration-plan.md):
 
 - **Native Node type-stripping, no build step.** `node adr.ts` runs directly on Node 24.12.
@@ -222,11 +222,11 @@ survives the handoff.
 
 ## 9. References
 
-- Decisions implemented: [ADR-009](../decisions/ADR-009-objective-invoked-audit-gate.md)
+- Decisions implemented: [ADR-014](../decisions/ADR-014-audit-gate.md)
   (objective invoked audit) · **decision-rule §5** (`~/.claude/rules/decisions.md`, integrity-blocks
-  / completeness-warns) · [ADR-006](../decisions/ADR-006-hook-fail-open-gated-blocking.md) (fail-open)
-  · [ADR-033](../decisions/ADR-033-three-part-objective-graduation-contract.md) (two-tier exit-code gate).
-- Runtime: [ADR-034](../decisions/ADR-034-typescript-default-native-type-stripping.md) ·
+  / completeness-warns) · [ADR-010](../decisions/ADR-010-hook-layer-contract.md) (fail-open)
+  · [ADR-014](../decisions/ADR-014-audit-gate.md) (two-tier exit-code gate).
+- Runtime: [ADR-004](../decisions/ADR-004-harness-internal-structure.md) ·
   [TS migration plan](nxtlvl-typescript-migration-plan.md) (T0.2/T0.3 infra, D4 CJS caveat).
 - Build-from-scratch strategy: [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md).
 - Precedent code: [`plugins/nxtlvl/hooks/dangerous-bash.js`](../../plugins/nxtlvl/hooks/dangerous-bash.js)
