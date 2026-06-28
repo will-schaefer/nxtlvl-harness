@@ -32,11 +32,12 @@ The user directed that the router point **only** to what nxtlvl has established,
 branch-by-branch via `grill-me` — chose to go *dark* at unowned phases rather than keep a demoted
 fallthrough.
 
-The dividing question: composing on agent-skills was always about **not reconstructing** SDLC
-content. Going dark in the router is not reconstruction — it is *not endorsing* upstream content the
-project hasn't vetted, and building `◆` versions reactively when a phase is actually needed. This
-**refines the composition posture of [ADR-003](ADR-003-compose-not-reconstruct.md) at the router
-layer**: compose-not-reconstruct still holds; the router simply stops exposing an agent-skills floor.
+The dividing question: what the router should endorse. Going dark at unowned phases is *not
+endorsing* upstream content the project hasn't vetted, and building `◆` versions reactively when a
+phase is actually needed. This is **consistent with build-from-scratch
+([ADR-003](ADR-003-build-from-scratch.md)) at the router layer**: the router endorses only nxtlvl's
+own from-scratch items; upstream is neither endorsed nor depended on. The router simply stops
+exposing an agent-skills floor.
 
 ## Decision
 
@@ -109,9 +110,9 @@ left intact via the two named exceptions.
 - **The ideation domain is untouched** — its ideation→contract composition still resolves.
 - **Endorsement-only** — `agent-skills` remains installed; a direct invocation of an upstream skill
   is still possible. The router neither prevents nor recommends it.
-- **Compose-not-reconstruct still holds.** This refines the router layer only; the
-  plumbing-reconstruct, orchestration-native, and reactive-vendoring posture of
-  [ADR-003](ADR-003-compose-not-reconstruct.md) remains in force.
+- **Build-from-scratch still holds.** This refines the router layer only; the
+  build-from-scratch, orchestration-native, and reactive build-from-scratch posture of
+  [ADR-003](ADR-003-build-from-scratch.md) remains in force.
 - **Follow-up work** (tracked outside this ADR): build `◆` `spec-driven-development` and
   `planning-and-task-breakdown`; continue the confident-core build-out so the dark phases close.
 - Recorded per the global decision rule (`~/.claude/rules/decisions.md`).

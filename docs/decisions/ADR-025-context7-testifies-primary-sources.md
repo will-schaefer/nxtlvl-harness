@@ -1,5 +1,5 @@
 ---
-id: ADR-026
+id: ADR-025
 title: "Primary sources testify, version-pinned — Context7 citations name the doc URL, not the courier"
 status: Draft
 date: 2026-06-28
@@ -17,7 +17,7 @@ nxtlvl is adding a self-contained Context7 MCP docs-grounding capability: the pl
 cutoff — a gap this session surfaced concretely (an authoritative-sounding hook-event list was
 stale; Context7 corrected it).
 
-The load-bearing question is **trust posture**. [ADR-025](ADR-025-deepwiki-orientation-not-evidence.md)
+The load-bearing question is **trust posture**. [ADR-024](ADR-024-deepwiki-orientation-not-evidence.md)
 ruled DeepWiki a **secondary source** (auto-generated prose, can be stale or hallucinated) and
 assigned it "leads, not evidence; zero citations reach artifacts." Context7 serves **official
 library docs** — it is **primary-derived**, so that posture must invert: its output *may* be cited.
@@ -121,6 +121,6 @@ point. Build is deferred to a forthcoming plan.
   `CITE — URL @ version`; zero uncited assertions in any brief. This is a binary, automatable
   check consistent with the objective-gate discipline of [ADR-014](ADR-014-audit-gate.md).
 
-- Cross-links: [ADR-025](ADR-025-deepwiki-orientation-not-evidence.md) (inverse companion),
+- Cross-links: [ADR-024](ADR-024-deepwiki-orientation-not-evidence.md) (inverse companion),
   [ADR-018](ADR-018-ideation-domain.md) (isolated-agent pattern reused),
   [ADR-020](ADR-020-router-endorses-established-items.md) (consumer-wiring deferral).

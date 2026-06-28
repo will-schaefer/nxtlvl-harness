@@ -12,7 +12,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [Terse confirms = momentum](terse-confirms-momentum.md) — one-word locks; acknowledge in one line and advance.
 
 ## How I should work (doctrine & feedback)
-- [Compose on native, quality-first](compose-on-native-quality-first.md) — decision lens = "what gives higher quality"; prefer composition over rebuilding.
+- [Compose on native, quality-first](compose-on-native-quality-first.md) — decision lens = "what gives higher quality"; resolved (2026-06-28) to build-from-scratch source-driven above the loop, compose only on native orchestration (ADR-003); old compose/vendor-and-refine default is dead.
 - [Quality over simplicity](harness-lab-quality-over-simplicity.md) — agent quality is top priority; heavier machinery OK if it raises quality; don't YAGNI the gate down.
 - [Hooks inform, don't force](harness-hooks-inform-not-force.md) — hooks surface signals, never interrupt/steer mid-task; behavior-shaping lives in workflow rules.
 - [Distill reusable → doc + memory](distill-reusable-to-doc-plus-memory.md) — log reusable findings as a docs/reference/ doc + a memory pointer; default destination, don't re-ask.

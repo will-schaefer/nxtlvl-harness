@@ -99,15 +99,15 @@ assessed deliberately against nxtlvl-wiki, and observability remains open
 
 ## 3. Layer 2 — Workflow domains (the verbs / entry points)
 
-The user-facing entry points. Each **composes** native + agent-skills rather than rebuilding
-substance ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)); each reaches into
+The user-facing entry points. Each is **built from scratch above native**, source-driven with
+nxtlvl-wiki as the source ([ADR-003](../decisions/ADR-003-build-from-scratch.md)); each reaches into
 Layer-1 capability domains on demand — *that* is what "language-plural" means operationally.
 
-| Workflow | Composes | Reaches (capability domains) | Status |
+| Workflow | Built from scratch (source-driven) | Reaches (capability domains) | Status |
 |---|---|---|---|
-| **`review`** | agent-skills five-axis review, refined for fit | E (Quality) + the changed file's language (A) / shape (B) | Phase-0 (M0/M5) |
-| **`dev`** | agent-skills `/spec→/plan→/build→/test→/review` loop | A + B + E, per the change | Phase-0 (M2/M5) |
-| **`research`** | built fresh (`deep-research` as *structural ref only*) | C (Knowledge) | Phase-0 (M5) |
+| **`review`** | built from scratch, source-driven (the *shipped* review skill still composes agent-skills, pending a from-scratch rebuild) | E (Quality) + the changed file's language (A) / shape (B) | Phase-0 (M0/M5) |
+| **`dev`** | built from scratch, source-driven (the `/spec→/plan→/build→/test→/review` loop) | A + B + E, per the change | Phase-0 (M2/M5) |
+| **`research`** | built from scratch, source-driven (`deep-research` as *structural ref only*) | C (Knowledge) | Phase-0 (M5) |
 | **`agent-building`** \* | TBD | D (Agentic/Meta) | **Reactive** — likely 4th workflow, not pre-built ([ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md)) |
 
 \* Pre-building `agent-building` is exactly the "seems useful" move the intake gate forbids; it
@@ -118,20 +118,21 @@ enters only when the fallback log proves repeat-need.
 ## 4. Layer 3 — Architectural domains (the subsystems)
 
 The reconstruction backlog (`personal-harness.md:52-61`) as internal domains. Strategy is
-**not uniform** — three tiers per [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md):
-*reconstruct* the plumbing, *compose* the workflow substance, leave orchestration *native*.
+**not uniform** — two tiers per [ADR-003](../decisions/ADR-003-build-from-scratch.md):
+*build from scratch* (source-driven, nxtlvl-wiki as source) everything above the loop — plumbing
+and workflow substance alike — and leave orchestration *native*.
 
 | Subsystem | Strategy | Governing ADR | Phase-0 milestone |
 |---|---|---|---|
 | Layered config + packaging | reconstruct | [ADR-001](../decisions/ADR-001-plugin-local-marketplace-packaging.md) | M0/M1 |
 | Context assembly/injection | reconstruct (budgeted, pointers>content) | [ADR-008](../decisions/ADR-008-context-assembly.md) | M4 |
 | Memory | **extend native**, no new store | [ADR-007](../decisions/ADR-007-memory-architecture.md) | M3 |
-| Composition layer | reconstruct (when skills fire, how agents chain) | [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md) | expressed via M2/M5 |
+| Composition layer | reconstruct (when skills fire, how agents chain) | [ADR-003](../decisions/ADR-003-build-from-scratch.md) | expressed via M2/M5 |
 | Hooks | reconstruct (lean, fail-open, flat-per-lane) | [ADR-010](../decisions/ADR-010-hook-layer-contract.md) | M6 |
 | Audit | reconstruct (objective, binary, *invoked*) | [ADR-014](../decisions/ADR-014-audit-gate.md) | deferred (Phase ≥1) |
 | Observability + metric | superseded north-star; metric OPEN (coverage assessed vs nxtlvl-wiki, [ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) | [ADR-011](../decisions/ADR-011-observability-and-metrics.md) (Draft) | M7 |
 
-> **The "never reconstruct" boundary** ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)):
+> **The "never reconstruct" boundary** ([ADR-003](../decisions/ADR-003-build-from-scratch.md)):
 > skill routing, agent dispatch, the tool-use loop, and context-window assembly live below the
 > plugin boundary and are **native, permanently.** A hand-built router is a slower, capped shim
 > around the real dispatcher. This is the floor under all three layers.

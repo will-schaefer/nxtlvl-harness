@@ -53,7 +53,7 @@ Each atom's nxtlvl status, per the build philosophy in
 
 | Mark | Status | Meaning |
 |:--:|---|---|
-| ⬛ | **NATIVE** | Provided by the Claude Code platform; **never reconstructed** — the floor under everything ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)). nxtlvl *uses* it, doesn't own it. |
+| ⬛ | **NATIVE** | Provided by the Claude Code platform; **never reconstructed** — the floor under everything ([ADR-003](../decisions/ADR-003-build-from-scratch.md)). nxtlvl *uses* it, doesn't own it. |
 | ✅ | **BUILT** | Ships today in `plugins/nxtlvl/` (plugin layer) and/or `config/claude/` (global layer). |
 | 🟡 | **PLANNED** | Committed via ADR / spec / plan / backlog; not yet on disk. |
 | ⛔ | **REJECTED** | Deliberately not built — a recorded *no* (ADR or intent). |
@@ -234,11 +234,11 @@ how outputs merge ([ADR-016](../decisions/ADR-016-orchestration-model.md)).*
 | H2 | Per-agent tool scoping | Restricting an agent's tool set | ✅ | e.g. read-only reviewers ([ADR-012](../decisions/ADR-012-agent-design-contract.md)) |
 | H3 | Read-only sandbox | An executor that cannot Write/Edit | ✅ | `doubt-reviewer`, `context-scout` |
 | H4 | MCP server integration | Wiring an external tool server | ✅ | context7, deepwiki (`.mcp.json`) |
-| H5 | Docs grounding (primary-source) | Version-pinned library docs into context | ✅ | `/context7` + `context7-scout` ([ADR-026](../decisions/ADR-026-context7-testifies-primary-sources.md)) |
-| H6 | Repo orientation (non-evidence) | DeepWiki orientation, treated as a lead not proof | ✅ | `deepwiki-scout` ([ADR-025](../decisions/ADR-025-deepwiki-orientation-not-evidence.md)) |
+| H5 | Docs grounding (primary-source) | Version-pinned library docs into context | ✅ | `/context7` + `context7-scout` ([ADR-025](../decisions/ADR-025-context7-testifies-primary-sources.md)) |
+| H6 | Repo orientation (non-evidence) | DeepWiki orientation, treated as a lead not proof | ✅ | `deepwiki-scout` ([ADR-024](../decisions/ADR-024-deepwiki-orientation-not-evidence.md)) |
 | H7 | Deferred / lazy tool loading | Load tool schemas on demand to save context | ⬛ | Platform `ToolSearch` |
 | H8 | GitHub operations | PR/issue/CI mechanics | ✅ | `git-workflow-runner` + `github-workflow` ([ADR-017](../decisions/ADR-017-git-workflows-domain.md)) |
-| H9 | Browser / computer-use tool | Drive a browser or GUI | ⚪ | Dormant-ecc backstop |
+| H9 | Browser / computer-use tool | Drive a browser or GUI | ⚪ | ecc is ingested reference-corpus only; native CC is the runtime backstop ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) |
 | H10 | Image/screenshot handling | Crop/process visual inputs | ✅ | `/crop` + `skills/crop/` |
 
 ---
@@ -257,7 +257,7 @@ no-secrets floor.*
 | I5 | Secrets / no-leak gate | No secrets may land | ✅ | `lib/scrub.js` (fail-closed) |
 | I6 | Dangerous-command guard | Block catastrophic shell commands | ✅ | `hooks/dangerous-bash.js` |
 | I7 | Frontmatter / dead-ref validation | No dead skill/agent refs; valid frontmatter | 🟡 | Audit sub-check ([ADR-014](../decisions/ADR-014-audit-gate.md)) |
-| I8 | Prose-quality / stop-slop | Guard against LLM slop in shipped prose | 🟡 | [ADR-024](../decisions/ADR-024-prose-quality-stop-slop.md) + `docs/spec/nxtlvl-stop-slop-pipeline.md` |
+| I8 | Prose-quality / stop-slop | Guard against LLM slop in shipped prose | 🟡 | PLANNED — the prior vendored stop-slop decision (ADR-024) and its implementing spec were deleted as off-doctrine ([ADR-003](../decisions/ADR-003-build-from-scratch.md)); pending a from-scratch decision |
 | I9 | Quality-first-over-leanness | Tie-break favors quality, not minimalism | ✅ | the quality-first doctrine |
 | I10 | Global decision rule | The adopt/adapt/reject decision discipline | ✅ | `~/.claude/rules/decisions.md` |
 | I11 | Agent evaluation model | How an authored agent is judged good | 🟡 | [ADR-021](../decisions/ADR-021-agent-evaluation-model.md) |
@@ -322,7 +322,7 @@ the full taxonomy + scoping is [`nxtlvl-domain-map.md`](nxtlvl-domain-map.md) §
 | L3 | Knowledge & research | knowledge-base / LLM-wiki construction | 🟡 | `research` is the one fresh-built workflow |
 | L4 | Agentic / meta | building agents *with* the harness (dogfooded) | ✅ | This whole repo; ADRs 017–022 |
 | L5 | Quality (cross-cutting) | review · testing · security across all of A–D | ✅ | Family I |
-| L6 | Out-of-scope domains | content/finance/healthcare/data-ML/… | ⚪ | Dormant-ecc ([nxtlvl-domain-map](nxtlvl-domain-map.md) §2b) |
+| L6 | Out-of-scope domains | content/finance/healthcare/data-ML/… | ⚪ | ecc ingested reference-corpus only; native CC is the runtime backstop ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)); [nxtlvl-domain-map](nxtlvl-domain-map.md) §2b |
 
 ---
 
@@ -396,7 +396,7 @@ visible.
 
 | Atom | Why it's open | Cheapest first move if a task earns it |
 |--|--|--|
-| **F7 · Stop hook** | No turn-end hook; the stop-slop gate ([ADR-024](../decisions/ADR-024-prose-quality-stop-slop.md)) is the obvious tenant | Wire `Stop` to the stop-slop check once I8 ships |
+| **F7 · Stop hook** | No turn-end hook; a future from-scratch prose-quality gate is the obvious tenant | Wire `Stop` to the prose-quality check once I8 ships |
 | **F8 · SubagentStop hook** | No subagent-completion hook; could compose G5 output-merging | Defer until a delegation pattern needs post-processing |
 | **F9 · Notification hook** | Unused native event | Defer; no driving task |
 | **C6 · Custom (non-MCP) tool** | All external capability is MCP today (H4); no bespoke tool | Only if a need resists both built-ins and MCP |

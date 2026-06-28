@@ -27,7 +27,7 @@ single-skill approach already on the branch (see "Where we are").
 
 1. **Agent-vs-skill doctrine (governs the whole shape):** `docs/reference/ecc-agent-vs-skill-scoping.md`
    — §3 the command→agent→skill pairing, §4 the worked `/go-review` trace, §5 the agent-vs-skill checklist, §6 smells.
-2. **Intent (anchor):** `docs/intent/personal-harness.md` — "compose, don't reconstruct"; agent-building is *reactive*; ECC is the dormant backstop.
+2. **Intent (anchor):** `docs/intent/personal-harness.md` — build from scratch, source-driven (nxtlvl-wiki as source); agent-building is *reactive*; ecc is ingested reference corpus only (not a dormant/installed backstop — native Claude Code is the runtime backstop).
 3. **The git-workflows domain decision:** `docs/decisions/ADR-017-git-workflows-domain.md`
    (see the Resolution note above).
 4. **The seed skill already built:** `plugins/nxtlvl/skills/github-workflow/SKILL.md`.

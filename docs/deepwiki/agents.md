@@ -113,8 +113,8 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - [ADR-012](../../../docs/decisions/ADR-012-agent-design-contract.md) — agents execute; skills hold knowledge.
 - [ADR-012](../../../docs/decisions/ADR-012-agent-design-contract.md) — agent design contract.
 - [ADR-018](../../../docs/decisions/ADR-018-ideation-domain.md) — ideation orchestrator skill + isolated agents.
-- [ADR-025](../../../docs/decisions/ADR-025-deepwiki-orientation-not-evidence.md) — DeepWiki leads.
-- [ADR-026](../../../docs/decisions/ADR-026-context7-testifies-primary-sources.md) — Context7 evidence.
+- [ADR-024](../../../docs/decisions/ADR-024-deepwiki-orientation-not-evidence.md) — DeepWiki leads.
+- [ADR-025](../../../docs/decisions/ADR-025-context7-testifies-primary-sources.md) — Context7 evidence.
 
 ## Open questions / TODOs
 

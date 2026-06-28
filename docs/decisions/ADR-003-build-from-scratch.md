@@ -36,17 +36,24 @@ question is the build strategy itself.
 scratch, held to the standard of active production harnesses and top-tier research —
 capable of supporting revenue-generating work.
 
-### Everything → build from scratch
+### Everything → build from scratch, source-driven
 
 Plumbing and workflow substance alike are built from scratch. No vendoring, no forking, no
 adapting someone else's design. Every layer is owned and understood.
 
-`nxtlvl-wiki` guides the build throughout — surfacing how production harnesses approached
-a problem, what patterns recur, where the bar is set — as orientation and leads, never as
-a blueprint to copy. The wiki is what keeps "build from scratch" from meaning "build in a
-vacuum." Every wiki output that informs a build decision is verified at primary source
+**The build method is source-driven development with `nxtlvl-wiki` as the source.** Each
+from-scratch component grounds its design in the wiki *before* a line is written — querying
+how reviewed production harnesses approached the same problem, what patterns recur, where
+the bar is set — then nxtlvl's own version is authored and owned end-to-end. The wiki is the
+*source* in the source-driven loop, not a blueprint to copy: it surfaces orientation and
+leads only, and every wiki output that informs a decision is verified at primary source
 before acting on it (per [ADR-002](ADR-002-reference-corpus-nxtlvl-wiki.md)'s evidence
-boundary).
+boundary). This is what keeps "build from scratch" from meaning "build in a vacuum."
+
+Two sources, by layer: for **harness-architecture** decisions the source is `nxtlvl-wiki`;
+for **language/library** decisions the source is official documentation (Context7,
+[ADR-025](ADR-025-context7-testifies-primary-sources.md)). Both ground the same from-scratch
+discipline — own the implementation, cite the source.
 
 The scope of reconstruction:
 - **Plumbing** — the machinery native CC doesn't hand over: context assembly, memory,

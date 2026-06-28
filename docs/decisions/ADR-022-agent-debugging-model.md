@@ -16,8 +16,8 @@ heuristics) and `agent-architecture-audit` (a 12-layer diagnostic for a built ag
 selection/execution/interpretation, answer shaping, platform rendering, hidden repair loops,
 persistence — with severity-ranked findings and a typed JSON report).
 
-nxtlvl composes on the native Claude Code runtime and builds no wrapper, tool router, or memory
-system ([ADR-003](ADR-003-compose-not-reconstruct.md),
+nxtlvl runs on the native Claude Code runtime (orchestration stays native) and builds no wrapper,
+tool router, or memory system ([ADR-003](ADR-003-build-from-scratch.md),
 [ADR-007](ADR-007-memory-architecture.md)), so most of the 12 layers are infrastructure it
 deliberately does not own. It already has a *static* promotion gate
 ([ADR-014](ADR-014-audit-gate.md)), a logged fallback signal
@@ -61,8 +61,8 @@ misbehaving agent/skill without building audit machinery that overlaps the promo
 ### Adopt the full 12-layer architecture audit with the JSON report envelope
 - Pros: comprehensive; ready-made severity model + report schema.
 - Cons: built for a standalone agent application with its own wrapper, router, memory, and
-  transport — infrastructure nxtlvl composes from native CC and does not own
-  ([ADR-003](ADR-003-compose-not-reconstruct.md), [ADR-007](ADR-007-memory-architecture.md)).
+  transport — infrastructure nxtlvl runs on from native CC and does not own
+  ([ADR-003](ADR-003-build-from-scratch.md), [ADR-007](ADR-007-memory-architecture.md)).
 - Rejected on scope: keep the relevant slice and its disciplines, drop the apparatus.
 
 ### Make the debug audit a promotion gate (or fold it into the promotion audit)

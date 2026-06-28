@@ -41,7 +41,8 @@ Two concerns that are sometimes bundled together are cleanly separated here:
 
 - **Workflow substance sourcing.** When composing workflow content (dev, review,
   research), `nxtlvl-wiki` surfaces what upstream harnesses ship in a given area. The
-  decision of what to vendor, adapt, or skip is mine; the wiki accelerates the survey.
+  decision of what to learn from, treat as a lead, or skip is mine — what nxtlvl builds from those
+  leads is mine; the wiki accelerates the survey.
 
 - **Coverage assessment.** `nxtlvl-wiki` is the reference standard for evaluating what
   `nxtlvl` covers and what it doesn't. Coverage gaps are identified by querying the wiki

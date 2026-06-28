@@ -14,7 +14,7 @@ That means deciding what lives in the composition layer that nxtlvl owns, what i
 to specialists, and what stays native to Claude Code's dispatch runtime. The shape of the
 orchestrator, the delegation contract, and the placement of human gates are all open.
 
-[ADR-003](ADR-003-compose-not-reconstruct.md) makes the dispatch runtime native and forbids
+[ADR-003](ADR-003-build-from-scratch.md) makes the dispatch runtime native and forbids
 reconstructing it. [ADR-012](ADR-012-agent-design-contract.md) defines the agent/skill
 boundary, which affects how a specialist is briefed and what it loads.
 

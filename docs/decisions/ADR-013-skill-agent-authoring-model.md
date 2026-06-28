@@ -12,7 +12,7 @@ date: 2026-06-28
 nxtlvl's skills and agents are core Claude Code primitives: markdown files that define
 knowledge and subagent behavior. Their internal structure, the boundary between them, when
 they are loaded into context, and how they are authored are all open.
-[ADR-003](ADR-003-compose-not-reconstruct.md) establishes that the harness is built from
+[ADR-003](ADR-003-build-from-scratch.md) establishes that the harness is built from
 scratch against a production-quality standard.
 
 A skill is a markdown file loaded into context. An agent is a markdown file that defines a

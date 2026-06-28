@@ -16,7 +16,7 @@ Three forces shaped the design space:
 
 1. **Governance constraint:** [ADR-015](ADR-015-scope-determination-and-extension-gate.md) bounds capability domains at five (Python, TS/JS, Rust, Frontend, Backend) as a deliberate anti-bloat brake. Any new domain must either fit inside that cap or be a workflow/process domain, which are not bounded.
 
-2. **Composition constraint:** [ADR-003](ADR-003-compose-not-reconstruct.md) (compose-not-reconstruct) and [ADR-012](ADR-012-agent-design-contract.md) (agents execute, skills hold knowledge) require that PM not re-implement execution. Domain agents (built in the five capability domains and shipped via the git-workflows domain) perform the actual work; PM tracks and visualizes it.
+2. **Internal-reuse constraint:** [ADR-003](ADR-003-build-from-scratch.md) (build-from-scratch; orchestration stays native) and [ADR-012](ADR-012-agent-design-contract.md) (agents execute, skills hold knowledge) require that PM not re-implement execution. Domain agents (built in the five capability domains and shipped via the git-workflows domain) perform the actual work; PM reuses them and tracks and visualizes the result.
 
 3. **Reference harness contrast:** ecc ships ~15 PM-related commands (`epic-*`, `projects`, `pm2`, etc.); SuperClaude ships a `pm` command + PDCA/reflexion prose split across files; Trellis has native spec+plan+memory integration. All are either over-weight for this harness's size or require external dependencies (GitHub issues backend). The explicit anti-ecc-bloat goal (curated over comprehensive) rules out direct adoption of any of them.
 
@@ -38,7 +38,7 @@ The user asked for a "project management suite" with an interactive visual tool 
 **5. Visual tool: a standalone local dashboard.** A small Node server (matching the harness's existing Node hook tooling) plus an interactive board UI — chosen as the primary surface because the user wants a persistent tool kept open across work sessions. The dashboard is fully interactive: drag cards, mark done, reprioritize, all with write-back. The two-writer hazard (dashboard and domain agents both mutating plan files concurrently) is resolved in the state library via optimistic concurrency (version check → on conflict: surface to user, dashboard re-fetches). This is handled once, in one module, and reused by every writer.
 
 **6. Components (curated — ~6, contrasting with ecc's ~15):**
-- `project-management` skill — PM methodology, state schema reference, compose-not-reconstruct discipline.
+- `project-management` skill — PM methodology, state schema reference, internal-reuse discipline (reads `/plan`, reuses domain agents; does not re-plan or re-implement execution).
 - `pm-reporter` agent — read-only; serves Status and Portfolio views.
 - State library — the shared parse/serialize/atomic-write/version-check module.
 - `Status` command — single-plan board.
@@ -48,7 +48,7 @@ The user asked for a "project management suite" with an interactive visual tool 
 
 Command names are provisional and will be pinned in the Phase-1 spec.
 
-**7. Composition posture ([ADR-003](ADR-003-compose-not-reconstruct.md)).** The suite reads `/plan` output (does not re-plan). `Backlog` promotes items into `/plan` by invoking the planning domain's conventions. The suite does NOT compose `/git-workflow` itself — shipping moved to the domain agents. `doubt`/`review` and `/doc-keeper` remain available at the broader workflow level, unchanged.
+**7. Internal-reuse posture ([ADR-003](ADR-003-build-from-scratch.md)).** The suite reuses owned skills and agents (internal orchestration): it reads `/plan` output (does not re-plan). `Backlog` promotes items into `/plan` by invoking the planning domain's conventions. The suite does NOT call `/git-workflow` itself — shipping moved to the domain agents. `doubt`/`review` and `/doc-keeper` remain available at the broader workflow level, unchanged.
 
 **8. Build order.** Phase 1: state library + status schema + Status (read side). Phase 2: standalone dashboard (Status + Portfolio + write-back). Phase 3: Backlog grooming.
 
@@ -104,7 +104,7 @@ Command names are provisional and will be pinned in the Phase-1 spec.
 Build is deferred and phased: Phase 1 = state library + status schema + Status (read side); Phase 2 = standalone dashboard (Status + Portfolio + write-back); Phase 3 = Backlog grooming. Tracked in a follow-on spec + plan. The state library's atomic-write seam follows the standard tmp-file + rename pattern for durable on-disk state (see [ADR-007](ADR-007-memory-architecture.md) for the harness's state/provenance conventions).
 
 Cross-links:
-- [ADR-003](ADR-003-compose-not-reconstruct.md) — compose-not-reconstruct; PM reads `/plan`, does not re-plan.
+- [ADR-003](ADR-003-build-from-scratch.md) — build-from-scratch; PM reuses owned skills (reads `/plan`, does not re-plan).
 - [ADR-012](ADR-012-agent-design-contract.md) — agents execute, skills hold knowledge; `pm-reporter` is read-only by design.
 - [ADR-015](ADR-015-scope-determination-and-extension-gate.md) — why PM is NOT a capability domain; the five-domain brake and why workflow/process domains are the right tier.
 - [ADR-017](ADR-017-git-workflows-domain.md) — workflow-domain precedent (three-layer command → agent → skill).

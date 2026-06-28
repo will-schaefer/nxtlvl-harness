@@ -1,5 +1,7 @@
 # Spec: `nxtlvl` ideation domain (intent → direction front door)
 
+> **Doctrine update (2026-06-28):** [ADR-003](../decisions/ADR-003-build-from-scratch.md) now mandates **build-from-scratch, source-driven** workflow substance (nxtlvl-wiki as source). The "compose / refine-upstream / vendor-and-refine" framing below reflects the **prior** model; any composed artifact it describes is **off-doctrine, pending a from-scratch rebuild**. Preserved as a historical record — do not act on its compose guidance.
+
 > Design spec for the harness's **ideation domain** — the front door that turns a raw idea
 > into a confirmed intent and an approved direction, then hands off to the spec/plan pipeline. It
 > ships as a three-layer `command → executor → knowledge` domain in ECC's shape

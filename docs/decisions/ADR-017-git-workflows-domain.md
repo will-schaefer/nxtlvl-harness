@@ -56,8 +56,8 @@ shape with a strict one-way dependency:
   that environment's policy, not the nxtlvl standard.)
 - **Scope is the full loop.** The everyday `branch → commit → PR → review → CI → merge` path is
   self-contained in the skill, with the long tail left as a pointer into `reference/ECC-main`.
-- **The review step composes `nxtlvl:review`** rather than reconstructing it
-  ([ADR-003](ADR-003-compose-not-reconstruct.md)).
+- **The review step reuses the owned `nxtlvl:review` skill** (internal orchestration) rather than
+  re-implementing review inside this domain.
 
 **Why an agent is justified.** The tell on the agent-vs-skill axis ([scoping doc](../reference/ecc-agent-vs-skill-scoping.md)
 §5) is *isolation / a restricted tool sandbox / autonomy / a model tier*. A naive read conflates
@@ -107,9 +107,10 @@ additional wins.
 - The executor **cannot edit source by design** — when review surfaces a code fix, it hands it back to
   the caller rather than applying it. This is a feature (visible, caller-owned changes), and a constraint
   callers must expect.
-- The loop **composes `nxtlvl:review`** rather than reconstructing it ([ADR-003](ADR-003-compose-not-reconstruct.md)),
-  and leans on the `dangerous-bash` gate ([ADR-010](ADR-010-hook-layer-contract.md)) for force-push
-  protection instead of re-implementing guards.
+- The loop **reuses the owned `nxtlvl:review` skill** (internal orchestration) rather than
+  re-implementing review, and leans on the `dangerous-bash` gate
+  ([ADR-010](ADR-010-hook-layer-contract.md)) for force-push protection instead of re-implementing
+  guards.
 - Commit history going forward is Conventional-Commit form; the earlier sentence-case commits are left
   as-is (not rewritten — public history).
 - Logged as an intake event in [`../plan/nxtlvl-skill-intake-backlog.md`](../plan/nxtlvl-skill-intake-backlog.md)

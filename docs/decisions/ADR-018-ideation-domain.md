@@ -60,9 +60,10 @@ three-layer domain, opposite executor placement, forced by the interactivity of 
 **Why composition, not a fork (synthesis resolved by ownership).** The earlier open question was
 whether `brainstorming` should *inline a fork* of `interview-me`'s engine (coherent, but a copy
 that drifts from upstream) or *delegate* to it (no copy, but a relay seam). Owning a refined
-`nxtlvl:interview-me` dissolves the dilemma: `brainstorming` **composes** it as factored
-knowledge — one copy, consulted one-way. The drift risk existed only while `interview-me` was
-upstream; refining it in-domain removes it (ADR-012, [ADR-003](ADR-003-compose-not-reconstruct.md)).
+`nxtlvl:interview-me` dissolves the dilemma: `brainstorming` **reuses the owned skill** (internal
+orchestration) — one copy, consulted one-way. The drift risk existed only while `interview-me` was
+upstream; building it from scratch in-domain removes it (ADR-012,
+[ADR-003](ADR-003-build-from-scratch.md)).
 
 ## Alternatives Considered
 
@@ -106,9 +107,9 @@ upstream; refining it in-domain removes it (ADR-012, [ADR-003](ADR-003-compose-n
   knowledge-skills-first, orchestrator-last (spec §11).
 - **Skill internals stay user-owned** — this ADR pins the domain *shape*; each skill's body is
   authored and iterated via `/skill-creator`. The architecture is stable while content evolves.
-- The domain **composes** the native `spec-driven-development → planning-and-task-breakdown`
-  pipeline and the decision rule rather than reconstructing them
-  ([ADR-003](ADR-003-compose-not-reconstruct.md)); `spec-driven-development` stays native as the
-  ideation→contract boundary.
+- The domain **uses** the native `spec-driven-development → planning-and-task-breakdown`
+  pipeline and the decision rule as the interim ideation→contract boundary; orchestration stays
+  native and any `◆` versions are built from scratch reactively
+  ([ADR-003](ADR-003-build-from-scratch.md), [ADR-020](ADR-020-router-endorses-established-items.md)).
 - Recorded per the global decision rule (`~/.claude/rules/decisions.md`); full architecture in
   [`../spec/nxtlvl-ideation-domain.md`](../spec/nxtlvl-ideation-domain.md).

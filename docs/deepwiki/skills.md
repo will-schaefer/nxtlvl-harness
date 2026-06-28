@@ -126,7 +126,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 
 ## Relevant ADRs / intent
 
-- [ADR-003](../../../docs/decisions/ADR-003-compose-not-reconstruct.md) — compose, don't reconstruct.
+- [ADR-003](../../../docs/decisions/ADR-003-build-from-scratch.md) — build from scratch, source-driven (nxtlvl-wiki as source).
 - [ADR-012](../../../docs/decisions/ADR-012-agent-design-contract.md) — skills hold knowledge; agents execute.
 - [ADR-017](../../../docs/decisions/ADR-017-git-workflows-domain.md) — git-workflows domain.
 - [ADR-020](../../../docs/decisions/ADR-020-router-endorses-established-items.md) — router endorses only established items.

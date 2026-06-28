@@ -1,11 +1,11 @@
 ---
-id: ADR-025
+id: ADR-024
 title: "Secondary sources orient but never testify — DeepWiki gives leads, not evidence"
 status: Draft
 date: 2026-06-28
 ---
 
-# ADR-025: DeepWiki orients `harness-review` but never testifies — leads, not evidence
+# ADR-024: DeepWiki orients `harness-review` but never testifies — leads, not evidence
 
 ## Context
 

@@ -5,9 +5,9 @@ description: nxtlvl skill router — the meta-skill that decides which nxtlvl sk
 
 # nxtlvl Router
 
-This router points you at the **right nxtlvl skill** for a task — and, deliberately, at *nothing* when nxtlvl owns no skill for the phase you're in. It endorses only what the project has **established**; it does **not** advertise the whole upstream `agent-skills` catalog as if nxtlvl had adopted it ([ADR-020](../../../../docs/decisions/ADR-020-router-endorses-established-items.md), which refines the composition posture of [ADR-003](../../../../docs/decisions/ADR-003-compose-not-reconstruct.md) at the router layer).
+This router points you at the **right nxtlvl skill** for a task — and, deliberately, at *nothing* when nxtlvl owns no skill for the phase you're in. It endorses only what the project has **established**; it does **not** advertise the whole upstream `agent-skills` catalog as if nxtlvl had adopted it ([ADR-020](../../../../docs/decisions/ADR-020-router-endorses-established-items.md), which refines the composition posture of [ADR-003](../../../../docs/decisions/ADR-003-build-from-scratch.md) at the router layer).
 
-It routes; it does not restate. Each skill holds its own knowledge ([ADR-012](../../../../docs/decisions/ADR-012-agents-execute-skills-hold-knowledge.md)) — this file sends you there, it doesn't duplicate what's inside. **Pointers over dumped content** applies to the router itself.
+It routes; it does not restate. Each skill holds its own knowledge ([ADR-012](../../../../docs/decisions/ADR-012-agent-design-contract.md)) — this file sends you there, it doesn't duplicate what's inside. **Pointers over dumped content** applies to the router itself.
 
 This router *is* nxtlvl's analog of `agent-skills:using-agent-skills` — that upstream meta-skill is deliberately not used, because this file replaces it.
 
@@ -63,7 +63,7 @@ A feature still flows in sequence: `◆ brainstorming` → (its handoff) `‡ sp
 
 For any phase not on the map, **the router offers nothing to route to** — by design ([ADR-020](../../../../docs/decisions/ADR-020-router-endorses-established-items.md)). nxtlvl has established only the phases above; the rest of the SDLC (implementation specifics, testing, debugging, security, performance, CI/CD, deprecation, observability, shipping) is **hand-flown natively** until nxtlvl builds a skill for it.
 
-This is deliberate, and it has a cost: most of the lifecycle has no skill scaffolding right now. The fix is **reactive, not a floor** — phases get covered as nxtlvl builds them (the bounded confident-core of [ADR-016](../../../../docs/decisions/ADR-016-confident-core-capability-domains.md) — Python, TS/JS, Rust, Frontend, Backend — plus anything that earns its way in through the [ADR-008](../../../../docs/decisions/ADR-008-reactive-growth-intake-gate.md) intake gate). Until then, *handle it natively* is the honest answer, not *borrow an unvetted upstream skill*.
+This is deliberate, and it has a cost: most of the lifecycle has no skill scaffolding right now. The fix is **reactive, not a floor** — phases get covered as nxtlvl builds them (the bounded confident-core of [ADR-015](../../../../docs/decisions/ADR-015-scope-determination-and-extension-gate.md) — Python, TS/JS, Rust, Frontend, Backend — plus anything that earns its way in through the [ADR-015](../../../../docs/decisions/ADR-015-scope-determination-and-extension-gate.md) intake gate). Until then, *handle it natively* is the honest answer, not *borrow an unvetted upstream skill*.
 
 The upstream `agent-skills` skills remain installed and directly invokable if you choose — the router simply doesn't endorse them.
 
@@ -83,7 +83,7 @@ These five are the **only** upstream skills the router points to, and the list i
 
 ## Skills vs. agents
 
-Skills hold knowledge; **agents execute it** ([ADR-012](../../../../docs/decisions/ADR-012-agents-execute-skills-hold-knowledge.md)). When a phase has a dedicated nxtlvl agent, the agent is the executor and the skill is its single source of truth — don't restate the skill into the agent's request.
+Skills hold knowledge; **agents execute it** ([ADR-012](../../../../docs/decisions/ADR-012-agent-design-contract.md)). When a phase has a dedicated nxtlvl agent, the agent is the executor and the skill is its single source of truth — don't restate the skill into the agent's request.
 
 - **`nxtlvl:git-workflow-runner`** (agent / `/git-workflow`) executes `◆ github-workflow` — branch → commit → PR → review → CI → merge in isolation, composing `◆ review` at the review step. It has `Bash` but no `Write`/`Edit`, so it commits and pushes yet cannot touch source — code fixes hand back to you ([ADR-017](../../../../docs/decisions/ADR-017-git-workflows-domain.md)). Reach for the agent to drive a change to a reviewed PR; reach for the skill to do it inline.
 - **`nxtlvl:doc-keeper`** (agent / `/doc-keeper`) executes `◆ documentation-and-adrs` — records the *why*, writes/supersedes ADRs, keeps the index honest. Reach for the agent when you want the documentation pass *done*; the skill when you want to do it inline.

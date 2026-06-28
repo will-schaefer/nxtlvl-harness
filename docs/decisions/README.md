@@ -12,9 +12,9 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 
 | ADR | Decision | Status |
 |---|---|---|
-| [001](ADR-001-plugin-local-marketplace-packaging.md) | Establish the nxtlvl plugin family: three independent plugins (`nxtlvl-harness`, `nxtlvl-labs`, `nxtlvl-wiki`), three repos, one shared marketplace repo (`nxtlvl-config`); each manages its own dev/prod separation; CC plugin mechanics (promotion = install, git-tag = rollback) carry forward per-repo | Accepted |
+| [001](ADR-001-plugin-local-marketplace-packaging.md) | Establish the nxtlvl plugin family: three independent plugins (`nxtlvl-harness`, `nxtlvl-labs`, `nxtlvl-wiki`), three repos, one shared marketplace repo (`nxtlvl-marketplace`); each manages its own dev/prod separation; CC plugin mechanics (promotion = install, git-tag = rollback) carry forward per-repo | Accepted |
 | [002](ADR-002-reference-corpus-nxtlvl-wiki.md) | `nxtlvl-wiki` is the sole reference corpus for the harness build — orientation and leads only, never citations; judgment-assisted coverage assessment; no installed fallback plugin | Accepted |
-| [003](ADR-003-compose-not-reconstruct.md) | Build nxtlvl from scratch against a production-quality reference standard — plumbing and workflow substance alike built from scratch; `nxtlvl-wiki` guides the build as orientation and leads; orchestrate on native CC through the build, own runtime a deliberate second phase; north star: production-quality, domain-agnostic, revenue-generating capable | Accepted |
+| [003](ADR-003-build-from-scratch.md) | Build nxtlvl from scratch against a production-quality reference standard — plumbing and workflow substance alike built from scratch via source-driven development with `nxtlvl-wiki` as the source (verified at primary source; official docs/Context7 for language-library decisions); orchestrate on native CC through the build, own runtime a deliberate second phase; north star: production-quality, domain-agnostic, revenue-generating capable | Accepted |
 | [004](ADR-004-harness-internal-structure.md) | `nxtlvl-harness` internal structure — layers, runtime contracts, and language | Draft |
 | [005](ADR-005-labs-internal-structure.md) | `nxtlvl-labs` internal structure — layers, runtime contracts, and language | Draft |
 | [006](ADR-006-wiki-internal-structure.md) | `nxtlvl-wiki` internal structure — layers, runtime contracts, and language | Draft |
@@ -35,11 +35,10 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [021](ADR-021-agent-evaluation-model.md) | Agent evaluation — advisory per-task self-evaluation (five-axis, evidence-bound); formal eval suites stay reactive and intake-gated; never a blocking gate | Draft |
 | [022](ADR-022-agent-debugging-model.md) | Agent debugging — an introspection self-debug loop and a scoped architecture-audit lens over owned layers; runtime, diagnostic, never a gate | Draft |
 | [023](ADR-023-agent-operation-model.md) | Agent operation — gated, interactive, single-operator sessions; reject autonomous, continuous-loop, and enterprise-fleet runtimes; fold their disciplines into existing gates | Draft |
-| [024](ADR-024-prose-quality-stop-slop.md) | Prose quality governed harness-wide via a vendored stop-slop skill with two faces — a composed edit-pass in writing workflows plus a condensed always-on chat convention | Draft |
-| [025](ADR-025-deepwiki-orientation-not-evidence.md) | Secondary sources orient but never testify — DeepWiki gives `harness-review` leads, not citable evidence; read-only by withheld tools | Draft |
-| [026](ADR-026-context7-testifies-primary-sources.md) | Primary sources testify, version-pinned — Context7 scout claims cite the official doc URL @ version (the witness), not Context7 (the courier) | Draft |
+| [024](ADR-024-deepwiki-orientation-not-evidence.md) | Secondary sources orient but never testify — DeepWiki gives `harness-review` leads, not citable evidence; read-only by withheld tools | Draft |
+| [025](ADR-025-context7-testifies-primary-sources.md) | Primary sources testify, version-pinned — Context7 scout claims cite the official doc URL @ version (the witness), not Context7 (the courier) | Draft |
 
 > **Lifecycle:** under the project override (see the repo `CLAUDE.md`), a superseded ADR is
 > archived and then deleted once nothing references it; its decision, if still live, is
-> re-recorded as a fresh standalone ADR above. ADRs 017–026 were re-recorded this way from an
+> re-recorded as a fresh standalone ADR above. ADRs 017–025 were re-recorded this way from an
 > earlier archived set.

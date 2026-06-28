@@ -1,5 +1,7 @@
 # Implementation Plan: `nxtlvl` Project Management — Phase 1 (read-side Status)
 
+> **Doctrine update (2026-06-28):** [ADR-003](../decisions/ADR-003-build-from-scratch.md) now mandates **build-from-scratch, source-driven** workflow substance (nxtlvl-wiki as source). The "compose / refine-upstream / vendor-and-refine" framing below reflects the **prior** model; any composed artifact it describes is **off-doctrine, pending a from-scratch rebuild**. Preserved as a historical record — do not act on its compose guidance.
+
 > SDD Phase: **Plan**. Implements the **APPROVED + schema-LOCKED** spec
 > [`docs/spec/nxtlvl-project-management.md`](../spec/nxtlvl-project-management.md), which records the
 > decision in [`ADR-019`](../decisions/ADR-019-project-management-domain.md).

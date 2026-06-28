@@ -132,10 +132,10 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 
 ## Relevant ADRs / intent
 
-- [ADR-003](../../../docs/decisions/ADR-003-compose-not-reconstruct.md) — compose, don't reconstruct.
+- [ADR-003](../../../docs/decisions/ADR-003-build-from-scratch.md) — build from scratch, source-driven (nxtlvl-wiki as source).
 - [ADR-017](../../../docs/decisions/ADR-017-git-workflows-domain.md) — git-workflows domain command + agent + skill.
 - [ADR-020](../../../docs/decisions/ADR-020-router-endorses-established-items.md) — router endorses only established items; interim exceptions.
-- [ADR-025](../../../docs/decisions/ADR-025-deepwiki-orientation-not-evidence.md) — harness-review DeepWiki orientation.
+- [ADR-024](../../../docs/decisions/ADR-024-deepwiki-orientation-not-evidence.md) — harness-review DeepWiki orientation.
 - [Intent](../../../docs/intent/personal-harness.md) — C&M floor, fallback-rate metric, reactive growth.
 
 ## Open questions / TODOs

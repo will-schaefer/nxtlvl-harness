@@ -1,5 +1,7 @@
 # Spec: `nxtlvl` Phase 0 — Minimum Viable Harness (MVH)
 
+> **Doctrine update (2026-06-28):** [ADR-003](../decisions/ADR-003-build-from-scratch.md) now mandates **build-from-scratch, source-driven** workflow substance (nxtlvl-wiki as source). The "compose / refine-upstream / vendor-and-refine" framing below reflects the **prior** model; any composed artifact it describes is **off-doctrine, pending a from-scratch rebuild**. Preserved as a historical record — do not act on its compose guidance.
+
 > Spec-driven-development artifact (Phase 1: Specify). Consumes the confirmed intent
 > [`docs/intent/personal-harness.md`](../intent/personal-harness.md) (interview-me + grill-me, 2026-06-16).
 > Scope is **strictly Phase 0 / the walking skeleton**, not the full reconstruction backlog.

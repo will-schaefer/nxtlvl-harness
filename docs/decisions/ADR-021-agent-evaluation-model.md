@@ -11,7 +11,9 @@ date: 2026-06-28
 Phase 3 (Evaluate) of the harness-review build method.
 [ADR-013](ADR-013-skill-agent-authoring-model.md) deferred one question: how the "done-condition
 first" stand-in hardens into a real evaluation, and how that relates to the existing `review`
-skill and stop-slop ([ADR-024](ADR-024-prose-quality-stop-slop.md)).
+skill and the prose-quality surface (the prior vendored stop-slop decision was deleted as
+off-doctrine under [ADR-003](ADR-003-build-from-scratch.md); a from-scratch prose-quality
+decision is pending).
 
 ECC carries three surfaces under the word "eval": `agent-self-evaluation` (a per-task 1-5
 scorecard on accuracy / completeness / clarity / actionability / conciseness, with an evidence
@@ -21,7 +23,8 @@ layout); and `agent-eval` (a CLI comparing coding-agent products on pass-rate / 
 consistency).
 
 nxtlvl already owns the adjacent surfaces: the `review` skill (five-axis code review),
-[ADR-024](ADR-024-prose-quality-stop-slop.md) (prose quality),
+the prose-quality surface (the prior vendored stop-slop decision was deleted as off-doctrine
+under [ADR-003](ADR-003-build-from-scratch.md); a from-scratch prose-quality decision is pending),
 [ADR-014](ADR-014-audit-gate.md) (the objective, binary, invoked promotion gate that blocks
 unconditionally and explicitly rejects a self-tunable quality score), and
 [ADR-011](ADR-011-observability-and-metrics.md) (the metric model — two automatic readouts,
@@ -39,8 +42,10 @@ fallback-rate and instinct-confidence, with no session quality score).
    that rejected thing. Self-evaluation therefore stays advisory by construction. The only
    blocking gate remains the promotion audit.
 3. **No third rubric — defer to the surfaces that already exist.** For code diffs the self-check
-   points to the `review` skill; for prose, clarity/conciseness defer to stop-slop
-   ([ADR-024](ADR-024-prose-quality-stop-slop.md)). The generic five axes apply to what the
+   points to the `review` skill; for prose, clarity/conciseness defer to the prose-quality
+   surface (the prior vendored stop-slop decision was deleted as off-doctrine under
+   [ADR-003](ADR-003-build-from-scratch.md); a from-scratch prose-quality decision is pending).
+   The generic five axes apply to what the
    existing surfaces do not fully cover: analysis, design, ADRs, and written deliverables.
 4. **Formal eval suites stay reactive.** The eval-first principle is already adopted
    ([ADR-013](ADR-013-skill-agent-authoring-model.md)). Standing pass@k / regression suites
@@ -73,7 +78,7 @@ fallback-rate and instinct-confidence, with no session quality score).
 
 ### Author a new nxtlvl five-axis rubric distinct from the review skill
 - Pros: a single bespoke rubric.
-- Cons: a third overlapping rubric next to `review` and stop-slop; duplication and drift.
+- Cons: a third overlapping rubric next to `review` and the prose-quality surface; duplication and drift.
 - Rejected: self-eval defers to the existing surfaces; the generic axes cover only the gap.
 
 ## Consequences

@@ -46,8 +46,8 @@ not autonomous *self-direction*; the line this ADR draws is exactly between the 
    ([ADR-015](ADR-015-scope-determination-and-extension-gate.md)).
 2. **Reject autonomous, continuous-loop, and enterprise-fleet operation as the operating mode.**
    No self-directing cron/dispatch/computer-use runtime, no loop-selection engine, no fleet
-   observability or lifecycle daemon. These reconstruct a runtime
-   ([ADR-003](ADR-003-compose-not-reconstruct.md)) and a memory system
+   observability or lifecycle daemon. These reconstruct the orchestration runtime that
+   [ADR-003](ADR-003-build-from-scratch.md) keeps native, and a memory system
    ([ADR-007](ADR-007-memory-architecture.md)), remove the human against the gated pipeline
    ([ADR-016](ADR-016-orchestration-model.md)) and the invoked-not-continuous gate
    ([ADR-014](ADR-014-audit-gate.md)), and target a multi-agent fleet that a
@@ -65,8 +65,8 @@ not autonomous *self-direction*; the line this ADR draws is exactly between the 
    the review/security gate ([ADR-016](ADR-016-orchestration-model.md)).
 4. **Any future automation rides native platform features, opted-in and scoped.** If scheduled
    check-ins or event-driven responses are ever added (the kind this project's own cloud build
-   sessions already use), they ride native platform capabilities — not a hand-built harness
-   ([ADR-003](ADR-003-compose-not-reconstruct.md)) — and inherit ECC's consent discipline:
+   sessions already use), they ride native platform capabilities — not a hand-built orchestration
+   runtime ([ADR-003](ADR-003-build-from-scratch.md) keeps orchestration native) — and inherit ECC's consent discipline:
    explicit opt-in, dry-run first, credentials kept out of versioned artifacts. They are added
    reactively through the intake gate
    ([ADR-015](ADR-015-scope-determination-and-extension-gate.md)).
@@ -75,8 +75,8 @@ not autonomous *self-direction*; the line this ADR draws is exactly between the 
 
 ### Adopt autonomous-agent-harness as nxtlvl's operating mode
 - Pros: hands-off operation; scheduled briefings, autonomous PR review, a personal-assistant loop.
-- Cons: reconstructs a runtime and a memory knowledge-graph
-  ([ADR-003](ADR-003-compose-not-reconstruct.md), [ADR-007](ADR-007-memory-architecture.md));
+- Cons: reconstructs the orchestration runtime that [ADR-003](ADR-003-build-from-scratch.md) keeps
+  native, plus a memory knowledge-graph ([ADR-007](ADR-007-memory-architecture.md));
   removes the human from a deliberately gated harness
   ([ADR-016](ADR-016-orchestration-model.md),
   [ADR-014](ADR-014-audit-gate.md)); a Hermes/AutoGPT replacement is scope a

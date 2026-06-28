@@ -22,8 +22,8 @@ Architecture Decision Records** — the **35** files at
 (§4). Its load-bearing piece is the **`adr audit`** verb: a deterministic, two-tier integrity
 gate over the ADR set (§5). That verb is a concrete, repo-local instance of the objective-gate
 shape ADR-009 reserves for the future `nxtlvl:audit` — building it now serves the repo today *and*
-prototypes the gate's two-tier / exit-code discipline so `nxtlvl:audit` can later **compose** it
-rather than reconstruct it ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)).
+prototypes the gate's two-tier / exit-code discipline so `nxtlvl:audit` can later **import and reuse**
+this from-scratch core rather than rebuild it ([ADR-003](../decisions/ADR-003-build-from-scratch.md)).
 
 ## 2. Scope (in / out)
 
@@ -184,8 +184,8 @@ survives the handoff.
   .claude/commands/adr.md   # the local /adr slash command, wraps `adr <verb>`
   ```
   `audit.ts` is a **pure function that returns a verdict** — the CLI translates that verdict into an
-  exit code. That separation is what lets the future `nxtlvl:audit` `import` the audit core instead
-  of reconstructing it ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)).
+  exit code. That separation is what lets the future `nxtlvl:audit` `import` and reuse this
+  from-scratch audit core instead of rebuilding it ([ADR-003](../decisions/ADR-003-build-from-scratch.md)).
   The shared **`lib/load.ts`** is the single file-I/O seam (every verb loads through it; the pure
   cores stay string/model-only and unit-testable). *Beat:* a single `scripts/adr.ts` monolith —
   simpler today, but not reusable by the gate.
@@ -228,7 +228,7 @@ survives the handoff.
   · [ADR-014](../decisions/ADR-014-audit-gate.md) (two-tier exit-code gate).
 - Runtime: [ADR-004](../decisions/ADR-004-harness-internal-structure.md) ·
   [TS migration plan](nxtlvl-typescript-migration-plan.md) (T0.2/T0.3 infra, D4 CJS caveat).
-- Build-from-scratch strategy: [ADR-003](../decisions/ADR-003-compose-not-reconstruct.md).
+- Build-from-scratch strategy: [ADR-003](../decisions/ADR-003-build-from-scratch.md).
 - Precedent code: [`plugins/nxtlvl/hooks/dangerous-bash.js`](../../plugins/nxtlvl/hooks/dangerous-bash.js)
   + [`.test.js`](../../plugins/nxtlvl/hooks/dangerous-bash.test.js).
 - Data: [`docs/decisions/`](../decisions/) (35 ADRs) + [`README.md`](../decisions/README.md) index.

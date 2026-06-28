@@ -10,7 +10,7 @@ date: 2026-06-28
 ## Context
 
 nxtlvl needs a clear model for what an agent is, what a skill is, and how the main
-session should delegate to specialist agents. The build strategy is set by [ADR-003](ADR-003-compose-not-reconstruct.md).
+session should delegate to specialist agents. The build strategy is set by [ADR-003](ADR-003-build-from-scratch.md).
 The production bar is the standard: a contract that is tight enough to make agents
 predictable and loose enough to let them adapt.
 

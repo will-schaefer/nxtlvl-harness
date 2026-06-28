@@ -1,11 +1,13 @@
 # nxtlvl — Skill/Workflow Intake Backlog
 
+> **Doctrine update (2026-06-28):** [ADR-003](../decisions/ADR-003-build-from-scratch.md) now mandates **build-from-scratch, source-driven** workflow substance (nxtlvl-wiki as source). The "compose / refine-upstream / vendor-and-refine" framing below reflects the **prior** model; any composed artifact it describes is **off-doctrine, pending a from-scratch rebuild**. Preserved as a historical record — do not act on its compose guidance.
+
 > Interim home for [ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md) intake entries
 > until M7 lands the runtime `fallback-log.jsonl` — which *is* the canonical intake backlog and
 > un-defer trigger (spec [`nxtlvl-phase-0-mvh.md`](../spec/nxtlvl-phase-0-mvh.md)). Every
 > skill/workflow added to `nxtlvl` logs **one entry** here naming **the task that required it** and
 > **the existing thing that failed** — the falsifiable gate, never a vibe. Vendoring an upstream
-> `agent-skills` skill ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)) is an intake
+> `agent-skills` skill ([ADR-003](../decisions/ADR-003-build-from-scratch.md)) is an intake
 > event and logs here too.
 >
 > **Membership test:** *would I want this no matter what I'm working on this week?* → build/vendor
@@ -26,7 +28,7 @@
   every project), so it qualifies on the spot — no logged near-miss needed.
 - **Action taken:** vendored the upstream into
   [`plugins/nxtlvl/skills/documentation-and-adrs/SKILL.md`](../../plugins/nxtlvl/skills/documentation-and-adrs/SKILL.md),
-  refined for fit ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md)) with the §3 format
+  refined for fit ([ADR-003](../decisions/ADR-003-build-from-scratch.md)) with the §3 format
   baked into the template; dropped the live `agent-skills:` call; repointed the canonical name to
   `/nxtlvl:documentation-and-adrs` in `~/.claude/CLAUDE.md` and `~/.claude/rules/decisions.md`.
 - **Upstream disposition:** the upstream `agent-skills` skill is reference-corpus material, ingested
@@ -47,7 +49,7 @@
   every project that touches GitHub), so it qualifies on the spot — no logged near-miss needed.
 - **Action taken:** vendored `git-workflow` + `github-ops` into
   [`plugins/nxtlvl/skills/github-workflow/SKILL.md`](../../plugins/nxtlvl/skills/github-workflow/SKILL.md),
-  refined for fit ([ADR-003](../decisions/ADR-003-compose-not-reconstruct.md), [ADR-017](../decisions/ADR-017-git-workflows-domain.md)):
+  refined for fit ([ADR-003](../decisions/ADR-003-build-from-scratch.md), [ADR-017](../decisions/ADR-017-git-workflows-domain.md)):
   Conventional Commits, draft-PR-first, no attribution, full-loop scope. The skill runs in-context
   and **composes** the existing `nxtlvl:review` agent at the review step rather than reconstructing
   it; per the agent-vs-skill axis ([`ecc-agent-vs-skill-scoping.md`](../reference/ecc-agent-vs-skill-scoping.md) §5)

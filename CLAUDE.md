@@ -8,7 +8,7 @@ This repo builds **nxtlvl**, a personal Claude Code harness. Anchor:
 nxtlvl is built from scratch, guided by **`nxtlvl-wiki`** — a queryable corpus of reviewed
 production harnesses that sets the reference bar without imposing anyone else's design
 ([ADR-002](docs/decisions/ADR-002-reference-corpus-nxtlvl-wiki.md),
-[ADR-003](docs/decisions/ADR-003-compose-not-reconstruct.md)). Harnesses in `reference/` are
+[ADR-003](docs/decisions/ADR-003-build-from-scratch.md)). Harnesses in `reference/` are
 study material; each review produces an ADR-recorded decision and a distillation under
 [`docs/reference/`](docs/reference/). The main session orchestrates and delegates — **when
 spawning a subagent during the build, pass this method along** so it knows we build against

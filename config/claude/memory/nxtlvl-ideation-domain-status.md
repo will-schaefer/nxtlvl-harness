@@ -11,7 +11,7 @@ The **ideation domain** turns a raw idea → confirmed intent → approved direc
 native spec/plan pipeline. Architecture is FINAL: spec at `docs/spec/nxtlvl-ideation-domain.md` +
 [ADR-026]. The load-bearing move is the **executor inversion** — the executor is a MAIN-THREAD
 SKILL (the interview is interactive; agents can't talk to the user), and agents are demoted to
-read-only support. This is the deliberate inverse of ADR-024 (git-workflows).
+read-only support. This is the deliberate inverse of ADR-017 (git-workflows).
 
 **Scope is WIDE-SPECTRUM, not software-only (corrected 2026-06-19):** the domain takes ideas of
 *any* kind — software, but equally writing, strategy, research, a process, a decision. The spec's

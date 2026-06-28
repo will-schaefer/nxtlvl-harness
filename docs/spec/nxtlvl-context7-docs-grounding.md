@@ -3,7 +3,7 @@
 > Status: **approved 2026-06-21** · Owner: nxtlvl · Origin: brainstorming session 2026-06-21
 > (Approach A + ADR). Inverse-companion to
 > [`harness-review-deepwiki-orientation.md`](harness-review-deepwiki-orientation.md) /
-> [ADR-025](../decisions/ADR-025-deepwiki-orientation-not-evidence.md).
+> [ADR-024](../decisions/ADR-024-deepwiki-orientation-not-evidence.md).
 
 ## Assumptions
 
@@ -27,7 +27,7 @@ Surfaced before any build — correct these now or they become the contract:
    vendored (D4 — the scope-shaping decision).
 5. **Context7 is never a hard dependency.** Unreachable server / library-not-found → the scout
    says so in one line and the caller falls back to model knowledge *with a "may be stale" caveat*.
-   Graceful, silent degradation, exactly as ADR-025 requires of DeepWiki.
+   Graceful, silent degradation, exactly as ADR-024 requires of DeepWiki.
 
 ## Objective
 
@@ -54,11 +54,11 @@ dump never touches the main thread, and an unreachable/unknown library degrades 
 > **A primary source may *testify* — but cite the source it delivered, version-pinned, not the
 > courier that delivered it.**
 
-Context7 produces **evidence, not just leads** — the inverse of ADR-025. But Context7 is a
+Context7 produces **evidence, not just leads** — the inverse of ADR-024. But Context7 is a
 third-party snapshot that can lag latest or mis-rank snippets, so the citation is to the **official
 doc URL** at a **resolved library version**, and correctness-critical facts name that URL as the
 authority. This is the load-bearing trust decision and is recorded as an ADR via the decision rule
-after this spec is approved — the inverse-companion that completes ADR-025's doctrine
+after this spec is approved — the inverse-companion that completes ADR-024's doctrine
 ("secondary→orient, primary→testify").
 
 ## Tech Stack
@@ -76,7 +76,7 @@ plugins/nxtlvl/.mcp.json                          → add "context7" server (2nd
 plugins/nxtlvl/agents/context7-scout.md           → NEW read-only scout agent
 plugins/nxtlvl/references/context7-grounding.md    → NEW shared contract doc (D2: agent-adjacent)
 plugins/nxtlvl/commands/context7.md (optional)     → NEW entry-point command (D4 entry point)
-docs/decisions/ADR-026-context7-testifies-primary-sources.md → NEW ADR (inverse-companion to ADR-025)
+docs/decisions/ADR-025-context7-testifies-primary-sources.md → NEW ADR (inverse-companion to ADR-024)
 docs/spec/nxtlvl-context7-docs-grounding.md        → THIS spec
 ```
 
@@ -84,7 +84,7 @@ docs/spec/nxtlvl-context7-docs-grounding.md        → THIS spec
 
 1. **`.mcp.json` registration** — add a `context7` server beside `deepwiki`. Tools resolve to
    `mcp__plugin_nxtlvl_context7__resolve-library-id` / `__query-docs`. **Namespace gotcha
-   (ADR-025 dogfood):** bundled MCP tools are `mcp__plugin_nxtlvl_*`, *not* bare `mcp__*` — the
+   (ADR-024 dogfood):** bundled MCP tools are `mcp__plugin_nxtlvl_*`, *not* bare `mcp__*` — the
    scout's `tools:` grant must use the namespaced ids or it silently resolves to nothing.
 
 2. **`context7-scout` agent** — read-only **by withheld tools**: holds *only* the two
@@ -104,7 +104,7 @@ docs/spec/nxtlvl-context7-docs-grounding.md        → THIS spec
 
 5. **The ADR** — *"Context7 testifies: primary sources, version-pinned"* — records the trust
    boundary, the resolve-then-query + cite-the-URL discipline, graceful degradation, and bounded
-   spend. Inverse-companion to ADR-025; cross-links it.
+   spend. Inverse-companion to ADR-024; cross-links it.
 
 ## Output contract — the cited brief (inverts deepwiki-scout)
 
@@ -127,7 +127,7 @@ docs/spec/nxtlvl-context7-docs-grounding.md        → THIS spec
 Rules: every bullet carries `CITE — …`; no pasted doc dumps (summarize + link); cite the **URL**,
 never "Context7"; if the version is uncertain, say so rather than implying precision.
 
-## Governance (inherited from ADR-025 playbook)
+## Governance (inherited from ADR-024 playbook)
 
 - **Read-only by withheld tools** — only the two Context7 tools; structurally cannot pollute or
   fabricate into the tree.
@@ -160,7 +160,7 @@ Mirrors the DeepWiki manual/scriptable split (the agent cannot run `/plugin`):
   `tools:` uses the namespaced `mcp__plugin_nxtlvl_context7__*` ids (grep); the contract doc exists
   and states cite-the-URL + version-pin.
 - **Live MCP smoke (manual, post-promote):** `resolve-library-id` on a known library returns
-  `/org/project`; `query-docs` returns cited snippets — mirrors the ADR-025 smoke that caught the
+  `/org/project`; `query-docs` returns cited snippets — mirrors the ADR-024 smoke that caught the
   namespacing bug.
 - **Dogfood (manual):** spawn `context7-scout` for a real library question; confirm every claim is
   `CITE`-stamped with a doc URL + version, no doc dump on the main thread, and an unknown-library
@@ -182,7 +182,7 @@ Mirrors the DeepWiki manual/scriptable split (the agent cannot run `/plugin`):
    uncited assertions; no doc dump reaches the main thread.
 3. An unknown library / unreachable server yields a one-line "unavailable" + stale caveat — the
    caller is never blocked.
-4. The ADR records the inverse-companion trust contract and cross-links ADR-025.
+4. The ADR records the inverse-companion trust contract and cross-links ADR-024.
 5. The capability is invocable via an nxtlvl-owned entry point with **no** dependency on un-owned
    skills.
 
