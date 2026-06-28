@@ -10,7 +10,7 @@
 
 ## One-line stack
 
-**`nxtlvl-wiki` = the sole reference corpus / production bar · native Claude Code = the platform I compose on *and* the runtime backstop, never reconstruct · `nxtlvl-labs` = the incubation tier where recurring gaps prove themselves before promotion · `nxtlvl` = the production-grade plugin I build, own, and run daily — the engine for an AI agent business.**
+**`nxtlvl-wiki` = the sole reference corpus / production bar · native Claude Code = the platform I compose on *and* the runtime backstop, never reconstruct · `nxtlvl-labs` = the incubation / creation plugin where agent harnesses, multi-agent teams, skills, commands, MCP servers, and plugins are built end-to-end through source-driven development, then promoted to the core plugin · `nxtlvl` = the production-grade plugin I build, own, and run daily — the engine for an AI agent business.**
 
 ## Name
 
@@ -33,11 +33,12 @@
 
 ## Purpose & stakes
 
-This is no longer a learning project. **Learning-by-reconstruction has been demoted from *goal* to
-*method*** — I still learn new plumbing areas by building them rather than importing them, but the
-*why* is commercial leverage, not understanding for its own sake. A learning project tolerates churn
+This is no longer a learning project. **Learning-by-building has been demoted from *goal* to
+*method*** — I still learn new areas (plumbing and workflow substance alike) by working through them
+in source-driven development (copying or creating as justified), but the *why* is commercial leverage,
+not understanding for its own sake. A learning project tolerates churn
 and rough edges; a **company foundation does not.** That raised risk profile is what justifies the
-reshape in this document: the original "walking-skeleton, whitelist-not-full, learn-by-reconstruction"
+reshape in this document: the original "walking-skeleton, whitelist-not-full, learn-by-building"
 posture was right for a lower-stakes exercise, but a foundation you bet a company on needs the
 **complete architecture mapped up front** (so I know what I'm missing before a client does) and a
 **hard production-quality floor.**
@@ -87,17 +88,23 @@ all, build it reactively.** The complete map is precisely what the deliberate co
 `nxtlvl-wiki` need something to measure against — you cannot assess gaps without a picture of full
 coverage.
 
-## The build, in three layers with distinct strategies
+## The build, in three layers: source-driven above the loop, native at the loop
 
-- **Plumbing layer → reconstruct (where the learning-as-method lives).** The machinery native CC
+- **Plumbing layer → source-driven, copy-or-create as justified.** The machinery native CC
   doesn't hand me: plugin packaging + layered config, **context assembly/injection**, **memory**
-  (extending native CC), a lean **hook** layer, and the **audit**. Reconstructing these is how I
-  earn the right to trust and extend an engine I'll bet income on. *(Much of this is now built; the
-  architecture map will surface the areas that aren't.)*
-- **Workflow layer → compose, don't reconstruct.** Dev, review, and research workflows
-  wrap/refine upstream skills + my conventions. `nxtlvl-wiki` surfaces what upstream harnesses ship
-  in a given area ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)); the decision of
-  what to vendor, adapt, or skip is mine. The point is *fit and leverage*, not understanding-by-rebuilding.
+  (extending native CC), a lean **hook** layer, and the **audit**. Researching these options and
+  owning the chosen implementation is how I earn the right to trust and extend an engine I'll bet
+  income on. *(Much of this is now built; the architecture map will surface the areas that aren't.)*
+- **Workflow layer → source-driven, copy-or-create as justified (`nxtlvl-wiki` is the source).** Dev,
+  review, research, and documentation workflows are **built through source-driven development** —
+  we copy a reference when source-driven exploration shows it is the best option, or author our own
+  when we identify a better one. The method is **source-driven development**: each workflow grounds its
+  design in `nxtlvl-wiki` *before* it's written — how reviewed production harnesses approach that
+  area ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)), verified at primary source —
+  then nxtlvl's version is authored, copied, or adapted as justified and owned end-to-end. Ownership
+  comes from the source-driven reasoning and the ability to modify, not from original authorship of
+  every line (build method: [ADR-003](../decisions/ADR-003-build-from-scratch.md), currently being
+  revised).
 - **Orchestration → native, always.** Skill routing, agent dispatch, the tool-use loop, and
   context-window assembly live below the plugin boundary and **must not be reconstructed** — a
   hand-built router is structurally a slower, capped shim around the real dispatcher. Deterministic
@@ -146,7 +153,7 @@ the buffer isn't hiding real gaps.
 > `spec → plan → ADR`, which became the *de facto* gate. The original gate was "fed by the fallback
 > log," but the log stayed empty (I never reached for ecc), so the gate had no fuel. The lesson:
 > growth needs a gate, but the old anchor named the wrong one. This version adopts the gate that
-> actually held. See [ADR-015](../decisions/) (scope-determination-and-extension-gate).
+> actually held. See [ADR-015](../decisions/ADR-015-scope-determination-and-extension-gate.md).
 
 ## The audit
 
@@ -161,7 +168,7 @@ the buffer isn't hiding real gaps.
 
 ## Dev/prod separation
 
-- **This repo = the workbench.** Where I reconstruct, experiment, break the plumbing, run the audit.
+- **This repo = the workbench.** Where I build, experiment, break the plumbing, run the audit.
   Churn lives here and never touches live sessions until I promote.
 - **Installed `~/.claude` = the daily driver.** Stable. Only proven, audited changes land here.
 - **Promotion = install = the gate** the audit guards. Mechanics: **local-marketplace install**
@@ -214,8 +221,6 @@ workflow** (the company's product surface), not a deferred afterthought.
 - **Dropped from the prior anchor:** the fallback-rate metric · ecc-as-dormant-backstop · the
   fallback-fed one-line intake gate.
 - Reconstructing orchestration primitives (skill router / dispatch / tool-loop) — **native.**
-- Rewriting the *substance* of review/dev (how-to-review) — refine upstream for *fit*, not to
-  re-derive the basis.
 - **Productizing `nxtlvl` itself, now** — the option is kept open (clean boundaries, no personal-only
   lock-in), but it is not a current goal.
 - ecc's 250+-skill breadth; a fourth memory system; continuous-learning/governance/optimizer
@@ -231,12 +236,16 @@ workflow** (the company's product surface), not a deferred afterthought.
 | **Backstop** | ecc installed-but-dormant | Native CC; `nxtlvl-labs` incubation; ecc = ingested corpus only |
 | **Scope posture** | "Whitelist, not full"; keep the map small | Map the full architecture up front; fill it reactively |
 | **Growth gate** | Fallback-fed one-line backlog entry | `nxtlvl-labs` buffer + `spec → plan → ADR` + periodic wiki assessment |
+| **Build strategy** | Compose on native + agent-skills; reconstruct only plumbing | Source-driven, copy-or-create as justified — copy a reference when source-driven exploration shows it is the best option, build our own when we identify a better one; orchestration stays native (build method: [ADR-003](../decisions/ADR-003-build-from-scratch.md), currently being revised) |
 
 ## Still open (resolve during planning, not blocking)
 
 - **The complete agent-harness architecture outline** — the coverage map this intent feeds; the
   immediate downstream deliverable.
 - A `grill-me` hardening pass on this re-derived intent before it is locked.
-- The audit's concrete rubric items ([ADR-014](../decisions/ADR-014-audit-gate.md)) — tailored once
-  the architecture map exists.
-- Exact `nxtlvl-labs` → `nxtlvl` graduation criteria (what "earned promotion" means in detail).
+- The source-driven copy-or-create decision criteria and the status of
+  [ADR-003](../decisions/ADR-003-build-from-scratch.md) (currently being revised to match this
+  intent).
+- The audit's concrete rubric items and the details of hook safety / context assembly policy —
+  to be explored once the architecture map exists.
+- Exact `nxtlvl-labs` taxonomy and graduation criteria (what "earned promotion" means in detail).
