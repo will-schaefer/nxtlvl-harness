@@ -22,14 +22,11 @@ It mirrors the plugin's shape (`sandbox/{skills,agents,commands}/`); promote whe
 [`sandbox/README.md`](sandbox/README.md). For throwaway experiments use the gitignored
 `*-workspace/` convention instead.
 
-## ADR lifecycle (project override)
-This repo **overrides** the global decision rule's keep-never-delete lifecycle
-(`~/.claude/rules/decisions.md` §3, §4). Here:
-- An ADR superseded by a newer decision is **moved to
-  [`docs/decisions/archive/`](docs/decisions/archive/) and marked `status: Archived`** — not
-  kept inline as `Superseded`. An archived ADR **may be deleted** once nothing references it.
-- New ADRs are written as **standalone, original decisions**: no `replaces:`/supersession
-  frontmatter, no "this revises ADR-N" prose, and no cross-links into archived ADRs.
-- Everything else in the global ADR format still applies — frontmatter, the
-  Context · Decision · Alternatives · Consequences body, the `docs/decisions/` location, and
-  the `README.md` index.
+## ADR lifecycle
+This repo follows the global decision rule's keep-never-delete lifecycle
+(`~/.claude/rules/decisions.md` §3): a superseded ADR is **kept** as `status: Superseded` with a
+`superseded-by:` pointer — never deleted — and its replacement may reference it. A project
+override (e.g. delete-and-rewrite) remains available under §4 if a real need arises, but none is
+in effect. The rest of the global ADR format applies — frontmatter, the
+Context · Decision · Alternatives · Consequences body, the `docs/decisions/` location, and the
+`README.md` index.

@@ -2,9 +2,9 @@
 
 Significant, expensive-to-reverse decisions behind `nxtlvl` — the *why* the code and the
 intent/spec/plan docs don't capture on their own. New decisions get the next sequential
-number. When a decision is superseded it is archived and then deleted once nothing references
-it — its replacement is written as a fresh standalone ADR (project lifecycle override — see the
-repo `CLAUDE.md`).
+number. When a decision is superseded, the old ADR is **kept** as `status: Superseded` with a
+`superseded-by:` pointer — never deleted — and its replacement references it (global
+keep-never-delete lifecycle; the repo `CLAUDE.md` may override if a real need arises).
 
 Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harness.md) →
 [`../spec/nxtlvl-phase-0-mvh.md`](../spec/nxtlvl-phase-0-mvh.md) →
