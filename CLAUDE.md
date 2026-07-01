@@ -30,3 +30,18 @@ override (e.g. delete-and-rewrite) remains available under §4 if a real need ar
 in effect. The rest of the global ADR format applies — frontmatter, the
 Context · Decision · Alternatives · Consequences body, the `docs/decisions/` location, and the
 `README.md` index.
+
+## nxtlvl-build conventions (project-specific, not global rules)
+The global rules layer (`~/.claude/rules/` — decisions, context assembly, hook safety, git
+workflow) carries only cross-project conventions. These are nxtlvl-build-specific and live here
+(design: [`docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md`](docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md)):
+
+- **Skill/agent authoring:** `/nxtlvl:brainstorming` before code, then spec, then review before
+  merge. (ADR-012/ADR-013 are `Draft`/`Pending` — this is current provisional practice, not a
+  recorded decision.)
+- **Promotion/audit gate:** promotion into the live plugin is gated by `nxtlvl:audit` — **not
+  yet built** (ADR-014 is `Draft`/`Pending`); rollback convention is a git tag per promotion.
+  Aspirational until the gate ships.
+- **Coverage check:** periodically compare the harness against the `nxtlvl-wiki` production bar
+  ([ADR-002](docs/decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — only meaningful while
+  working on nxtlvl itself.
