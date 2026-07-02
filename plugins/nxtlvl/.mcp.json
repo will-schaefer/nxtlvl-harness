@@ -2,7 +2,10 @@
   "mcpServers": {
     "deepwiki": {
       "type": "http",
-      "url": "https://mcp.deepwiki.com/mcp"
+      "url": "https://mcp.devin.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer ${DEVIN_API_KEY}"
+      }
     },
     "context7": {
       "type": "http",
