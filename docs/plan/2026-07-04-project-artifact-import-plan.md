@@ -1,7 +1,7 @@
 # Implementation Plan: project-artifact skill import
 
 > Consumes [`docs/superpowers/specs/2026-07-04-project-artifact-import-design-spec.md`](../superpowers/specs/2026-07-04-project-artifact-import-design-spec.md)
-> Status: **Draft for review**
+> Status: **Completed**
 > Date: 2026-07-04
 
 ## Overview
@@ -23,7 +23,7 @@ graph TD
 **Description:** Ensure the staging directory `sandbox/skills/project-artifact/` exists and is clean.
 
 **Acceptance criteria:**
-- [ ] Directory `sandbox/skills/project-artifact/` exists.
+- [x] Directory `sandbox/skills/project-artifact/` exists.
 
 **Verification:**
 - `ls -la sandbox/skills/project-artifact/` or similar checks.
@@ -38,7 +38,7 @@ graph TD
 **Description:** Copy the files from `/Users/willschaefer/.claude/plugins/marketplaces/claude-plugins-official/plugins/project-artifact/` into `sandbox/skills/project-artifact/`.
 
 **Acceptance criteria:**
-- [ ] All 5 target files copied: `SKILL.md`, `swe.md`, `template.html`, `LICENSE`, `README.md`.
+- [x] All 5 target files copied: `SKILL.md`, `swe.md`, `template.html`, `LICENSE`, `README.md`.
 
 **Verification:**
 - Verify files exist in `sandbox/skills/project-artifact/` and compare their sizes/hashes with the source files.
@@ -58,8 +58,8 @@ graph TD
 **Description:** Check that the copied files are correct and ensure that the running harness does not load/warn about them since they are under `sandbox/`.
 
 **Acceptance criteria:**
-- [ ] MD5/SHA256 checksums match the source files exactly.
-- [ ] No harness startup warnings or loading of the new skill.
+- [x] MD5/SHA256 checksums match the source files exactly.
+- [x] No harness startup warnings or loading of the new skill.
 
 **Verification:**
 - Run `git status` to ensure all 5 files are tracked.

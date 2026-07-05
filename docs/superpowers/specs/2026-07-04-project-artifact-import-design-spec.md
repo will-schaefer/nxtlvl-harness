@@ -1,7 +1,7 @@
 ---
 id: SPEC-028
 title: "Importing project-artifact skill to sandbox"
-status: Draft
+status: Approved
 date: 2026-07-04
 ---
 
