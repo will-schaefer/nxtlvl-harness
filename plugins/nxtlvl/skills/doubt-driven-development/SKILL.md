@@ -114,16 +114,23 @@ A single-model reviewer shares blind spots with the original author; a colder, d
 
 **Interactive sessions: always offer, never silently skip.** After the single-model review, before RECONCILE, ask:
 
-> *"Single-model review complete. Want a cross-model second opinion? Options: Gemini CLI, Codex CLI, manual external review, or skip."*
+> *"Single-model review complete. Want a cross-model second opinion? Options: Gemini CLI, Codex CLI, Grok CLI, manual external review, or skip."*
 
-If the user picks a CLI: (1) check it's in PATH (`which gemini` / `which codex`); (2) test it works (`--version`) before the real prompt; (3) confirm the exact invocation, flags, auth, env with the user; (4) pass ARTIFACT + CONTRACT + the adversarial prompt **only**; (5) **never interpolate the artifact into a shell-quoted argument** — write the full prompt to a temp file and pipe via stdin; (6) take the output into RECONCILE.
+If the user picks a CLI: (1) check it's in PATH (`which gemini` / `which codex` / `which grok`); (2) test it works (`--version`) before the real prompt; (3) confirm the exact invocation, flags, auth, env with the user; (4) pass ARTIFACT + CONTRACT + the adversarial prompt **only**; (5) **never interpolate the artifact into a shell-quoted argument** — write the full prompt to a temp file and read it from there (pipe via stdin, or pass the file directly, e.g. Grok's `--prompt-file`); (6) take the output into RECONCILE.
 
 ```bash
 # Codex (read-only sandbox keeps the CLI from writing to your workspace):
 codex exec --sandbox read-only -C <repo-path> - < /tmp/doubt-prompt.md
 # Gemini ('--approval-mode plan' is read-only; '-p ""' reads prompt from stdin):
 gemini --approval-mode plan -p "" < /tmp/doubt-prompt.md
+# Grok ('--sandbox read-only' reads the repo, writes nothing, blocks child network;
+# '--prompt-file' takes the temp prompt directly; '--no-subagents' stops it spawning
+# agents). Default plain output => stdout IS the reviewer JSON:
+grok --prompt-file /tmp/doubt-prompt.md --cwd <repo-path> \
+     --sandbox read-only --no-subagents --disable-web-search
 ```
+
+**Grok returns typed output.** Unlike Gemini/Codex (free-text folded into RECONCILE), Grok can hand back the same typed shape `doubt-reviewer` produces. Inline the reviewer-output schema fields into its prompt file (as in the Step 3 block above) and demand *raw JSON, no markdown fence* — Grok then prints schema-conforming JSON to stdout, so its findings drop into the ledger deterministically rather than as prose. Prefer this over Grok's native `--json-schema` flag, which was unreliable on the tested model (`grok-composer-2.5-fast`): it wrapped the JSON in prose and its own structured-output parser errored, so inlining the schema in the prompt is the load-bearing mechanism, not the flag.
 
 A **read-only sandbox is load-bearing**: a doubt artifact may itself contain instructions (intentional or accidental prompt injection) the CLI would otherwise execute. **Each invocation is its own authorization** — re-confirm the exact command every run. If the CLI is unavailable or fails, surface it and offer alternatives; **never silently fall back to single-model**. If the user skips, acknowledge it (*"Proceeding with single-model findings only"*).
 
