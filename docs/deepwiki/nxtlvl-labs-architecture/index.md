@@ -41,19 +41,30 @@ It is **not** invoked during daily work; it is invoked when designing, prototypi
 
 ## Status at a glance
 
-The labs plugin is largely **speculative** at this stage. Most atoms are `PLANNED` or `OPEN`.
+The labs plugin's **foundation layer is partly built** — the incubation Spine, measurement
+engine, reference MCP server, and slash commands exist on disk. The meta-builder **Teams layer**
+is intentionally deferred, so most remaining atoms are `PLANNED` or `OPEN`.
 
-| Status | Meaning | Approximate count |
+| Status | Meaning | Count |
 |---|---|---|
-| NATIVE | Provided by Claude Code. | 4 atoms |
-| BUILT | Already exists in some form. | 0 atoms |
-| PLANNED | Committed or strongly intended. | 20+ atoms |
-| OPEN | No position taken yet. | 30+ atoms |
-| REJECTED | Deliberately not built. | 2 atoms |
+| NATIVE | Provided by Claude Code. | 13 atoms |
+| BUILT | Exists on disk today. | 17 atoms |
+| PLANNED | Committed or strongly intended. | 45 atoms |
+| OPEN | No position taken yet. | 19 atoms |
+| REJECTED | Deliberately not built. | 3 atoms |
 | OOS | Out of scope for labs. | 3 atoms |
+
+> **Two framings of labs.** This wiki organizes labs into nine atom families (LAB-A…I) that
+> mirror the core plugin's structure. A complementary, build-oriented view — the confirmed
+> intent — describes labs as a **three-layer model**: **Reference** (`nxtlvl-wiki` made
+> consultable) + **Spine** (fused `harness-lab` + `evals-lab` lifecycle) + **Teams** (deferred
+> meta-builder domain teams). The BUILT atoms above are the Spine and Reference foundation; the
+> PLANNED/OPEN atoms are mostly the Teams layer. See
+> [`nxtlvl-labs/docs/intent/nxtlvl-labs-redesign.md`](../../../../nxtlvl-labs/docs/intent/nxtlvl-labs-redesign.md).
 
 ## Open questions
 
-- The labs plugin's own packaging and namespace are not yet defined.
-- The promotion mechanism from labs to core is still being explored.
+- The promotion mechanism from labs to core has a first implementation (`/graduate` objective
+  gate) but the full ritual (file move vs. publish vs. reimplementation) is still being explored.
 - The conditional dependency on core (standalone vs. integrated) is still being explored.
+- The Teams layer (per-component-type meta-builder domain teams) is designed but not yet built.

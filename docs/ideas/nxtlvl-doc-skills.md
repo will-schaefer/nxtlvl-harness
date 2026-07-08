@@ -26,17 +26,19 @@ decision, nothing is built yet.
 | Doc type | Home | Purpose for agents | Format encoded? |
 |---|---|---|---|
 | Decision | `docs/decisions/ADR-NNN` | *Why* a hard-to-reverse choice was made | ✅ `documentation-and-adrs` |
-| Spec | `docs/spec/` | Verified architecture/impl the agent builds *to* | ❌ format exists, untaught |
-| Plan | `docs/plan/` | Sequencing/task-order for execution | ❌ |
+| Spec | `docs/spec/` | Verified architecture/impl the agent builds *to* | ✅ `show-me` |
+| Plan | `docs/plan/` | Sequencing/task-order for execution | ✅ `show-me` |
 | Intent | `docs/intent/` | Anchor *why-at-all*; specs link up to it | ❌ uncovered |
 | Reference | `docs/reference/` | Vendored external knowledge (e.g. ECC) | ❌ informal |
-| Diagram | `docs/diagrams/` | Visual flow (e.g. context-alert hook) | ❌ informal |
+| Diagram | `docs/diagrams/` | Visual flow (e.g. context-alert hook) | ✅ README + `visual-docs` rule |
 
 ## Prioritized Backlog (each with an un-defer trigger)
 
-1. **writing-design-docs** (specs + plans, folds in intent) — *Trigger: ALREADY MET* (5 specs +
-   6 plans share a house format). Highest-value when built. Folds intent in as the "anchor" link
-   specs already use.
+1. **`show-me`** (was `writing-design-docs` → `design-layer-authoring`) — specs + plans +
+   visuals, folds in intent links — *Trigger: MET; **built** 2026-07-03* at
+   `plugins/nxtlvl/skills/show-me/SKILL.md`. Retires the interim
+   `spec-driven-development` / `planning-and-task-breakdown` router pointers. Further renames:
+   → [`docs/intent/skill-naming-show-me-handoff.md`](../intent/skill-naming-show-me-handoff.md).
 2. **doc-index / taxonomy maintenance** — *Trigger: when a 2nd agent visibly fails to find or
    mis-routes a doc.* For an agent audience this is the retrieval bottleneck; extends the ADR
    README-index pattern to all six types.
@@ -70,5 +72,5 @@ decision, nothing is built yet.
 ## Open Questions
 - Where do un-defer triggers get **logged** so they actually fire? (`docs/plan/nxtlvl-skill-intake-backlog.md`
   already exists — is that the ledger?)
-- Should `writing-design-docs` be **one skill or two**? The `/brainstorm → spec → /plan` pipeline
-  argues one; size argues two.
+- ~~Should `writing-design-docs` be **one skill or two**?~~ **Resolved:** one skill — `show-me` —
+  two internal phases (spec → plan).

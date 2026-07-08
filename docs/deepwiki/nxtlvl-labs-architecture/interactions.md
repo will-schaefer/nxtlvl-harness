@@ -6,7 +6,7 @@
 
 ### Labs reads from wiki
 
-- The labs plugin is the primary consumer of `nxtlvl-wiki`.
+- The labs plugin is the primary consumer of `nxtlvl-wiki`. The consultation surface is built: `nxtlvl-wiki-mcp` exposes the corpus over stdio (`search`, `list`, `get-page`, `get-source`), wired through the repo-root `.mcp.json`.
 - Every source-driven development project starts with a wiki query to see how reviewed production harnesses approach the problem.
 - The query is treated as **orientation and leads, never evidence**.
 - Claims are verified at primary source before they influence a copy/create decision or reach an ADR.
@@ -21,7 +21,7 @@
 ### Labs produces artifacts for core
 
 - Skills, agents, commands, hooks, MCP servers, domain teams, and whole harnesses are built in labs and promoted to core.
-- The promotion mechanism is still being explored (file move, package publish, or spec-driven reimplementation).
+- A first promotion implementation exists: the `/graduate` command runs an objective graduation gate (exit 2 = block) over a harness-lab cell. The full ritual beyond the gate (file move, package publish, or spec-driven reimplementation) is still being explored.
 
 ### Labs optionally calls into core
 

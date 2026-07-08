@@ -11,7 +11,10 @@
 
 ## 2. Promotion mechanism
 
-- How does a lab artifact graduate to the core plugin?
+> **Partly resolved:** `/graduate` runs an objective graduation gate (exit 2 = block, exit 0 =
+> pass/warn) over a harness-lab cell. The questions below cover everything beyond that gate.
+
+- How does a lab artifact graduate to the core plugin *after* it passes the gate?
 - Is it a file move, a package publish, a spec-driven reimplementation, or a combination?
 - Who approves the promotion?
 - What gates must the artifact pass?
@@ -39,7 +42,12 @@
 
 ## 6. Experimentation infrastructure
 
-- What is the eval runner interface?
+> **Partly built:** `evals-lab` is a standing measurement engine (`run-eval` + `engine`/
+> `graders`/`scorecard` libs) that runs a capability's declared eval against a labeled corpus and
+> emits a scorecard. The open part is the **seam**: `harness-lab/bin/eval.ts` still stubs the
+> evals-lab engine and the two sides don't yet share an eval-spec/scorecard shape.
+
+- What is the eval runner interface, and how does a cell declare its corpus/adapter?
 - What is the A/B runner interface?
 - How are strategies compared and scored?
 - How do experiments feed the decision log?

@@ -1,6 +1,13 @@
 # nxtlvl-labs Plugin — Build Order
 
 > Foundational → phase 0 → phase 1 → reactive. The order in which the labs plugin's atoms should be built.
+>
+> **Already built (foundation + phase 0 partial):** the plugin manifest/marketplace (LAB-B1, B2,
+> B7, B8, B10), the four slash commands (LAB-C1, C9), the `nxtlvl-wiki-mcp` reference layer
+> (LAB-C7, H4, H6), typed cell contracts and shared libs (LAB-C8, C12), experiment
+> capture/recall/scoping (LAB-E2, E5, E6), project memory (LAB-D2), and the graduation gate
+> (LAB-I3). See [`atoms.md`](atoms.md) for the full BUILT set. The lists below keep the original
+> ordering; treat the above as done.
 
 ## Foundational layer (must exist first)
 

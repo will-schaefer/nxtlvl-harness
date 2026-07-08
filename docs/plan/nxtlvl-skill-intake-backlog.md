@@ -80,3 +80,51 @@
 - **Upstream disposition:** `agent-skills`/ECC are reference-corpus material, ingested via
   `nxtlvl-wiki` ([ADR-002](../decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — not an installed
   fallback plugin; the runtime backstop is native Claude Code, with recurring gaps going to `nxtlvl-labs`.
+
+## 4. `source-driven-development` (skill) — VENDORED (2026-07-01)
+
+- **Task that required it:** ground framework/library-specific code decisions in current official
+  docs instead of training data, and give `nxtlvl-labs`' harness-lab capability-creation pipeline a
+  real skill to bind its "source-grounding" stage to, instead of a bare pointer at an un-vendored
+  upstream skill.
+- **Existing thing that failed:** `agent-skills:source-driven-development` documents the discipline
+  but its fetch step is generic ("fetch the docs yourself") with no concrete grounding mechanism —
+  and [ADR-025](../decisions/ADR-025-context7-testifies-primary-sources.md) had already built
+  `context7-scout` for exactly this purpose but explicitly deferred wiring it into a consumer skill
+  "until vendored." Nothing bridged the two.
+- **Membership:** build-now. Framework/library-correctness grounding is task-independent machinery
+  (applies on every project touching a versioned dependency), matching the other three build-now
+  entries above.
+- **Action taken:** vendored into
+  [`plugins/nxtlvl/skills/source-driven-development/SKILL.md`](../../plugins/nxtlvl/skills/source-driven-development/SKILL.md),
+  refined for fit: the fetch step now spawns `context7-scout` (with a direct-fetch fallback for
+  content outside Context7's per-library index — web standards, compat tables); citations carry the
+  scout's `CITE — /org/project@version + doc URL` stamp. Self-contained; does not call the live
+  upstream skill.
+- **Upstream disposition:** `agent-skills:source-driven-development` is reference-corpus material,
+  ingested via `nxtlvl-wiki` — not an installed fallback plugin.
+
+## 5. `wiki-driven-development` (skill) + `wiki-scout` (agent) — BUILT (2026-07-01)
+
+- **Task that required it:** turn [ADR-003](../decisions/ADR-003-build-from-scratch.md)'s
+  "workflows are built source-driven with `nxtlvl-wiki` as the source" ruling, and `nxtlvl-labs`'
+  `IDEAS.md` idea **A14** (ground new-capability discovery in `nxtlvl-wiki`'s harness-pattern
+  catalogue), into something actually invokable — mirroring how DeepWiki/Context7 each got a scout
+  + consumer skill instead of staying prose doctrine.
+- **Existing thing that failed:** nothing wired `nxtlvl-wiki`'s query interface into the plugin at
+  all. `nxtlvl-wiki`'s 4-tool MCP server was registered only in `nxtlvl-labs`' own `.mcp.json`,
+  unreachable from any other session; `nxtlvl`'s own `.mcp.json` had `deepwiki` and `context7` but
+  no path to the wiki corpus itself.
+- **Membership:** build-now. Orienting a new capability against reviewed reference-harness patterns
+  is task-independent machinery (applies to every new skill/agent/command/plumbing piece), and
+  ADR-003 already establishes it as ambient doctrine — this just makes the doctrine invokable.
+- **Action taken:** recorded [ADR-026](../decisions/ADR-026-nxtlvl-wiki-mcp-source.md) (new
+  `.mcp.json` server + new isolated agent = new architectural surface, same bar as ADR-024/025);
+  added `nxtlvl-wiki` as a third entry in `plugins/nxtlvl/.mcp.json`; added
+  [`plugins/nxtlvl/agents/wiki-scout.md`](../../plugins/nxtlvl/agents/wiki-scout.md) (read-only by
+  withheld tools, inherits ADR-002's leads-only posture, two modes — `general` and `repo`, the
+  latter resolving what would otherwise have been a fourth "repo-driven development" skill into a
+  scoped mode of this one); added
+  [`plugins/nxtlvl/skills/wiki-driven-development/SKILL.md`](../../plugins/nxtlvl/skills/wiki-driven-development/SKILL.md)
+  composing the scout.
+- **Upstream disposition:** n/a — net-new, no upstream skill exists for this.
