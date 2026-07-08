@@ -20,7 +20,8 @@ different churn rates, and different reasons to be installed:
    with the user through a full production lifecycle — ideation, drafting, testing,
    evaluating — to design and deliver production-quality agent teams against a given
    request. The user brings the domain, the goal, and the request; labs brings the
-   architecture, the components, and the production-quality bar.
+   architecture, the components, and the production-quality bar. Lives in its own repo
+   (`~/Developer/nxtlvl-labs/`).
 
    Two decoupled Node/TS subprojects power the engine:
    - `harness-lab` — the capability incubation pipeline. Cells (individual capabilities:
@@ -81,17 +82,17 @@ These mechanics apply per repo, independently.
 
 ### Shared marketplace repo
 
-A dedicated repo — `will-schaefer/nxtlvl-config` — hosts:
+A dedicated repo — `will-schaefer/nxtlvl-marketplace` — hosts:
 - The `marketplace.json` (or equivalent) listing all three plugin repos as installable
   entries.
 - Any shared Claude Code configuration that is family-wide rather than harness-specific.
 
-This is the **single install surface**: `/plugin marketplace add <nxtlvl-config>` and
+This is the **single install surface**: `/plugin marketplace add <nxtlvl-marketplace>` and
 all three plugins become discoverable and installable from one place. Adding a fourth
-family member later is a single line in `nxtlvl-config`'s marketplace file — no new
+family member later is a single line in `nxtlvl-marketplace`'s marketplace file — no new
 marketplace add required.
 
-`nxtlvl-config` does **not** carry plugin source. It is a manifest + config repo only.
+`nxtlvl-marketplace` does **not** carry plugin source. It is a manifest + config repo only.
 
 ### Precedence and discovery at runtime
 
@@ -130,8 +131,8 @@ each operates in its own namespace (`nxtlvl-harness:`, `nxtlvl-labs:`,
   blurs both identities.
 - Rejected: a plugin family marketplace is not a dotfile.
 
-### Keep `nxtlvl-labs` as tracked subdirs of the harness repo
-- Pros: graduation stays an in-repo `git mv`; one sandbox write-allowlist and a shared
+### Make `nxtlvl-labs` tracked subdirs of the harness repo
+- Pros: graduation would stay an in-repo `git mv`; one sandbox write-allowlist and a shared
   version history.
 - Cons: labs and harness would share a release lifecycle; the labs' independent, high
   churn rate justifies a real repo boundary, and the cross-repo graduation cost is the
@@ -149,12 +150,12 @@ each operates in its own namespace (`nxtlvl-harness:`, `nxtlvl-labs:`,
   independent lifecycles. The team creation lifecycle
   (ideation → drafting → testing → evaluating → delivery) is the user-facing process labs
   exposes, distinct from the internal incubation pipeline.
-- **`nxtlvl-config` is a new repo to create.** It is the install surface and the
+- **`nxtlvl-marketplace` is a new repo to create.** It is the install surface and the
   marketplace; it has no plugin source of its own.
 - **`nxtlvl-wiki` is a new repo to create.** The `llm-wiki` corpus migrates into it
   alongside the MCP server to be built.
 - **Each plugin manages its own dev/prod separation independently** — sandbox → promote →
   git-tag-per-promotion per repo. No cross-repo promotion coupling.
-- **The install ceremony is one command:** `/plugin marketplace add <nxtlvl-config>`,
+- **The install ceremony is one command:** `/plugin marketplace add <nxtlvl-marketplace>`,
   then install whichever family members are wanted. Adding future family members is a
-  single `nxtlvl-config` manifest edit.
+  single `nxtlvl-marketplace` manifest edit.
