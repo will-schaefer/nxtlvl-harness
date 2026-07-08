@@ -4,6 +4,10 @@ This repo builds **nxtlvl**, a personal Claude Code harness. Anchor:
 [`docs/intent/personal-harness.md`](docs/intent/personal-harness.md). Decisions (ADRs):
 [`docs/decisions/`](docs/decisions/).
 
+> **Sandbox — `gh` runs sandbox-off.** Pass `dangerouslyDisableSandbox: true` for any `gh`
+> invocation (and HTTPS `git push`/`fetch`); the command sandbox breaks TLS to GitHub's API
+> (`x509: OSStatus` cert error). See global `CLAUDE.md` → **Sandbox**.
+
 ## Build method — build from scratch against a production-quality standard
 nxtlvl is built from scratch, guided by **`nxtlvl-wiki`** — a queryable corpus of reviewed
 production harnesses that sets the reference bar without imposing anyone else's design
@@ -33,12 +37,12 @@ Context · Decision · Alternatives · Consequences body, the `docs/decisions/` 
 
 ## nxtlvl-build conventions (project-specific, not global rules)
 The global rules layer (`~/.claude/rules/` — decisions, context assembly, hook safety, git
-workflow) carries only cross-project conventions. These are nxtlvl-build-specific and live here
+workflow, visual design docs) carries only cross-project conventions. These are nxtlvl-build-specific and live here
 (design: [`docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md`](docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md)):
 
-- **Skill/agent authoring:** `/nxtlvl:brainstorming` before code, then spec, then review before
-  merge. (ADR-012/ADR-013 are `Draft`/`Pending` — this is current provisional practice, not a
-  recorded decision.)
+- **Skill/agent authoring:** `/nxtlvl:brainstorming` before code, then `◆ show-me` (spec → plan),
+  then review before merge. (ADR-012/ADR-013 are `Draft`/`Pending` — this is
+  current provisional practice, not a recorded decision.)
 - **Promotion/audit gate:** promotion into the live plugin is gated by `nxtlvl:audit` — **not
   yet built** (ADR-014 is `Draft`/`Pending`); rollback convention is a git tag per promotion.
   Aspirational until the gate ships.

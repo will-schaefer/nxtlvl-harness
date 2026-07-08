@@ -21,7 +21,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [ADRs advisory, not canonical](adrs-advisory-not-canonical.md) — on nxtlvl, reference ADRs but don't treat them as binding; record overrides.
 - [Meta-skill discoverability](meta-skill-discoverability-in-plumbing.md) — router/meta-skills don't fire via description; wire entry into the floor brief, not frontmatter.
 - [Component-scoping doctrine](ecc-component-scoping-doctrine.md) — when to build agent vs skill vs command vs hook vs rule; full guide at docs/reference/ecc-agent-vs-skill-scoping.md.
-- [ADR numbering collision hazard](adr-numbering-collision-hazard.md) — doc-keeper numbers ADRs by globbing the working tree; verify vs committed/remote tree to avoid dups.
+- [ADR numbering collision hazard](adr-numbering-collision-hazard.md) — collides BOTH directions (working-tree globs miss committed numbers; committed-tree checks miss uncommitted in-flight ADRs, confirmed 2026-07-01); number from the UNION of both trees.
 
 ## Claude Code platform facts
 - [TS migration: verbatim+import.meta vs typeless](ts-migration-verbatim-importmeta-typeless-conflict.md) — nodenext+typeless classifies ESM .ts as CJS → verbatimModuleSyntax (TS1295/1287) + import.meta (TS1470) fail tsc though Node runs it; use module=preserve/bundler mid-migration, nodenext+type:module at the final gate.

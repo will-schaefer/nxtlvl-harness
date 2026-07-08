@@ -3,57 +3,58 @@
     "ECC_GATEGUARD": "off"
   },
   "permissions": {
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "additionalDirectories": [
+      "/Users/willschaefer/Developer/nxtlvl-labs"
+    ]
   },
   "statusLine": {
     "type": "command",
-    "command": "sh /Users/willschaefer/.claude/statusline-command.sh"
+    "command": "bash /Users/willschaefer/Developer/context-bar.sh"
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
     "ecc@ecc": false,
-    "agent-skills@addy-agent-skills": true,
+    "agent-skills@addy-agent-skills": false,
     "skill-creator@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "nxtlvl@nxtlvl-dev": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "feature-dev@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": false,
+    "playground@claude-plugins-official": false,
+    "feature-dev@claude-plugins-official": false,
+    "superpowers@claude-plugins-official": false,
     "context7@claude-plugins-official": true,
-    "understand-anything@understand-anything": true,
-    "project-artifact@claude-plugins-official": true
+    "understand-anything@understand-anything": false,
+    "project-artifact@claude-plugins-official": false,
+    "nxtlvl@nxtlvl-marketplace": true,
+    "nxtlvl-labs@nxtlvl-marketplace": true,
+    "nxtlvl-wiki@nxtlvl-marketplace": true,
+    "startup@startup-skill": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "addy-agent-skills": {
-      "source": {
-        "source": "github",
-        "repo": "addyosmani/agent-skills"
-      }
-    },
-    "ecc": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/affaan-m/ECC.git"
-      }
-    },
-    "nxtlvl-dev": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/willschaefer/Developer/nxtlvl"
-      }
-    },
     "understand-anything": {
       "source": {
         "source": "git",
         "url": "https://github.com/Egonex-AI/Understand-Anything.git"
       }
     },
-    "ruflo": {
+    "nxtlvl-marketplace": {
       "source": {
         "source": "github",
-        "repo": "ruvnet/ruflo"
+        "repo": "will-schaefer/nxtlvl-marketplace"
+      }
+    },
+    "startup-skill": {
+      "source": {
+        "source": "github",
+        "repo": "ferdinandobons/startup-skill"
+      }
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
       }
     }
   },
@@ -69,12 +70,24 @@
         "pypi.org",
         "*.pythonhosted.org"
       ]
-    }
+    },
+    "filesystem": {
+      "allowWrite": [
+        "/Users/willschaefer/Developer/nxtlvl-labs"
+      ]
+    },
+    "excludedCommands": [
+      "python3 Scripts/vault_social.py *",
+      "python3 Scripts/instagram_scrape.py *",
+      "python3 Scripts/instagram_scan.py *",
+      "python3 Scripts/instagram_filter.py *"
+    ]
   },
+  "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "theme": "dark-ansi",
-  "autoScrollEnabled": false,
+  "theme": "light",
+  "autoScrollEnabled": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
 }

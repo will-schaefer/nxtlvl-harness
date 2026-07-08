@@ -1,6 +1,6 @@
 ---
 name: adr-numbering-collision-hazard
-description: ADR numbers in the nxtlvl repo collide because doc-keeper assigns the next number by globbing the working tree; verify against the committed tree first.
+description: ADR numbers in the nxtlvl repo collide in BOTH directions — working-tree-only globs miss committed numbers, committed-tree-only checks miss uncommitted in-flight ADRs; verify against the UNION of both.
 metadata: 
   node_type: memory
   type: project
@@ -11,4 +11,4 @@ When doc-keeper (or anyone) creates a new ADR in `docs/decisions/`, it picks the
 
 **Why:** the next-free-number check reads working-tree state, which diverges from committed/remote state during in-progress merges, stashes, or concurrent branches.
 
-**How to apply:** before finalizing any new ADR number, check the committed tree, not just disk — e.g. `git ls-tree --name-only HEAD docs/decisions/ | grep -oE 'ADR-[0-9]+' | sort | uniq -d` to catch dups, and confirm the chosen number isn't already on origin/main. Also: before `git push`, verify the *committed* blobs are marker-free (`git show HEAD:<file> | grep -nE '^(<<<<<<<|=======|>>>>>>>)'`) — a `git commit --amend` will happily commit conflict markers. Relates to [[adrs-advisory-not-canonical]].
+**How to apply:** before finalizing any new ADR number, check the **union** of committed tree AND working tree — the hazard runs both directions. Working-tree-only globs miss numbers claimed in committed history (the 2026-06-19 stash-pop incident above); committed-tree-only checks miss uncommitted in-flight ADRs (confirmed 2026-07-01: `git ls-tree HEAD` topped out at ADR-025, but an uncommitted ADR-026 from a parallel task sat untracked in the working tree — numbering by committed tree alone would have collided; doc-keeper checked both and correctly took ADR-027). E.g. `git ls-tree --name-only HEAD docs/decisions/` plus a plain `ls docs/decisions/`, take max+1 over both; confirm the number isn't on origin/main either. Also: before `git push`, verify the *committed* blobs are marker-free (`git show HEAD:<file> | grep -nE '^(<<<<<<<|=======|>>>>>>>)'`) — a `git commit --amend` will happily commit conflict markers. Relates to [[adrs-advisory-not-canonical]].

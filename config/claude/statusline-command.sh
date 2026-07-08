@@ -29,8 +29,26 @@ else
   dir=$(basename "$(pwd)")
 fi
 
-# Git branch (skip optional locks, suppress errors)
-branch=$(git -C "${cwd:-$(pwd)}" --no-optional-locks symbolic-ref --short HEAD 2>/dev/null)
+# Git state — one porcelain=v2 query yields branch, upstream divergence, and
+# working-tree counts; awk reduces it to a single pipe-delimited line. Replaces
+# the older symbolic-ref call (one git process instead of several). Detached
+# HEAD reports as "(detached)", which we treat as no branch (hides the segment).
+gitinfo=$(git -C "${cwd:-$(pwd)}" --no-optional-locks status --porcelain=v2 --branch 2>/dev/null | awk '
+  /^# branch.head / { branch = $3 }
+  /^# branch.ab /   { ahead = $3; behind = $4 }
+  /^[12] /          { x = substr($2, 1, 1); y = substr($2, 2, 1)
+                      if (x != ".") staged++; if (y != ".") modified++ }
+  /^u /             { unmerged++ }
+  /^\? /            { untracked++ }
+  END {
+    if (branch == "(detached)") branch = ""
+    sub(/^\+/, "", ahead); sub(/^-/, "", behind)
+    printf "%s|%d|%d|%d|%d|%d|%d", branch, ahead+0, behind+0, staged+0, modified+0, untracked+0, unmerged+0
+  }')
+IFS='|' read -r branch ahead behind staged modified untracked unmerged <<GITEOF
+$gitinfo
+GITEOF
+: "${ahead:=0}" "${behind:=0}" "${staged:=0}" "${modified:=0}" "${untracked:=0}" "${unmerged:=0}"
 
 # Colors — build with a real ESC byte so the final emit is a plain %s
 # (dynamic content is concatenated literally, never re-interpreted by printf)
@@ -40,6 +58,7 @@ DIM="${ESC}[2m"
 CYAN="${ESC}[2;36m"
 YELLOW="${ESC}[2;33m"
 MAGENTA="${ESC}[2;35m"
+GREEN="${ESC}[2;32m"         # git: clean working tree (dirty reuses YELLOW)
 # Two band palettes (green=healthy / amber=watch / red=danger). ctx is the
 # quality-degradation signal, so when it leaves the healthy band it fills its
 # BACKGROUND (a highlighted block) to dominate the normal-weight usage segments.
@@ -55,7 +74,24 @@ USE_RED="${ESC}[31m"
 # dir/branch segments already show — so only render «session» when it has been
 # manually renamed to something other than that auto title (avoids duplication).
 out="${CYAN}${dir}${RESET}"
-[ -n "$branch" ] && out="${out} ${YELLOW}(${branch})${RESET}"
+# Git segment: branch + upstream divergence + working-tree state. Cleanliness is
+# encoded by color (green = clean, yellow = dirty); each count renders only when
+# > 0, so a clean tree shows just "(branch)" and a busy one "(branch ↑1 +2 ~1 ?3)".
+if [ -n "$branch" ]; then
+  gitseg="$branch"
+  [ "$ahead"     -gt 0 ] && gitseg="${gitseg} ↑${ahead}"
+  [ "$behind"    -gt 0 ] && gitseg="${gitseg} ↓${behind}"
+  [ "$staged"    -gt 0 ] && gitseg="${gitseg} +${staged}"
+  [ "$modified"  -gt 0 ] && gitseg="${gitseg} ~${modified}"
+  [ "$untracked" -gt 0 ] && gitseg="${gitseg} ?${untracked}"
+  [ "$unmerged"  -gt 0 ] && gitseg="${gitseg} !${unmerged}"
+  if [ "$((staged + modified + untracked + unmerged))" -gt 0 ]; then
+    gitcolor="$YELLOW"
+  else
+    gitcolor="$GREEN"
+  fi
+  out="${out} ${gitcolor}(${gitseg})${RESET}"
+fi
 if [ -n "$branch" ]; then auto_title="${dir} · ${branch}"; else auto_title="${dir}"; fi
 [ -n "$session_name" ] && [ "$session_name" != "$auto_title" ] \
   && out="${out} ${MAGENTA}«${session_name}»${RESET}"
