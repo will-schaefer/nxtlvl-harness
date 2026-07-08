@@ -24,7 +24,7 @@ executor is a main-thread skill by design — the "executor inversion"
 3. It **shapes the direction** — 2–3 approaches with a recommendation, presented in sections — and spawns the
    read-only `idea-critic` before the **approval gate**.
 4. On approval it **hands off**: record any ADR-worthy decision via the decision rule, then
-   `spec-driven-development` → `planning-and-task-breakdown`. It does **not** enter implementation.
+   `show-me` (spec → plan). It does **not** enter implementation.
 
 ## When to use
 

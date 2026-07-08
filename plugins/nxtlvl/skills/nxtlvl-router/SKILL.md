@@ -39,8 +39,7 @@ Task arrives
     │       ├── Stress-test a plan/design hard? ──→ ‡ grill-me
     │       └── Diverge on an unfixed concept? ───→ ‡ idea-refine
     │
-    ├── Need a written contract before code? ─────→ ‡ spec-driven-development
-    ├── Have a spec, need tasks? ─────────────────→ ‡ planning-and-task-breakdown
+    ├── Need a spec, a plan, or both (design layer)? → ◆ show-me
     │
     ├── Implementing, stakes high / unfamiliar? ──→ ◆ doubt-driven-development
     ├── Reviewing a diff before merge? ───────────→ ◆ review
@@ -55,7 +54,7 @@ performance, CI/CD, deprecation, observability, shipping, …:
 
 That last ◆ branch is an off-ramp from the SDLC, not a phase within it. `◆ harness-review` is wholly native — it studies *someone else's* repo to understand it, score it, or mine it (three modes: general review · adopt/adapt/reject · single-component domain review), which is not the same as `◆ review` (five-axis review of *our own* diff).
 
-A feature still flows in sequence: `◆ brainstorming` → (its handoff) `‡ spec-driven-development` → `‡ planning-and-task-breakdown` → implement *natively* with `◆ doubt-driven-development` in-flight when stakes are high → `◆ review` → `◆ github-workflow` → `◆ documentation-and-adrs`. The implement/test/debug middle is currently native — nxtlvl owns no skill there yet.
+A feature still flows in sequence: `◆ brainstorming` → (its handoff) `◆ show-me` (spec → plan) → implement *natively* with `◆ doubt-driven-development` in-flight when stakes are high → `◆ review` → `◆ github-workflow` → `◆ documentation-and-adrs`. The implement/test/debug middle is currently native — nxtlvl owns no skill there yet.
 
 **Two named ◆ skills carry names different from the upstream they replaced** (historical context, no longer a fallthrough concern): `◆ review` supersedes the upstream `code-review-and-quality` skill (`review` is its command alias), and `◆ github-workflow` supersedes `git-workflow-and-versioning`, renamed for its GitHub/`gh` focus ([ADR-017](../../../../docs/decisions/ADR-017-git-workflows-domain.md)).
 
@@ -69,15 +68,15 @@ The upstream `agent-skills` skills remain installed and directly invokable if yo
 
 ## Interim exceptions ledger (‡)
 
-These five are the **only** upstream skills the router points to, and the list is meant to shrink to zero:
+These three are the **only** upstream skills the router points to, and the list is meant to shrink to zero:
 
 | ‡ Skill | Why it's still here | Retires when |
 |---|---|---|
 | `interview-me` | ideation sub-skill; body pending authoring (per its command file) | its ◆ body is authored |
 | `grill-me` | ideation sub-skill; body pending authoring | its ◆ body is authored |
 | `idea-refine` | ideation sub-skill; body pending authoring | its ◆ body is authored |
-| `spec-driven-development` | composed by `◆ brainstorming`'s ideation→contract handoff ([ADR-018](../../../../docs/decisions/ADR-018-ideation-domain.md)) | its ◆ version is built |
-| `planning-and-task-breakdown` | composed by the same handoff | its ◆ version is built |
+
+`spec-driven-development` and `planning-and-task-breakdown` **retired** — replaced by `◆ show-me` (2026-07-03).
 
 `◆ brainstorming` already has its own body; it composes the three ‡ ideation sub-skills until they're authored.
 
@@ -113,8 +112,7 @@ These hold across every skill the router dispatches to — and across natively-h
 |-------|-------|--------|
 | Ideate (front door) | **brainstorming** — composes the rest, hands off to spec → plan | ◆ nxtlvl |
 | Ideate (sub-skills) | interview-me · grill-me · idea-refine | ‡ interim (body upstream, pending ◆) |
-| Contract | spec-driven-development | ‡ interim (composed by brainstorming) |
-| Plan | planning-and-task-breakdown | ‡ interim (composed by brainstorming) |
+| Contract + plan | **show-me** | ◆ nxtlvl (spec → plan, with visuals) |
 | Build (in-flight) | **doubt-driven-development** — adversarial review of non-trivial decisions | ◆ nxtlvl |
 | Build (everything else) | *implementation, testing, debugging, …* | native — nxtlvl owns no skill yet |
 | Review | **review** — five-axis review, refined for my conventions | ◆ nxtlvl |
@@ -126,7 +124,7 @@ These hold across every skill the router dispatches to — and across natively-h
 ## Verification
 
 - [ ] Checked for an applicable **nxtlvl** skill before starting non-trivial work
-- [ ] Resolved by precedence (◆ nxtlvl → native); used a ‡ interim exception only for the five named skills, and **did not** silently reach for any other upstream `agent-skills` skill
+- [ ] Resolved by precedence (◆ nxtlvl → native); used a ‡ interim exception only for the three named ideation sub-skills, and **did not** silently reach for any other upstream `agent-skills` skill
 - [ ] At an unowned phase, handled it natively rather than borrowing an unvetted upstream skill
 - [ ] Surfaced assumptions and used pointers, not dumped content, throughout
 - [ ] Recorded any override of an ADR rather than diverging silently

@@ -32,9 +32,9 @@ This is the heart of the front-door model. Resolve each row by the router's prec
 | Generate variants from a rough, unfixed concept | → `idea-refine` |
 | Propose 2-3 approaches + recommendation | **this skill** |
 | Present the design, run the approval gate | **this skill** |
-| Capture the approved design as a written contract | → `spec-driven-development` (lands in `docs/spec/`) |
+| Capture the approved design as a written contract | → `◆ show-me` — spec phase (`docs/spec/`) |
 | Record an ADR-worthy decision made along the way | → the decision rule → `◆ documentation-and-adrs` |
-| Break the contract into ordered tasks | → `planning-and-task-breakdown` *(terminal)* |
+| Break the contract into ordered tasks | → `◆ show-me` — plan phase (`docs/plan/`) *(terminal)* |
 
 The skill's job is to drive the dialogue from idea to approved design and then route into that chain — not to carry it the whole way itself.
 
@@ -47,8 +47,8 @@ Create a task for each item and complete them in order:
 3. **Clarify intent** — one question at a time. Route by depth: a few inline questions if the idea is nearly sharp; hand to `interview-me` / `grill-me` if it's underspecified or high-stakes.
 4. **Propose 2-3 approaches** — trade-offs, lead with your recommendation and why.
 5. **Present the design** — in sections scaled to their complexity; get approval after each section.
-6. **Hand off to `spec-driven-development`** — the approved design becomes the written contract in `docs/spec/`. Record any ADR-worthy decision via the decision rule on the way.
-7. **Continue into `planning-and-task-breakdown`** — the terminal handoff. Do not jump to implementation.
+6. **Hand off to `◆ show-me` (spec phase)** — the approved design becomes the written contract in `docs/spec/`. Record any ADR-worthy decision via the decision rule on the way.
+7. **Continue into `◆ show-me` (plan phase)** — the terminal handoff to `docs/plan/`. Do not jump to implementation.
 
 ## Process flow
 
@@ -61,10 +61,10 @@ digraph brainstorming {
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves?" [shape=diamond];
-    "Hand to spec-driven-development" [shape=box];
+    "Hand to show-me (spec)" [shape=box];
     "ADR-worthy decision?" [shape=diamond];
     "Trigger decision rule → documentation-and-adrs" [shape=box];
-    "Hand to planning-and-task-breakdown" [shape=doublecircle];
+    "Hand to show-me (plan)" [shape=doublecircle];
 
     "Explore context + scope triage" -> "Intent sharp enough?";
     "Intent sharp enough?" -> "Hand to interview-me / grill-me" [label="no / high-stakes"];
@@ -76,9 +76,9 @@ digraph brainstorming {
     "User approves?" -> "Present design sections" [label="no, revise"];
     "User approves?" -> "ADR-worthy decision?" [label="yes"];
     "ADR-worthy decision?" -> "Trigger decision rule → documentation-and-adrs" [label="yes"];
-    "ADR-worthy decision?" -> "Hand to spec-driven-development" [label="no"];
-    "Trigger decision rule → documentation-and-adrs" -> "Hand to spec-driven-development";
-    "Hand to spec-driven-development" -> "Hand to planning-and-task-breakdown";
+    "ADR-worthy decision?" -> "Hand to show-me (spec)" [label="no"];
+    "Trigger decision rule → documentation-and-adrs" -> "Hand to show-me (spec)";
+    "Hand to show-me (spec)" -> "Hand to show-me (plan)";
 }
 ```
 
@@ -120,9 +120,8 @@ These are the composition points. Each is a skill that already owns its job; bra
 
 - **Intent → `interview-me` / `grill-me`.** When the idea is underspecified or high-stakes, extract and stress-test intent there, then return to approach-exploration with a sharp brief.
 - **Variants → `idea-refine`.** When the concept itself is unfixed and you want divergent options before converging, that's the refine loop.
-- **Contract → `spec-driven-development`.** The approved design is the input; `/spec` writes it to `docs/spec/` and owns its self-review. This is why brainstorming writes no design doc of its own — the spec *is* the artifact.
+- **Contract + plan → `◆ show-me`.** The approved design is the input; the skill writes the spec to `docs/spec/` then the plan to `docs/plan/` with mandatory structural visuals. Brainstorming writes no duplicate design doc — the spec *is* the artifact.
 - **Decision → the decision rule → `◆ documentation-and-adrs`.** If the design settles a decision that is *both* architectural and expensive to reverse, record it (see `~/.claude/rules/decisions.md`). Don't dilute the ADR set with facts (those go in the spec) or sequencing (that goes in the plan).
-- **Breakdown → `planning-and-task-breakdown`.** The terminal handoff: contract in hand, break it into ordered, verifiable tasks.
 
 ## Showing, not just telling — native visuals
 
@@ -156,7 +155,7 @@ These cross-cutting behaviors come from the router and hold throughout — refer
 - [ ] Scope was triaged; multi-subsystem requests were decomposed before detailed questioning.
 - [ ] Intent that was underspecified or high-stakes was routed to `interview-me` / `grill-me`, not shallow-handled inline.
 - [ ] 2-3 approaches were offered with a reasoned recommendation.
-- [ ] The approved design was handed to `spec-driven-development` (no duplicate design doc written here), with any ADR-worthy decision recorded via the decision rule.
+- [ ] The approved design was handed to `◆ show-me` (spec then plan; no duplicate design doc written here), with any ADR-worthy decision recorded via the decision rule.
 - [ ] Structural/visual questions were shown via the `visualize` tooling, not just described.
 
 $ARGUMENTS
