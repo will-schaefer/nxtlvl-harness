@@ -20,6 +20,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [Decision-recording conventions](decision-recording-conventions.md) — formalized as the global decision rule (~/.claude/rules/decisions.md); ADRs in docs/decisions/, YAML frontmatter, curated.
 - [ADRs advisory, not canonical](adrs-advisory-not-canonical.md) — on nxtlvl, reference ADRs but don't treat them as binding; record overrides.
 - [Meta-skill discoverability](meta-skill-discoverability-in-plumbing.md) — router/meta-skills don't fire via description; wire entry into the floor brief, not frontmatter.
+- [Scout zero-tool-call fabrication](scout-zero-tool-call-fabrication.md) — unmounted-MCP scouts fabricate confident CITED reports; tool_uses:0 ⇒ discard; verify MCP mounted before spawning, else ground inline.
 - [Component-scoping doctrine](ecc-component-scoping-doctrine.md) — when to build agent vs skill vs command vs hook vs rule; full guide at docs/reference/ecc-agent-vs-skill-scoping.md.
 - [ADR numbering collision hazard](adr-numbering-collision-hazard.md) — collides BOTH directions (working-tree globs miss committed numbers; committed-tree checks miss uncommitted in-flight ADRs, confirmed 2026-07-01); number from the UNION of both trees.
 
@@ -30,17 +31,18 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [Hook env propagation](cc-hook-env-propagation.md) — inline `VAR=x claude` may not reach the process; settings `env` field reaches hooks AND hot-reloads; secrets stripped.
 - [CLAUDE.md layering](cc-claudemd-layering-facts.md) — global always-on; @import inlines vs plain path = on-demand; project loads last & wins; arbitrary ~/.claude files not auto-loaded.
 - [Sandbox blocks localhost](cc-sandbox-localhost-blocked.md) — sandbox net allowlist blocks loopback too; curl to 127.0.0.1 = HTTP 000 until sandbox off.
-- [Sandbox blocks keychain auth](cc-sandbox-blocks-keychain-auth.md) — sandbox blocks macOS keychain → auth-touching git push/pull/gh: go sandbox-off on the FIRST attempt (in-sandbox try is a guaranteed false-fail); "could not read Username"/"invalid token" = sandbox biting, not bad creds.
+- [Sandbox blocks keychain auth](cc-sandbox-blocks-keychain-auth.md) — sandbox blocks macOS keychain → auth-touching git push/pull/gh: go sandbox-off on the FIRST attempt (in-sandbox try is a guaranteed false-fail); "could not read Username"/"invalid token" = sandbox biting, not bad creds. SOLE carrier since CLAUDE.md ## Sandbox was removed (ADR-028); unauthenticated GitHub HTTPS now works in-sandbox (*.github.com allowlisted 2026-07-10).
 - [Workflow args not array](cc-workflow-args-not-array.md) — Workflow tool `args` may not arrive as a native array; generate the list in-script or guard with Array.isArray/JSON.parse.
 
 ## Environment & repo
-- [~/.claude config repo](claude-config-repo.md) — nxtlvl repo (~/Developer/nxtlvl) is the SOURCE for global CC config (config/claude/*); ~/.claude/* symlink in; PR→main, remote will-schaefer/nxtlvl-harness.
+- [~/.claude config repo](claude-config-repo.md) — nxtlvl repo (~/Developer/nxtlvl/nxtlvl-core) is the SOURCE for global CC config (config/claude/*); ~/.claude/* symlink in; PR→main, remote will-schaefer/nxtlvl-harness.
 - [Developer repo git workflow](developer-repo-git-workflow.md) — solo, commit directly to main, don't branch for routine work, don't push unless asked; the 'epitaxy' parallel-committer was retired 2026-06-25 (was a transient session behavior, not a daemon).
 - [Disable ecc active hooks in dev](disable-ecc-active-hooks-dev.md) — ecc dormant via enabledPlugins."ecc@ecc":false (flip to re-enable); ECC_GATEGUARD=off was ineffective.
 - [nxtlvl install/promotion](nxtlvl-install-promotion.md) — installed nxtlvl is a SHA-pinned cache snapshot, not a live repo read; committed work needs a manual /plugin promote; repo HEAD runs ahead.
 
 ## nxtlvl — project & subsystem status
 - [nxtlvl harness (anchor)](nxtlvl-harness.md) — the personal CC agent-harness plugin; intent doc docs/intent/personal-harness.md, ADRs docs/decisions/; reactive vendoring; hook stdin field shapes.
+- [Multi-CLI config compilers](nxtlvl-multi-cli-compilers.md) — Claude config = single source; compiler scripts fan out to Antigravity/Gemini, Codex, Devin CLI, Grok Build CLI; only the gemini agent-compiler exists so far.
 - [Purpose reshape → commercial](nxtlvl-purpose-commercial-reshape.md) — intent re-derived 2026-06-28: nxtlvl = foundation for a potential AI agent company (job loss ~2026-06-21); learning demoted to method; 3 original mechanisms dropped; map-first/build-reactive posture.
 - [Agent runtime primer](agent-runtime-primer.md) — runtime anatomy + native-vs-DIY ledger (docs/reference/agent-runtime-primer.md); nxtlvl's substance lives ABOVE the loop, so composing keeps it.
 - [C&M subsystem status](nxtlvl-context-memory-subsystem.md) — C&M domain PROMOTED & LIVE (2026-06-22): installed snapshot==repo HEAD, all 6 hooks firing, Checkpoints A–D verified, fallback 0/137.

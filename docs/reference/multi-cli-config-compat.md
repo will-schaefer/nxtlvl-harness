@@ -77,10 +77,10 @@ flowchart LR
    CLAUDE.md means duplicated portable content *and* the Claude-only leakage survives via
    CLAUDE.md. **Devin confirms the same accumulate semantics** (both load, no dedup;
    `read_config_from.claude` is all-or-nothing — no rules-only off-switch). **Antigravity
-   reads only `GEMINI.md`** (today a symlink to CLAUDE.md; its self-review says an emitted
-   AGENTS.md is not picked up, contradicting the harvested best-practices CITE — verify
-   empirically).
-   **Settled strategy (3 of 4 self-reviews converge):** make the shared SoT itself portable —
+   accumulates too** — the 2026-07-10 trusted-workspace probe loaded `GEMINI.md` *and*
+   `AGENTS.md` both AND expanded `@file.md` imports, refuting its own self-review's
+   GEMINI.md-only claim (probe > model self-report; see the Antigravity pass below).
+   **Settled strategy (Codex is the only pick-one):** make the shared SoT itself portable —
    strip Claude-only content out of CLAUDE.md (project *and* global, since Devin and Grok read
    both) into Claude-only channels — and demote emitted files to per-CLI *supplements*:
    Devin-specific notes in AGENTS.md, Grok deltas in `.grok/rules/`, Antigravity via the
@@ -314,14 +314,24 @@ copied back). Four facts confirmed; two corrected outright, one incomplete:
   only (`settings.json`, logs, `brain/`, scratch). Emitting skills/plugins into
   `antigravity-cli/` gets silently ignored. (Permissions in
   `~/.gemini/antigravity-cli/settings.json` stand — that file is the exception.)
-- **GEMINI.md only:** an emitted `AGENTS.md` is not picked up per the live model
-  (conflicts with the harvested best-practices CITE). A scratch-workspace probe
-  (magic-word markers; `AGENTS.md` alone, then `GEMINI.md`+`AGENTS.md`) came back
-  **inconclusive** — nothing loaded in either case, *including the GEMINI.md control*, i.e. a
-  workspace-trust confound: `agy -p` in an untrusted dir loads no instructions at all.
-  Re-test inside a trusted workspace when convenient; non-blocking (the Antigravity target is
-  `GEMINI.md` either way — today the symlink to CLAUDE.md).
-- **No `@file.md` imports** in Antigravity's GEMINI.md — that's Gemini CLI behavior.
+- **~~GEMINI.md only~~ — REFUTED empirically (2026-07-10 probe).** The live model claimed an
+  emitted `AGENTS.md` is not picked up; the first scratch probe was inconclusive (workspace-trust
+  confound — `agy -p` in an untrusted dir loads no instructions at all, GEMINI.md control
+  included). The official migration page contradicted the model (*"…rule documents, such as
+  `GEMINI.md` and `AGENTS.md` in your active directory … will continue to be parsed and
+  enforced without modification"* — CITE https://antigravity.google/docs/cli/gcli-migration
+  §"Context files and workspace rules", corroborating best-practices). **Decisive re-probe with
+  `agy --new-project -p` in a trusted scratch workspace: all three markers loaded** —
+  GEMINI.md control ✓, `AGENTS.md` ✓, `@./imported-file.md` referenced from GEMINI.md ✓.
+  Verdicts: Antigravity **reads AGENTS.md AND GEMINI.md (loads both — it is a load-everything
+  reader like Grok/Devin, not pick-one)**, and **`@file.md` imports DO expand** — so the
+  `GEMINI.md → CLAUDE.md` symlink leaks anything Claude `@import`s until replaced by the
+  compiled target. Probe recipe for future re-verification: three magic-word marker files +
+  `agy --new-project -p "quote every magic word in your loaded rules"`.
+- **MCP config split (gcli-migration, new):** global servers `~/.gemini/config/mcp_config.json`,
+  **workspace servers `.agents/mcp_config.json`** — the neutral `.agents/` dir again, matching
+  what `sync-agent-configs.ts` already emits. First `agy` run also auto-onboards Gemini CLI
+  profiles/settings/tokens (one-time, like the other first-party imports).
 - **`agy plugin import claude` is one-shot** migration, not re-runnable sync — a continuous
   compiler emits directly into `~/.gemini/config/plugins/`.
 - **Rules format confirmed** (closes formerly-unverified item 1): frontmatter

@@ -4,10 +4,6 @@ This repo builds **nxtlvl**, a personal Claude Code harness. Anchor:
 [`docs/intent/personal-harness.md`](docs/intent/personal-harness.md). Decisions (ADRs):
 [`docs/decisions/`](docs/decisions/).
 
-> **Sandbox — `gh` runs sandbox-off.** Pass `dangerouslyDisableSandbox: true` for any `gh`
-> invocation (and HTTPS `git push`/`fetch`); the command sandbox breaks TLS to GitHub's API
-> (`x509: OSStatus` cert error). See global `CLAUDE.md` → **Sandbox**.
-
 ## Build method — build from scratch against a production-quality standard
 nxtlvl is built from scratch, guided by **`nxtlvl-wiki`** — a queryable corpus of reviewed
 production harnesses that sets the reference bar without imposing anyone else's design

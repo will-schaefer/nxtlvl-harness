@@ -28,16 +28,6 @@ When work will **land on GitHub** — committing, opening a PR, driving a change
 **follow the git conventions: read `~/.claude/rules/git-workflow.md`.** It covers commit
 format, PR flow, and attribution. Local throwaway work: just proceed.
 
-## Sandbox
-
-**`gh` must run with the command sandbox disabled** — pass `dangerouslyDisableSandbox: true` on
-every `gh` invocation. The sandbox's network proxy breaks TLS to GitHub's API (`gh` fails with
-`x509: OSStatus` certificate errors; `api.github.com` isn't on the sandbox host-allowlist).
-The same applies to any command that reaches GitHub over the network — HTTPS `git push`/`git
-fetch`/`git ls-remote`. This is **environmental** (true for every repo on this machine), not a
-per-project preference, so it lives in the always-on global convention rather than a
-read-on-demand rule file.
-
 ## Visual design docs
 
 When you are **authoring or revising design documentation** — specs, plans, intents, ADRs,

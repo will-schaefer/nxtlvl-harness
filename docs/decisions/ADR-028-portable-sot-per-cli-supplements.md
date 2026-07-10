@@ -31,9 +31,9 @@ instruction-file discovery semantics differ *structurally* across the four:
 | Codex | **Pick-one per directory** (`AGENTS.override.md` → `AGENTS.md` → fallbacks) | Safe — AGENTS.md wins, CLAUDE.md ignored |
 | Grok | **Accumulate** every matching filename | Duplication *and* the leak survives via CLAUDE.md |
 | Devin | **Accumulate**, no dedup; `read_config_from.claude` is all-or-nothing (no rules-only off-switch) | Duplication *and* the leak survives via CLAUDE.md |
-| Antigravity | Reads `GEMINI.md` (live model says emitted `AGENTS.md` is not picked up; harvested docs conflict) | Not picked up at all |
+| Antigravity | **Accumulate** — loads `GEMINI.md` *and* `AGENTS.md` both; `@file.md` imports expand (trusted-workspace probe, 2026-07-10) | Duplication *and* the leak survives via GEMINI.md |
 
-So the filtered-copy strategy is actively harmful for two of four CLIs, inert for a third, and
+So the filtered-copy strategy is actively harmful for three of four CLIs and
 correct only for Codex. Grok's and Devin's reviews independently converged on the same
 alternative: fix the shared source itself.
 
@@ -130,10 +130,16 @@ flowchart LR
   its default compat. This is a candidate for a future rule-file trigger and an
   `nxtlvl:audit` check (warning-tier, per ADR-009's block-on-facts-only discipline), neither
   built yet.
-- **The first concrete migration case is the global `## Sandbox` section** — the
-  `dangerouslyDisableSandbox` guidance is the documented leak exhibit and must move to a
-  Claude-only channel. Choosing that channel is implementation work this ADR does not settle;
-  the constraint is only "a surface no other CLI ingests as always-on instructions."
+- **~~The first concrete migration case is the global `## Sandbox` section~~ — MIGRATED
+  (2026-07-10, same day):** diagnosis split the blanket "sandbox breaks TLS to GitHub" claim
+  into a missing `api.github.com` allowlist entry (fixed — `*.github.com` added to
+  `sandbox.network.allowedDomains`; unauthenticated GitHub HTTPS now works in-sandbox,
+  verified) and two residual blockers for authenticated `gh`/`git push` (Go↔`trustd` TLS
+  verification and macOS-keychain token reads — the keychain one left deliberately unfixed
+  as a credential boundary). The `## Sandbox` sections were removed from global and
+  nxtlvl-core CLAUDE.md; the residual sandbox-off-for-auth guidance now lives in the
+  `cc-sandbox-blocks-keychain-auth` memory — settings + memory being the Claude-only
+  channels this ADR anticipated.
 - **The compiler seed (`nxtlvl-lab/scripts/sync-agent-configs.ts`) refocuses**: its
   instruction-file output becomes supplement-shaped; its residue emitters (MCP, permissions,
   agents, skills) and a per-CLI verification step become the substance. The compat doc's
@@ -143,10 +149,13 @@ flowchart LR
 - **`GEMINI.md → CLAUDE.md` symlinks become correct once CLAUDE.md is portable** — the
   symlink then delivers portable content to Antigravity by construction; a compiled
   Antigravity-specific GEMINI.md is only needed if Antigravity supplements materialize.
-- **Open verification item, non-blocking:** whether Antigravity honors a root `AGENTS.md`
-  (harvested docs say yes, the live model says no; a scratch-workspace probe was inconclusive
-  due to workspace-trust confounds). The decision doesn't depend on it — Antigravity's target
-  is `GEMINI.md` either way.
+- **~~Open verification item~~ — RESOLVED (2026-07-10):** a trusted-workspace probe
+  (`agy --new-project -p`, magic-word markers) showed Antigravity loads a root `AGENTS.md`
+  **and** `GEMINI.md` (accumulate, not pick-one) and expands `@file.md` imports. The earlier
+  inconclusive probe was the untrusted-workspace confound. Consequences: Antigravity joins the
+  load-everything column (strengthening this ADR's no-copies rationale), and the
+  `GEMINI.md → CLAUDE.md` symlink forwards Claude `@import`s to Gemini until CLAUDE.md's
+  imports are themselves portable-only.
 - **Reviews are dated evidence.** The four self-review passes are pinned to 2026-07-10
   CLI versions; re-ground the per-CLI ingestion surfaces before major compiler work, since
   any CLI adding or removing a read path shifts what "portable" and "Claude-only channel"

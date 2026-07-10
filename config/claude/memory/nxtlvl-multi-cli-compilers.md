@@ -20,8 +20,11 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   files are **per-CLI supplements, never filtered copies**; the compiler emits only the
   mechanical residue (MCP, permissions demux, agent transforms, skills relocation) with a
   per-CLI verification step. The earlier "compile filtered AGENTS.md copies" idea was
-  invalidated — Grok and Devin *accumulate* every instruction file (a copy = duplication +
-  the leak survives), Antigravity ignores AGENTS.md per its own model, only Codex is pick-one.
+  invalidated — Grok, Devin, AND Antigravity *accumulate* every instruction file (a copy =
+  duplication + the leak survives); only Codex is pick-one. Probe 2026-07-10 settled
+  Antigravity: `agy --new-project` trusted-workspace test loaded GEMINI.md + AGENTS.md both
+  AND expanded `@file.md` imports (its self-review had claimed neither — model self-reports
+  about file discovery are unreliable; probe > self-report).
 - Verified per-CLI facts (with every self-review correction folded in) live in
   `docs/reference/multi-cli-config-compat.md` — read it before any compiler work. Headline
   traps: Codex trust-gates repo-local `.codex/` files (emit + verify, never just emit);
