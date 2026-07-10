@@ -1,7 +1,7 @@
 # nxtlvl Project Status Report
 
 **Date:** July 5, 2026  
-**Repo:** `/Users/willschaefer/Developer/nxtlvl` (workbench monorepo)  
+**Repo:** `/Users/willschaefer/Developer/nxtlvl/nxtlvl-core` (workbench monorepo)  
 **Git:** `main` is **8 commits ahead** of `origin/main`; **41 uncommitted changes** (active WIP session)
 
 ---

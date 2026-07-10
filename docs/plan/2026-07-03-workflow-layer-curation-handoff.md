@@ -1,7 +1,7 @@
 # Handoff — nxtlvl workflow-layer curation
 
 > **For a fresh session.** Self-contained: everything you need is here or behind the pointers in §1.
-> Produced 2026-07-03 from a collaborative mapping session. Run this session **in `~/Developer/nxtlvl`**
+> Produced 2026-07-03 from a collaborative mapping session. Run this session **in `~/Developer/nxtlvl/nxtlvl-core`**
 > (this repo) so you can write the outputs.
 
 ## 0. Your task, in one sentence

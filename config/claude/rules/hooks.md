@@ -6,9 +6,9 @@ my own daily driver.
 
 ## Pointers
 
-- Full contract & rationale: `~/Developer/nxtlvl/docs/intent/personal-harness.md`
+- Full contract & rationale: `~/Developer/nxtlvl/nxtlvl-core/docs/intent/personal-harness.md`
   §"Hook safety (highest-severity failure mode)" — the current source. ADR-010 (hook layer
-  contract, `~/Developer/nxtlvl/docs/decisions/`) is `Draft`/`Pending` and supersedes this
+  contract, `~/Developer/nxtlvl/nxtlvl-core/docs/decisions/`) is `Draft`/`Pending` and supersedes this
   pointer once decided.
 
 ## Triggers

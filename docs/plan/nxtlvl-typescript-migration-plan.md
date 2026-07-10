@@ -23,8 +23,8 @@ stripping.
 |---|---|---|---|
 | Production lib | `plugins/nxtlvl/lib/` | 11 + 11 tests | Pure modules, dependency-ordered |
 | Production hooks | `plugins/nxtlvl/hooks/` | 8 + 7 tests + 1 adapter | Invoked by `hooks.json` as `node …/X.js`; `session-title` is the lone untested hook (gains a test, T2.8) |
-| evals-lab | `Developer/nxtlvl-labs/evals-lab/bin/` | 4 + 4 tests + fixture | Own `package.json`; `node bin/X.js`. Now in the standalone `nxtlvl-labs` repo (moved out 2026-06-28) — migrate there, not in this repo |
-| harness-lab | `Developer/nxtlvl-labs/harness-lab/bin/` | 5 + 5 tests + fixtures | Own `package.json`; `node bin/X.js`. Now in the standalone `nxtlvl-labs` repo (moved out 2026-06-28) — migrate there, not in this repo |
+| evals-lab | `Developer/nxtlvl/nxtlvl-lab/evals-lab/bin/` | 4 + 4 tests + fixture | Own `package.json`; `node bin/X.js`. Now in the standalone `nxtlvl-labs` repo (moved out 2026-06-28) — migrate there, not in this repo |
+| harness-lab | `Developer/nxtlvl/nxtlvl-lab/harness-lab/bin/` | 5 + 5 tests + fixtures | Own `package.json`; `node bin/X.js`. Now in the standalone `nxtlvl-labs` repo (moved out 2026-06-28) — migrate there, not in this repo |
 | Skill scripts | `config/claude/skills/brainstorming/scripts/` | `helper.js`, `server.cjs` | Lower priority; `server.cjs` stays explicit CJS |
 
 **Explicitly out of scope:** `cm-phase0-workspace/` (throwaway, gitignored `*-workspace/`),
@@ -136,7 +136,7 @@ stdin smoke test; `node --test` green; commit.
 - **T2.8** `session-title` (**author a new `session-title.test.ts`** — the lone untested hook, and a `UserPromptSubmit` stdin-parser: the exact bug class this migration targets) · **T2.9** `evals/dangerous-bash/adapter`
 - *(`fallback-log.sh` stays shell — no change.)*
 
-### Phase 3 — Labs (`Developer/nxtlvl-labs/`)
+### Phase 3 — Labs (`Developer/nxtlvl/nxtlvl-lab/`)
 
 > **Note (2026-06-28):** the labs moved out of this repo's `sandbox/` into the standalone `nxtlvl-labs`
 > repo. This phase now applies to that sibling repo, not the nxtlvl repo, and would be driven from there.

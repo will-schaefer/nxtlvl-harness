@@ -26,7 +26,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - May receive a pre-gathered snapshot from `scripts/project-snapshot.sh`; if present, it digests it but never relays it.
 - Ends with 2–4 open questions for the interview.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/context-scout.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/context-scout.md" />
 
 ### `context7-scout`
 
@@ -35,7 +35,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Budget: 1 `resolve-library-id` + ≤3 `query-docs`.
 - Degrades to one-line "unavailable" if Context7 fails or the library doesn't resolve.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/context7-scout.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/context7-scout.md" />
 
 ### `deepwiki-scout`
 
@@ -43,7 +43,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Returns lead-stamped orientation: every claim is `LEAD — verify at source`, never a citation in the final artifact.
 - Budget: 1 `read_wiki_structure` + 3–5 `ask_question` calls.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/deepwiki-scout.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/deepwiki-scout.md" />
 
 ### `doc-keeper`
 
@@ -52,7 +52,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Routes decisions to ADRs (architectural + expensive-to-reverse), specs (verified facts), plans (methodology), or amends existing ADRs.
 - Returns a structured report: status, summary, changed files, verification, next_actions.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/doc-keeper.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/doc-keeper.md" />
 
 ### `doubt-reviewer`
 
@@ -61,7 +61,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Receives only `ARTIFACT + CONTRACT`; the author's claim is stripped to avoid bias.
 - Returns JSON conforming to `reviewer-output.schema.json`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/doubt-reviewer.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/doubt-reviewer.md" />
 
 ### `evolver`
 
@@ -70,7 +70,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Writes to `<project-root>/.claude/evolved/` (off the discovery path) for user review and promotion.
 - Tags every artifact with source instinct ids in a trailing comment.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/evolver.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/evolver.md" />
 
 ### `git-workflow-runner`
 
@@ -79,7 +79,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Composes `nxtlvl:review` at the review step.
 - Loads the `github-workflow` skill as its source of truth.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/git-workflow-runner.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/git-workflow-runner.md" />
 
 ### `idea-critic`
 
@@ -87,7 +87,7 @@ The `agents/` directory contains 8 read-only or specialist agents that the main 
 - Reviews an idea draft (not a finished artifact) for holes and risks.
 - Returns a Markdown verdict: `holes_found | clean | cannot_assess` with findings and a probe per finding.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/agents/idea-critic.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/agents/idea-critic.md" />
 
 ## Configuration / kill switches
 

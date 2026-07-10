@@ -21,7 +21,7 @@ The `scripts/` directory contains two Bash scripts that support the plugin lifec
 - Verifies the end state by re-querying the plugin list and checking for `enabled` status.
 - Safe to re-run; idempotent.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/scripts/install-nxtlvl.sh" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/scripts/install-nxtlvl.sh" />
 
 ### `project-snapshot.sh`
 
@@ -42,7 +42,7 @@ The `scripts/` directory contains two Bash scripts that support the plugin lifec
   - Empty tree → one-line "empty tree — nothing to snapshot".
 - Deliberately uses `set -uo pipefail` without `set -e` so benign non-zero exits (e.g., a grep with no matches) do not abort the whole script.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/scripts/project-snapshot.sh" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/scripts/project-snapshot.sh" />
 
 ## Configuration / kill switches
 

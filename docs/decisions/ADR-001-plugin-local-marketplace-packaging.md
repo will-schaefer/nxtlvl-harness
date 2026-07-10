@@ -14,14 +14,14 @@ different churn rates, and different reasons to be installed:
 
 1. **The harness** — `nxtlvl-harness`: the main daily-driver plugin. Context assembly,
    memory, hooks, skills, agents, commands, the audit. Lives in this repo
-   (`~/Developer/nxtlvl/`).
+   (`~/Developer/nxtlvl/nxtlvl-core/`).
 
 2. **The labs** — `nxtlvl-labs`: a domain-agnostic multi-agent team engine. Collaborates
    with the user through a full production lifecycle — ideation, drafting, testing,
    evaluating — to design and deliver production-quality agent teams against a given
    request. The user brings the domain, the goal, and the request; labs brings the
    architecture, the components, and the production-quality bar. Lives in its own repo
-   (`~/Developer/nxtlvl-labs/`).
+   (`~/Developer/nxtlvl/nxtlvl-lab/`).
 
    Two decoupled Node/TS subprojects power the engine:
    - `harness-lab` — the capability incubation pipeline. Cells (individual capabilities:

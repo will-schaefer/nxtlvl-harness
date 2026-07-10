@@ -6,10 +6,10 @@ firehose**.
 
 ## Pointers
 
-- Full policy & rationale: `~/Developer/nxtlvl/docs/intent/personal-harness.md`
+- Full policy & rationale: `~/Developer/nxtlvl/nxtlvl-core/docs/intent/personal-harness.md`
   §"Context assembly = a budgeted injection policy (not a firehose)" — the current source.
 - This is ADR-008's domain (context assembly); ADR-007 covers the separate memory-store /
-  ownership decision. Both live in `~/Developer/nxtlvl/docs/decisions/` and are
+  ownership decision. Both live in `~/Developer/nxtlvl/nxtlvl-core/docs/decisions/` and are
   `Draft`/`Pending` — once decided they supersede the intent-doc pointer above, and this
   file may split if their decisions don't share one file cleanly.
 

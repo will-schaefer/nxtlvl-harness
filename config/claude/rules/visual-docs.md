@@ -7,7 +7,7 @@ understood faster when shown, not only described.
 ## Pointers
 
 - Persisted specs and plans (house format + required visuals): **`nxtlvl:show-me`**
-  — `~/Developer/nxtlvl/plugins/nxtlvl/skills/show-me/SKILL.md`.
+  — `~/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/show-me/SKILL.md`.
 - In-session interactive visuals (mockups, comparisons, live architecture): **`nxtlvl:brainstorming`**
   §"Showing, not just telling — native visuals" and the `visualize` MCP tooling
   (`mcp__visualize__read_me`, then `mcp__visualize__show_widget`).

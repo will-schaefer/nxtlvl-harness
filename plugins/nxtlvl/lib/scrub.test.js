@@ -9,7 +9,7 @@
 //  - Bounded runtime: ~5k and oversized (1 MB) inputs complete quickly.
 //  - Idempotence: scrubbing already-scrubbed output changes nothing further.
 //
-// Run: node --test "plugins/nxtlvl/lib/scrub.test.js" from /Users/willschaefer/Developer/nxtlvl
+// Run: node --test "plugins/nxtlvl/lib/scrub.test.js" from /Users/willschaefer/Developer/nxtlvl/nxtlvl-core
 
 'use strict';
 

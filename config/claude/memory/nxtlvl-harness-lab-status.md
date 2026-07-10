@@ -8,7 +8,7 @@ metadata:
 ---
 
 The **harness-lab** incubation tier (upstream-most of `harness-lab → nxtlvl plugin → installed ~/.claude`)
-is **BUILT** as of 2026-06-22. Home: `Developer/nxtlvl-labs/harness-lab/` — in the standalone
+is **BUILT** as of 2026-06-22. Home: `Developer/nxtlvl/nxtlvl-lab/harness-lab/` — in the standalone
 `nxtlvl-labs` repo (sibling of the nxtlvl repo; **moved out of the harness repo's `sandbox/` on
 2026-06-28**, beside `evals-lab/`; not `~/agent-lab`). Spec `docs/spec/nxtlvl-harness-lab.md`
 + plan `docs/plan/nxtlvl-harness-lab-plan.md` both marked BUILT. The decisions live in that spec + plan

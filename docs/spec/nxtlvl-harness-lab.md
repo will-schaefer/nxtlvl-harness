@@ -12,7 +12,7 @@
 
 **What:** A self-contained R&D **workspace**, `harness-lab` (a dev workspace, *not*
 a standalone plugin — its cells graduate into the `nxtlvl` plugin, e.g. `nxtlvl:pointer-summary`), living
-at `Developer/nxtlvl-labs/harness-lab/` in the standalone `nxtlvl-labs` repo (a sibling of the nxtlvl
+at `Developer/nxtlvl/nxtlvl-lab/harness-lab/` in the standalone `nxtlvl-labs` repo (a sibling of the nxtlvl
 repo; moved out of the harness repo's `sandbox/` on 2026-06-28), where new agent capabilities — skills, agents/subagents,
 commands, hooks — are **incubated to production quality and then graduate into the `nxtlvl` plugin.**
 
@@ -31,11 +31,11 @@ gate that blocks on facts and never on taste.
 
 ```
 harness-lab                       →   nxtlvl plugin        →   installed ~/.claude
-(Developer/nxtlvl-labs/, highest     (the workbench,           (stable daily driver)
+(Developer/nxtlvl/nxtlvl-lab/, highest     (the workbench,           (stable daily driver)
  churn, lowest pressure)              Developer repo)
 ```
 
-`harness-lab` lives in the **standalone `nxtlvl-labs` repo** at `Developer/nxtlvl-labs/harness-lab/` — a
+`harness-lab` lives in the **standalone `nxtlvl-labs` repo** at `Developer/nxtlvl/nxtlvl-lab/harness-lab/` — a
 sibling of the nxtlvl repo, fully off the live plugin's discovery path (a separate tree entirely, so
 in-flight cells are never loaded, routed to, or warned about by the live plugin). It is **its own repo**
 (`will-schaefer/nxtlvl-labs`) with its own git history — not a subdir of the nxtlvl repo, not gitignored
@@ -79,7 +79,7 @@ Install for dogfood: <local-marketplace install>     # confirm against current C
 ## Project Structure
 
 ```
-Developer/nxtlvl-labs/harness-lab/  # in the standalone nxtlvl-labs repo (beside evals-lab/)
+Developer/nxtlvl/nxtlvl-lab/harness-lab/  # in the standalone nxtlvl-labs repo (beside evals-lab/)
   cells/<capability>/          # the unit of work — one incubating capability each
     manifest.yaml              #   intent · type · stage · deps · graduation criteria · intake · target
     <capability files>         #   SKILL.md | agent .md | command .md | hook(s)
@@ -235,7 +235,7 @@ engine exists, the seam may be backed by a stub that returns a scorecard in the 
 ## Open Questions
 
 - ~~Exact repo root path~~ — **RESOLVED 2026-06-22; RELOCATED 2026-06-28:** now
-  `Developer/nxtlvl-labs/harness-lab/`, in the standalone `nxtlvl-labs` repo (sibling of the nxtlvl
+  `Developer/nxtlvl/nxtlvl-lab/harness-lab/`, in the standalone `nxtlvl-labs` repo (sibling of the nxtlvl
   repo) beside `evals-lab/`. Originally lived as a tracked subdir under the harness repo's
   `sandbox/nxtlvl-labs/`; moved out to its own repo on 2026-06-28.
 - The concrete shared **eval spec / scorecard schema** — co-designed with the `evals-lab` cycle; this
@@ -252,7 +252,7 @@ and expensive to reverse. Verify ADR numbering against the committed/remote tree
 hazard); next is ~ADR-031.
 
 1. **Labs topology** — the incubation lab (`harness-lab`) and the standing measurement
-   instrument (`evals-lab`) live in the standalone `nxtlvl-labs` repo at `Developer/nxtlvl-labs/`
+   instrument (`evals-lab`) live in the standalone `nxtlvl-labs` repo at `Developer/nxtlvl/nxtlvl-lab/`
    (a sibling of the nxtlvl repo); a cell graduates by `git mv` into the `nxtlvl` plugin in the
    harness repo. *(Originally incubated as tracked subdirs under the harness repo's `sandbox/` per the
    2026-06-22 relocation away from the separate-`~/agent-lab`-repo design; moved out to its own

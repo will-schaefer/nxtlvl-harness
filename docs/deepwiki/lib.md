@@ -30,7 +30,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `appendLine(target, line)` — O_APPEND single-line JSONL append; strips embedded newlines.
 - `writeLiveness(target, record)` — bounded heartbeat line; never throws.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/atomic.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/atomic.js" />
 
 ### `bookmarks.js`
 
@@ -41,7 +41,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `isStale(projectId, groupKey, compareTs)` compares the newest bookmark against the newest observation timestamp.
 - Readers skip torn/unparseable lines.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/bookmarks.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/bookmarks.js" />
 
 ### `evolve.js`
 
@@ -54,7 +54,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
   - `command` — size 1 and domain === `workflow`.
 - Sorts deterministically by type rank, size, confidence, trigger key.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/evolve.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/evolve.js" />
 
 ### `instincts.js`
 
@@ -65,7 +65,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `promote(inst)` re-scopes project → global by writing the global copy first, then removing the project file (recoverable duplicate on crash).
 - `list({ projectId, scope, minConfidence, now })` filters by effective confidence when requested.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/instincts.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/instincts.js" />
 
 ### `metrics.js`
 
@@ -74,7 +74,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `bucketEffective(effValues)` is the pure histogram helper.
 - Fallback rate is clamped to [0,1] to guard against crashed sessions that never record a `session_close`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/metrics.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/metrics.js" />
 
 ### `obs-log.js`
 
@@ -87,7 +87,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `purge(projectId, { maxAgeDays, maxBytes, now })` archives when size ≥ 10 MB and drops consumed entries older than 30 days.
 - Readers skip unparseable lines.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/obs-log.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/obs-log.js" />
 
 ### `observer-runner.js`
 
@@ -101,7 +101,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - Create ids are always slugified; reinforce ids are validated before lookup.
 - Writes a liveness line and releases the lock in a `finally` (except SIGKILL).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/observer-runner.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/observer-runner.js" />
 
 ### `open-files.js`
 
@@ -110,7 +110,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `extractOpenFiles(text, dropFirst)` scans main-thread assistant tool_use blocks for `Read`/`Edit`/`MultiEdit`/`Write`/`NotebookEdit` and returns the most-recent 8 unique file paths.
 - Used by `briefing.js` on the post-compaction `SessionStart` path.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/open-files.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/open-files.js" />
 
 ### `paths.ts`
 
@@ -121,7 +121,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - `ensureDir(dir)` is idempotent recursive mkdir.
 - Type-strips to zero runtime code (erasable syntax only).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/paths.ts" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/paths.ts" />
 
 ### `project-identity.js`
 
@@ -130,7 +130,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - Pure: no writes.
 - Worktrees of the same repo share identity; separate clones get distinct keys.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/project-identity.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/project-identity.js" />
 
 ### `recall.js`
 
@@ -139,7 +139,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - Injects every instinct at or above the effective-confidence bar; if the set exceeds the ceiling, returns the names of truncated instincts so the UI can surface them.
 - Delegates relevance and sort to `lib/instincts.forProject`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/recall.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/recall.js" />
 
 ### `scrub.js`
 
@@ -150,7 +150,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - Bounds each scrubbed field to 64 KiB to prevent regex/entropy attacks.
 - Entropy threshold: 20+ chars, mixes letters+digits or is long hex, Shannon entropy ≥ 3.5 bits/char.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/scrub.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/scrub.js" />
 
 ### `types.ts`
 
@@ -160,7 +160,7 @@ The `lib/` directory contains 13 shared libraries that power the C&M subsystem, 
 - Documented exit-code convention: 0 = proceed/fail-open, 2 = block (PreToolUse deny).
 - Erasable TypeScript only: no runtime values, no enums, no namespaces.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/lib/types.ts" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/lib/types.ts" />
 
 ## Configuration / env vars
 

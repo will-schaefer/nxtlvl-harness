@@ -28,7 +28,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Routes to `interview-me`, `grill-me`, `idea-refine`, `spec-driven-development`, `planning-and-task-breakdown`, and the decision rule as needed.
 - Uses the `visualize` MCP for visual/structural questions.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/brainstorming/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/brainstorming/SKILL.md" />
 
 ### `documentation-and-adrs`
 
@@ -38,7 +38,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Routes facts → specs, methodology → plans, resolved open questions → amend existing ADRs.
 - Maintains `docs/decisions/README.md` index; superseded ADRs carry `superseded-by:`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/documentation-and-adrs/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/documentation-and-adrs/SKILL.md" />
 
 ### `doubt-driven-development`
 
@@ -49,7 +49,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Offers cross-model second opinion in interactive sessions (Gemini/Codex CLI) with explicit per-call authorization.
 - Recovery table for reviewer failure modes (validation, `cannot_assess`, malformed JSON, stall).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/doubt-driven-development/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/doubt-driven-development/SKILL.md" />
 
 ### `github-workflow`
 
@@ -61,7 +61,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Investigate CI failures, don't just re-run.
 - Merge only when CI green and review `APPROVE`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/github-workflow/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/github-workflow/SKILL.md" />
 
 ### `harness-review`
 
@@ -73,7 +73,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Public GitHub repos optionally use `deepwiki-scout` for Phase 2 orientation (leads only, not evidence).
 - Per-mode references live in `skills/harness-review/references/`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/harness-review/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/harness-review/SKILL.md" />
 
 ### `nxtlvl-router`
 
@@ -84,7 +84,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Unowned phases (implementation specifics, testing, debugging, security, performance, CI/CD, observability, shipping) are handled natively.
 - Core operating behaviors: pointers over dumped content, surface assumptions, ADRs are advisory, manage confusion actively, push back when warranted, enforce simplicity, verify.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/nxtlvl-router/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/nxtlvl-router/SKILL.md" />
 
 ### `pointer-summary`
 
@@ -92,7 +92,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Format: `path/to/file.ext:LINE — one-line why this matters`.
 - Does NOT fire when editing a single file or quoting a user-requested snippet.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/pointer-summary/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/pointer-summary/SKILL.md" />
 
 ### `review`
 
@@ -100,7 +100,7 @@ The `skills/` directory contains 8 nxtlvl skills. Skills are the knowledge layer
 - Applies nxtlvl conventions: language-plural reviewer selection, surface assumptions, pointers over dumped content.
 - Produces a five-axis report (correctness, readability, architecture, security, performance).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/skills/review/SKILL.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/skills/review/SKILL.md" />
 
 ## Configuration / kill switches
 

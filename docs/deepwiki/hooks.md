@@ -50,7 +50,7 @@ The registry uses the `PreToolUse` / `PostToolUse` / `UserPromptSubmit` / `Sessi
 
 Every hook has a description and a kill-switch env var documented in its description. The registry expands `${CLAUDE_PLUGIN_ROOT}` to the plugin's install path.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/hooks.json" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/hooks.json" />
 
 ### `fallback-log.sh`
 
@@ -60,7 +60,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Skips observer subprocesses (`NXTLVL_CM_OBSERVER`).
 - Always exits 0 and emits nothing.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/fallback-log.sh" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/fallback-log.sh" />
 
 ### `dangerous-bash.js`
 
@@ -70,7 +70,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Errors always exit 0 (fail-open): a block is only ever a clean decision.
 - Uses JSON.parse (Node) rather than `jq` so it has no external dependency.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/dangerous-bash.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/dangerous-bash.js" />
 
 ### `capture.js`
 
@@ -80,7 +80,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Skips on kill switch, observer run, `isSidechain=true`, and non-interactive sessions (no session_id/transcript_path).
 - Always exits 0 and emits nothing.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/capture.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/capture.js" />
 
 ### `context-alert.js`
 
@@ -93,7 +93,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Persists per-session state in a temp JSON file under `os.tmpdir()`.
 - Darwin-only for notifications; silently no-ops elsewhere.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/context-alert.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/context-alert.js" />
 
 ### `observe.js`
 
@@ -103,7 +103,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - The lock TTL (5 min default) must stay above the model timeout (2 min default) to prevent double observers.
 - Always exits 0 and emits nothing.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/observe.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/observe.js" />
 
 ### `session-title.js`
 
@@ -112,7 +112,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Emits `hookSpecificOutput.sessionTitle`.
 - Never blocks prompt submission; every failure path degrades silently.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/session-title.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/session-title.js" />
 
 ### `briefing.js`
 
@@ -126,7 +126,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Skips observer runs and sidechains.
 - Absolute fail-open: any error returns `''`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/briefing.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/briefing.js" />
 
 ### `close.js`
 
@@ -138,7 +138,7 @@ Every hook has a description and a kill-switch env var documented in its descrip
 - Skips observer runs and sidechains.
 - Reads only the tail of the transcript by default; re-reads the whole file only when the tail is inconclusive.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/hooks/close.js" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/hooks/close.js" />
 
 ## Configuration / kill switches
 

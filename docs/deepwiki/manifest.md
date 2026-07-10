@@ -18,7 +18,7 @@ The plugin is packaged as a Claude Code local-marketplace plugin. These files de
 
 Minimal Claude Code plugin manifest. Only `name` and `description` are declared; the plugin content is discovered conventionally from sibling directories (`agents/`, `commands/`, `skills/`, `hooks/`, `lib/`).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/.claude-plugin/plugin.json" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/.claude-plugin/plugin.json" />
 
 ### `.mcp.json`
 
@@ -29,7 +29,7 @@ Defines two HTTP MCP servers used by nxtlvl agents:
 
 Tool grants in agent frontmatter must use the namespaced form `mcp__plugin_nxtlvl_<server>__*`; the bare `mcp__<server>__*` form grants nothing.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/.mcp.json" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/.mcp.json" />
 
 ### `scripts/install-nxtlvl.sh`
 
@@ -42,7 +42,7 @@ Idempotent, project-scope install script:
 
 It is the source of truth for installing the plugin from this repo; the per-machine `settings.json` path is gitignored.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/scripts/install-nxtlvl.sh" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/scripts/install-nxtlvl.sh" />
 
 ## Configuration / kill switches
 

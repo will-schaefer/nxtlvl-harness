@@ -20,7 +20,7 @@ The `references/` directory contains bundled reference documents that agents and
 - Graceful degradation: one-line "unavailable" if the server fails or the library doesn't resolve.
 - Secrets: optional `CONTEXT7_API_KEY` env var only; never commit in `.mcp.json`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/references/context7-grounding.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/references/context7-grounding.md" />
 
 ## Configuration / kill switches
 

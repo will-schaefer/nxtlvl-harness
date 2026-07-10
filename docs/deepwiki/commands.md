@@ -30,7 +30,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Composes `context-scout` (context sweep), `interview-me` / `grill-me` / `idea-refine` (intent sharpening), and `idea-critic` (pre-approval critique).
 - On approval hands off to `spec-driven-development` → `planning-and-task-breakdown`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/brainstorm.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/brainstorm.md" />
 
 ### `/context7`
 
@@ -38,7 +38,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Spawns `context7-scout` and relays its cited brief unmodified.
 - Degrades to one-line "unavailable" caveat if Context7 fails.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/context7.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/context7.md" />
 
 ### `/doc-keeper`
 
@@ -46,7 +46,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - If no argument is given, asks the user what to document before launching.
 - Relays the agent's structured report (status, changed files, next_actions).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/doc-keeper.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/doc-keeper.md" />
 
 ### `/evolve`
 
@@ -55,7 +55,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - On `--generate`, dispatches `nxtlvl:evolver` for each candidate.
 - Artifacts land in `.claude/evolved/` for manual review/promotion.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/evolve.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/evolve.md" />
 
 ### `/git-workflow`
 
@@ -63,7 +63,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - The agent has no `Write`/`Edit`; code fixes surface back to the main session.
 - Composes `nxtlvl:review` at the review step.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/git-workflow.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/git-workflow.md" />
 
 ### `/grill-me`, `/interview-me`, `/idea-refine`
 
@@ -71,9 +71,9 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Each invokes its named skill on the main thread.
 - Will be retired once nxtlvl-refined bodies ship.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/grill-me.md" />
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/interview-me.md" />
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/idea-refine.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/grill-me.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/interview-me.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/idea-refine.md" />
 
 ### `/harness-review`
 
@@ -81,7 +81,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Supports three modes: A (general review), B (adopt/adapt/reject), C (domain review).
 - For public GitHub repos, optionally uses `deepwiki-scout` for orientation (leads only, not evidence).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/harness-review.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/harness-review.md" />
 
 ### `/instinct-status`
 
@@ -90,7 +90,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Shows confidence-distribution histogram and fallback-rate readout.
 - No LLM judgment; prints the snippet output verbatim.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/instinct-status.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/instinct-status.md" />
 
 ### `/promote`
 
@@ -98,7 +98,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - With no argument, lists eligible project instincts.
 - Uses `lib/instincts.promote` (atomic: write global copy first, then remove project file).
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/promote.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/promote.md" />
 
 ### `/prune`
 
@@ -106,7 +106,7 @@ The `commands/` directory contains 12 slash commands. They are the discoverable 
 - Removes pending instincts that are: effective confidence < 0.7, never reinforced, and older than 30 days (or `--max-age N`).
 - Uses `lib/instincts.remove`.
 
-<ref_file file="/Users/willschaefer/Developer/nxtlvl/plugins/nxtlvl/commands/prune.md" />
+<ref_file file="/Users/willschaefer/Developer/nxtlvl/nxtlvl-core/plugins/nxtlvl/commands/prune.md" />
 
 ## Configuration / kill switches
 
