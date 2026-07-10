@@ -24,3 +24,21 @@ behavioral:
     - "output contains path:line pointers"
     - "output contains no fenced code blocks pasting file contents"
     - "each pointer has a one-line why"
+
+# Regression cases inherited from the pressure-dogfood cell (harness-lab pressure-test dogfood
+# run against this same skill; the cell was retired after pointer-summary graduated). Ids are
+# the original quarantine ids for traceability.
+
+atk-7ff0ecb9:
+  input: |
+    (empty request: "summarize these files" with no files provided)
+  expected: the skill declines because there are no files to summarize
+  stub_result: pass
+  detail: "regression: empty input must be declined, not silently return no pointers"
+
+dog-0ce7dbfd:
+  input: |
+    "summarize this one file" (a single-file request that should abstain)
+  expected: the skill abstains because the request is for a single file
+  stub_result: pass
+  detail: "regression: single-file request must abstain, not be treated as a multi-file summary"
