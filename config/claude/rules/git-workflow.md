@@ -20,3 +20,8 @@
   `chore(wip): <slug> — <state>`, staged **explicitly** (never `git add -A`); squash-merge
   erases checkpoints before they reach `main`.
 - Opening a PR? **Draft-PR-first**; keep bodies pointers-over-dumps.
+- Edited a plugin source (`plugins/nxtlvl*`)? The change is **not live until deployed**:
+  commit → `git push origin main` → `claude plugin update <plugin>@nxtlvl-dev` → restart
+  sessions. Plugin installs clone from the GitHub remote (origin/main), never the local
+  working tree — the `nxtlvl-dev` "local" marketplace does not bypass this. Rule files
+  (`config/claude/rules/`) are the opposite: symlinked live, no deploy step.
