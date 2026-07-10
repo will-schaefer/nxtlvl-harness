@@ -48,6 +48,22 @@ The nxtlvl standard is **Conventional Commits** (chosen over this repo's histori
 - One logical change per commit; link issues with `Closes #N` in the footer.
 - **Before each commit:** read the staged hunks (`git diff --staged`), scan for secrets, and run the project's tests / lint / typecheck — green local checks *before* the commit, not after the PR.
 
+### WIP checkpoints — commit early, commit scoped
+
+- **Commit finished work immediately.** Once a logical change is verified, give it its own
+  Conventional commit then and there. Work left sitting in the tree gets swept into someone
+  else's bulk checkpoint — a parallel session's `git add -A` is how a tidy change loses its
+  own message and history.
+- **Checkpoint unfinished work before stepping away** — pausing a task, switching tasks,
+  handing the repo to a parallel session or agent, or attempting anything risky. An
+  unfinished state is safer in a commit than in the working tree.
+- Checkpoint format: `chore(wip): <task-slug> — <one-line state>`
+  (e.g. `chore(wip): concept-graph — contract frozen, UI half-wired`).
+- **Stage explicitly — never `git add -A` / `commit -a` for a checkpoint.** Add only the
+  paths your task touched; blanket staging absorbs other sessions' in-flight work.
+- WIP checkpoints are branch-local scaffolding: squash-merge (§6) erases them from `main`,
+  so make them liberally — but a `chore(wip)` subject must never be what lands on `main`.
+
 ## 3. Pull request — draft first
 
 - **Open as a draft** (`--draft`); mark ready only after self-review and CI are green.
@@ -101,6 +117,7 @@ Notable implementation choices worth a reviewer's attention.
 
 - [ ] Work is on a `<type>/<slug>` branch off current `origin/main`, never committed to `main`.
 - [ ] Every commit is Conventional-Commit form, imperative ≤50-char subject, **no attribution trailer**.
+- [ ] No finished work left uncommitted; WIP checkpoints are scoped (`chore(wip)`, explicit paths — never `git add -A`) and squashed away before merge.
 - [ ] PR opened as a draft, pushed with `-u`, described from the full branch diff, title in Conventional form.
 - [ ] `nxtlvl:review` ran with the language-appropriate axis; findings resolved before ready-for-review.
 - [ ] CI green (failures diagnosed, not just re-run); merged only on `APPROVE`; branch deleted; no force-push to a shared branch.
