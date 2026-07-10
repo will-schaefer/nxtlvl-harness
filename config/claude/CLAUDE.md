@@ -28,6 +28,14 @@ When work will **land on GitHub** — committing, opening a PR, driving a change
 **follow the git conventions: read `~/.claude/rules/git-workflow.md`.** It covers commit
 format, PR flow, and attribution. Local throwaway work: just proceed.
 
+## Plain language
+
+When you are **writing anything that persists** — docs, ADRs, commits, PR text, comments,
+skill or rule files — **follow the plain-language rule: read
+`~/.claude/rules/plain-language.md`.** In short: no invented shorthand or nicknames (never
+"SoT" — write *source of truth*); only universal acronyms (ADR, PR, CI, API), spelled out on
+first use per document. Throwaway in-session scratch text: just proceed.
+
 ## Visual design docs
 
 When you are **authoring or revising design documentation** — specs, plans, intents, ADRs,
