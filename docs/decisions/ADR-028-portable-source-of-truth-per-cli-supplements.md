@@ -140,7 +140,13 @@ flowchart LR
   as a credential boundary). The `## Sandbox` sections were removed from global and
   nxtlvl-core CLAUDE.md; the residual sandbox-off-for-auth guidance now lives in the
   `cc-sandbox-blocks-keychain-auth` memory — settings + memory being the Claude-only
-  channels this ADR anticipated.
+  channels this ADR anticipated. **Portable sweep completed 2026-07-11:** straggler copies
+  of the stale sandbox block were removed from `nxtlvl-lab/CLAUDE.md` and
+  `nxtlvl-wiki/CLAUDE.md`, and Claude-only invocation syntax (the slash-command pipeline
+  names in the global file, `/nxtlvl:` slash syntax in nxtlvl-core's) was rewritten as
+  capability descriptions — the command names stay in the on-demand rule files, which no
+  CLI ingests always-on (`grok inspect` verified: Grok's always-on stream is exactly the
+  global + project CLAUDE.md pair).
 - **The compiler seed (`nxtlvl-lab/scripts/sync-agent-configs.ts`) refocuses**: its
   instruction-file output becomes supplement-shaped; its residue emitters (MCP, permissions,
   agents, skills) and a per-CLI verification step become the substance. The compat doc's

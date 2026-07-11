@@ -36,9 +36,9 @@ The global rules layer (`~/.claude/rules/` — decisions, context assembly, hook
 workflow, visual design docs) carries only cross-project conventions. These are nxtlvl-build-specific and live here
 (design: [`docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md`](docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md)):
 
-- **Skill/agent authoring:** `/nxtlvl:brainstorming` before code, then `◆ show-me` (spec → plan),
-  then review before merge. (ADR-012/ADR-013 are `Draft`/`Pending` — this is
-  current provisional practice, not a recorded decision.)
+- **Skill/agent authoring:** run the nxtlvl **brainstorming** skill before code, then the
+  **show-me** spec → plan format, then review before merge. (ADR-012/ADR-013 are
+  `Draft`/`Pending` — this is current provisional practice, not a recorded decision.)
 - **Promotion/audit gate:** promotion into the live plugin is gated by `nxtlvl:audit` — **not
   yet built** (ADR-014 is `Draft`/`Pending`); rollback convention is a git tag per promotion.
   Aspirational until the gate ships.
