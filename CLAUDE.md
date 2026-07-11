@@ -4,6 +4,9 @@ This repo builds **nxtlvl**, a personal Claude Code harness. Anchor:
 [`docs/intent/personal-harness.md`](docs/intent/personal-harness.md). Decisions (ADRs):
 [`docs/decisions/`](docs/decisions/).
 
+Family-wide conventions (subrepo map, cross-repo norms): `../CLAUDE.md` at the workbench
+root — agents that don't auto-load parent directories should read it before cross-repo work.
+
 ## Build method — build from scratch against a production-quality standard
 nxtlvl is built from scratch, guided by **`nxtlvl-wiki`** — a queryable corpus of reviewed
 production harnesses that sets the reference bar without imposing anyone else's design
