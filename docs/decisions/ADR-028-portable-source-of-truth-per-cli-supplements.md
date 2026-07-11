@@ -92,8 +92,8 @@ flowchart LR
 ## Alternatives Considered
 
 ### Filtered `AGENTS.md` copies (the prior direction)
-- Pros: single uniform mechanism; no authoring discipline required on the source; the SoT
-  stays free-form.
+- Pros: single uniform mechanism; no authoring discipline required on the source; the
+  source of truth stays free-form.
 - Cons: double-loads on Grok and Devin (duplicated portable content, and the Claude-only
   leak survives via the still-present CLAUDE.md); not picked up by Antigravity; correct only
   for Codex.
@@ -106,7 +106,8 @@ flowchart LR
 - Cons: forks the entire import pipeline per CLI (skills, agents, hooks, MCP all become
   emitters); loses the native-compat maintenance win that made the compat-first headline
   true; Devin's review priced this as the expensive branch of its all-or-nothing switch.
-- Rejected: maximal maintenance for a problem the portable-SoT rule solves at the source.
+- Rejected: maximal maintenance for a problem the portable-source-of-truth rule solves at
+  the source.
 
 ### Claude-only sections left inline, marked as prose ("when using Claude Code…")
 - Pros: no relocation work; zero new channels.
@@ -114,7 +115,7 @@ flowchart LR
   residual confusion risk for subagents that try to invoke nonexistent tool parameters.
 - Rejected as the end state; acceptable only as a shrinking interim while content migrates.
 
-### Portable SoT + per-CLI supplements — Adopted
+### Portable source of truth + per-CLI supplements — Adopted
 - Pros: fixes the leak at its origin for every current *and future* CLI regardless of its
   discovery semantics; shrinks the compiler (no instruction-copy emitters); the two
   accumulate-semantics reviews independently recommended exactly this shape.

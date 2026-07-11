@@ -52,7 +52,7 @@ flowchart LR
         X1[Codex: CLAUDE.md fallback, skills format]
     end
     subgraph COMPILE["compiler emits (the residue)"]
-        F[PORTABLE SoT: strip claude-only from CLAUDE.md<br/>+ per-CLI supplements — see residue #1]
+        F[PORTABLE SOURCE OF TRUTH: strip claude-only from<br/>CLAUDE.md + per-CLI supplements — see residue #1]
         M[MCP: Codex TOML, Devin/Antigravity JSON]
         P[Permissions: Devin Exec grammar,<br/>Codex execpolicy prefix_rules + profiles]
         A[Agents: Codex TOML transform,<br/>Antigravity tool-name map]
@@ -80,7 +80,7 @@ flowchart LR
    accumulates too** — the 2026-07-10 trusted-workspace probe loaded `GEMINI.md` *and*
    `AGENTS.md` both AND expanded `@file.md` imports, refuting its own self-review's
    GEMINI.md-only claim (probe > model self-report; see the Antigravity pass below).
-   **Settled strategy (Codex is the only pick-one):** make the shared SoT itself portable —
+   **Settled strategy (Codex is the only pick-one):** make the shared source of truth itself portable —
    strip Claude-only content out of CLAUDE.md (project *and* global, since Devin and Grok read
    both) into Claude-only channels — and demote emitted files to per-CLI *supplements*:
    Devin-specific notes in AGENTS.md, Grok deltas in `.grok/rules/`, Antigravity via the

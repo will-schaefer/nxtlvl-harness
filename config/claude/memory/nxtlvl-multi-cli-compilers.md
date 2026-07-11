@@ -15,7 +15,7 @@ and separate **compiler scripts** populate each additional CLI the user runs:
 contract / multi-source the delivery" spine adopted from the Trellis review ([[nxtlvl-trellis-distillation]]).
 
 **How to apply (updated 2026-07-10 after four per-CLI adversarial self-reviews):**
-- **The strategy is recorded as ADR-028** (`docs/decisions/ADR-028-portable-sot-per-cli-supplements.md`
+- **The strategy is recorded as ADR-028** (`docs/decisions/ADR-028-portable-source-of-truth-per-cli-supplements.md`
   in nxtlvl-core): CLAUDE.md (project + global) is authored **portable**; emitted instruction
   files are **per-CLI supplements, never filtered copies**; the compiler emits only the
   mechanical residue (MCP, permissions demux, agent transforms, skills relocation) with a
