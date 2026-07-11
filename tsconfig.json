@@ -16,6 +16,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["plugins/nxtlvl/**/*.ts"],
+  "include": ["plugins/nxtlvl/**/*.ts", "scripts/multi-cli-compiler/**/*.ts"],
   "exclude": ["node_modules", "reference", "**/vendor", "*-workspace", "scripts/adr"]
 }
