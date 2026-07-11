@@ -57,8 +57,8 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 - [ADR knowledge graph](nxtlvl-adr-knowledge-graph.md) — SEMANTIC understand-anything graph of the 35 ADRs at docs/decisions/.understand-anything/ (44 nodes/197 edges/8 layers); complements bespoke structural scripts/adr/graph.ts→graph.html; update via /understand docs/decisions/ --full.
 
 ## Reference: ECC
-- [ECC component map](ecc-component-map.md) — full 589-item map of reference/ECC-main at docs/reference/ecc-main-map.md; mine it instead of re-scanning.
-- [ECC knowledge graph](ecc-knowledge-graph.md) — interactive understand-anything graph of ECC-main (1944 nodes) at reference/ECC-main/.understand-anything/; view via /understand-dashboard.
+- [ECC component map](ecc-component-map.md) — full 589-item map of ECC at docs/reference/ecc-main-map.md; mine it instead of re-scanning (vendored copy deleted 2026-07-11).
+- [ECC knowledge graph](ecc-knowledge-graph.md) — understand-anything graph of ECC (1944 nodes) rescued to docs/reference/ecc-understand-anything/; dashboard defunct since the vendored copy was deleted.
 
 ## Harness reviews — reference/ corpus (mine, don't re-scan)
 - [reference/ repo map (breadth)](nxtlvl-reference-repo-map.md) — orientation map of all 13 vendored harnesses (docs/reference/reference-repo-map.md): identity/lang/size tables + A/B/C capsules; pick deep-review targets.

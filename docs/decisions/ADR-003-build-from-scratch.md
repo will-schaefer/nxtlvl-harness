@@ -138,3 +138,14 @@ the harness.
   upstream sources happen to ship. Domain-agnostic means no vertical assumptions are
   inherited; revenue-generating capable means the bar is real production, not demo quality.
 - Recorded per the global decision rule.
+
+## Amendments
+
+- **2026-07-11 — vendored study copies retired.** The locally vendored harness snapshots
+  under `reference/` (including the one tracked exception, `ECC-main`) were deleted after
+  all planned reviews had produced their distillations in `docs/reference/`. `reference/`
+  is now a wholly gitignored scratch directory: the harness-review workflow clones a repo
+  there reactively and the clone is disposable. The durable record of a reviewed harness is
+  its distillation here plus its row in the `nxtlvl-wiki` repo manifest (`repos.jsonl`,
+  URL-canonical, SHA-pinned at ingest) — the same format the wiki uses for every source.
+  The rescued ECC knowledge-graph artifacts live at `docs/reference/ecc-understand-anything/`.

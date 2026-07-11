@@ -1,6 +1,6 @@
 ---
 name: ecc-knowledge-graph
-description: "Interactive understand-anything knowledge graph of reference/ECC-main — node/edge/layer/tour graph + dashboard, distinct from the static component map."
+description: "Understand-anything knowledge graph of the retired ECC-main vendored copy — graph JSON rescued to docs/reference/ecc-understand-anything/; dashboard defunct since source deletion."
 metadata: 
   node_type: memory
   type: reference
@@ -9,7 +9,9 @@ metadata:
 
 Ran the `understand-anything:understand` 7-phase pipeline on `reference/ECC-main` at scope "Full system, noise excluded" (1,264 files; mirror dirs + docs/ + assets/ excluded via `.understand-anything/.understandignore`).
 
-Output (gitignored, lives under `reference/ECC-main/.understand-anything/`, NOT in git history):
+**2026-07-11 — vendored ECC-main deleted** (ADR-003 amendment: reference/ copies retired; wiki manifest is the durable record). The core graph artifacts were rescued to **`docs/reference/ecc-understand-anything/`** (tracked); `intermediate/` and trash were dropped. The dashboard and any file-content lens are **defunct** — they read the deleted source tree. To revive: re-clone affaan-m/ECC into gitignored `reference/`, place the rescued `.understand-anything/` contents inside it, or re-run `/understand` fresh. The launchd LaunchAgent `com.willschaefer.ecc-dashboard.plist` still runs but serves a broken graph — unload it unless revived.
+
+Original output (now at `docs/reference/ecc-understand-anything/`):
 - `knowledge-graph.json` — 1,944 nodes (432 file, 754 function, 621 document, 70 config, 57 class, 10 pipeline), 1,781 edges, 9 layers, 11-step tour.
 - 9 layers: Skills Catalog (355), Agents & Commands (175), Coding Rules (89), Automation Scripts (204), Rust Control Plane (19), LLM & Integration (26), Test Suite (135), Plugin Manifest & Config (89), CI/CD & Docs (41).
 - `fingerprints.json` (TreeSitter baseline), `meta.json`, `intermediate/scan-result.json` preserved for incremental reruns.

@@ -1,5 +1,10 @@
 # nxtlvl `reference/` harness map — high-level
 
+> **2026-07-11 — the vendored copies this map describes were deleted** (ADR-003 amendment:
+> `reference/` is now gitignored reactive-clone scratch only). This map and the linked
+> distillations remain the durable record, alongside each repo's row in the `nxtlvl-wiki`
+> repo manifest. To re-examine a repo's source, re-clone it from its GitHub URL below.
+
 *Mapped 2026-06-20.* A one-screen orientation over **every vendored harness in
 [`reference/`](../../reference/)** (13 repos): what each one *is*, how it's shaped, whether it's
 Claude-Code-native, and whether we've already distilled it. This is the **breadth pass** — the cheap

@@ -14,11 +14,10 @@ node_modules/
 # Nested editor-config repos with their own git history — keep out of this bundle
 config/helix/
 
-# Vendored references — large, machine-local "books on the shelf" (e.g. ECC-main ~49MB).
-# reference/ECC-main is vendored in-repo intentionally and IS tracked; everything else
-# under reference/ (and any nested .DS_Store) stays local. Our own analysis lives in docs/reference/.
-/reference/*
-!/reference/ECC-main
+# Harness-review scratch — reactive clones only, always disposable (ADR-003 amendment
+# 2026-07-11: vendored study copies retired). The durable record of a reviewed harness is
+# its distillation in docs/reference/ plus its row in the nxtlvl-wiki repo manifest.
+/reference/
 
 # Packaged skill bundles — built artifacts; rebuild from source, don't track.
 *.skill
