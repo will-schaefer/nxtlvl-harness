@@ -3,7 +3,7 @@ id: ADR-028
 title: "Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies"
 status: Accepted
 date: 2026-07-10
-implementation: deferred — compiler generalization not yet built; seed is `nxtlvl-lab/scripts/sync-agent-configs.ts`
+implementation: in progress — global-scope compiler built 2026-07-11 (`scripts/multi-cli-compiler/`, spec `docs/spec/nxtlvl-multi-cli-compiler.md`, plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`); apply to live CLI configs + repo-scope emitters pending
 ---
 
 # ADR-028: Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies
