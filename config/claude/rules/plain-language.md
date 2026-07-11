@@ -11,7 +11,8 @@ entries, and UI copy. If a future reader (human or agent) will see it, this rule
   codenames for components, no compressed jargon a newcomer couldn't decode. Write the
   words: *source of truth*, *wiki-driven development*.
 - **Universal industry acronyms are the only exception** — terms any working developer
-  reads without pausing: ADR, PR, CI, API, URL, JSON, MCP, CLI, HTML, CSS. Even these:
+  reads without pausing. The exhaustive allow-list is `~/.claude/rules/approved-acronyms.md`;
+  if a term isn't there, it isn't universal — write it out. Even listed terms:
   **spell out on first use per document** when the doc's audience might not know them
   (e.g. "ADR (architecture decision record)").
 - **The test:** would someone opening this file cold, with no session context, read the
