@@ -1,9 +1,11 @@
 # Spec: multi-CLI config compiler
 
-> Status: **FINAL for increment 1 (global scope)** — later increments extend this spec
+> Status: **FINAL for increments 1 (global scope) + 2 (repo-scope MCP)** — later increments
+> extend this spec
 > Date: 2026-07-11 · Revised same day: the Antigravity emit switched from a compiled
 > always-on rule to a `~/.gemini/GEMINI.md` symlink after a sentinel probe showed
 > `~/.gemini/config/agents/` is never read (nothing loads files there, always-on or otherwise)
+> · Extended 2026-07-12 with increment 2: repo-scope MCP emitters, both targets sentinel-probed
 > Anchor intent: [`docs/intent/personal-harness.md`](../intent/personal-harness.md)
 > Related: [ADR-028](../decisions/ADR-028-portable-source-of-truth-per-cli-supplements.md)
 > (strategy — locked), [`docs/reference/multi-cli-config-compat.md`](../reference/multi-cli-config-compat.md)
@@ -37,8 +39,12 @@ session hook (informational only, per the hook-safety rule).
 
 - **In (increment 1):** global scope — machine-level CLI config surfaces under `~/.codex/` and
   `~/.gemini/config/`.
-- **In (later increments, see the plan):** repo scope — MCP translation, skills/commands
-  relocation, agent transforms, permissions demux; deeper per-CLI verification.
+- **In (increment 2):** repo-scope MCP — `--repo <path>` compiles that repo's `mcpServers`
+  (union of `.mcp.json`, `.claude/settings.json`, `.claude/settings.local.json`; later files
+  win per name) into the Codex managed region and the Antigravity workspace
+  `.agents/mcp_config.json`. Devin and Grok import `.mcp.json` natively — no emits.
+- **In (later increments, see the plan):** skills/commands relocation, agent transforms,
+  permissions demux; deeper per-CLI verification.
 - **Out (non-goals, locked by ADR-028 and the compat doc's do-not-compile list):** filtered
   instruction copies; Codex memories; Devin Knowledge/Playbooks; Claude-harness-only surfaces
   (context & memory instincts, output styles, statusline).
@@ -72,8 +78,15 @@ flowchart LR
         T3["~/.gemini/GEMINI.md<br/>symlink → ~/.claude/CLAUDE.md"]
         T4["~/.gemini/config/agents/{5 hand conversions<br/>+ compiled global-conventions.md}<br/>RETIRED (backed up, deleted — dir is never read)"]
     end
+    subgraph REPO["repo-scope surfaces (per --repo path)"]
+        R0["<repo>/.mcp.json + .claude/settings*.json<br/>(mcpServers — the repo source)"]
+        R1["<repo>/.codex/config.toml<br/>managed region: [mcp_servers.X] tables<br/>(seed-owned file → verify only, never written)"]
+        R2["<repo>/.agents/mcp_config.json<br/>merge: serverUrl entries, foreign keys kept"]
+    end
     S1 --> P
+    R0 --> P
     A --> T1 & T2 & T3 & T4
+    A --> R1 & R2
     S2 -. "delivered on demand via pointers<br/>inside T2/T3 content" .-> TARGETS
 ```
 
@@ -91,6 +104,9 @@ natively; Grok reads everything natively. Their compiler surface is verification
 | **Backups** | Before any overwrite or retire, the prior file is copied to `compiler-backup-workspace/<timestamp>/<original path>` in this repo (gitignored via the family `*-workspace/` convention). Backups live outside the CLI config directories so no CLI can accidentally load them. |
 | **Modes** | Default = dry-run plan. `--write` = apply with backups. `--check` = drift gate (no writes, non-zero exit on drift). `--write` and `--check` are mutually exclusive. |
 | **Portability gate** | Compiled instruction content matching the Claude-only token pattern (`dangerouslyDisable*`, `claude.ai/code`, slash-pipeline names, `/nxtlvl:`, `◆`) aborts the run before any write. This enforces ADR-028's authoring discipline at compile time. |
+| **Repo MCP → Codex** | `[mcp_servers.<name>]` tables inside the managed region of `<repo>/.codex/config.toml` (HTTP `url`/`http_headers`, stdio `command`/`args`/`env`). Sentinel-probed 2026-07-12: loads in a trusted repo; Codex normalizes server names (hyphens → underscores) in its tool namespace. |
+| **Repo MCP → Antigravity** | Merge into `<repo>/.agents/mcp_config.json`: HTTP servers as `serverUrl` entries (byte-compatible with the lab seed's output); foreign top-level keys and foreign servers preserved; invalid existing JSON aborts rather than clobbers. Sentinel-probed 2026-07-12. **stdio servers are not emitted** until their key shape is probe-verified. |
+| **Seed-owned file guard** | A `.codex/config.toml` stamped with another generator's "Generated from" header (the lab's `stack.toml` flow) is never written — that flow regenerates the file whole and would erase a foreign managed block. The compiler emits a `verify` action instead: delivery of each server is asserted, and a miss reports `conflict` (fix belongs in `.agents/stack.toml`). |
 
 ## Constraints & decisions already locked
 
@@ -117,3 +133,13 @@ natively; Grok reads everything natively. Their compiler surface is verification
   the symlink) and `~/.gemini/config/agents/` is empty; Grok — `grok inspect --json` still
   shows exactly the global + project CLAUDE.md pair (nothing this compiler emits may appear
   in Grok's stream).
+- **Repo-scope MCP smoke (done 2026-07-12; probe recipe for re-verification):** scratch git
+  repo with only a `.mcp.json` naming a sentinel server (`nxtlvl-probe-deepwiki`), compiled
+  with `--repo <scratch> --write`, then each CLI asked to list its MCP servers — Codex
+  (scratch temporarily trusted via a marker-delimited `[projects]` entry, removed after)
+  must return the sentinel from the emitted managed block; Antigravity (`agy --new-project`)
+  must return it from the emitted `.agents/mcp_config.json`. The sentinel name disambiguates
+  from plugin-delivered servers (a plugin-scoped `deepwiki` exists globally on this machine).
+- **Lab coexistence:** `--repo nxtlvl-lab` dry run reports everything in sync (the compiled
+  `mcp_config.json` is byte-identical to the seed's; the seed-owned Codex file passes the
+  delivery assertion), and the lab's own `sync-agent-configs --check` stays green.

@@ -167,7 +167,11 @@ Grounded via `/websites/developers_openai_codex`, `/websites/devin_ai`,
   default 32 KiB — https://developers.openai.com/codex/guides/agents-md,
   https://developers.openai.com/codex/config-sample
 - Codex MCP `[mcp_servers.X]` (stdio `command/args/env_vars`; HTTP
-  `url/bearer_token_env_var/http_headers`) — https://developers.openai.com/codex/mcp
+  `url/bearer_token_env_var/http_headers`) — https://developers.openai.com/codex/mcp.
+  **Repo-local confirmed by sentinel probe (2026-07-12):** `[mcp_servers.X]` inside the
+  compiler's managed region of a trusted repo's `.codex/config.toml` loads live; Codex
+  normalizes server names in its tool namespace (`nxtlvl-probe-deepwiki` →
+  `nxtlvl_probe_deepwiki`), so don't grep session output for the hyphenated name.
 - Codex subagent TOML (`name/description/developer_instructions`) —
   https://developers.openai.com/codex/subagents. The `[agent]` table header seen in one snippet
   is **resolved**: current subagents docs show top-level keys, no wrapper (Codex self-review
@@ -339,6 +343,10 @@ copied back). Four facts confirmed; two corrected outright, one incomplete:
   **workspace servers `.agents/mcp_config.json`** — the neutral `.agents/` dir again, matching
   what `sync-agent-configs.ts` already emits. First `agy` run also auto-onboards Gemini CLI
   profiles/settings/tokens (one-time, like the other first-party imports).
+  **Workspace half confirmed by sentinel probe (2026-07-12):** a compiler-emitted
+  `.agents/mcp_config.json` (`serverUrl` entry, sentinel name) is listed by
+  `agy --new-project` — this emit target loads live. stdio key shape still unprobed; the
+  compiler skips stdio servers for Antigravity until it is.
 - **`agy plugin import claude` is one-shot** migration, not re-runnable sync — a continuous
   compiler emits directly into `~/.gemini/config/plugins/`.
 - **Rules format confirmed** (closes formerly-unverified item 1): frontmatter

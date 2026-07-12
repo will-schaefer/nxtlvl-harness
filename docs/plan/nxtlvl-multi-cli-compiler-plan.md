@@ -1,10 +1,9 @@
 # Implementation Plan: multi-CLI config compiler
 
 > Consumes [`docs/spec/nxtlvl-multi-cli-compiler.md`](../spec/nxtlvl-multi-cli-compiler.md)
-> Status: **Task 1 built, applied, and re-applied 2026-07-11 (the Antigravity emit was
-> revised same-day — see the Task 1 revision note); `--check` reports all targets in sync.
-> Tasks 2–6 queued.**
-> Date: 2026-07-11
+> Status: **Tasks 1–2 built and verified (Task 1 applied 2026-07-11; Task 2 built and
+> sentinel-probed 2026-07-12); `--check` reports all targets in sync. Tasks 3–6 queued.**
+> Date: 2026-07-11 · Updated: 2026-07-12
 
 ## Overview
 
@@ -83,7 +82,7 @@ in the spec §Verification.
 **Files likely touched:** `scripts/multi-cli-compiler/{compile,emitters,emitters.test}.ts`,
 `package.json`, `tsconfig.json`.
 
-## Task 2: Repo-scope MCP emitters
+## Task 2: Repo-scope MCP emitters — **BUILT + VERIFIED 2026-07-12**
 
 **Description:** Per-repo run mode: read `<repo>/.mcp.json` (+ `.claude/settings.json`
 `mcpServers`), emit the Codex `[mcp_servers.X]` managed region in `<repo>/.codex/config.toml`
@@ -93,9 +92,30 @@ location Antigravity's workspace MCP reads). Devin and Grok need no MCP emitter 
 First real input: `nxtlvl-lab/.mcp.json` (deepwiki).
 
 **Acceptance criteria:**
-- [ ] nxtlvl-lab's deepwiki server reaches Codex and Antigravity workspace config from
-      `.mcp.json` alone
-- [ ] The lab's `stack.toml` flow still passes its own `--check`
+- [x] nxtlvl-lab's deepwiki server reaches Codex and Antigravity workspace config from
+      `.mcp.json` alone (2026-07-12: the compiled `.agents/mcp_config.json` is byte-identical
+      to the lab seed's live file, and the seed-owned `.codex/config.toml` passes the
+      delivery assertion — see build notes)
+- [x] The lab's `stack.toml` flow still passes its own `--check` (run 2026-07-12, green)
+
+**Build notes (2026-07-12):**
+- `--repo <path>` (repeatable) compiles that repo's MCP servers on top of the global plan;
+  sources are the union of `.mcp.json`, `.claude/settings.json`, and
+  `.claude/settings.local.json`, later files winning per server name.
+- A seed-owned `.codex/config.toml` (the lab's `stack.toml` flow stamps a "Generated from"
+  header) is never rewritten — that flow regenerates the file whole and would silently erase
+  a foreign managed block. The compiler asserts delivery instead (a `verify` action); a
+  missing server reports `conflict` and is fixed in `.agents/stack.toml`, not by the compiler.
+- Antigravity stdio servers are deliberately not emitted until their `mcp_config.json` key
+  shape is probe-verified; HTTP servers use `serverUrl` (byte-compatible with the lab seed).
+- Sentinel probes (2026-07-12), per ADR-028's every-emit-paired-with-verification rule: a
+  scratch repo compiled from `.mcp.json` alone, then each CLI asked to list its MCP servers.
+  Codex (scratch temporarily trusted) returned the sentinel server from the emitted managed
+  block — repo-local `[mcp_servers.X]` loads; nuance: Codex normalizes server names
+  (`nxtlvl-probe-deepwiki` → `nxtlvl_probe_deepwiki`). Antigravity (`agy --new-project`)
+  returned the sentinel from the emitted `.agents/mcp_config.json`. Both emit targets are
+  empirically confirmed; probe workspace and the temporary Codex trust entry were removed
+  after the runs.
 
 **Dependencies:** Task 1.
 
