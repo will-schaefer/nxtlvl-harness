@@ -3,7 +3,7 @@ id: ADR-028
 title: "Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies"
 status: Accepted
 date: 2026-07-10
-implementation: in progress — global-scope compiler built 2026-07-11 (`scripts/multi-cli-compiler/`, spec `docs/spec/nxtlvl-multi-cli-compiler.md`, plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`); apply to live CLI configs + repo-scope emitters pending
+implementation: in progress — global scope done 2026-07-11 (`scripts/multi-cli-compiler/`, spec `docs/spec/nxtlvl-multi-cli-compiler.md`, plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`; applied to live CLI configs and smoke-verified, drift check in sync); repo-scope emitters (plan Tasks 2–6) pending
 ---
 
 # ADR-028: Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies

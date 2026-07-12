@@ -63,8 +63,10 @@ flowchart LR
 ```
 
 1. **Filtered instructions — the #1 job.** Every native path shares CLAUDE.md *verbatim*, so
-   Claude-only content leaks: `~/.gemini/config/agents/global-conventions.md` currently tells
-   Gemini to pass `dangerouslyDisableSandbox: true` (a Claude Code Bash-tool flag). Fix = tag
+   Claude-only content leaks: `~/.gemini/config/agents/global-conventions.md` told
+   Gemini to pass `dangerouslyDisableSandbox: true` (a Claude Code Bash-tool flag) — retired
+   2026-07-11 by the compiler; a same-day sentinel probe showed nothing ever read that
+   directory anyway. Fix = tag
    sections in the source (portable vs claude-only) and compile filtered `AGENTS.md` /
    Antigravity rules. Codex caps combined project docs at 32 KiB (`project_doc_max_bytes`
    default; this repo pins 65536) — filtering also keeps us under it.
@@ -203,8 +205,12 @@ Grounded via `/websites/developers_openai_codex`, `/websites/devin_ai`,
 **Formerly unverified — all four items closed by the 2026-07-10 self-review passes (below):**
 1. ~~Antigravity rules `trigger:` frontmatter~~ — **confirmed** by the agy self-review:
    markdown + YAML frontmatter (`trigger: always_on|model_decision`, `description:`); global
-   rules in `~/.gemini/config/agents/`, plugin rules in
-   `~/.gemini/config/plugins/<name>/rules/`.
+   rules in ~~`~/.gemini/config/agents/`~~, plugin rules in
+   `~/.gemini/config/plugins/<name>/rules/`. **Location correction (2026-07-11 sentinel
+   probes):** `~/.gemini/config/agents/` is **never read** — files there load nothing,
+   always-on or otherwise (another self-review claim refuted by probe). `~/.gemini/config/rules/`
+   *does* load, and `~/.gemini/GEMINI.md` loads always-on (the compiler now symlinks it to
+   the global CLAUDE.md).
 2. ~~Codex `/import`, memories dir, hooks event list, permission-profile/sandbox_mode mutual
    exclusion~~ — **closed** by the Codex self-review pass: import reclassified as
    desktop-app bootstrap, hooks event list + mutual exclusion confirmed (with the

@@ -1,7 +1,9 @@
 # Spec: multi-CLI config compiler
 
 > Status: **FINAL for increment 1 (global scope)** — later increments extend this spec
-> Date: 2026-07-11
+> Date: 2026-07-11 · Revised same day: the Antigravity emit switched from a compiled
+> always-on rule to a `~/.gemini/GEMINI.md` symlink after a sentinel probe showed
+> `~/.gemini/config/agents/` is never read (nothing loads files there, always-on or otherwise)
 > Anchor intent: [`docs/intent/personal-harness.md`](../intent/personal-harness.md)
 > Related: [ADR-028](../decisions/ADR-028-portable-source-of-truth-per-cli-supplements.md)
 > (strategy — locked), [`docs/reference/multi-cli-config-compat.md`](../reference/multi-cli-config-compat.md)
@@ -24,9 +26,10 @@ session hook (informational only, per the hook-safety rule).
 - `npm run compile-multi-cli -- --check` exits non-zero when any target file drifts from what
   the sources compile to, zero otherwise.
 - After `--write`: Codex reads `CLAUDE.md` in repos with no `AGENTS.md` (global
-  `project_doc_fallback_filenames`); Codex has global instructions; Antigravity's always-on
-  global rule byte-matches the compiled `~/.claude/CLAUDE.md`; the stale 2026-07-04 hand
-  conversions are gone; every touched file has a backup.
+  `project_doc_fallback_filenames`); Codex has global instructions; Antigravity loads the
+  portable source through the `~/.gemini/GEMINI.md` symlink; `~/.gemini/config/agents/` is
+  empty (the five stale 2026-07-04 hand conversions and the transitional compiled rule are
+  all retired); every touched file has a backup.
 - The compiler **refuses to emit** any instruction content containing Claude-only tokens
   (portability gate) — a non-portable source fails the run before any write.
 
@@ -40,9 +43,12 @@ session hook (informational only, per the hook-safety rule).
   instruction copies; Codex memories; Devin Knowledge/Playbooks; Claude-harness-only surfaces
   (context & memory instincts, output styles, statusline).
 - **Deliberately not emitted:** per-rule Antigravity copies of `~/.claude/rules/*.md`. The
-  rules layer is on-demand by design — the compiled global-conventions rule carries the same
-  pointer lines the source does, and any CLI can read the rule files when triggered. This
-  retires the 2026-07-04 hand conversions instead of regenerating them.
+  rules layer is on-demand by design — the `GEMINI.md` symlink delivers the source's pointer
+  lines verbatim, and any CLI can read the rule files when triggered. This retires the
+  2026-07-04 hand conversions instead of regenerating them. (The first build compiled an
+  always-on `global-conventions.md` rule into `~/.gemini/config/agents/`; the sentinel probe
+  then showed that directory is never read, so that rule is itself on the retire list and the
+  symlink replaced it.)
 
 ## Architecture
 
@@ -63,8 +69,8 @@ flowchart LR
     subgraph TARGETS["global CLI surfaces"]
         T1["~/.codex/config.toml<br/>managed region: CLAUDE.md fallback"]
         T2["~/.codex/AGENTS.md<br/>symlink → ~/.claude/CLAUDE.md"]
-        T3["~/.gemini/config/agents/global-conventions.md<br/>always_on rule (compiled)"]
-        T4["~/.gemini/config/agents/{5 hand conversions}<br/>RETIRED (backed up, deleted)"]
+        T3["~/.gemini/GEMINI.md<br/>symlink → ~/.claude/CLAUDE.md"]
+        T4["~/.gemini/config/agents/{5 hand conversions<br/>+ compiled global-conventions.md}<br/>RETIRED (backed up, deleted — dir is never read)"]
     end
     S1 --> P
     A --> T1 & T2 & T3 & T4
@@ -80,8 +86,8 @@ natively; Grok reads everything natively. Their compiler surface is verification
 |---|---|
 | **Managed TOML region** | A marker-delimited block (`# --- nxtlvl-managed BEGIN/END ---`) the compiler owns inside a CLI-owned file. Inserted **before the first `[table]` header** (TOML top-level keys must precede tables); replaced in place on re-run; idempotent (second run is a byte no-op). Everything outside the markers is never touched. |
 | **Codex global instructions** | `~/.codex/AGENTS.md` as a **symlink** to `~/.claude/CLAUDE.md` — delivers the portable source verbatim, zero drift. If Codex is ever shown not to follow symlinks, fall back to the seed's pointer-adapter file (verification catches this). |
-| **Antigravity always-on rule** | Markdown with `trigger: always_on` + `description` frontmatter and a generated-file notice, body = the global CLAUDE.md verbatim. Regenerated on every run. |
-| **Retire list** | Exact filenames the compiler deletes as superseded. Guard: a listed file is only deleted if it looks like a hand conversion (`trigger:` frontmatter); anything else is skipped with a warning — user-authored rules are never touched. |
+| **Antigravity global instructions** | `~/.gemini/GEMINI.md` as a **symlink** to `~/.claude/CLAUDE.md` — the sentinel probe (2026-07-11) confirmed Antigravity loads `~/.gemini/GEMINI.md` always-on and that `~/.gemini/config/agents/` is never read, so a symlink delivers the portable source verbatim with zero drift. |
+| **Retire list** | Exact filenames the compiler deletes as superseded: the five 2026-07-04 hand conversions plus the transitional compiled `global-conventions.md` from the first build. Guard: a listed file is only deleted if it looks like a compiler-known conversion (`trigger:` frontmatter); anything else is skipped with a warning — user-authored rules are never touched. |
 | **Backups** | Before any overwrite or retire, the prior file is copied to `compiler-backup-workspace/<timestamp>/<original path>` in this repo (gitignored via the family `*-workspace/` convention). Backups live outside the CLI config directories so no CLI can accidentally load them. |
 | **Modes** | Default = dry-run plan. `--write` = apply with backups. `--check` = drift gate (no writes, non-zero exit on drift). `--write` and `--check` are mutually exclusive. |
 | **Portability gate** | Compiled instruction content matching the Claude-only token pattern (`dangerouslyDisable*`, `claude.ai/code`, slash-pipeline names, `/nxtlvl:`, `◆`) aborts the run before any write. This enforces ADR-028's authoring discipline at compile time. |
@@ -107,6 +113,7 @@ natively; Grok reads everything natively. Their compiler surface is verification
   surface must flip it non-zero.
 - **Per-CLI smoke (manual, per ADR-028's verification requirement):** Codex — a run in a repo
   with no `AGENTS.md` sees CLAUDE.md content, and global instructions resolve through the
-  symlink; Antigravity — the compiled rule appears in its rules listing without the retired
-  five; Grok — `grok inspect --json` still shows exactly the global + project CLAUDE.md pair
-  (nothing this compiler emits may appear in Grok's stream).
+  symlink; Antigravity — a sentinel probe returns content from `~/.gemini/GEMINI.md` (through
+  the symlink) and `~/.gemini/config/agents/` is empty; Grok — `grok inspect --json` still
+  shows exactly the global + project CLAUDE.md pair (nothing this compiler emits may appear
+  in Grok's stream).

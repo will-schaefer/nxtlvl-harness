@@ -1,7 +1,9 @@
 # Implementation Plan: multi-CLI config compiler
 
 > Consumes [`docs/spec/nxtlvl-multi-cli-compiler.md`](../spec/nxtlvl-multi-cli-compiler.md)
-> Status: **Task 1 built 2026-07-11 (apply to live configs pending user approval); Tasks 2–6 queued**
+> Status: **Task 1 built, applied, and re-applied 2026-07-11 (the Antigravity emit was
+> revised same-day — see the Task 1 revision note); `--check` reports all targets in sync.
+> Tasks 2–6 queued.**
 > Date: 2026-07-11
 
 ## Overview
@@ -37,24 +39,41 @@ flowchart TD
     T5 --> T6
 ```
 
-## Task 1: Global-scope compiler (Codex + Antigravity emitters) — **BUILT 2026-07-11**
+## Task 1: Global-scope compiler (Codex + Antigravity emitters) — **BUILT + APPLIED 2026-07-11**
 
 **Description:** `scripts/multi-cli-compiler/` with dry-run/`--write`/`--check` modes, the
 managed-TOML-region contract, the portability gate, backups, and the retire list. Emits:
 Codex `project_doc_fallback_filenames = ["CLAUDE.md"]` (managed region in
-`~/.codex/config.toml`), `~/.codex/AGENTS.md → ~/.claude/CLAUDE.md` symlink, and the compiled
-Antigravity `global-conventions.md` always-on rule; retires the five 2026-07-04 hand-converted
-rule copies.
+`~/.codex/config.toml`), `~/.codex/AGENTS.md → ~/.claude/CLAUDE.md` symlink, and the
+`~/.gemini/GEMINI.md → ~/.claude/CLAUDE.md` symlink; retires the five 2026-07-04
+hand-converted rule copies plus the transitional compiled `global-conventions.md`.
+
+**Revision note (same day):** the first build compiled an always-on
+`global-conventions.md` rule into `~/.gemini/config/agents/` and applied it. A follow-up
+sentinel probe showed that directory is **never read** (nothing loads files there), while
+`~/.gemini/GEMINI.md` loads always-on — so the emit was revised to the symlink and the
+compiled rule joined the retire list. The revised emits were applied 2026-07-11 (2 changes,
+backups under `compiler-backup-workspace/2026-07-12T01-53-26-294Z/`); `--check` exits zero.
 
 **Acceptance criteria:**
 - [x] Unit tests pass (`npm test`); typecheck clean (`npm run typecheck`)
 - [x] Dry run prints the plan and writes nothing (verified 2026-07-11: 8 changes planned,
       portability gate passed, retire guard validated all five hand conversions)
-- [ ] `--write` applies with backups; immediate `--check` exits zero — **awaiting user
-      approval**: the apply deletes/overwrites files under `~/.codex/` and
-      `~/.gemini/config/`, outside the repo
-- [ ] Manual smoke: Codex sees CLAUDE.md in an `AGENTS.md`-less repo; Antigravity lists the
-      compiled rule and not the retired five; `grok inspect` stream unchanged
+- [x] `--write` applies with backups; immediate `--check` exits zero (applied by the user
+      2026-07-11 after the permission classifier required explicit consent; 8 changes,
+      backups under `compiler-backup-workspace/2026-07-11T18-45-31-044Z/`; `--check` exit 0)
+- [x] Manual smoke (2026-07-11): Codex `exec` probe in an `AGENTS.md`-less directory returned
+      the sentinel from CLAUDE.md *and* the global file's first heading through the symlink;
+      `~/.gemini/config/agents/` holds only the compiled rule (retired five absent —
+      Antigravity's rule discovery is directory-based, a claim the later sentinel probe
+      refuted; see the revision note); `grok inspect` stream unchanged
+      (global + project CLAUDE.md pair, nothing new)
+- [x] Revised apply (2026-07-11): `--write` created the `~/.gemini/GEMINI.md` symlink and
+      retired the compiled `global-conventions.md` (2 changes, backed up); immediate
+      `--check` exits zero
+- [x] Revised smoke (2026-07-11): a trusted-workspace Antigravity probe with tools forbidden
+      quoted the global CLAUDE.md "Plain language" section and its rule-file path — content
+      reachable only through the `GEMINI.md` symlink; `~/.gemini/config/agents/` is empty
 
 **Verification:** `npm test`, `npm run compile-multi-cli -- --check`, the three smoke checks
 in the spec §Verification.

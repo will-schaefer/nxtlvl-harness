@@ -38,3 +38,24 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   Devin Knowledge (no CLI surface), C&M.
 - The pre-build doc gaps (Codex commands, Devin permission grammar) are **closed** — the
   2026-07-10 self-review passes in the compat doc ground them.
+- **Compiler Task 1 DONE — built, applied, verified (2026-07-11):** global-scope compiler
+  at `nxtlvl-core/scripts/multi-cli-compiler/` (spec `docs/spec/nxtlvl-multi-cli-compiler.md`,
+  plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`). Emits: Codex
+  `project_doc_fallback_filenames` managed TOML region + `~/.codex/AGENTS.md → ~/.claude/CLAUDE.md`
+  symlink + `~/.gemini/GEMINI.md → ~/.claude/CLAUDE.md` symlink; RETIRES all of
+  `~/.gemini/config/agents/` (five 2026-07-04 hand conversions + the first build's compiled
+  `global-conventions.md` — a sentinel probe showed that directory is NEVER read; rules stay
+  on-demand, deliberately NOT compiled per-rule, slash-command names would leak back
+  always-on). Modes: dry-run default / `--write` (backups to gitignored
+  `compiler-backup-workspace/`) / `--check` drift gate; portability gate hard-fails on
+  Claude-only tokens. All emits applied live; `--check` in sync; symlink smoke passed
+  (Antigravity quoted global-CLAUDE.md content through the `GEMINI.md` symlink with tools
+  forbidden). Tasks 2–6 queued in the plan doc — Task 2 (repo-scope MCP emitters) is next.
+- **CLAUDE.md portable restructure DONE (2026-07-11):** all four instruction files swept
+  (global + nxtlvl-core slash-syntax rewrites; stale sandbox-block stragglers deleted from
+  nxtlvl-lab + nxtlvl-wiki), committed per repo. `grok inspect` ground truth: Grok's
+  always-on stream is exactly global + project CLAUDE.md — `~/.claude/rules/` is on-demand
+  only. Remaining build work: plan Tasks 2–6 — repo-scope MCP emitters, skills/commands
+  relocation, agent transforms, permissions demux, verification deepening + Grok config
+  hygiene. (The two global gaps once listed here — Codex missing the CLAUDE.md fallback,
+  and a stale always-on Antigravity rule — were closed by the applied Task 1.)
