@@ -3,9 +3,14 @@ import { test } from 'node:test';
 import {
   MANAGED_BEGIN,
   MANAGED_END,
+  compileAntigravityMcpServers,
   compileAntigravityRule,
+  compileCodexMcpServerLines,
   findClaudeOnlyTokens,
+  isLabSeedOwnedToml,
   looksLikeHandConvertedRule,
+  mergeMcpConfigJson,
+  tomlDeliversMcpServer,
   upsertManagedTomlBlock,
 } from './emitters.ts';
 
@@ -92,4 +97,104 @@ test('retire guard accepts hand-converted rules and rejects everything else', ()
   assert.ok(looksLikeHandConvertedRule('---\ntrigger: always_on\ndescription: x\n---\n# Rule\n'));
   assert.ok(!looksLikeHandConvertedRule('# Just a markdown file\n\ntrigger: mentioned in prose\n'));
   assert.ok(!looksLikeHandConvertedRule(''));
+});
+
+// --- increment 2: repo-scope MCP emitters ---
+
+test('codex mcp lines: http server with url only', () => {
+  const lines = compileCodexMcpServerLines('deepwiki', { url: 'https://mcp.deepwiki.com/mcp' });
+  assert.deepEqual(lines, ['[mcp_servers.deepwiki]', 'url = "https://mcp.deepwiki.com/mcp"']);
+});
+
+test('codex mcp lines: http server with headers becomes http_headers inline table', () => {
+  const lines = compileCodexMcpServerLines('api', {
+    url: 'https://example.com/mcp',
+    headers: { Authorization: 'Bearer abc' },
+  });
+  assert.deepEqual(lines, [
+    '[mcp_servers.api]',
+    'url = "https://example.com/mcp"',
+    'http_headers = { "Authorization" = "Bearer abc" }',
+  ]);
+});
+
+test('codex mcp lines: stdio server with args and env', () => {
+  const lines = compileCodexMcpServerLines('local', {
+    command: 'npx',
+    args: ['-y', 'some-server'],
+    env: { TOKEN: 'x' },
+  });
+  assert.deepEqual(lines, [
+    '[mcp_servers.local]',
+    'command = "npx"',
+    'args = ["-y", "some-server"]',
+    'env = { "TOKEN" = "x" }',
+  ]);
+});
+
+test('codex mcp lines: non-identifier server name gets quoted', () => {
+  const lines = compileCodexMcpServerLines('my server', { url: 'https://x.example/mcp' });
+  assert.equal(lines[0], '[mcp_servers."my server"]');
+});
+
+test('antigravity mcp: http becomes serverUrl, stdio is skipped', () => {
+  const result = compileAntigravityMcpServers({
+    deepwiki: { url: 'https://mcp.deepwiki.com/mcp' },
+    local: { command: 'npx', args: ['-y', 'thing'] },
+  });
+  assert.deepEqual(result.servers, {
+    deepwiki: { serverUrl: 'https://mcp.deepwiki.com/mcp' },
+  });
+  assert.deepEqual(result.skippedStdio, ['local']);
+});
+
+test('mcp_config merge: fresh file gets sorted deterministic shape', () => {
+  const merged = mergeMcpConfigJson(null, { deepwiki: { serverUrl: 'https://mcp.deepwiki.com/mcp' } });
+  assert.equal(
+    merged,
+    '{\n  "mcpServers": {\n    "deepwiki": {\n      "serverUrl": "https://mcp.deepwiki.com/mcp"\n    }\n  }\n}\n',
+  );
+});
+
+test('mcp_config merge: byte-stable against the lab seed output', () => {
+  const seedEmitted =
+    '{\n  "mcpServers": {\n    "deepwiki": {\n      "serverUrl": "https://mcp.deepwiki.com/mcp"\n    }\n  }\n}\n';
+  const merged = mergeMcpConfigJson(seedEmitted, {
+    deepwiki: { serverUrl: 'https://mcp.deepwiki.com/mcp' },
+  });
+  assert.equal(merged, seedEmitted, 'identical desired state must be a byte no-op');
+});
+
+test('mcp_config merge: preserves foreign keys and servers, compiled wins per name', () => {
+  const existing = JSON.stringify(
+    {
+      otherSetting: true,
+      mcpServers: {
+        keepMe: { serverUrl: 'https://keep.example/mcp' },
+        deepwiki: { serverUrl: 'https://stale.example/mcp' },
+      },
+    },
+    null,
+    2,
+  );
+  const merged = JSON.parse(
+    mergeMcpConfigJson(existing, { deepwiki: { serverUrl: 'https://mcp.deepwiki.com/mcp' } }),
+  );
+  assert.equal(merged.otherSetting, true);
+  assert.equal(merged.mcpServers.keepMe.serverUrl, 'https://keep.example/mcp');
+  assert.equal(merged.mcpServers.deepwiki.serverUrl, 'https://mcp.deepwiki.com/mcp');
+});
+
+test('mcp_config merge: invalid existing JSON throws instead of clobbering', () => {
+  assert.throws(() => mergeMcpConfigJson('{not json', { a: { serverUrl: 'https://x/mcp' } }));
+});
+
+test('lab seed ownership detection and delivery check', () => {
+  const seedFile =
+    '# Generated from .agents/stack.toml by scripts/sync-agent-configs.ts.\nmodel = "gpt-5.5"\n\n[mcp_servers.deepwiki]\nurl = "https://mcp.deepwiki.com/mcp"\nenabled = true\n';
+  assert.ok(isLabSeedOwnedToml(seedFile));
+  assert.ok(!isLabSeedOwnedToml('model = "gpt-5.5"\n'));
+  assert.ok(tomlDeliversMcpServer(seedFile, 'deepwiki', 'https://mcp.deepwiki.com/mcp'));
+  assert.ok(!tomlDeliversMcpServer(seedFile, 'deepwiki', 'https://other.example/mcp'));
+  assert.ok(!tomlDeliversMcpServer(seedFile, 'missing', 'https://mcp.deepwiki.com/mcp'));
 });

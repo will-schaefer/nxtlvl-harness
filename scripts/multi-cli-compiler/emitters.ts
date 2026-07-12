@@ -77,6 +77,117 @@ export function compileAntigravityRule(options: AntigravityRuleOptions): string 
   return ensureTrailingNewline(header + stripFrontmatter(options.body).trimStart());
 }
 
+/** Claude-format MCP server, as found in `.mcp.json` / settings `mcpServers`. */
+export interface ClaudeMcpServer {
+  type?: string;
+  url?: string;
+  headers?: Record<string, string>;
+  command?: string;
+  args?: string[];
+  env?: Record<string, string>;
+}
+
+/**
+ * Claude MCP server → Codex `[mcp_servers.<name>]` TOML lines.
+ * Keys per the compat doc's verified Codex list: HTTP `url`/`http_headers`,
+ * stdio `command`/`args`/`env`. JSON string escaping is valid TOML basic-string escaping.
+ */
+export function compileCodexMcpServerLines(name: string, server: ClaudeMcpServer): string[] {
+  const key = /^[A-Za-z0-9_-]+$/.test(name) ? name : JSON.stringify(name);
+  const lines = [`[mcp_servers.${key}]`];
+  if (server.url !== undefined) {
+    lines.push(`url = ${JSON.stringify(server.url)}`);
+    const headers = Object.entries(server.headers ?? {});
+    if (headers.length > 0) {
+      lines.push(`http_headers = ${tomlInlineTable(headers)}`);
+    }
+    return lines;
+  }
+  lines.push(`command = ${JSON.stringify(server.command ?? '')}`);
+  if (server.args !== undefined && server.args.length > 0) {
+    lines.push(`args = [${server.args.map((arg) => JSON.stringify(arg)).join(', ')}]`);
+  }
+  const env = Object.entries(server.env ?? {});
+  if (env.length > 0) {
+    lines.push(`env = ${tomlInlineTable(env)}`);
+  }
+  return lines;
+}
+
+export interface AntigravityMcpResult {
+  servers: Record<string, { serverUrl: string }>;
+  /** stdio servers — their Antigravity key shape is unverified, so they are not emitted. */
+  skippedStdio: string[];
+}
+
+/**
+ * Claude MCP servers → Antigravity workspace `mcp_config.json` entries.
+ * HTTP uses `serverUrl` (the shape the lab seed emits and the compat doc records);
+ * stdio is skipped until a real stdio server exists to probe-verify the shape.
+ */
+export function compileAntigravityMcpServers(
+  source: Record<string, ClaudeMcpServer>,
+): AntigravityMcpResult {
+  const servers: Record<string, { serverUrl: string }> = {};
+  const skippedStdio: string[] = [];
+  for (const [name, server] of Object.entries(source)) {
+    if (server.url !== undefined) {
+      servers[name] = { serverUrl: server.url };
+    } else {
+      skippedStdio.push(name);
+    }
+  }
+  return { servers, skippedStdio };
+}
+
+/**
+ * Merge compiled servers into an existing `mcp_config.json`, preserving every
+ * foreign key (other servers, other top-level settings). Output is deterministic:
+ * recursively sorted keys, two-space indent, trailing newline. Invalid existing
+ * JSON throws — the compiler must never silently clobber a file it cannot parse.
+ */
+export function mergeMcpConfigJson(
+  existing: string | null,
+  compiled: Record<string, unknown>,
+): string {
+  let parsed: Record<string, unknown> = {};
+  if (existing !== null && existing.trim() !== '') {
+    parsed = JSON.parse(existing) as Record<string, unknown>;
+  }
+  const currentServers = (parsed.mcpServers ?? {}) as Record<string, unknown>;
+  const merged = { ...parsed, mcpServers: { ...currentServers, ...compiled } };
+  return `${JSON.stringify(sortKeysDeep(merged), null, 2)}\n`;
+}
+
+/** The lab seed (sync-agent-configs.ts) owns files it stamps with this header. */
+export function isLabSeedOwnedToml(content: string): boolean {
+  return content.startsWith('# Generated from .agents/stack.toml');
+}
+
+/** Crude but reliable delivery check for seed-owned TOML the compiler must not rewrite. */
+export function tomlDeliversMcpServer(content: string, name: string, url: string): boolean {
+  return content.includes(`[mcp_servers.${name}]`) && content.includes(JSON.stringify(url));
+}
+
+function tomlInlineTable(entries: [string, string][]): string {
+  const pairs = entries.map(([key, value]) => `${JSON.stringify(key)} = ${JSON.stringify(value)}`);
+  return `{ ${pairs.join(', ')} }`;
+}
+
+function sortKeysDeep(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(sortKeysDeep);
+  }
+  if (value !== null && typeof value === 'object') {
+    const sorted: Record<string, unknown> = {};
+    for (const key of Object.keys(value as Record<string, unknown>).sort()) {
+      sorted[key] = sortKeysDeep((value as Record<string, unknown>)[key]);
+    }
+    return sorted;
+  }
+  return value;
+}
+
 /**
  * Retire-list guard: only files that look like the known hand conversions
  * (Antigravity rule frontmatter) may be deleted — never user-authored content.

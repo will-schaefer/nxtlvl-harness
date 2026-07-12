@@ -1,9 +1,11 @@
 /**
- * multi-CLI config compiler — global scope (increment 1).
+ * multi-CLI config compiler — global scope (increment 1) + repo-scope MCP (increment 2).
  * Makes Codex and Antigravity consume the Claude Code config as their source of truth,
  * emitting only ADR-028's mechanical residue. Devin and Grok read it natively (no emits).
  *
  * Modes: default = dry-run plan · --write = apply with backups · --check = drift gate.
+ * Repo scope: `--repo <path>` (repeatable) compiles that repo's `.mcp.json` on top of
+ * the global plan.
  * Spec: docs/spec/nxtlvl-multi-cli-compiler.md · Plan: docs/plan/nxtlvl-multi-cli-compiler-plan.md
  */
 
@@ -21,10 +23,16 @@ import {
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import {
+  compileAntigravityMcpServers,
+  compileCodexMcpServerLines,
   findClaudeOnlyTokens,
+  isLabSeedOwnedToml,
   looksLikeHandConvertedRule,
+  mergeMcpConfigJson,
+  tomlDeliversMcpServer,
   upsertManagedTomlBlock,
 } from './emitters.ts';
+import type { ClaudeMcpServer } from './emitters.ts';
 
 const HOME = homedir();
 const SOURCE_GLOBAL_CLAUDE_MD = join(HOME, '.claude', 'CLAUDE.md');
@@ -77,8 +85,16 @@ interface RetireAction {
   reason: string;
 }
 
-type Action = WriteAction | SymlinkAction | RetireAction;
-type Status = 'ok' | 'create' | 'update' | 'retire' | 'skip';
+/** A delivery assertion on a file another flow owns — never written, only checked. */
+interface VerifyAction {
+  kind: 'verify';
+  path: string;
+  ok: boolean;
+  reason: string;
+}
+
+type Action = WriteAction | SymlinkAction | RetireAction | VerifyAction;
+type Status = 'ok' | 'create' | 'update' | 'retire' | 'skip' | 'conflict';
 
 main();
 
@@ -94,7 +110,20 @@ function main(): void {
     process.exit(1);
   }
 
-  const actions = buildGlobalPlan();
+  const repoRoots: string[] = [];
+  for (let i = 2; i < process.argv.length; i += 1) {
+    if (process.argv[i] === '--repo') {
+      const value = process.argv[i + 1];
+      if (value === undefined || value.startsWith('--')) {
+        console.error('--repo requires a path.');
+        process.exit(1);
+      }
+      repoRoots.push(resolve(value));
+      i += 1;
+    }
+  }
+
+  const actions = [...buildGlobalPlan(), ...repoRoots.flatMap(buildRepoPlan)];
 
   // Symlinks expose the source verbatim, so the gate sweeps the source itself,
   // plus any emitted instruction content (sweep-flagged writes).
@@ -142,14 +171,24 @@ function main(): void {
     return;
   }
 
+  const conflicts = pending.filter(({ status }) => status === 'conflict');
+  const applicable = pending.filter(({ status }) => status !== 'conflict');
   if (pending.length === 0) {
     console.log('\nNothing to apply.');
     return;
   }
-  for (const { action, status } of pending) {
+  for (const { action, status } of applicable) {
     apply(action, status);
   }
-  console.log(`\nApplied ${pending.length} change(s). Backups: ${display(BACKUP_ROOT)}`);
+  if (applicable.length > 0) {
+    console.log(`\nApplied ${applicable.length} change(s). Backups: ${display(BACKUP_ROOT)}`);
+  }
+  if (conflicts.length > 0) {
+    console.error(
+      `\n${conflicts.length} conflict(s) the compiler cannot fix — the flagged file is owned by another flow; fix its own source and re-run.`,
+    );
+    process.exit(1);
+  }
 }
 
 function buildGlobalPlan(): Action[] {
@@ -191,7 +230,100 @@ function buildGlobalPlan(): Action[] {
   return actions;
 }
 
+/**
+ * Repo scope: compile `<repo>/.mcp.json` (+ settings `mcpServers`) into the
+ * Codex and Antigravity workspace MCP surfaces. Devin and Grok read `.mcp.json`
+ * natively — no emits (compat doc item 2).
+ */
+function buildRepoPlan(repoRoot: string): Action[] {
+  const servers = readClaudeMcpServers(repoRoot);
+  if (servers === null || Object.keys(servers).length === 0) {
+    console.log(`NOTE    ${display(repoRoot)} — no MCP servers found; nothing to compile for this repo`);
+    return [];
+  }
+  const actions: Action[] = [];
+  const names = Object.keys(servers).sort();
+
+  const codexPath = join(repoRoot, '.codex', 'config.toml');
+  const codexExisting = readTextIfExists(codexPath);
+  if (codexExisting !== null && isLabSeedOwnedToml(codexExisting)) {
+    // The repo's own stack.toml flow regenerates this file whole — a foreign managed
+    // block would be silently erased, so assert delivery instead of writing.
+    for (const name of names) {
+      const url = servers[name].url;
+      const delivered = url !== undefined && tomlDeliversMcpServer(codexExisting, name, url);
+      actions.push({
+        kind: 'verify',
+        path: codexPath,
+        ok: delivered,
+        reason: delivered
+          ? `mcp server '${name}' delivered by this repo's stack.toml flow (seed-owned file, not rewritten)`
+          : `mcp server '${name}' missing from the seed-owned file — add it to .agents/stack.toml and re-run that repo's sync`,
+      });
+    }
+  } else {
+    const body = names.flatMap((name, index) => {
+      const lines = compileCodexMcpServerLines(name, servers[name]);
+      return index === 0 ? lines : ['', ...lines];
+    });
+    actions.push({
+      kind: 'write',
+      path: codexPath,
+      desired: upsertManagedTomlBlock(codexExisting ?? '', body),
+      sweep: false,
+      reason: 'Codex reads repo MCP only from .codex/config.toml — compiled from .mcp.json',
+    });
+  }
+
+  const antigravity = compileAntigravityMcpServers(servers);
+  if (antigravity.skippedStdio.length > 0) {
+    console.warn(
+      `WARN    ${display(repoRoot)} — stdio server(s) not compiled for Antigravity (key shape unverified): ${antigravity.skippedStdio.join(', ')}`,
+    );
+  }
+  if (Object.keys(antigravity.servers).length > 0) {
+    const antigravityPath = join(repoRoot, '.agents', 'mcp_config.json');
+    actions.push({
+      kind: 'write',
+      path: antigravityPath,
+      desired: mergeMcpConfigJson(readTextIfExists(antigravityPath), antigravity.servers),
+      sweep: false,
+      reason: 'Antigravity workspace MCP — compiled from .mcp.json (merge preserves foreign keys)',
+    });
+  }
+
+  return actions;
+}
+
+/** Union of `.mcp.json` and settings-file `mcpServers`, later sources winning per name. */
+function readClaudeMcpServers(repoRoot: string): Record<string, ClaudeMcpServer> | null {
+  const sources = ['.mcp.json', '.claude/settings.json', '.claude/settings.local.json'];
+  const merged: Record<string, ClaudeMcpServer> = {};
+  let found = false;
+  for (const relative of sources) {
+    const path = join(repoRoot, relative);
+    const text = readTextIfExists(path);
+    if (text === null) continue;
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      console.error(`Invalid JSON in ${display(path)} — refusing to compile this repo.`);
+      process.exit(1);
+    }
+    const mcpServers = (parsed as { mcpServers?: Record<string, ClaudeMcpServer> }).mcpServers;
+    if (mcpServers !== undefined && typeof mcpServers === 'object') {
+      found = true;
+      Object.assign(merged, mcpServers);
+    }
+  }
+  return found ? merged : null;
+}
+
 function statusOf(action: Action): Status {
+  if (action.kind === 'verify') {
+    return action.ok ? 'ok' : 'conflict';
+  }
   if (action.kind === 'write') {
     const current = readTextIfExists(action.path);
     if (current === action.desired) return 'ok';
@@ -209,6 +341,9 @@ function statusOf(action: Action): Status {
 }
 
 function apply(action: Action, status: Status): void {
+  if (action.kind === 'verify') {
+    return;
+  }
   if (action.kind === 'write') {
     if (status === 'update') backup(action.path);
     mkdirSync(dirname(action.path), { recursive: true });
