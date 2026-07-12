@@ -50,7 +50,21 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   `compiler-backup-workspace/`) / `--check` drift gate; portability gate hard-fails on
   Claude-only tokens. All emits applied live; `--check` in sync; symlink smoke passed
   (Antigravity quoted global-CLAUDE.md content through the `GEMINI.md` symlink with tools
-  forbidden). Tasks 2–6 queued in the plan doc — Task 2 (repo-scope MCP emitters) is next.
+  forbidden). Tasks 3–6 queued in the plan doc — Task 3 (skills/commands relocation) is next.
+- **Compiler Task 2 DONE — repo-scope MCP emitters, built + verified (2026-07-12):**
+  `--repo <path>` (repeatable) compiles the repo's `mcpServers` (union of `.mcp.json` +
+  `.claude/settings*.json`, later wins) into a Codex `[mcp_servers.X]` managed region in
+  `<repo>/.codex/config.toml` and a merge-preserving `<repo>/.agents/mcp_config.json`
+  (`serverUrl` for HTTP; stdio skipped for Antigravity — key shape unverified). **Seed
+  handshake:** a `.codex/config.toml` stamped "Generated from .agents/stack.toml" is never
+  rewritten — the compiler asserts delivery instead (CONFLICT status, non-zero
+  `--check`/`--write`; the fix belongs in stack.toml). Lab acceptance: compiled state
+  byte-identical to the seed's output; lab's own sync `--check` green. Live probes: Codex in
+  the lab lists `deepwiki` (repo-local `.codex/config.toml` loads — home-dir trust covers
+  it); `agy --new-project -p` in the lab lists `context7, deepwiki` — the
+  `.agents/mcp_config.json` channel is now PROBE-VERIFIED (was self-review-only). Probe
+  discipline (from the Task 1 revision): plain `agy -p` without a project binding loads NO
+  instruction files; always bind a project and pair probes with a positive control.
 - **CLAUDE.md portable restructure DONE (2026-07-11):** all four instruction files swept
   (global + nxtlvl-core slash-syntax rewrites; stale sandbox-block stragglers deleted from
   nxtlvl-lab + nxtlvl-wiki), committed per repo. `grok inspect` ground truth: Grok's
