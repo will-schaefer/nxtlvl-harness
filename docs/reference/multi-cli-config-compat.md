@@ -143,8 +143,9 @@ flowchart LR
   `.grok/settings.json`, `.gemini/settings.json`, plugin.json. Model tiers + permission
   profiles + MCP targeting. **The seed to generalize.**
 - `nxtlvl-wiki/scripts/compile_agents.py` — Claude→Antigravity agent tool-name map.
-- Hand conversions in `~/.gemini/config/agents/` — rules with `trigger:` frontmatter,
-  unfiltered (the leak exhibit).
+- ~~Hand conversions in `~/.gemini/config/agents/` — rules with `trigger:` frontmatter,
+  unfiltered (the leak exhibit).~~ Retired 2026-07-11 by the compiler; the sentinel probe
+  showed that directory is never read, so they had never loaded at all.
 - `GEMINI.md → CLAUDE.md` symlinks in all three sub-repos; Codex `project_doc_fallback_filenames`.
 
 ## Do NOT compile
@@ -341,8 +342,11 @@ copied back). Four facts confirmed; two corrected outright, one incomplete:
 - **`agy plugin import claude` is one-shot** migration, not re-runnable sync — a continuous
   compiler emits directly into `~/.gemini/config/plugins/`.
 - **Rules format confirmed** (closes formerly-unverified item 1): frontmatter
-  `trigger: always_on|model_decision` + `description`; `~/.gemini/config/agents/` is the
-  right global directory.
+  `trigger: always_on|model_decision` + `description`; ~~`~/.gemini/config/agents/` is the
+  right global directory~~ — **the directory half was REFUTED by the 2026-07-11 sentinel
+  probes** (nothing reads `config/agents/`; `~/.gemini/config/rules/` and `~/.gemini/GEMINI.md`
+  are the channels that load — see the corrected item 1 above). Another self-review
+  file-discovery claim that failed the probe test.
 - **Agent tool map incomplete:** must add orchestration/system tools — `invoke_subagent`,
   `manage_task`, `schedule`, `call_mcp_tool`, `ask_permission`, `ask_question`,
   `define_subagent`, `send_message`, `generate_image`, ….
