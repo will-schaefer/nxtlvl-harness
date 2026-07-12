@@ -1,8 +1,9 @@
 # Implementation Plan: multi-CLI config compiler
 
 > Consumes [`docs/spec/nxtlvl-multi-cli-compiler.md`](../spec/nxtlvl-multi-cli-compiler.md)
-> Status: **Tasks 1–2 built and verified (Task 1 applied 2026-07-11; Task 2 built and
-> sentinel-probed 2026-07-12); `--check` reports all targets in sync. Tasks 3–6 queued.**
+> Status: **Tasks 1–3 built and verified (Task 1 applied 2026-07-11; Tasks 2–3 built,
+> applied, and sentinel-probed 2026-07-12); `--check` reports all targets in sync.
+> Tasks 4–6 queued.**
 > Date: 2026-07-11 · Updated: 2026-07-12
 
 ## Overview
@@ -119,12 +120,52 @@ First real input: `nxtlvl-lab/.mcp.json` (deepwiki).
 
 **Dependencies:** Task 1.
 
-## Task 3: Skills & commands relocation
+## Task 3: Skills & commands relocation — **BUILT + APPLIED + VERIFIED 2026-07-12**
 
 **Description:** Symlink/copy skills to `.agents/skills/` (the pinned neutral location) per
 repo, and close Devin's global-skills gap (`~/.claude/skills/` is not natively imported —
 relocate into `~/.config/devin/skills/` or `~/.agents/skills/`). Avoid same-name collisions
 (undefined behavior in Devin).
+
+**Acceptance criteria:**
+- [x] Global: every `~/.claude/skills/` skill gets a `~/.agents/skills/<name>` symlink
+      (applied 2026-07-12 — one real skill, `brainstorming`; the empty `learned/` dir is
+      skipped with a visible NOTE)
+- [x] Repo scope: `--repo` relocates `<repo>/.claude/skills/` into `<repo>/.agents/skills/`
+      as **relative** symlinks (they survive cloning); nxtlvl-lab needed no writes — its
+      skills already live in `.agents/skills/` behind reverse-direction symlinks (build notes)
+- [x] Sentinel probes all green (2026-07-12): Devin and Codex quoted the global sentinel
+      through `~/.agents/skills/`; Codex (in an **untrusted** repo) and Antigravity quoted
+      the repo sentinel through the workspace relative symlink
+- [x] Collision guard unit-tested (`classifyAgentsSkillEntry`); the migrate path
+      (byte-identical copy → symlink, original backed up) exercised live in the scratch repo
+- [x] `npm test` and `npm run typecheck` pass; `--check` (global + `--repo nxtlvl-lab`)
+      exits zero after apply
+
+**Build notes (2026-07-12):**
+- **Link direction:** ADR-028 makes the Claude config the source of truth, so links point
+  from `.agents/skills/` into `.claude/skills/` — the reverse of the agentskills.io
+  installer convention nxtlvl-lab already uses (real directories in `.agents/skills/`,
+  Claude-side symlinks into them; `~/.agents/.skill-lock.json` is that installer's state).
+  The compiler recognizes the reverse arrangement as *already relocated* and asserts
+  delivery (a `verify` action, like the seed-owned Codex file in Task 2) instead of
+  restructuring another flow's layout.
+- **Collision guard:** only an empty slot or a byte-identical relocation copy is ever
+  (re)placed; any foreign same-name entry reports `conflict` and is never touched —
+  same-name collisions are undefined behavior in Devin (compat doc).
+- **New compat facts from the probes:** Codex reads workspace `.agents/skills/` in an
+  untrusted repo — skills discovery is **not** trust-gated, unlike `.codex/` config — and
+  Codex, Devin, and Antigravity all follow the relocation symlinks.
+- **Commands:** no `.claude/commands/` source exists anywhere on this machine, so the
+  command → skill transform stays unbuilt; if command files ever appear the compiler emits
+  a loud WARN rather than skipping them silently.
+- **Portability gate:** markdown of every skill the compiler relocates is swept for
+  Claude-only tokens (it is instruction content delivered to other CLIs); pre-existing
+  reverse-direction arrangements are asserted, not swept — the gate governs what the
+  compiler itself emits.
+- **Deliberate gap:** Antigravity *global* skills (`~/.gemini/config/skills/`) are not
+  emitted — that path is documented but unprobed, and no need exists yet; workspace skills
+  cover the Antigravity story.
 
 **Dependencies:** Task 2 (shares the repo-scope run mode).
 

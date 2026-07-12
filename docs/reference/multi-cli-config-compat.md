@@ -128,13 +128,22 @@ flowchart LR
    **Pin `.agents/skills/` deliberately** — Codex's own docs conflict (current skills page says
    `.agents/skills`; older changelog says `.codex/skills`), so the compiler picks one layout
    rather than assuming all Codex surfaces agree.
+   **Sentinel-probed 2026-07-12 (increment 3):** per-skill *symlinks* in `.agents/skills/`
+   are followed by all three consumers — Codex and Devin returned a global sentinel through
+   `~/.agents/skills/<name> → ~/.claude/skills/<name>`, and Codex and Antigravity returned a
+   repo sentinel through a workspace-relative `../../.claude/skills/<name>` link. Notable:
+   `~/.agents/` is also the agentskills.io installer's home (`.skill-lock.json`), and that
+   installer uses the **reverse** direction (real dirs in `.agents/skills/`, agent-dir
+   symlinks into them — nxtlvl-lab's arrangement); both directions deliver identically.
 6. **Trust gating — emitted files can be silently ignored (Codex).** In untrusted repos Codex
    skips repo-local `.codex/` config, hooks, and rules entirely; non-managed hooks are
    hash-gated until a human reviews them, and plugin hooks are not auto-trusted. The compiler
    therefore needs a **verification step** (e.g. a smoke `codex exec` that echoes loaded
    config), not just a write step. Adjacent surfaces the plan doesn't cover yet:
    parent-directory `.codex/` Team Config layering and enterprise `requirements.toml`
-   overrides.
+   overrides. **Nuance (sentinel probe 2026-07-12):** workspace `.agents/skills/` is **not**
+   trust-gated — Codex loaded a skill through its relative symlink in a deliberately
+   untrusted scratch repo; the gate covers `.codex/`-resident surfaces.
 
 ## Prior art already in the repos
 
@@ -306,7 +315,8 @@ Net-new findings:
 - **Global skills gap:** `~/.claude/skills/` is *not* natively imported (project-level
   `.claude/skills/` only; global rules import covers only `~/.claude/CLAUDE.md`) — global
   Claude skills need relocation or symlink into `~/.config/devin/skills/` /
-  `~/.agents/skills/`.
+  `~/.agents/skills/`. **Closed 2026-07-12** by the compiler's increment 3: Devin returned
+  a sentinel through `~/.agents/skills/<name> → ~/.claude/skills/<name>` (symlink followed).
 - **Skill name collisions are undefined behavior** (imported vs. native same-name) — the
   compiler should avoid creating them rather than rely on precedence.
 - **Compound commands:** `Exec(npm test)` does not match `npm test && git commit` — permit
