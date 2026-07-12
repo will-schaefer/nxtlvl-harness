@@ -50,7 +50,7 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   `compiler-backup-workspace/`) / `--check` drift gate; portability gate hard-fails on
   Claude-only tokens. All emits applied live; `--check` in sync; symlink smoke passed
   (Antigravity quoted global-CLAUDE.md content through the `GEMINI.md` symlink with tools
-  forbidden). Tasks 3–6 queued in the plan doc — Task 3 (skills/commands relocation) is next.
+  forbidden). Tasks 4–6 queued in the plan doc — Task 4 (agent transforms) is next.
 - **Compiler Task 2 DONE — repo-scope MCP emitters, built + verified (2026-07-12):**
   `--repo <path>` (repeatable) compiles the repo's `mcpServers` (union of `.mcp.json` +
   `.claude/settings*.json`, later wins) into a Codex `[mcp_servers.X]` managed region in
@@ -65,11 +65,26 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   `.agents/mcp_config.json` channel is now PROBE-VERIFIED (was self-review-only). Probe
   discipline (from the Task 1 revision): plain `agy -p` without a project binding loads NO
   instruction files; always bind a project and pair probes with a positive control.
+- **Compiler Task 3 DONE — skills relocation, built + applied + verified (2026-07-12):**
+  per-skill **symlinks** into the pinned neutral `.agents/skills/`: global
+  `~/.agents/skills/<name> → ~/.claude/skills/<name>` (closes Devin's global-skills gap;
+  Codex reads it too) and repo `<repo>/.agents/skills/<name> → ../../.claude/skills/<name>`
+  (relative, survives cloning). All four sentinel probes green: Devin + Codex quoted the
+  global sentinel; Codex (in an **untrusted** scratch repo — workspace `.agents/skills/` is
+  NOT trust-gated, new compat fact) + Antigravity quoted the repo sentinel. Collision guard
+  (`classifyAgentsSkillEntry`): fill empty slots or migrate byte-identical relocation copies
+  only; foreign same-name entries CONFLICT, never touched (undefined behavior in Devin).
+  Reverse-direction arrangements (agentskills.io installer convention — real dirs in
+  `.agents/skills/`, Claude-side symlinks into them; nxtlvl-lab's layout, and
+  `~/.agents/.skill-lock.json` is that installer's state) are recognized as already
+  relocated and delivery-asserted, never restructured. Commands: no `.claude/commands/`
+  source exists anywhere — transform unbuilt, loud WARN if sources appear. Codex probe
+  gotcha: `codex exec` from a non-git directory needs `--skip-git-repo-check`.
 - **CLAUDE.md portable restructure DONE (2026-07-11):** all four instruction files swept
   (global + nxtlvl-core slash-syntax rewrites; stale sandbox-block stragglers deleted from
   nxtlvl-lab + nxtlvl-wiki), committed per repo. `grok inspect` ground truth: Grok's
   always-on stream is exactly global + project CLAUDE.md — `~/.claude/rules/` is on-demand
-  only. Remaining build work: plan Tasks 2–6 — repo-scope MCP emitters, skills/commands
-  relocation, agent transforms, permissions demux, verification deepening + Grok config
-  hygiene. (The two global gaps once listed here — Codex missing the CLAUDE.md fallback,
-  and a stale always-on Antigravity rule — were closed by the applied Task 1.)
+  only. Remaining build work: plan Tasks 4–6 — agent transforms, permissions demux,
+  verification deepening + Grok config hygiene. (The two global gaps once listed here —
+  Codex missing the CLAUDE.md fallback, and a stale always-on Antigravity rule — were
+  closed by the applied Task 1.)
