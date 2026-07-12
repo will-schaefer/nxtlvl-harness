@@ -159,6 +159,40 @@ export function mergeMcpConfigJson(
   return `${JSON.stringify(sortKeysDeep(merged), null, 2)}\n`;
 }
 
+/** What already sits at `.agents/skills/<name>` when the compiler wants to link a skill there. */
+export interface AgentsSkillEntry {
+  kind: 'missing' | 'symlink' | 'directory' | 'file';
+  /** `readlink` result when kind === 'symlink'. */
+  linkTarget?: string;
+  /** The existing directory's SKILL.md content when kind === 'directory'; null if it has none. */
+  skillMd?: string | null;
+}
+
+export type SkillPlanStatus = 'ok' | 'create' | 'migrate' | 'conflict';
+
+/**
+ * Same-name collision guard for the `.agents/skills/` relocation (compat doc: collisions
+ * are undefined behavior in Devin — the compiler must avoid creating them). Only two
+ * things may ever be replaced: nothing, or a byte-identical relocation copy of the same
+ * Claude skill (`migrate` — the hand-seeded copies predating this emitter). Anything
+ * else — a foreign skill, a symlink elsewhere, a plain file — is a conflict, never touched.
+ */
+export function classifyAgentsSkillEntry(
+  entry: AgentsSkillEntry,
+  desiredLinkTarget: string,
+  sourceSkillMd: string,
+): SkillPlanStatus {
+  if (entry.kind === 'missing') return 'create';
+  if (entry.kind === 'symlink') {
+    return entry.linkTarget === desiredLinkTarget ? 'ok' : 'conflict';
+  }
+  if (entry.kind === 'directory') {
+    const identical = entry.skillMd !== null && entry.skillMd === sourceSkillMd;
+    return identical ? 'migrate' : 'conflict';
+  }
+  return 'conflict';
+}
+
 /** The lab seed (sync-agent-configs.ts) owns files it stamps with this header. */
 export function isLabSeedOwnedToml(content: string): boolean {
   return content.startsWith('# Generated from .agents/stack.toml');

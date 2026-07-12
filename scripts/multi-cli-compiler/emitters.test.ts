@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   MANAGED_BEGIN,
   MANAGED_END,
+  classifyAgentsSkillEntry,
   compileAntigravityMcpServers,
   compileAntigravityRule,
   compileCodexMcpServerLines,
@@ -187,6 +188,57 @@ test('mcp_config merge: preserves foreign keys and servers, compiled wins per na
 
 test('mcp_config merge: invalid existing JSON throws instead of clobbering', () => {
   assert.throws(() => mergeMcpConfigJson('{not json', { a: { serverUrl: 'https://x/mcp' } }));
+});
+
+const SKILL_MD = '---\nname: grill-me\n---\n\nRun a `/grilling` session.\n';
+const LINK_TARGET = '../../.claude/skills/grill-me';
+
+test('skill relocation: empty slot creates the symlink', () => {
+  assert.equal(classifyAgentsSkillEntry({ kind: 'missing' }, LINK_TARGET, SKILL_MD), 'create');
+});
+
+test('skill relocation: correct existing symlink is a no-op', () => {
+  assert.equal(
+    classifyAgentsSkillEntry({ kind: 'symlink', linkTarget: LINK_TARGET }, LINK_TARGET, SKILL_MD),
+    'ok',
+  );
+});
+
+test('skill relocation: symlink pointing elsewhere is a conflict, never retargeted', () => {
+  assert.equal(
+    classifyAgentsSkillEntry(
+      { kind: 'symlink', linkTarget: '/somewhere/else/grill-me' },
+      LINK_TARGET,
+      SKILL_MD,
+    ),
+    'conflict',
+  );
+});
+
+test('skill relocation: byte-identical copy migrates to a symlink', () => {
+  assert.equal(
+    classifyAgentsSkillEntry({ kind: 'directory', skillMd: SKILL_MD }, LINK_TARGET, SKILL_MD),
+    'migrate',
+  );
+});
+
+test('skill relocation: foreign same-name skill is a conflict (undefined behavior in Devin)', () => {
+  assert.equal(
+    classifyAgentsSkillEntry(
+      { kind: 'directory', skillMd: '---\nname: grill-me\n---\n\nA different skill.\n' },
+      LINK_TARGET,
+      SKILL_MD,
+    ),
+    'conflict',
+  );
+});
+
+test('skill relocation: directory without SKILL.md and plain files are conflicts', () => {
+  assert.equal(
+    classifyAgentsSkillEntry({ kind: 'directory', skillMd: null }, LINK_TARGET, SKILL_MD),
+    'conflict',
+  );
+  assert.equal(classifyAgentsSkillEntry({ kind: 'file' }, LINK_TARGET, SKILL_MD), 'conflict');
 });
 
 test('lab seed ownership detection and delivery check', () => {
