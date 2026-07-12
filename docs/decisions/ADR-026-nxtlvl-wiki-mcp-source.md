@@ -42,13 +42,22 @@ Recorded per the global decision rule (`~/.claude/rules/decisions.md`).
 read-only `wiki-scout` agent that inherits ADR-002's already-decided leads-only posture — never
 Context7's citable-testify tier.**
 
-1. `plugins/nxtlvl/.mcp.json` gains a third entry, `nxtlvl-wiki` — a local stdio server
-   (`node <absolute path to nxtlvl-wiki-mcp/src/server.ts>`). Its corpus resolution is independent
-   of launch cwd (it resolves via `import.meta.url` to the sibling `nxtlvl-wiki` repo), so it
-   behaves identically whether invoked from `nxtlvl`, `nxtlvl-labs`, or any other session.
+1. *(Amended 2026-07-12 — the server now ships inside the `nxtlvl-wiki` plugin itself.)*
+   The **`nxtlvl-wiki` plugin registers its own server** in its `plugin.json`
+   (`mcpServers.nxtlvl-wiki`, launching the committed single-file bundle
+   `${CLAUDE_PLUGIN_ROOT}/mcp/dist/server.js`) — no entry in `plugins/nxtlvl/.mcp.json` and no
+   absolute machine paths in committed config. Corpus resolution: explicit arg >
+   `NXTLVL_WIKI_ROOT` env > launch cwd. Sessions inside a wiki checkout work with zero
+   configuration; cross-repo consumers (this plugin's `wiki-scout`) rely on `NXTLVL_WIKI_ROOT`
+   set once, machine-globally (e.g. `~/.claude/settings.json` `env`) — without it the scout
+   degrades to its "corpus unreachable" one-liner per point 4, never blocking.
+   *(The original wiring — an absolute-path entry in `plugins/nxtlvl/.mcp.json` with
+   `import.meta.url` sibling resolution — was never shipped; the 2026-07-12 full-wiki review
+   found no registration existed anywhere, and the sibling resolution had broken when the
+   server moved from `nxtlvl-labs` into the wiki plugin.)*
 
 2. `wiki-scout` is read-only by withheld tools — only the four
-   `mcp__plugin_nxtlvl_nxtlvl-wiki__*` tools (`search`/`list`/`get_page`/`get_source`), no
+   `mcp__plugin_nxtlvl-wiki_nxtlvl-wiki__*` tools (`search`/`list`/`get_page`/`get_source`), no
    Read/Write/Edit/Bash/Glob/Grep — reusing the isolated-agent pattern
    ([ADR-018](ADR-018-ideation-domain.md)) that `deepwiki-scout` and `context7-scout` already
    established.
@@ -71,8 +80,8 @@ Context7's citable-testify tier.**
    workflow-construction doctrine and `IDEAS.md` A14 into an invokable check: before or while
    building a new capability, orient against what `nxtlvl-wiki` already knows.
 
-Realized as: a `nxtlvl-wiki` entry in `plugins/nxtlvl/.mcp.json`, the `wiki-scout` agent, and the
-`wiki-driven-development` skill.
+Realized as: the `nxtlvl-wiki` plugin's own `mcpServers` registration (its `plugin.json`), the
+`wiki-scout` agent, and the `wiki-driven-development` skill.
 
 ## Alternatives Considered
 
@@ -109,8 +118,9 @@ Realized as: a `nxtlvl-wiki` entry in `plugins/nxtlvl/.mcp.json`, the `wiki-scou
 - **Completes the three-source trust-tier framework** ADR-024/025 started: DeepWiki = orient,
   Context7 = testify-with-URL+version, `nxtlvl-wiki` = orient (DeepWiki's tier, formally wired for
   the first time).
-- **The plugin gains its third `.mcp.json` server** — non-load-bearing; degrades to a one-line note
-  if the corpus is unreachable or sparse.
+- **The corpus server is served by the `nxtlvl-wiki` plugin, consumed by this one** (amended
+  2026-07-12) — non-load-bearing; degrades to a one-line note if the corpus is unreachable or
+  sparse; cross-repo use needs the one-time `NXTLVL_WIKI_ROOT` env setting.
 - **`wiki-driven-development`, and any future consumer skill, can compose `wiki-scout` without
   re-litigating trust posture** — it is inherited from ADR-002 by construction.
 - **Directly unblocks `nxtlvl-labs`' harness-lab intake design**
