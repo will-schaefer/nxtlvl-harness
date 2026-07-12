@@ -58,7 +58,10 @@ export interface AntigravityRuleOptions {
 
 /**
  * Wrap portable markdown as an Antigravity rule: trigger/description frontmatter
- * (format confirmed by the 2026-07-10 agy self-review) + a generated-file notice.
+ * + a generated-file notice. Currently unused by the global plan — sentinel probes
+ * (2026-07-11) showed `~/.gemini/config/agents/` loads nothing (the self-review's
+ * global-rules claim was wrong) while `~/.gemini/config/rules/` does load; this
+ * emitter targets that rules channel when a real Antigravity supplement materializes.
  */
 export function compileAntigravityRule(options: AntigravityRuleOptions): string {
   const header = [

@@ -21,7 +21,6 @@ import {
 import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import {
-  compileAntigravityRule,
   findClaudeOnlyTokens,
   looksLikeHandConvertedRule,
   upsertManagedTomlBlock,
@@ -32,12 +31,16 @@ const SOURCE_GLOBAL_CLAUDE_MD = join(HOME, '.claude', 'CLAUDE.md');
 const CODEX_CONFIG_TOML = join(HOME, '.codex', 'config.toml');
 const CODEX_GLOBAL_AGENTS_MD = join(HOME, '.codex', 'AGENTS.md');
 const ANTIGRAVITY_AGENTS_DIR = join(HOME, '.gemini', 'config', 'agents');
+const ANTIGRAVITY_GLOBAL_GEMINI_MD = join(HOME, '.gemini', 'GEMINI.md');
 
-// 2026-07-04 hand conversions, superseded: the compiled global-conventions rule carries the
-// same pointer lines, and every CLI reads ~/.claude/rules/*.md on demand (ADR-028).
+// Retired from ~/.gemini/config/agents/ — a directory nothing reads (sentinel probe,
+// 2026-07-11): the five 2026-07-04 hand conversions never loaded, and the compiled
+// global-conventions rule (first --write, same day) landed dead too. The GEMINI.md
+// symlink now delivers the global source; rules stay on-demand via its pointer lines.
 const RETIRED_ANTIGRAVITY_RULES = [
   'decisions.md',
   'git-workflow.md',
+  'global-conventions.md',
   'hooks.md',
   'memory.md',
   'visual-docs.md',
@@ -93,7 +96,12 @@ function main(): void {
 
   const actions = buildGlobalPlan();
 
+  // Symlinks expose the source verbatim, so the gate sweeps the source itself,
+  // plus any emitted instruction content (sweep-flagged writes).
   const violations: string[] = [];
+  for (const token of findClaudeOnlyTokens(readFileSync(SOURCE_GLOBAL_CLAUDE_MD, 'utf8'))) {
+    violations.push(`${display(SOURCE_GLOBAL_CLAUDE_MD)}: ${token}`);
+  }
   for (const action of actions) {
     if (action.kind === 'write' && action.sweep) {
       for (const token of findClaudeOnlyTokens(action.desired)) {
@@ -166,24 +174,17 @@ function buildGlobalPlan(): Action[] {
   });
 
   actions.push({
-    kind: 'write',
-    path: join(ANTIGRAVITY_AGENTS_DIR, 'global-conventions.md'),
-    desired: compileAntigravityRule({
-      trigger: 'always_on',
-      description:
-        'Machine-global working conventions, compiled from the shared portable source of truth (~/.claude/CLAUDE.md).',
-      sourceLabel: '~/.claude/CLAUDE.md',
-      body: readFileSync(SOURCE_GLOBAL_CLAUDE_MD, 'utf8'),
-    }),
-    sweep: true,
-    reason: 'Antigravity has no native global-CLAUDE.md read; replaces the stale 2026-07-04 hand conversion',
+    kind: 'symlink',
+    path: ANTIGRAVITY_GLOBAL_GEMINI_MD,
+    target: SOURCE_GLOBAL_CLAUDE_MD,
+    reason: 'Antigravity loads ~/.gemini/GEMINI.md always-on (sentinel probe 2026-07-11); symlink delivers the portable source verbatim',
   });
 
   for (const name of RETIRED_ANTIGRAVITY_RULES) {
     actions.push({
       kind: 'retire',
       path: join(ANTIGRAVITY_AGENTS_DIR, name),
-      reason: 'superseded hand conversion — rules are on-demand via the global rule’s pointers',
+      reason: 'config/agents/ is dead (nothing reads it — sentinel probe 2026-07-11); GEMINI.md symlink carries the source, rules stay on-demand',
     });
   }
 
