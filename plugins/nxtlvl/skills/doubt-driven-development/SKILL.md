@@ -112,29 +112,33 @@ Reviewer selection, in preference order:
 
 A single-model reviewer shares blind spots with the original author; a colder, different-architecture model catches them.
 
+**Transport lives in `nxtlvl:call-model`** — do not invent per-CLI flag recipes here. That skill owns companion invocation, portable adapters (Codex / Grok / Gemini / Devin / Claude), read-only defaults, and result-handling.
+
 **Interactive sessions: always offer, never silently skip.** After the single-model review, before RECONCILE, ask:
 
-> *"Single-model review complete. Want a cross-model second opinion? Options: Gemini CLI, Codex CLI, Grok CLI, manual external review, or skip."*
+> *"Single-model review complete. Want a cross-model second opinion? Options: Codex, Grok, Gemini, Devin, Claude headless, manual external review, or skip."*
 
-If the user picks a CLI: (1) check it's in PATH (`which gemini` / `which codex` / `which grok`); (2) test it works (`--version`) before the real prompt; (3) confirm the exact invocation, flags, auth, env with the user; (4) pass ARTIFACT + CONTRACT + the adversarial prompt **only**; (5) **never interpolate the artifact into a shell-quoted argument** — write the full prompt to a temp file and read it from there (pipe via stdin, or pass the file directly, e.g. Grok's `--prompt-file`); (6) take the output into RECONCILE.
+If the user picks a target:
+
+1. Write ARTIFACT + CONTRACT + the adversarial prompt above (and, when useful, an ask for raw JSON matching `reviewer-output.schema.json`) to a temp file — **never** shell-interpolate the artifact.
+2. Confirm the exact `call-model` invocation with the user (per-call authorization).
+3. Invoke via the companion (preferred) or the portable recipes in `call-model`:
 
 ```bash
-# Codex (read-only sandbox keeps the CLI from writing to your workspace):
-codex exec --sandbox read-only -C <repo-path> - < /tmp/doubt-prompt.md
-# Gemini ('--approval-mode plan' is read-only; '-p ""' reads prompt from stdin):
-gemini --approval-mode plan -p "" < /tmp/doubt-prompt.md
-# Grok ('--sandbox read-only' reads the repo, writes nothing, blocks child network;
-# '--prompt-file' takes the temp prompt directly; '--no-subagents' stops it spawning
-# agents). Default plain output => stdout IS the reviewer JSON:
-grok --prompt-file /tmp/doubt-prompt.md --cwd <repo-path> \
-     --sandbox read-only --no-subagents --disable-web-search
+# Prefer the companion (from the nxtlvl plugin skill path):
+node "<plugin>/skills/call-model/scripts/call-model.mjs" adversarial \
+  --target <codex|grok|gemini|devin|claude> \
+  --cwd <repo-path> \
+  --prompt-file /tmp/doubt-prompt.md
 ```
 
-**Grok returns typed output.** Unlike Gemini/Codex (free-text folded into RECONCILE), Grok can hand back the same typed shape `doubt-reviewer` produces. Inline the reviewer-output schema fields into its prompt file (as in the Step 3 block above) and demand *raw JSON, no markdown fence* — Grok then prints schema-conforming JSON to stdout, so its findings drop into the ledger deterministically rather than as prose. Prefer this over Grok's native `--json-schema` flag, which was unreliable on the tested model (`grok-composer-2.5-fast`): it wrapped the JSON in prose and its own structured-output parser errored, so inlining the schema in the prompt is the load-bearing mechanism, not the flag.
+4. Fold stdout into RECONCILE (typed JSON when present; else prose findings with provenance `cross-model:<target>`).
 
-A **read-only sandbox is load-bearing**: a doubt artifact may itself contain instructions (intentional or accidental prompt injection) the CLI would otherwise execute. **Each invocation is its own authorization** — re-confirm the exact command every run. If the CLI is unavailable or fails, surface it and offer alternatives; **never silently fall back to single-model**. If the user skips, acknowledge it (*"Proceeding with single-model findings only"*).
+**Grok typed output.** Prefer inlining the reviewer-output schema fields in the prompt and demanding *raw JSON, no markdown fence* — more reliable than Grok's `--json-schema` flag on some models. That yields schema-shaped stdout for the ledger.
 
-**Non-interactive contexts** (CI, `/loop`, autonomous-loop, scheduled): cross-model is **skipped and the skip is announced** (*"Cross-model skipped: non-interactive context."*). Never invoke an external CLI without explicit user authorization.
+A **read-only sandbox is load-bearing** (enforced by `call-model` for adversarial/consult). **Each invocation is its own authorization**. If the CLI is unavailable or fails, surface it and offer alternatives; **never silently fall back to single-model**. If the user skips, acknowledge it (*"Proceeding with single-model findings only"*).
+
+**Non-interactive contexts** (CI, `/loop`, autonomous-loop, scheduled): cross-model is **skipped and the skip is announced** (*"Cross-model skipped: non-interactive context."*) unless the user pre-authorized a specific target and command. Never invoke an external CLI without that authorization.
 
 ### Step 4: RECONCILE — Fold typed findings back
 
@@ -166,7 +170,7 @@ If 3 cycles is "obviously insufficient" because the artifact is large: it's too 
 
 ## Recovery contract
 
-The cross-model CLI paths are covered above. These are the single-model reviewer paths:
+Cross-model transport failures are handled by `nxtlvl:call-model` (surface error, offer another target, no silent single-model fallthrough). These are the single-model reviewer paths:
 
 | Failure mode | Root-cause hint | Safe retry | Stop condition |
 |---|---|---|---|
@@ -214,6 +218,8 @@ Computable for free once findings are typed:
 
 ## Interaction with Other Skills
 
+- **`nxtlvl:call-model`:** cross-model escalation transport (Codex / Grok / Gemini / Devin / Claude headless). Load it for Step 3 second opinions; do not re-embed CLI recipes here.
+- **`nxtlvl:headless-doubt`:** same-model Claude headless DOUBT via `claude -p` when Task spawn is unavailable.
 - **`nxtlvl:review` / `/review`:** complementary. `/review` is a post-hoc PR verdict; doubt-driven is in-flight per-decision.
 - **`source-driven-development`:** SDD verifies *facts about frameworks* against docs; doubt-driven verifies *your reasoning about the artifact*.
 - **`test-driven-development`:** TDD's RED step is doubt made concrete — a failing test *is* the doubt step for behavioral claims.
@@ -233,6 +239,6 @@ Computable for free once findings are typed:
 - [ ] Findings were classified against the artifact text using the precedence: contract-misread / actionable / trade-off / noise
 - [ ] A stop condition was met (trivial findings, 3 cycles, or user override)
 - [ ] Interactive mode: cross-model was explicitly offered and the response acknowledged; non-interactive: skip was announced
-- [ ] Any external CLI invocation had a PATH check, a working-binary test, syntax confirmation, and explicit per-call authorization
+- [ ] Any cross-model invocation went through `nxtlvl:call-model` (or an explicit user-approved equivalent) with per-call authorization
 
 $ARGUMENTS

@@ -114,7 +114,7 @@ This skill ends at a schema-conforming reviewer object. The orchestrator still:
 - Maintains the findings ledger keyed by `finding.id`.
 - Applies STOP rules (trivial findings, 3 cycles, user override, stall detection).
 
-**Cross-model escalation** remains governed by doubt-driven-development — headless doubt is the single-model path. In non-interactive contexts, announce *"Cross-model skipped: non-interactive context."*
+**Cross-model escalation** uses `nxtlvl:call-model` (invoked from doubt-driven-development) — headless doubt is the **same-model Claude** path only. For a generic headless Claude consult outside typed doubt, `call-model --target claude` is available. In non-interactive contexts without pre-authorization, announce *"Cross-model skipped: non-interactive context."*
 
 ## Prompt builder
 
@@ -165,6 +165,7 @@ These rows extend doubt-driven-development's recovery table for headless-specifi
 | Skill / agent | Relationship |
 |---|---|
 | `doubt-driven-development` | **Parent cycle.** This skill is the headless executor for its Step 3 only. |
+| `call-model` | **Sibling transport.** Multi-callee (Codex/Grok/Gemini/Devin/Claude); use for cross-model. This skill stays Claude-only typed doubt. |
 | `doubt-reviewer` | **Same persona, different transport** — Task spawn vs `claude -p --agent`. |
 | `review` | **Complementary.** `/review` is a five-axis PR gate; this is in-flight adversarial cross-exam. |
 | `autonomous-loops` | **Consumer.** Sequential `claude -p` pipelines can call headless doubt as a quality gate between implement and commit. |
