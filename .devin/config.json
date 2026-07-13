@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Exec(python3 -m json.tool /Users/willschaefer/Developer/nxtlvl/nxtlvl-core/config/claude/settings.json)",
+      "Read(/Users/willschaefer/.claude/**)"
+    ]
+  }
+}

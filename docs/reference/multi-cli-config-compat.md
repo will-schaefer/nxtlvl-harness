@@ -109,6 +109,12 @@ flowchart LR
    **not** `approval_policy` (Codex self-review correction). Pick profiles and keep
    `sandbox_mode` out of every loaded layer — except per-agent files, where it's the
    deliberate degradation (item 4).
+   **Built 2026-07-13:** the compiler unions repo `settings.json` and `settings.local.json`
+   permission arrays, writes supported rules to a compiler-owned `.devin/config.json`, emits
+   only literal safe `Bash(...)` prefixes to `.codex/rules/nxtlvl-permissions.rules`, and adds
+   literal file/domain grants to a Codex profile extending `:workspace`. Unsupported or lossy
+   source forms emit a warning rather than an invented equivalent. Grok remains a no-output
+   target because its own permission TOML would shadow the native Claude fallback.
 4. **Agent transforms.** Codex agents are TOML (`.codex/agents/*.toml`, **top-level keys** —
    `name`/`description`/`developer_instructions`, no `[agent]` wrapper; body →
    `developer_instructions`). Claude's `tools:` allowlist is an **explicitly lossy**

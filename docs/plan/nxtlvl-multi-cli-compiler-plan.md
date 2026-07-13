@@ -193,14 +193,34 @@ official Antigravity target path is now recorded in the compat reference; live s
 execution remains part of Task 6's smoke-test work because `agy agents` lists its global
 catalog rather than workspace agents.
 
-## Task 5: Permissions demux
+## Task 5: Permissions demux — **BUILT + APPLIED 2026-07-13**
 
-**Description:** Claude `permissions` → Devin `Exec()/Read()/Write()/Fetch()` grammar as a
-managed block in Devin config (Devin ignores Claude-format entries today — ghost entries);
+**Description:** Claude `permissions` → Devin `Exec()/Read()/Write()/Fetch()` grammar in a
+compiler-owned Devin project config (Devin ignores Claude-format entries today — ghost entries);
 Codex → Starlark `prefix_rule()` execpolicy files in `.codex/rules/` (literal prefixes with
 `justification` + examples, validated via `codex execpolicy check`) and `[permissions.<name>]`
 profiles, keeping `sandbox_mode` out of every loaded layer. Grok gets **no** permission
 emitter — an emitted `[permission]` TOML silently shadows its Claude-settings fallback.
+
+**Acceptance criteria:**
+- [x] Repo settings and local settings permissions are unioned; supported Claude grants compile
+      into a compiler-owned `.devin/config.json`, leaving `.devin/config.local.json` for local
+      overrides.
+- [x] Safe literal `Bash(...)` grants compile into `.codex/rules/nxtlvl-permissions.rules`
+      with a decision, justification, and matching/non-matching examples; `codex execpolicy
+      check` validates the generated rule.
+- [x] Literal file and `domain:` fetch grants compile to a Codex `nxtlvl_portable` profile that
+      extends `:workspace`; legacy `sandbox_mode` blocks the profile instead of silently
+      disabling it.
+- [x] Claude-only, ambiguous, and prompt-only profile grants produce a clear warning and are
+      not guessed; Grok gets no permission output.
+
+**Build notes (2026-07-13):** The core repo now compiles its allowed Claude settings into a
+Devin `Read` grant, a Codex read profile for `~/.claude`, and a literal `python3 -m json.tool`
+rule. `npm test` passes 476 tests, `npm run typecheck` passes, the generated rule returns
+`allow` from `codex execpolicy check`, and an immediate compiler `--check --repo .` is clean.
+The source's `Skill(update-config)` grant and a shell command containing embedded program code
+are explicitly warned and skipped because neither has a lossless target representation.
 
 **Dependencies:** Task 1.
 

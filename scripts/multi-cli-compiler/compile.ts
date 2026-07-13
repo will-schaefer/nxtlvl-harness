@@ -33,16 +33,22 @@ import {
   compileAntigravityAgent,
   compileCodexAgent,
   compileCodexMcpServerLines,
+  compileCodexPermissionProfile,
+  compileCodexPermissionRules,
+  compileDevinPermissionsConfig,
+  compileClaudePermissions,
   findClaudeOnlyTokens,
   isLabSeedOwnedToml,
   isCompilerManagedAgentFile,
+  isCompilerManagedCodexRulesFile,
+  isCompilerManagedDevinPermissionsConfig,
   looksLikeHandConvertedRule,
   mergeMcpConfigJson,
   parseClaudeAgentSource,
   tomlDeliversMcpServer,
   upsertManagedTomlBlock,
 } from './emitters.ts';
-import type { AgentsSkillEntry, ClaudeMcpServer } from './emitters.ts';
+import type { AgentsSkillEntry, ClaudeMcpServer, ClaudePermissions } from './emitters.ts';
 
 const HOME = homedir();
 const SOURCE_GLOBAL_CLAUDE_MD = join(HOME, '.claude', 'CLAUDE.md');
@@ -56,6 +62,7 @@ const CLAUDE_GLOBAL_SKILLS_DIR = join(HOME, '.claude', 'skills');
 // $HOME/.agents/skills. The dir is shared with the skills installer (.skill-lock.json
 // lives there); the compiler only adds per-skill symlinks, never touches foreign entries.
 const AGENTS_GLOBAL_SKILLS_DIR = join(HOME, '.agents', 'skills');
+const CODEX_RULES_FILE = 'nxtlvl-permissions.rules';
 
 // Retired from ~/.gemini/config/agents/ — a directory nothing reads (sentinel probe,
 // 2026-07-11): the five 2026-07-04 hand conversions never loaded, and the compiled
@@ -288,7 +295,8 @@ function buildGlobalPlan(): Plan {
  * Codex and Antigravity workspace MCP surfaces (Devin and Grok read `.mcp.json`
  * natively — no emits, compat doc item 2), and relocate `<repo>/.claude/skills/`
  * into `<repo>/.agents/skills/` (the pinned neutral location, compat doc item 5), and
- * transform `<repo>/.claude/agents/` for Codex and Antigravity (compat doc item 4).
+ * transform `<repo>/.claude/agents/` for Codex and Antigravity (compat doc item 4), and
+ * demultiplex Claude permissions into Devin and Codex-native forms (compat doc item 3).
  */
 function buildRepoPlan(repoRoot: string): Plan {
   warnUncompiledCommands(join(repoRoot, '.claude', 'commands'));
@@ -302,11 +310,12 @@ function buildRepoPlan(repoRoot: string): Plan {
   );
   const mcpActions = buildRepoMcpActions(repoRoot);
   const agents = buildRepoAgentActions(repoRoot);
-  if (mcpActions.length === 0 && skills.actions.length === 0 && agents.actions.length === 0) {
-    console.log(`NOTE    ${display(repoRoot)} — no MCP servers, skills, or agents found; nothing to compile for this repo`);
+  const permissionActions = buildRepoPermissionActions(repoRoot);
+  if (mcpActions.length === 0 && skills.actions.length === 0 && agents.actions.length === 0 && permissionActions.length === 0) {
+    console.log(`NOTE    ${display(repoRoot)} — no MCP servers, skills, agents, or supported permissions found; nothing to compile for this repo`);
   }
   return {
-    actions: [...mcpActions, ...skills.actions, ...agents.actions],
+    actions: [...mcpActions, ...skills.actions, ...agents.actions, ...permissionActions],
     skillSourceDirs: skills.skillSourceDirs,
     agentSourceDirs: agents.agentSourceDirs,
   };
@@ -414,6 +423,139 @@ function buildRepoMcpActions(repoRoot: string): Action[] {
   }
 
   return actions;
+}
+
+/**
+ * Split Claude's single permissions grammar into the target-native surfaces. Devin's
+ * generated `config.json` is intentionally separate from `.devin/config.local.json`,
+ * which is a human/local-override channel. Codex receives only a project-local rule
+ * file and profile; Grok is intentionally untouched because a TOML permission block
+ * would shadow its native Claude-settings fallback.
+ */
+function buildRepoPermissionActions(repoRoot: string): Action[] {
+  const source = readClaudePermissions(repoRoot);
+  if (source === null) return [];
+  const compiled = compileClaudePermissions(source);
+  for (const skipped of compiled.skipped) {
+    console.warn(`WARN    ${display(repoRoot)} — permission ${JSON.stringify(skipped.permission)} not compiled: ${skipped.reason}`);
+  }
+
+  const actions: Action[] = [];
+  const devinHasPermissions = Object.values(compiled.devin).some((entries) => entries.length > 0);
+  if (devinHasPermissions) {
+    const path = join(repoRoot, '.devin', 'config.json');
+    const current = readTextIfExists(path);
+    if (current !== null && !isCompilerManagedDevinPermissionsConfig(current)) {
+      actions.push({
+        kind: 'verify',
+        path,
+        ok: false,
+        reason: 'Devin config is user-authored — compiler owns only an empty or permission-only generated config.json slot',
+      });
+    } else {
+      actions.push({
+        kind: 'write',
+        path,
+        desired: compileDevinPermissionsConfig(compiled.devin),
+        sweep: false,
+        reason: 'Devin Exec()/Read()/Write()/Fetch() permissions compiled from Claude settings',
+      });
+    }
+  }
+
+  const profileLines = compileCodexPermissionProfile(compiled.codexProfile);
+  const codexConfigPath = join(repoRoot, '.codex', 'config.toml');
+  if (profileLines.length > 5) {
+    const config = readTextIfExists(codexConfigPath) ?? '';
+    if (isLabSeedOwnedToml(config)) {
+      actions.push({
+        kind: 'verify',
+        path: codexConfigPath,
+        ok: false,
+        reason: 'Codex config is seed-owned — add the profile to .agents/stack.toml instead of overwriting it',
+      });
+    } else if (hasLegacyCodexSandbox(config) || hasLegacyCodexSandbox(readTextIfExists(CODEX_CONFIG_TOML) ?? '')) {
+      actions.push({
+        kind: 'verify',
+        path: codexConfigPath,
+        ok: false,
+        reason: 'a loaded Codex config uses legacy sandbox_mode settings, which disable permission profiles',
+      });
+    } else {
+      actions.push({
+        kind: 'write',
+        path: codexConfigPath,
+        desired: upsertManagedTomlBlock(config, profileLines),
+        sweep: false,
+        reason: 'Codex permission profile compiled from Claude file and network grants (no legacy sandbox_mode)',
+      });
+    }
+  }
+
+  if (compiled.codexRules.length > 0) {
+    const path = join(repoRoot, '.codex', 'rules', CODEX_RULES_FILE);
+    const current = readTextIfExists(path);
+    if (current !== null && !isCompilerManagedCodexRulesFile(current)) {
+      actions.push({
+        kind: 'verify',
+        path,
+        ok: false,
+        reason: 'Codex rules file is user-authored — compiler writes only its named generated rule file',
+      });
+    } else {
+      actions.push({
+        kind: 'write',
+        path,
+        desired: compileCodexPermissionRules(compiled.codexRules),
+        sweep: false,
+        reason: 'Codex literal exec-policy prefixes compiled from safe Claude Bash permissions',
+      });
+    }
+  }
+  return actions;
+}
+
+/** Merge the global and local Claude settings permission arrays without assuming precedence. */
+function readClaudePermissions(repoRoot: string): ClaudePermissions | null {
+  const result: ClaudePermissions = { allow: [], deny: [], ask: [] };
+  let found = false;
+  for (const relative of ['.claude/settings.json', '.claude/settings.local.json']) {
+    const path = join(repoRoot, relative);
+    const text = readTextIfExists(path);
+    if (text === null) continue;
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(text);
+    } catch {
+      console.error(`Invalid JSON in ${display(path)} — refusing to compile this repo.`);
+      process.exit(1);
+    }
+    const permissions = (parsed as { permissions?: unknown }).permissions;
+    if (permissions === undefined) continue;
+    if (permissions === null || typeof permissions !== 'object' || Array.isArray(permissions)) {
+      console.error(`Invalid permissions object in ${display(path)} — refusing to compile this repo.`);
+      process.exit(1);
+    }
+    found = true;
+    for (const decision of ['allow', 'deny', 'ask'] as const) {
+      const entries = (permissions as Record<string, unknown>)[decision];
+      if (entries === undefined) continue;
+      if (!Array.isArray(entries) || entries.some((entry) => typeof entry !== 'string')) {
+        console.error(`Invalid permissions.${decision} in ${display(path)} — expected an array of strings.`);
+        process.exit(1);
+      }
+      result[decision].push(...entries);
+    }
+  }
+  if (!found) return null;
+  for (const decision of ['allow', 'deny', 'ask'] as const) {
+    result[decision] = [...new Set(result[decision])].sort();
+  }
+  return result;
+}
+
+function hasLegacyCodexSandbox(content: string): boolean {
+  return /^\s*sandbox_mode\s*=|^\s*\[sandbox_workspace_write\]/m.test(content);
 }
 
 /** Union of `.mcp.json` and settings-file `mcpServers`, later sources winning per name. */

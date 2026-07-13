@@ -7,10 +7,16 @@ import {
   compileAntigravityAgent,
   compileAntigravityMcpServers,
   compileAntigravityRule,
+  compileClaudePermissions,
   compileCodexAgent,
   compileCodexMcpServerLines,
+  compileCodexPermissionProfile,
+  compileCodexPermissionRules,
+  compileDevinPermissionsConfig,
   findClaudeOnlyTokens,
   isCompilerManagedAgentFile,
+  isCompilerManagedCodexRulesFile,
+  isCompilerManagedDevinPermissionsConfig,
   isLabSeedOwnedToml,
   looksLikeHandConvertedRule,
   mergeMcpConfigJson,
@@ -156,6 +162,101 @@ test('Antigravity agent transform maps file and orchestration tools', () => {
   assert.ok(compiled.includes('tools: ["ask_permission", "call_mcp_tool", "define_subagent", "invoke_subagent", "manage_task", "run_command", "view_file"]'));
   assert.ok(compiled.includes('Delegate carefully.'));
   assert.ok(isCompilerManagedAgentFile(compiled));
+});
+
+// --- increment 5: permission demultiplexing ---
+
+test('permissions demux maps supported Claude grants to Devin, Codex rules, and a profile', () => {
+  const result = compileClaudePermissions({
+    allow: [
+      'Bash(npm run test)',
+      'Read(//Users/willschaefer/.claude/**)',
+      'Write(src/**)',
+      'WebFetch(domain:docs.devin.ai)',
+    ],
+    deny: ['Bash(rm)', 'Write(.env)'],
+    ask: ['WebFetch(domain:example.com)'],
+  });
+
+  assert.deepEqual(result.devin.allow, [
+    'Exec(npm run test)',
+    'Fetch(domain:docs.devin.ai)',
+    'Read(/Users/willschaefer/.claude/**)',
+    'Write(src/**)',
+  ]);
+  assert.deepEqual(result.devin.deny, ['Exec(rm)', 'Write(.env)']);
+  assert.deepEqual(result.devin.ask, ['Fetch(domain:example.com)']);
+  assert.deepEqual(result.codexRules, [
+    { command: 'npm run test', decision: 'allow' },
+    { command: 'rm', decision: 'forbidden' },
+  ]);
+  assert.deepEqual(result.codexProfile.filesystem, [
+    { access: 'deny', path: '.env' },
+    { access: 'read', path: '/Users/willschaefer/.claude' },
+    { access: 'write', path: 'src' },
+  ]);
+  assert.deepEqual(result.codexProfile.domains, [{ access: 'allow', domain: 'docs.devin.ai' }]);
+  assert.deepEqual(result.skipped, [
+    {
+      permission: 'WebFetch(domain:example.com)',
+      reason: 'Codex permission profiles have no network prompt equivalent',
+    },
+  ]);
+});
+
+test('permissions demux reports Claude-only and unsafe shell rules instead of guessing', () => {
+  const result = compileClaudePermissions({
+    allow: ['Skill(update-config)', "Bash(python3 -c 'import os; print(os.getcwd())')"],
+    deny: [],
+    ask: [],
+  });
+  assert.deepEqual(result.devin, { allow: [], deny: [], ask: [] });
+  assert.equal(result.codexRules.length, 0);
+  assert.deepEqual(result.skipped, [
+    { permission: 'Skill(update-config)', reason: 'not a supported scoped Claude permission' },
+    {
+      permission: "Bash(python3 -c 'import os; print(os.getcwd())')",
+      reason: 'shell syntax is not a literal command prefix, so Codex cannot safely compile it',
+    },
+  ]);
+});
+
+test('Devin permission config is deterministic and recognizes only the generated shape', () => {
+  const config = compileDevinPermissionsConfig({
+    allow: ['Read(src/**)'],
+    deny: [],
+    ask: ['Exec(git push)'],
+  });
+  assert.equal(
+    config,
+    '{\n  "permissions": {\n    "allow": [\n      "Read(src/**)"\n    ],\n    "ask": [\n      "Exec(git push)"\n    ]\n  }\n}\n',
+  );
+  assert.ok(isCompilerManagedDevinPermissionsConfig(config));
+  assert.ok(!isCompilerManagedDevinPermissionsConfig('{"permissions": {"allow": []}, "model": "x"}'));
+  assert.ok(!isCompilerManagedDevinPermissionsConfig('{not-json'));
+});
+
+test('Codex permission renderers include literal prefixes, justifications, and examples', () => {
+  const rules = compileCodexPermissionRules([
+    { command: 'npm run test', decision: 'allow' },
+    { command: 'rm', decision: 'forbidden' },
+  ]);
+  assert.ok(isCompilerManagedCodexRulesFile(rules));
+  assert.ok(rules.includes('pattern = ["npm", "run", "test"]'));
+  assert.ok(rules.includes('decision = "forbidden"'));
+  assert.ok(rules.includes('justification = "Compiled from Claude Bash(rm) permission."'));
+  assert.ok(rules.includes('match = ["npm run test --nxtlvl-permission-probe"]'));
+  assert.ok(rules.includes('not_match = ["nxtlvl-not-npm"]'));
+
+  const profile = compileCodexPermissionProfile({
+    filesystem: [{ path: '~/.claude', access: 'read' }],
+    domains: [{ domain: 'docs.devin.ai', access: 'allow' }],
+  }).join('\n');
+  assert.ok(profile.includes('default_permissions = "nxtlvl_portable"'));
+  assert.ok(profile.includes('extends = ":workspace"'));
+  assert.ok(profile.includes('"~/.claude" = "read"'));
+  assert.ok(profile.includes('[permissions.nxtlvl_portable.network.domains]'));
+  assert.ok(!profile.includes('sandbox_mode'));
 });
 
 // --- increment 2: repo-scope MCP emitters ---

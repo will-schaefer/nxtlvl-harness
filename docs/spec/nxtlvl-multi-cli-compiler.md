@@ -1,7 +1,8 @@
 # Spec: multi-CLI config compiler
 
 > Status: **FINAL for increments 1 (global scope) + 2 (repo-scope MCP) + 3 (skills
-> relocation) + 4 (agent transforms)** — later increments extend this spec
+> relocation) + 4 (agent transforms) + 5 (permissions demultiplexing)** — later increments
+> extend this spec
 > Date: 2026-07-11 · Revised same day: the Antigravity emit switched from a compiled
 > always-on rule to a `~/.gemini/GEMINI.md` symlink after a sentinel probe showed
 > `~/.gemini/config/agents/` is never read (nothing loads files there, always-on or otherwise)
@@ -10,6 +11,8 @@
 > (global + repo scope), all four sentinel probes green
 > · Extended 2026-07-12 with increment 4: repo Claude-agent transforms into Codex TOML
 > and Antigravity workspace agents, with a generated-file collision guard
+> · Extended 2026-07-13 with increment 5: Claude permission grants into Devin project
+> permissions and Codex profiles plus command rules, with explicit loss reporting
 > Anchor intent: [`docs/intent/personal-harness.md`](../intent/personal-harness.md)
 > Related: [ADR-028](../decisions/ADR-028-portable-source-of-truth-per-cli-supplements.md)
 > (strategy — locked), [`docs/reference/multi-cli-config-compat.md`](../reference/multi-cli-config-compat.md)
@@ -98,11 +101,12 @@ flowchart LR
         T5["~/.agents/skills/<name><br/>symlink → ~/.claude/skills/<name><br/>(Devin global-skills gap + Codex)"]
     end
     subgraph REPO["repo-scope surfaces (per --repo path)"]
-        R0["<repo>/.mcp.json + .claude/settings*.json<br/>(mcpServers — the repo source)"]
+        R0["<repo>/.mcp.json + .claude/settings*.json<br/>(MCP servers + permissions — the repo source)"]
         R1["<repo>/.codex/config.toml<br/>managed region: [mcp_servers.X] tables<br/>(seed-owned file → verify only, never written)"]
         R2["<repo>/.agents/mcp_config.json<br/>merge: serverUrl entries, foreign keys kept"]
         R3["<repo>/.agents/skills/<name><br/>relative symlink → ../../.claude/skills/<name><br/>(Codex + Antigravity; reverse-direction<br/>arrangements verified, never restructured)"]
         R4["<repo>/.codex/agents/<name>.toml<br/>+ .agents/agents/<name>/agent.md<br/>(Codex + Antigravity agent transforms)"]
+        R5["<repo>/.devin/config.json<br/>+ .codex/rules/nxtlvl-permissions.rules<br/>+ Codex profile managed region<br/>(permission demultiplexing)"]
     end
     S1 --> P
     S3 --> P
@@ -111,6 +115,7 @@ flowchart LR
     A --> T1 & T2 & T3 & T4 & T5
     A --> R1 & R2 & R3
     A --> R4
+    A --> R5
     S2 -. "delivered on demand via pointers<br/>inside T2/T3 content" .-> TARGETS
 ```
 
@@ -136,6 +141,7 @@ touching any Devin-owned file; Grok's compiler surface stays verification only.
 | **Skills relocation** | Every Claude skill (a directory with a `SKILL.md`) gets a per-skill symlink in the pinned neutral `.agents/skills/` location: global `~/.agents/skills/<name> → ~/.claude/skills/<name>` (absolute), repo `<repo>/.agents/skills/<name> → ../../.claude/skills/<name>` (relative — survives cloning). Symlinks keep the relocation at zero drift. All three consumers probe-verified 2026-07-12: Codex and Devin (global), Codex and Antigravity (workspace) — all follow the symlinks; Codex reads workspace skills even in an **untrusted** repo (skills discovery is not trust-gated). Relocated skills' markdown feeds the portability gate. |
 | **Skill collision guard** | Same-name collisions are undefined behavior in Devin, so the compiler never creates or resolves one: an `.agents/skills/<name>` slot is only filled when empty, or replaced when it holds a **byte-identical** relocation copy of the same skill (`migrate` — backed up, then symlinked). Anything else — a foreign skill, a symlink elsewhere, a plain file — reports `conflict` and is never touched. A source entry that is itself a symlink *into* `.agents/skills/` (the agentskills.io installer's reverse-direction convention, used by nxtlvl-lab) means the skill is already relocated: the compiler asserts delivery (`verify`) and never restructures the arrangement. |
 | **Agent transforms** | Repo `.claude/agents/*.md` sources compile into `.codex/agents/<name>.toml` (Codex top-level `name`, `description`, and `developer_instructions`) and `.agents/agents/<name>/agent.md` (Antigravity frontmatter plus mapped tools). Empty or compiler-generated slots may be written; a foreign target is always a conflict. A Claude tool allowlist has no exact Codex equivalent, so the compiler uses `sandbox_mode = "read-only"` only for edit-free agents and restates the intended discipline in every output. |
+| **Permissions demultiplexing** | Repo `.claude/settings.json` and `.claude/settings.local.json` permission arrays are unioned. Supported `Bash`, `Read`, `Edit`/`Write`, and `WebFetch` grants compile to a compiler-owned `.devin/config.json` using Devin `Exec`, `Read`, `Write`, and `Fetch` grammar. Safe literal `Bash` prefixes also compile into `.codex/rules/nxtlvl-permissions.rules`, each with a decision, justification, and matching/non-matching examples. Literal file and `domain:` fetch grants compile into an `nxtlvl_portable` Codex profile extending `:workspace`; the compiler refuses profiles whenever a loaded user or repo config uses legacy `sandbox_mode`. Unsupported, prompt-only profile grants, and shell syntax that is not a literal prefix warn and remain uncompiled. `.devin/config.local.json` stays a human local-override channel; a user-authored `.devin/config.json` or Codex rules slot is a conflict. Grok receives no permission output. |
 | **Commands** | No `.claude/commands/` source exists on this machine, so the command → skill transform is deliberately unbuilt. If command files appear, the compiler emits a loud WARN (never a silent skip) until the transform lands. |
 
 ## Constraints & decisions already locked
