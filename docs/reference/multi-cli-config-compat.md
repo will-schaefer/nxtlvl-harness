@@ -115,7 +115,9 @@ flowchart LR
    translation — no Codex analog for built-in tools. Best degradation:
    `sandbox_mode = "read-only"` for no-edit agents + per-agent `mcp_servers` trimming
    (or `[[skills.config]]` disabling) + restate the intended tool discipline in
-   `developer_instructions`. Antigravity agents keep markdown but need the tool-name map
+   `developer_instructions`. Antigravity agents live at
+   `.agents/agents/<name>/agent.md` (a flat `.agents/agents/<name>.md` is not discovered)
+   and keep markdown but need the tool-name map
    (`compile_agents.py` prior art) — the map must cover Antigravity's orchestration/system
    tools too (`invoke_subagent`, `manage_task`, `schedule`, `call_mcp_tool`, `ask_permission`,
    `define_subagent`, …); the previously-captured read/write tool list was incomplete (agy

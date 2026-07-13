@@ -3,7 +3,7 @@ id: ADR-028
 title: "Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies"
 status: Accepted
 date: 2026-07-10
-implementation: in progress — global scope done 2026-07-11; repo-scope MCP (Task 2) and skills relocation (Task 3) done 2026-07-12 (`scripts/multi-cli-compiler/`, spec `docs/spec/nxtlvl-multi-cli-compiler.md`, plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`; all emits applied to live configs and sentinel-probed, drift check in sync); agent transforms, permissions demux, verification deepening (plan Tasks 4–6) pending
+implementation: in progress — global scope done 2026-07-11; repo-scope MCP (Task 2), skills relocation (Task 3), and agent transforms (Task 4) done 2026-07-12 (`scripts/multi-cli-compiler/`, spec `docs/spec/nxtlvl-multi-cli-compiler.md`, plan `docs/plan/nxtlvl-multi-cli-compiler-plan.md`; all emitted state is drift-checked); permissions demux and verification deepening (plan Tasks 5–6) pending
 ---
 
 # ADR-028: Multi-CLI config: portable shared source-of-truth plus per-CLI supplements — compile the residue, never filtered instruction copies

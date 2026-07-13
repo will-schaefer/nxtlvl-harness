@@ -1,6 +1,6 @@
 /**
  * multi-CLI config compiler — global scope (increment 1) + repo-scope MCP (increment 2)
- * + skills relocation (increment 3).
+ * + skills relocation (increment 3) + agent transforms (increment 4).
  * Makes Codex and Antigravity consume the Claude Code config as their source of truth,
  * emitting only ADR-028's mechanical residue. Devin and Grok read it natively (no emits),
  * except Devin's global-skills gap — closed by the ~/.agents/skills relocation.
@@ -30,11 +30,15 @@ import { dirname, join, resolve } from 'node:path';
 import {
   classifyAgentsSkillEntry,
   compileAntigravityMcpServers,
+  compileAntigravityAgent,
+  compileCodexAgent,
   compileCodexMcpServerLines,
   findClaudeOnlyTokens,
   isLabSeedOwnedToml,
+  isCompilerManagedAgentFile,
   looksLikeHandConvertedRule,
   mergeMcpConfigJson,
+  parseClaudeAgentSource,
   tomlDeliversMcpServer,
   upsertManagedTomlBlock,
 } from './emitters.ts';
@@ -112,6 +116,7 @@ type Status = 'ok' | 'create' | 'update' | 'retire' | 'skip' | 'conflict';
 interface Plan {
   actions: Action[];
   skillSourceDirs: string[];
+  agentSourceDirs: string[];
 }
 
 main();
@@ -144,6 +149,7 @@ function main(): void {
   const plans = [buildGlobalPlan(), ...repoRoots.map(buildRepoPlan)];
   const actions = plans.flatMap((plan) => plan.actions);
   const skillSourceDirs = plans.flatMap((plan) => plan.skillSourceDirs);
+  const agentSourceDirs = plans.flatMap((plan) => plan.agentSourceDirs);
 
   // Symlinks expose the source verbatim, so the gate sweeps the source itself
   // (global CLAUDE.md and every relocated skill's markdown), plus any emitted
@@ -153,6 +159,13 @@ function main(): void {
     violations.push(`${display(SOURCE_GLOBAL_CLAUDE_MD)}: ${token}`);
   }
   for (const dir of skillSourceDirs) {
+    for (const file of listMarkdownFiles(dir)) {
+      for (const token of findClaudeOnlyTokens(readFileSync(file, 'utf8'))) {
+        violations.push(`${display(file)}: ${token}`);
+      }
+    }
+  }
+  for (const dir of agentSourceDirs) {
     for (const file of listMarkdownFiles(dir)) {
       for (const token of findClaudeOnlyTokens(readFileSync(file, 'utf8'))) {
         violations.push(`${display(file)}: ${token}`);
@@ -263,14 +276,19 @@ function buildGlobalPlan(): Plan {
     'Devin (global-skills gap) + Codex read ~/.agents/skills',
   );
 
-  return { actions: [...actions, ...skills.actions], skillSourceDirs: skills.skillSourceDirs };
+  return {
+    actions: [...actions, ...skills.actions],
+    skillSourceDirs: skills.skillSourceDirs,
+    agentSourceDirs: [],
+  };
 }
 
 /**
  * Repo scope: compile `<repo>/.mcp.json` (+ settings `mcpServers`) into the
  * Codex and Antigravity workspace MCP surfaces (Devin and Grok read `.mcp.json`
  * natively — no emits, compat doc item 2), and relocate `<repo>/.claude/skills/`
- * into `<repo>/.agents/skills/` (the pinned neutral location, compat doc item 5).
+ * into `<repo>/.agents/skills/` (the pinned neutral location, compat doc item 5), and
+ * transform `<repo>/.claude/agents/` for Codex and Antigravity (compat doc item 4).
  */
 function buildRepoPlan(repoRoot: string): Plan {
   warnUncompiledCommands(join(repoRoot, '.claude', 'commands'));
@@ -283,10 +301,60 @@ function buildRepoPlan(repoRoot: string): Plan {
     'Codex + Antigravity read the workspace .agents/skills',
   );
   const mcpActions = buildRepoMcpActions(repoRoot);
-  if (mcpActions.length === 0 && skills.actions.length === 0) {
-    console.log(`NOTE    ${display(repoRoot)} — no MCP servers or skills found; nothing to compile for this repo`);
+  const agents = buildRepoAgentActions(repoRoot);
+  if (mcpActions.length === 0 && skills.actions.length === 0 && agents.actions.length === 0) {
+    console.log(`NOTE    ${display(repoRoot)} — no MCP servers, skills, or agents found; nothing to compile for this repo`);
   }
-  return { actions: [...mcpActions, ...skills.actions], skillSourceDirs: skills.skillSourceDirs };
+  return {
+    actions: [...mcpActions, ...skills.actions, ...agents.actions],
+    skillSourceDirs: skills.skillSourceDirs,
+    agentSourceDirs: agents.agentSourceDirs,
+  };
+}
+
+/**
+ * Compile each Claude Code agent into the project-local surfaces the target CLIs discover.
+ * Standalone agent files are not marker-delimited, so a same-name user-authored target is a
+ * conflict rather than a file the compiler may replace.
+ */
+function buildRepoAgentActions(repoRoot: string): { actions: Action[]; agentSourceDirs: string[] } {
+  const sourceDir = join(repoRoot, '.claude', 'agents');
+  if (!existsSync(sourceDir)) return { actions: [], agentSourceDirs: [] };
+
+  const actions: Action[] = [];
+  for (const entry of readdirSync(sourceDir).sort()) {
+    if (!entry.endsWith('.md')) continue;
+    const sourcePath = join(sourceDir, entry);
+    if (!lstatSync(sourcePath).isFile() && !lstatSync(sourcePath).isSymbolicLink()) continue;
+    const fallbackName = entry.slice(0, -'.md'.length);
+    const source = parseClaudeAgentSource(readFileSync(sourcePath, 'utf8'), fallbackName);
+    const targets = [
+      {
+        path: join(repoRoot, '.codex', 'agents', `${source.name}.toml`),
+        desired: compileCodexAgent(source),
+        reason: `Codex custom agent '${source.name}' compiled from .claude/agents/${entry}`,
+      },
+      {
+        path: join(repoRoot, '.agents', 'agents', source.name, 'agent.md'),
+        desired: compileAntigravityAgent(source),
+        reason: `Antigravity custom agent '${source.name}' compiled with its tool-name map`,
+      },
+    ];
+    for (const target of targets) {
+      const current = readTextIfExists(target.path);
+      if (current !== null && !isCompilerManagedAgentFile(current)) {
+        actions.push({
+          kind: 'verify',
+          path: target.path,
+          ok: false,
+          reason: `agent '${source.name}' collides with a user-authored target — reconcile by hand`,
+        });
+        continue;
+      }
+      actions.push({ kind: 'write', path: target.path, desired: target.desired, sweep: true, reason: target.reason });
+    }
+  }
+  return { actions, agentSourceDirs: [sourceDir] };
 }
 
 function buildRepoMcpActions(repoRoot: string): Action[] {
@@ -386,7 +454,7 @@ function buildSkillRelocationActions(
   audience: string,
 ): Plan {
   if (!existsSync(sourceSkillsDir)) {
-    return { actions: [], skillSourceDirs: [] };
+    return { actions: [], skillSourceDirs: [], agentSourceDirs: [] };
   }
   const actions: Action[] = [];
   const skillSourceDirs: string[] = [];
@@ -445,7 +513,7 @@ function buildSkillRelocationActions(
           : `skill '${name}' → symlink into the neutral skills location (${audience})`,
     });
   }
-  return { actions, skillSourceDirs };
+  return { actions, skillSourceDirs, agentSourceDirs: [] };
 }
 
 /** Snapshot of what already occupies a `.agents/skills/<name>` slot, for the pure classifier. */

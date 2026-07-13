@@ -80,6 +80,18 @@ contract / multi-source the delivery" spine adopted from the Trellis review ([[n
   relocated and delivery-asserted, never restructured. Commands: no `.claude/commands/`
   source exists anywhere — transform unbuilt, loud WARN if sources appear. Codex probe
   gotcha: `codex exec` from a non-git directory needs `--skip-git-repo-check`.
+- **Compiler Task 4 DONE — agent transforms, built + applied + drift-checked (2026-07-12):**
+  repo `.claude/agents/*.md` sources now compile to Codex
+  `.codex/agents/<name>.toml` (top-level `name`, `description`,
+  `developer_instructions`; `sandbox_mode = "read-only"` only when the source allowlist has
+  no write-like tool) and Antigravity `.agents/agents/<name>/agent.md` (the nested directory
+  is required for workspace discovery). The compiler only writes empty or compiler-generated
+  target slots; a user-authored target is a loud conflict. Claude tool names are mapped to
+  Antigravity names, including orchestration/system tools and `exec` → `run_command`; Codex
+  instead receives the original tool discipline in its instructions because it has no
+  built-in-tool allowlist. Applied to `nxtlvl-lab`'s `plan-executor`; compiler `--check`
+  passes. `agy agents` reports its global catalog rather than workspace agents, so live
+  selected-agent execution stays in Task 6's smoke-test scope.
 - **CLAUDE.md portable restructure DONE (2026-07-11):** all four instruction files swept
   (global + nxtlvl-core slash-syntax rewrites; stale sandbox-block stragglers deleted from
   nxtlvl-lab + nxtlvl-wiki), committed per repo. `grok inspect` ground truth: Grok's

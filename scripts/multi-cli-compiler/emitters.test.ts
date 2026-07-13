@@ -4,13 +4,17 @@ import {
   MANAGED_BEGIN,
   MANAGED_END,
   classifyAgentsSkillEntry,
+  compileAntigravityAgent,
   compileAntigravityMcpServers,
   compileAntigravityRule,
+  compileCodexAgent,
   compileCodexMcpServerLines,
   findClaudeOnlyTokens,
+  isCompilerManagedAgentFile,
   isLabSeedOwnedToml,
   looksLikeHandConvertedRule,
   mergeMcpConfigJson,
+  parseClaudeAgentSource,
   tomlDeliversMcpServer,
   upsertManagedTomlBlock,
 } from './emitters.ts';
@@ -98,6 +102,60 @@ test('retire guard accepts hand-converted rules and rejects everything else', ()
   assert.ok(looksLikeHandConvertedRule('---\ntrigger: always_on\ndescription: x\n---\n# Rule\n'));
   assert.ok(!looksLikeHandConvertedRule('# Just a markdown file\n\ntrigger: mentioned in prose\n'));
   assert.ok(!looksLikeHandConvertedRule(''));
+});
+
+const CLAUDE_AGENT = `---
+name: context-scout
+description: Read-only scout.
+allowed-tools:
+  - read
+  - grep
+  - glob
+model: sonnet
+---
+
+# context-scout
+
+Return file pointers only.
+`;
+
+test('agent parser reads list-style allowed-tools and removes frontmatter from the body', () => {
+  const agent = parseClaudeAgentSource(CLAUDE_AGENT, 'fallback-name');
+  assert.equal(agent.name, 'context-scout');
+  assert.equal(agent.description, 'Read-only scout.');
+  assert.deepEqual(agent.tools, ['read', 'grep', 'glob']);
+  assert.equal(agent.body, '# context-scout\n\nReturn file pointers only.');
+});
+
+test('Codex agent transform uses documented top-level keys and read-only degradation', () => {
+  const source = parseClaudeAgentSource(CLAUDE_AGENT, 'fallback-name');
+  const compiled = compileCodexAgent(source);
+  assert.ok(compiled.includes('name = "context-scout"'));
+  assert.ok(compiled.includes('description = "Read-only scout."'));
+  assert.ok(compiled.includes('sandbox_mode = "read-only"'));
+  assert.ok(compiled.includes('developer_instructions = '));
+  assert.ok(compiled.includes('Claude Code tool allowlist: read, grep, glob.'));
+  assert.ok(!compiled.includes('[agent]'));
+  assert.ok(isCompilerManagedAgentFile(compiled));
+});
+
+test('Codex agent transform does not force a sandbox for an editing agent', () => {
+  const source = parseClaudeAgentSource(
+    '---\nname: worker\ndescription: Can edit.\ntools: Read, Edit, Bash\n---\n\nMake the change.\n',
+    'fallback-name',
+  );
+  assert.ok(!compileCodexAgent(source).includes('sandbox_mode = "read-only"'));
+});
+
+test('Antigravity agent transform maps file and orchestration tools', () => {
+  const source = parseClaudeAgentSource(
+    '---\nname: orchestrator\ndescription: Coordinates work.\ntools: Read, exec, Task, TaskCreate, CallMcpTool, AskPermission, DefineSubagent\n---\n\nDelegate carefully.\n',
+    'fallback-name',
+  );
+  const compiled = compileAntigravityAgent(source);
+  assert.ok(compiled.includes('tools: ["ask_permission", "call_mcp_tool", "define_subagent", "invoke_subagent", "manage_task", "run_command", "view_file"]'));
+  assert.ok(compiled.includes('Delegate carefully.'));
+  assert.ok(isCompilerManagedAgentFile(compiled));
 });
 
 // --- increment 2: repo-scope MCP emitters ---

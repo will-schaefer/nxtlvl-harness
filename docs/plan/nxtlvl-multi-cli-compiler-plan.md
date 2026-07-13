@@ -169,7 +169,7 @@ relocate into `~/.config/devin/skills/` or `~/.agents/skills/`). Avoid same-name
 
 **Dependencies:** Task 2 (shares the repo-scope run mode).
 
-## Task 4: Agent transforms
+## Task 4: Agent transforms — **BUILT + APPLIED 2026-07-12**
 
 **Description:** Claude agents → Codex `.codex/agents/*.toml` (top-level
 `name/description/developer_instructions`; `tools:` allowlist degrades to
@@ -178,6 +178,20 @@ markdown with the tool-name map, extending `nxtlvl-wiki/scripts/compile_agents.p
 with the orchestration tools (`invoke_subagent`, `manage_task`, `call_mcp_tool`, …).
 
 **Dependencies:** Task 1.
+
+**Build notes (2026-07-12):** The compiler discovers each repo's
+`.claude/agents/*.md`, parses its frontmatter, and emits managed target files only when the
+slot is empty or already compiler-generated. A user-authored target is a conflict, never an
+overwrite. Codex receives `.codex/agents/<name>.toml` with top-level
+`name`/`description`/`developer_instructions`; an edit-free Claude tool allowlist degrades to
+`sandbox_mode = "read-only"`, and every target restates the intended tool discipline.
+Antigravity receives `.agents/agents/<name>/agent.md` with mapped tool names; the map now
+covers the orchestration tools as well as `exec` → `run_command`.
+
+Applied to `nxtlvl-lab`'s `plan-executor` agent and passed the compiler drift check. The
+official Antigravity target path is now recorded in the compat reference; live selected-agent
+execution remains part of Task 6's smoke-test work because `agy agents` lists its global
+catalog rather than workspace agents.
 
 ## Task 5: Permissions demux
 
