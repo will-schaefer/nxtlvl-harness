@@ -37,7 +37,7 @@ One line per memory — detail lives in the topic file. Grouped for fast orienta
 ## Environment & repo
 - [~/.claude config repo](claude-config-repo.md) — nxtlvl repo (~/Developer/nxtlvl/nxtlvl-core) is the SOURCE for global CC config (config/claude/*); ~/.claude/* symlink in; PR→main, remote will-schaefer/nxtlvl-harness.
 - [Developer repo git workflow](developer-repo-git-workflow.md) — solo, commit directly to main, don't branch for routine work, don't push unless asked; the 'epitaxy' parallel-committer was retired 2026-06-25 (was a transient session behavior, not a daemon).
-- [Disable ecc active hooks in dev](disable-ecc-active-hooks-dev.md) — ecc dormant via enabledPlugins."ecc@ecc":false (flip to re-enable); ECC_GATEGUARD=off was ineffective.
+- [ecc uninstalled](disable-ecc-active-hooks-dev.md) — ecc + agent-skills fully UNINSTALLED 2026-07-12 (orphaned installs erroring at load); re-enable = reinstall, no settings flip; durable record in docs/reference/.
 - [nxtlvl install/promotion](nxtlvl-install-promotion.md) — installed nxtlvl is a SHA-pinned cache snapshot, not a live repo read; committed work needs a manual /plugin promote; repo HEAD runs ahead.
 
 ## nxtlvl — project & subsystem status

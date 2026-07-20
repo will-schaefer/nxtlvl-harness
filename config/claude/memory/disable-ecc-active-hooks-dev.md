@@ -1,11 +1,22 @@
 ---
 name: disable-ecc-active-hooks-dev
-description: "During development, silence ecc's active hooks (GateGuard, pre:observe); keep ecc only as read-only reference."
+description: "ecc plugin fully UNINSTALLED 2026-07-12 (was causing load errors as an orphaned install); re-enabling now requires a fresh install, not a settings flip."
 metadata: 
   node_type: memory
   type: feedback
   originSessionId: 794f06a2-18d8-40ab-b498-49d6500c44eb
 ---
+
+**UPDATE 2026-07-12: ecc is fully uninstalled, not just dormant.** The orphaned install (its
+marketplace had dropped out of the known-marketplaces registry) caused a load error on every
+session start, so the user had `ecc@ecc` and `agent-skills@addy-agent-skills` deleted outright —
+`claude plugin uninstall` plus removal of their cache/marketplace directories. The
+`enabledPlugins."ecc@ecc": false` flip-switch no longer exists; **re-enabling ecc means
+re-adding its marketplace and reinstalling**. The durable ECC record survives in
+nxtlvl-core `docs/reference/` ([[ecc-component-map]], [[ecc-knowledge-graph]]). The history
+below explains why ecc's active hooks were unwanted in the first place.
+
+***
 
 ecc's **active** machinery interferes during development — GateGuard blocks Bash and Write/Edit with a "fact-forcing gate," and `pre:observe` fires on every tool call. The user wants the active layer **off** during dev work (especially harness/agent work), keeping ecc's skills/agents on disk as a passive reference library.
 
