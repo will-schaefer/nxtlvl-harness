@@ -43,3 +43,9 @@ architecture, proposals, or equivalent — **follow the visual-docs rule: read
 `~/.claude/rules/visual-docs.md`.** It covers diagrams (mermaid, ASCII), when to use in-session
 interactive visuals, and where standalone diagram artifacts live. Pure implementation code or
 throwaway notes: just proceed.
+
+## Output shaping
+
+**Every reply, in every session: follow the `i-have-adhd` skill** — invoke
+`/i-have-adhd:i-have-adhd` if it isn't already loaded. It shapes replies for an ADHD reader:
+lead with the next action, number multi-step work, restate state each turn, no filler.
