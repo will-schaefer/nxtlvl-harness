@@ -49,7 +49,7 @@ Details: [references/modes-and-prompts.md](references/modes-and-prompts.md).
 | `grok` | `grok` | `--prompt-file` + read-only sandbox flags |
 | `gemini` | `gemini` | `--approval-mode plan`; free-tier may be auth-dead — fail loud |
 | `devin` | `devin` | `-p` / `--prompt-file` + permission mode |
-| `claude` | `claude` | Headless `claude -p`; prefer `headless-doubt` for typed doubt |
+| `claude` | `claude` | Headless `claude -p`; read-only by default; `task --write` uses `--permission-mode acceptEdits` (override via `CALL_MODEL_CLAUDE_PERMISSION_MODE`). Prefer `headless-doubt` for typed doubt |
 
 Full flag matrix and caveats: [references/targets.md](references/targets.md).  
 Codex compose path: [references/openai-compose.md](references/openai-compose.md).
@@ -89,6 +89,7 @@ node …/call-model.mjs review --target codex --cwd /path/to/repo
 
 # Task (write requires --write)
 node …/call-model.mjs task --target codex --cwd /path/to/repo --prompt-file /tmp/task.md --write
+node …/call-model.mjs task --target claude --cwd /path/to/repo --prompt-file /tmp/task.md --write
 ```
 
 Env overrides:
@@ -98,6 +99,7 @@ Env overrides:
 | `CODEX_COMPANION=0` | Force Codex portable `exec` (skip OpenAI companion) |
 | `CODEX_COMPANION_PATH` | Absolute path to `codex-companion.mjs` |
 | `CALL_MODEL_TIMEOUT_MS` | Kill child after N ms (default 600000) |
+| `CALL_MODEL_CLAUDE_PERMISSION_MODE` | Claude write path only; default `acceptEdits` |
 
 When the skill is loaded from the installed plugin, resolve the script relative to this skill directory:
 

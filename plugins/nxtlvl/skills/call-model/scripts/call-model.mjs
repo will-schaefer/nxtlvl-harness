@@ -15,9 +15,11 @@
  *   --skip-git-repo-check Pass through to codex exec when needed
  *
  * Env:
- *   CODEX_COMPANION=0           Force portable Codex exec
- *   CODEX_COMPANION_PATH        Pin path to codex-companion.mjs
- *   CALL_MODEL_TIMEOUT_MS       Child timeout (default 600000)
+ *   CODEX_COMPANION=0                  Force portable Codex exec
+ *   CODEX_COMPANION_PATH               Pin path to codex-companion.mjs
+ *   CALL_MODEL_TIMEOUT_MS              Child timeout (default 600000)
+ *   CALL_MODEL_CLAUDE_PERMISSION_MODE  Claude write task permission mode
+ *                                      (default acceptEdits)
  */
 
 import { spawn, spawnSync } from "node:child_process";
@@ -415,21 +417,34 @@ async function invokeDevin(mode, opts) {
 
 async function invokeClaude(mode, opts) {
   requirePromptFile(opts);
-  if (opts.write && mode === "task") {
-    die("claude write/task is not enabled via call-model; use a normal Claude session");
+  const write = Boolean(opts.write && mode === "task");
+  // -p "" + stdin: prompt file must not be shell-interpolated (same as consult).
+  // --setting-sources project: load repo CLAUDE.md / project settings; keep
+  // NXTLVL_CM_OBSERVER=1 so nxtlvl hooks skip nested observer capture.
+  const args = ["-p", "", "--setting-sources", "project"];
+  if (write) {
+    // Write path: do NOT strip Write/Edit/Bash. Default permission mode is
+    // acceptEdits (auto-approve file edits; analogous to Devin accept-edits).
+    // Override with CALL_MODEL_CLAUDE_PERMISSION_MODE when unattended Bash
+    // needs a broader mode (e.g. bypassPermissions) — never the default.
+    const perm =
+      process.env.CALL_MODEL_CLAUDE_PERMISSION_MODE || "acceptEdits";
+    args.push("--permission-mode", perm);
+    process.stderr.write(
+      `call-model: transport=portable-cli claude -p write permission=${perm}\n`,
+    );
+  } else {
+    args.push(
+      "--disallowedTools",
+      "Write",
+      "Edit",
+      "NotebookEdit",
+      "Bash",
+    );
+    process.stderr.write(
+      `call-model: transport=portable-cli claude -p read-only tools\n`,
+    );
   }
-  const args = [
-    "-p",
-    "",
-    "--disallowedTools",
-    "Write",
-    "Edit",
-    "NotebookEdit",
-    "Bash",
-    "--setting-sources",
-    "project",
-  ];
-  process.stderr.write(`call-model: transport=portable-cli claude -p read-only tools\n`);
   return runWithStdinFile("claude", args, opts.promptFile, {
     cwd: opts.cwd,
     env: { ...process.env, NXTLVL_CM_OBSERVER: "1" },

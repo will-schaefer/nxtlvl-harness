@@ -37,7 +37,8 @@ Git-scoped code review of working tree or branch.
 Implementation or deep debug handoff.
 
 - Requires explicit user authorization.
-- Companion requires `--write` to drop read-only sandbox.
+- Companion requires `--write` to drop read-only sandbox / tool strips.
+- **Claude:** `--write` switches from `--disallowedTools Write Edit NotebookEdit Bash` to `--permission-mode acceptEdits` (or `CALL_MODEL_CLAUDE_PERMISSION_MODE`). Same per-call auth as other write targets.
 - Prefer one clear task per run; state done-when and verification expectations in the prompt.
 
 ## setup
