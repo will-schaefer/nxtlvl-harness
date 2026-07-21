@@ -20,7 +20,15 @@ Record an ADR **only** when a decision is *both*:
 
 - verified platform/implementation **facts** → they live in the **spec**;
 - **methodology / sequencing / task order** → lives in the **plan**;
-- a resolved **open question** that just folds into an existing ADR → **amend that ADR**.
+- everyday, easily-reversible choices → just proceed (no ADR).
+
+**Domain grain (one major domain per ADR):** each ADR covers **one major capability domain**
+(or one standalone hard constraint) — e.g. skill design/canonical format vs agent creation
+process, not a separate ADR per every sub-question inside a domain. Related open questions
+**fold into the domain ADR** as sections and are amended when they resolve. Open a **new**
+ADR when the topic is a **different domain**, not the next bullet on the same contract.
+Optional short **map** ADRs may only index domain ADRs. Still: not every config knob.
+(Recorded for nxtlvl as `docs/decisions/ADR-029-atomic-adrs-one-decision-each.md`.)
 
 Curation is the hard part. An ADR is for the decisions the project *is*, not every choice
 made along the way.

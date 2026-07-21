@@ -1,75 +1,41 @@
 ---
 id: ADR-013
-title: "nxtlvl-harness skill and agent authoring model — skill files, agent files, and load rules"
-status: Draft
+title: "Skill and agent authoring — decision map (skill vs agent)"
+status: Accepted
 date: 2026-06-28
+updated: 2026-07-20
 ---
 
-# ADR-013: nxtlvl-harness skill and agent authoring model — skill files, agent files, and load rules
+# ADR-013: Skill and agent authoring — decision map (skill vs agent)
 
 ## Context
 
-nxtlvl's skills and agents are core Claude Code primitives: markdown files that define
-knowledge and subagent behavior. Their internal structure, the boundary between them, when
-they are loaded into context, and how they are authored are all open.
-[ADR-003](ADR-003-build-from-scratch.md) establishes that the harness is built from
-scratch against a production-quality standard.
-
-A skill is a markdown file loaded into context. An agent is a markdown file that defines a
-subagent. The two files are conceptually separate: skills hold domain knowledge; agents
-execute. But the exact contents of each file, the schema for a skill pointer in an agent,
-the load rule, and the authoring discipline are not yet fixed.
-
-### The questions
-
-**1. What does a skill file contain and how is it structured?**
-
-A skill is a CC primitive — a markdown file loaded into context. What it should contain
-(domain rules, conventions, format specs, procedures), how it should be organized, and what
-it should never contain (executable logic, agent-specific workflow) is open. The structure
-determines how easy skills are to maintain and how reliably agents can load and follow them.
-
-**2. What does an agent file contain and how is it structured?**
-
-An agent is a CC primitive — a markdown file that defines a subagent's behavior. What
-belongs in the agent definition (role, tools allowlist, output contract, skill pointer) vs.
-what belongs in a skill is the boundary question from ADR-012. The authoring model must make
-that boundary concrete and enforceable.
-
-**3. What is the load rule — when does an agent load its skill?**
-
-An agent that runs a full workflow needs its knowledge skill loaded. An agent that is a
-spawn target (handed a specific task by the orchestrator) may not. The load rule determines
-when skills are injected into context and prevents unnecessary context bloat. The right
-rule is open.
-
-**4. What is the eval-first discipline for authoring?**
-
-A capability should have its acceptance criteria declared before it is built — not validated
-after. What "eval-first" means concretely in the authoring workflow, what pre-declared
-graduation criteria look like, and how they are enforced without blocking authoring velocity
-is open.
-
-### What agents-wiki is being queried on
-
-- How do production agent harnesses structure skill files — what do they contain, how are
-  they organized, and what do they explicitly exclude?
-- How do production harnesses handle the agent/skill load relationship — when do agents
-  load skills, and what patterns prevent unnecessary context bloat?
-- What authoring workflows do production harnesses use for skills and agents — is there an
-  eval-first or contract-first discipline, and how is it enforced?
-- Any anti-patterns in skill/agent authoring: skills that grow too large, agents that carry
-  too much inline knowledge, load rules that pollute context?
+Skill design and agent creation are related but **different domains**. This file is only a
+navigation map. Domain grain: [ADR-029](ADR-029-atomic-adrs-one-decision-each.md).
 
 ## Decision
 
-> **Pending** — querying agents-wiki on production skill and agent authoring patterns.
-> Decision to be recorded here once the call is made.
+**Index only — decisions live in the domain ADRs below.**
+
+| Domain | ADR | Status |
+|---|---|---|
+| Domain grain (how big an ADR is) | [ADR-029](ADR-029-atomic-adrs-one-decision-each.md) | Accepted |
+| **Skill** design and canonical format | [ADR-030](ADR-030-skill-design-and-canonical-format.md) | Accepted (markup done; other skill open questions stay on that ADR) |
+| **Agent** creation process | [ADR-032](ADR-032-agent-creation-process.md) | Draft |
+
+Do not add skill or agent decision bodies here. Amend ADR-030 or ADR-032 instead.
+
+### Historical note
+
+This file was briefly a multi-question bucket, then an over-split map of micro-ADRs
+(031–034). Corrected to the two-domain split above; micro-stubs are Superseded.
 
 ## Alternatives Considered
 
-> To be completed alongside the decision.
+See [ADR-029](ADR-029-atomic-adrs-one-decision-each.md).
 
 ## Consequences
 
-> To be completed alongside the decision.
+- Link **ADR-030** for skills, **ADR-032** for agents.
+- ADR-012 may still discuss agent/skill **boundary** until narrowed; avoid duplicating skill
+  format or agent creation process outside those domain ADRs.

@@ -36,14 +36,21 @@ in effect. The rest of the global ADR format applies — frontmatter, the
 Context · Decision · Alternatives · Consequences body, the `docs/decisions/` location, and the
 `README.md` index.
 
+**Domain grain** ([ADR-029](docs/decisions/ADR-029-atomic-adrs-one-decision-each.md)): one
+ADR per major capability domain. Related sub-questions fold into that domain ADR. Example
+split: skill design → [ADR-030](docs/decisions/ADR-030-skill-design-and-canonical-format.md);
+agent creation → [ADR-032](docs/decisions/ADR-032-agent-creation-process.md).
+
 ## nxtlvl-build conventions (project-specific, not global rules)
 The global rules layer (`~/.claude/rules/` — decisions, context assembly, hook safety, git
 workflow, visual design docs) carries only cross-project conventions. These are nxtlvl-build-specific and live here
 (design: [`docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md`](docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md)):
 
 - **Skill/agent authoring:** run the nxtlvl **brainstorming** skill before code, then the
-  **show-me** spec → plan format, then review before merge. (ADR-012/ADR-013 are
-  `Draft`/`Pending` — this is current provisional practice, not a recorded decision.)
+  **show-me** spec → plan format, then review before merge. Skills:
+  [ADR-030](docs/decisions/ADR-030-skill-design-and-canonical-format.md) (canonical format;
+  markup Accepted). Agents: [ADR-032](docs/decisions/ADR-032-agent-creation-process.md)
+  (Draft). Map: [ADR-013](docs/decisions/ADR-013-skill-agent-authoring-model.md).
 - **Promotion/audit gate:** promotion into the live plugin is gated by `nxtlvl:audit` — **not
   yet built** (ADR-014 is `Draft`/`Pending`); rollback convention is a git tag per promotion.
   Aspirational until the gate ships.

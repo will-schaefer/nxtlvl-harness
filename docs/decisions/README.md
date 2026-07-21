@@ -24,7 +24,7 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [010](ADR-010-hook-layer-contract.md) | `nxtlvl-harness` hook layer contract — failure contract, exit codes, kill switches, and event scope | Draft |
 | [011](ADR-011-observability-and-metrics.md) | `nxtlvl-harness` observability and metrics — north-star measurement and automatic logging | Draft |
 | [012](ADR-012-agent-design-contract.md) | Agent design contract — agents, skills, and the orchestrator/specialist boundary | Draft |
-| [013](ADR-013-skill-agent-authoring-model.md) | Skill and agent authoring model — skill files, agent files, and load rules | Draft |
+| [013](ADR-013-skill-agent-authoring-model.md) | Skill and agent authoring — **map** (skill → ADR-030, agent → ADR-032) | Accepted |
 | [014](ADR-014-audit-gate.md) | Audit gate — objective promotion criteria and invocation | Draft |
 | [015](ADR-015-scope-determination-and-extension-gate.md) | Scope determination and extension gate — harness domain map, include/defer/exclude frame, and extension gate for additions beyond defined scope | Draft |
 | [016](ADR-016-orchestration-model.md) | Orchestration model — composition layer, delegation contract, and human gates | Draft |
@@ -40,3 +40,9 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [026](ADR-026-nxtlvl-wiki-mcp-source.md) | `nxtlvl-wiki` becomes a queryable MCP source — a new `wiki-scout` agent inherits ADR-002's leads-only posture, never Context7's testify tier | Draft |
 | [027](ADR-027-global-rules-layer-cross-project-split.md) | Global rules layer (`config/claude/rules/`) scoped to genuinely cross-project conventions only (4 files); nxtlvl-build-specific mechanics stay as project `CLAUDE.md` prose; a rule file is inert unless wired via a matching `## <Topic>` trigger section in global `CLAUDE.md` | Accepted |
 | [028](ADR-028-portable-source-of-truth-per-cli-supplements.md) | Multi-CLI config: `CLAUDE.md` (project + global) authored as a portable shared source of truth; emitted instruction files are per-CLI supplements, never filtered copies; the compiler emits only the mechanical residue with a per-CLI verification step | Accepted |
+| [029](ADR-029-atomic-adrs-one-decision-each.md) | Domain-level ADRs — one major capability domain per ADR; not micro-slices | Accepted |
+| [030](ADR-030-skill-design-and-canonical-format.md) | Skill design and canonical format (markup Accepted; other skill open questions stay here) | Accepted |
+| [031](ADR-031-skill-file-contents-and-section-anatomy.md) | *(superseded — fold into ADR-030)* | Superseded |
+| [032](ADR-032-agent-creation-process.md) | Agent creation process — how nxtlvl agents are defined and wired | Draft |
+| [033](ADR-033-agent-skill-load-rule.md) | *(superseded — fold into ADR-032)* | Superseded |
+| [034](ADR-034-eval-first-skill-authoring.md) | *(superseded — fold into ADR-030)* | Superseded |
