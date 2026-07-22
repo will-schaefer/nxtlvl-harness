@@ -54,6 +54,34 @@ test('managed block body is replaced in place on re-run', () => {
   assert.equal(updated.split(MANAGED_END).length, 2);
 });
 
+test('managed block absorbs a bare survivor of a stripped block (Codex re-serialization)', () => {
+  // Codex rewrites its config.toml dropping every comment: the markers vanish,
+  // the managed key survives bare. Re-upsert must not duplicate the key.
+  const existing =
+    'model = "gpt-5.4"\nproject_doc_fallback_filenames = ["CLAUDE.md"]\nsandbox_mode = "workspace-write"\n[projects."/x"]\ntrust_level = "trusted"\n';
+  const result = upsertManagedTomlBlock(existing, BODY);
+  assert.equal(
+    result.split('project_doc_fallback_filenames').length,
+    2,
+    'managed key appears exactly once',
+  );
+  const managedAt = result.indexOf(MANAGED_BEGIN);
+  const keyAt = result.indexOf('project_doc_fallback_filenames');
+  assert.ok(keyAt > managedAt, 'the surviving key lives inside the managed block');
+  assert.ok(result.includes('sandbox_mode = "workspace-write"'), 'unmanaged top-level keys preserved');
+  assert.ok(result.includes('trust_level = "trusted"'), 'tables preserved');
+});
+
+test('managed block dedupe ignores matching lines inside tables', () => {
+  const existing = '[weird]\nproject_doc_fallback_filenames = ["CLAUDE.md"]\n';
+  const result = upsertManagedTomlBlock(existing, BODY);
+  assert.equal(
+    result.split('project_doc_fallback_filenames').length,
+    3,
+    'a same-text key inside a table is a different key — never removed',
+  );
+});
+
 test('managed block appends when the file has no tables', () => {
   const result = upsertManagedTomlBlock('model = "gpt-5.4"\n', BODY);
   assert.ok(result.startsWith('model = "gpt-5.4"'));

@@ -27,7 +27,23 @@ export function findClaudeOnlyTokens(content: string): string[] {
  */
 export function upsertManagedTomlBlock(existing: string, bodyLines: string[]): string {
   const block = [MANAGED_BEGIN, ...bodyLines, MANAGED_END];
-  const lines = existing.length > 0 ? existing.split('\n') : [];
+  const rawLines = existing.length > 0 ? existing.split('\n') : [];
+
+  // A CLI that re-serializes its own config (Codex does) drops comment lines:
+  // the managed markers vanish while the managed keys survive as bare top-level
+  // lines. Re-inserting the block beside such a survivor would duplicate a
+  // top-level key — invalid TOML — so drop bare copies of managed lines that
+  // sit outside the block, in the top-level section.
+  const managedBodies = new Set(bodyLines.map((line) => line.trim()));
+  const rawBegin = rawLines.indexOf(MANAGED_BEGIN);
+  const rawEnd = rawLines.indexOf(MANAGED_END);
+  const rawFirstTable = rawLines.findIndex((line) => /^\s*\[/.test(line));
+  const lines = rawLines.filter((line, i) => {
+    const inBlock = rawBegin !== -1 && rawEnd >= rawBegin && i >= rawBegin && i <= rawEnd;
+    if (inBlock) return true;
+    const topLevel = rawFirstTable === -1 || i < rawFirstTable;
+    return !(topLevel && managedBodies.has(line.trim()));
+  });
 
   const beginIndex = lines.indexOf(MANAGED_BEGIN);
   const endIndex = lines.indexOf(MANAGED_END);
