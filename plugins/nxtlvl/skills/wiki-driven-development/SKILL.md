@@ -78,12 +78,15 @@ If you can't state the candidate this compactly, it's too early to query — sha
 
 ### Step 2: QUESTIONS — collect or draft the list, then the user approves it
 
-Two entry paths:
+Three entry paths, checked in order:
 
+- **Already parked in the repo.** Check the target repo's `docs/framing/` for a draft framing
+  doc for this component — one created early to collect wiki questions between sessions (see
+  Step 4). If it exists, its question list is the handed-in list.
 - **Handed in.** The user supplies the open questions from wherever framing happened — a pasted
   list, or a transcript you extract candidate questions from. Upstream tools (Codex, `/brainstorm`,
   `/interview-me`) are deliberately *not* changed; a plain question list is the only interface.
-- **Drafted.** No list supplied → draft a situation-specific question list from the framing
+- **Drafted.** No list anywhere → draft a situation-specific question list from the framing
   context.
 
 Either way, normalize the list: **deduplicate**, **split compound questions**, and **prune**
@@ -118,7 +121,8 @@ line. Fold them into a persisted **framing doc**:
 
 - **Path:** `docs/framing/YYYY-MM-DD-<topic>.md` in the repo of the project *being built*.
   Name collision → `-2` suffix. If the project has no repo yet, the doc lands in `nxtlvl-lab`
-  and moves when the repo exists.
+  and moves when the repo exists. If a draft framing doc for this component already exists
+  (born early — see below), fill the answers into *that* file; it keeps its original name.
 - **Format:** a header (candidate line, date, question provenance), then one block per question:
 
   ```markdown
@@ -146,6 +150,12 @@ source (the actual reference repo, the actual page's cited `raw/` note), never "
 
 Framing-doc lifecycle rules:
 
+0. **Born early is fine.** A framing doc may be created *before* any wiki run — header
+   (component, use cases, `Status: collecting questions — no wiki run yet`) plus questions
+   with `**Wiki says:** (pending)` / `**Decision:** (pending)` lines — as the standing
+   parking place for wiki questions that come up mid-build. Questions accumulate there
+   between sessions. When the workflow runs, that list still goes through normalization and
+   the user approval gate like any handed-in list, and the answers fill in place.
 1. **Back-link required.** The resulting spec or ADR must link back to its framing doc — that link
    is the provenance trail for "why did we choose X."
 2. **Frozen once decided.** Once the Decision lines are filled, the doc is a historical record like
@@ -224,6 +234,8 @@ is a known, expected state ([ADR-026](../../../../docs/decisions/ADR-026-nxtlvl-
 - [ ] Every answer landed in the framing doc (`docs/framing/YYYY-MM-DD-<topic>.md` in the target
       repo; `-2` suffix on collision; `nxtlvl-lab` when no repo exists yet), each wiki claim
       stamped `LEAD — verify at <slug>`, each `no coverage` recorded as-is.
+- [ ] If a draft framing doc for this component already existed, its questions were used as the
+      handed-in list and the answers were filled into that same file — no parallel second doc.
 - [ ] Every Decision line was left for the user — none pre-filled.
 - [ ] The spec or ADR that came out of this build links back to the framing doc.
 - [ ] Zero wiki claims reached an ADR, spec, or commit message as evidence.
