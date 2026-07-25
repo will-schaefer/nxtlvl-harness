@@ -1,7 +1,0 @@
-{
-  "name": "nxtlvl-dev",
-  "owner": { "name": "will-schaefer" },
-  "plugins": [
-    { "name": "nxtlvl", "source": "./plugins/nxtlvl", "description": "Personal agent harness." }
-  ]
-}
