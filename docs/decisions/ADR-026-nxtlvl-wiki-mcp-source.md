@@ -1,7 +1,7 @@
 ---
 id: ADR-026
 title: "nxtlvl-wiki becomes a queryable MCP source — wiki-scout orients, never testifies"
-status: Draft
+status: Accepted
 date: 2026-07-01
 ---
 
@@ -131,3 +131,34 @@ Realized as: the `nxtlvl-wiki` plugin's own `mcpServers` registration (its `plug
   [ADR-024](ADR-024-deepwiki-orientation-not-evidence.md) (sibling leads-only doctrine, direct
   format template), [ADR-025](ADR-025-context7-testifies-primary-sources.md) (contrasting testify
   tier).
+
+## Amendment (2026-07-25) — the consumer workflow becomes question-driven
+
+Design: `nxtlvl-lab/docs/superpowers/specs/2026-07-25-wiki-driven-development-question-driven-update-design.md`.
+
+The `wiki-driven-development` skill and the `wiki-scout` agent are reshaped around the observation
+that every real framing session already produces the most valuable query artifact there is — a
+list of specific open design questions — and the old one-line topic query threw it away:
+
+- **The skill's flow is now five steps** — FRAME → QUESTIONS → QUERY → WEIGH → PROCEED. Open
+  design questions are collected (handed in or drafted), normalized, and **approved by the user**
+  (pruned questions shown with reasons, never dropped silently; at most 12 per pass) before any
+  wiki spend. Answers persist in a **framing doc** (`docs/framing/YYYY-MM-DD-<topic>.md` in the
+  target repo) whose Decision lines only the user fills.
+- **`wiki-scout`'s input is now `QUESTIONS`** — a numbered list of at most 5 (one topic cluster;
+  clusters spawn in parallel), each optionally tagged `repo:<name>` for the repo-reference layer.
+  The per-call `MODE` field is retired. Budget scales per question (one search plus up to two
+  page-fetches, pages reused across the cluster); output is one answer block per question —
+  lead-stamped findings or an explicit `no coverage` line, no question skipped.
+- **Trust posture unchanged.** Leads, never evidence (ADR-002) — every point in this ADR's
+  Decision other than the retired `MODE` field stands as written.
+- **Supersession:** the 2026-07-01 lens-suite design
+  (`nxtlvl-lab/docs/superpowers/specs/2026-07-01-wiki-driven-development-lens-suite-design.md`) is
+  superseded — one question pipeline replaces the planned five per-capability-type lens skills.
+- **Explicitly open:** whether wiki-grounding measurably improves builds or mostly adds cost and
+  anchoring is **unproven** — `nxtlvl-lab/docs/experiments/wiki-grounding-value.md` (proposed,
+  unrun) is the measurement path. Framing docs record exactly what the wiki contributed per
+  decision, making that experiment cheap to run later.
+
+Status also bumped `Draft` → `Accepted` in this amendment: the capability shipped on 2026-07-01;
+`Draft` was paperwork lag.
