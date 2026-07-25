@@ -46,3 +46,5 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [032](ADR-032-agent-creation-process.md) | Agent creation process — how nxtlvl agents are defined and wired | Draft |
 | [033](ADR-033-agent-skill-load-rule.md) | *(superseded — fold into ADR-032)* | Superseded |
 | [034](ADR-034-eval-first-skill-authoring.md) | *(superseded — fold into ADR-030)* | Superseded |
+| [035](ADR-035-skill-file-markup-markdown-only.md) | *(superseded — markup slice folded into ADR-030; renumbered from a colliding `ADR-030` id)* | Superseded |
+| [036](ADR-036-agent-file-structure.md) | *(superseded — fold into ADR-032; renumbered from a colliding `ADR-032` id)* | Superseded |
