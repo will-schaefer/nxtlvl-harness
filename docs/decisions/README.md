@@ -48,3 +48,4 @@ Anchors these consume: [`../intent/personal-harness.md`](../intent/personal-harn
 | [034](ADR-034-eval-first-skill-authoring.md) | *(superseded — fold into ADR-030)* | Superseded |
 | [035](ADR-035-skill-file-markup-markdown-only.md) | *(superseded — markup slice folded into ADR-030; renumbered from a colliding `ADR-030` id)* | Superseded |
 | [036](ADR-036-agent-file-structure.md) | *(superseded — fold into ADR-032; renumbered from a colliding `ADR-032` id)* | Superseded |
+| [037](ADR-037-model-routing-policy.md) | Model routing policy — task-class routing over the call-model transport | Accepted |
