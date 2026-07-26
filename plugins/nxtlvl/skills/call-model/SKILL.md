@@ -65,12 +65,15 @@ call-model:
 - [ ] Step 5: RETURN — stdout to caller; host does not auto-fix review findings
 ```
 
-### Default target policy (when user does not pin a target)
+### Routing policy (when user does not pin a target)
 
-1. Prefer a callee **≠ host family** (Claude host → codex or grok first).
-2. Prefer targets that pass `setup` / PATH check.
-3. Deprioritize `gemini` until a real smoke succeeds (version alone is insufficient).
-4. Always honor an explicit `--target`.
+Resolve the target from [references/routing-policy.md](references/routing-policy.md): name the
+task's class from the closed five-class menu, then walk that row's CLI chain. The cascade, in
+order — an explicit `--target` pin always wins; then a prior failure's fallback; then the class
+row (availability-checked, freshness-checked); terminally, surface and offer a manual pick or
+skip. **Routing proposes — it never fires**: surface the chosen route (class, target, row
+provenance and date) and keep per-call authorization. Ties between equally-good targets break
+toward a callee **≠ host family**. Decision record: ADR-037.
 
 ### Companion (preferred)
 
