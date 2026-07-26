@@ -1,6 +1,6 @@
 ---
 name: call-model
-description: nxtlvl multi-callee cross-model transport — invoke another coding-agent CLI (Codex, Grok, Gemini, Devin, or Claude headless) for consult, adversarial second opinion, review, or optional task handoff. Use when the host agent needs a different-architecture model, doubt-driven-development offers cross-model escalation, the user asks for a Codex/Grok/Gemini/Devin second opinion, or you must delegate a read-only consult without inventing per-CLI flag recipes.
+description: nxtlvl multi-callee cross-model transport — invoke another coding-agent CLI (Codex, Grok, Gemini, Devin, Claude headless, or Antigravity for Gemini models) for consult, adversarial second opinion, review, or optional task handoff. Use when the host agent needs a different-architecture model, doubt-driven-development offers cross-model escalation, the user asks for a Codex/Grok/Gemini/Devin second opinion, or you must delegate a read-only consult without inventing per-CLI flag recipes.
 ---
 
 # Call Model (nxtlvl)
@@ -50,6 +50,7 @@ Details: [references/modes-and-prompts.md](references/modes-and-prompts.md).
 | `gemini` | `gemini` | `--approval-mode plan`; free-tier may be auth-dead — fail loud |
 | `devin` | `devin` | `-p` / `--prompt-file` + permission mode |
 | `claude` | `claude` | Headless `claude -p`; read-only by default; `task --write` uses `--permission-mode acceptEdits` (override via `CALL_MODEL_CLAUDE_PERMISSION_MODE`). Prefer `headless-doubt` for typed doubt |
+| `antigravity` | `agy` | Google Antigravity — the working Gemini path (per-call `--model`, e.g. `gemini-3.1-pro-high`); plan mode read-only; prompt via argv (200KB cap) |
 
 Full flag matrix and caveats: [references/targets.md](references/targets.md).  
 Codex compose path: [references/openai-compose.md](references/openai-compose.md).

@@ -32,10 +32,10 @@ model's CLI is dead, gated, or runs a different model than the flagship (see cav
 | # | Task class | Mode | Best model (aspirational) | CLI chain (executable) | Confidence | Last reviewed |
 |---|---|---|---|---|---|---|
 | 1 | Planning / architecture design | `consult` | Claude Fable 5; runner-up GPT-5.6 Sol | `claude` → `codex` | Moderate — proxy measures only | 2026-07-26 |
-| 2 | Deep reasoning / adversarial doubt | `adversarial` | Gemini 3.1 Pro (Deep Think) for abstract flaw-finding; Claude Opus 5 close | `codex` → `claude` (`gemini` blocked — see caveats) | Moderate — split by sub-task | 2026-07-26 |
+| 2 | Deep reasoning / adversarial doubt | `adversarial` | Gemini 3.1 Pro (Deep Think) for abstract flaw-finding; Claude Opus 5 close | `antigravity` (`--model gemini-3.1-pro-high`) → `codex` → `claude` | Moderate — split by sub-task | 2026-07-26 |
 | 3 | Code review | `review` | Claude Opus 5 (inferred, not measured) | `codex` (composes the OpenAI companion) → `claude` | **Weak — no model-level benchmark exists** | 2026-07-26 |
 | 4 | Implementation / debug handoff | `task` (write only with explicit auth) | Contested: GPT-5.6 Sol vs Claude Fable 5 | `codex` → `devin` → `claude` | Moderate shortlist, low ordering | 2026-07-26 |
-| 5 | Cheap triage / classification | `consult` | Gemini 3.x Flash Lite; Claude Haiku 4.5 at ~13× the cost | `claude` (smallest model available) → `codex` | Moderate — best-measured class, but stale source | 2026-07-26 |
+| 5 | Cheap triage / classification | `consult` | Gemini 3.x Flash Lite; Claude Haiku 4.5 at ~13× the cost | `antigravity` (`--model gemini-3.6-flash-low`) → `claude` (smallest model) → `codex` | Moderate — best-measured class, but stale source | 2026-07-26 |
 
 ## Row provenance (July 2026 research pass)
 
@@ -67,9 +67,13 @@ model's CLI is dead, gated, or runs a different model than the flagship (see cav
 ## CLI caveats (why the two columns differ)
 
 - **`gemini`:** individual free-tier access ended June 18 2026 (enterprise continues); the
-  CLI stays **blocked in chains** until a real smoke test passes under a working
-  authorization. Best-model claims for Gemini remain recorded so the row heals the moment
-  access does.
+  standalone CLI stays **blocked in chains** until a real smoke test passes under a working
+  authorization.
+- **`antigravity`:** the working Gemini path — Google's `agy` CLI reaches
+  `gemini-3.1-pro-high`, `gemini-3.6-flash` tiers, and some Claude models, with per-call
+  `--model` selection. Smoke-verified 2026-07-26 (companion `consult`, plan mode). This is
+  what healed the two Gemini-led rows above. Prompt travels via argv (200KB cap, no stdin);
+  fails inside restrictive parent sandboxes (needs its log dir + a localhost port).
 - **`grok`:** the CLI ("Grok Build", early beta, subscription-gated) runs `grok-build-0.1`,
   a purpose-built coding model — **not** the flagship Grok whose reasoning benchmarks make
   headlines. Do not route reasoning work to it on the flagship's scores; currently in no
