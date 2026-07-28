@@ -9,10 +9,13 @@
     "compile-multi-cli": "node scripts/multi-cli-compiler/compile.ts"
   },
   "devDependencies": {
-    "typescript": "^6.0.3",
-    "@types/node": "^24.0.0"
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=24.12"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
   }
 }

@@ -1,0 +1,82 @@
+schema_version: 1
+owner: core
+components:
+  - id: core/component/nxtlvl-plugin
+    name: nxtlvl plugin
+    kind: plugin
+    root: plugins/nxtlvl
+    capability_roots:
+      - path: skills
+        kind: skill
+        entry: SKILL.md
+      - path: agents
+        kind: agent
+        entry: "*.md"
+      - path: commands
+        kind: command
+        entry: "*.md"
+      - path: hooks
+        kind: hook
+        entry: hooks.json
+      - path: scripts
+        kind: script
+        entry: "*.ts"
+      - path: scripts
+        kind: script
+        entry: "*.sh"
+      - path: .
+        kind: mcp-server
+        entry: mcp_config.json
+    exclusions:
+      - "**/node_modules/**"
+      - "**/dist/**"
+      - "**/.cache/**"
+      - "**/*-workspace/**"
+    entry_overrides:
+      - path: hooks/hooks.json
+        name: nxtlvl hooks
+        control_parent: core/component/nxtlvl-plugin
+      - path: mcp_config.json
+        name: nxtlvl Model Context Protocol configuration
+        control_parent: core/component/nxtlvl-plugin
+
+  - id: core/component/global-agent-config
+    name: Global agent configuration
+    kind: subsystem
+    root: config/claude
+    capability_roots:
+      - path: skills
+        kind: skill
+        entry: SKILL.md
+      - path: rules
+        kind: configuration-module
+        entry: "*.md"
+      - path: output-styles
+        kind: configuration-module
+        entry: "*.md"
+      - path: .
+        kind: configuration-module
+        entry: CLAUDE.md
+      - path: .
+        kind: configuration-module
+        entry: settings.json
+      - path: .
+        kind: script
+        entry: statusline-command.sh
+    exclusions:
+      - "**/node_modules/**"
+      - "**/dist/**"
+      - "**/__pycache__/**"
+      - "**/.pytest_cache/**"
+
+  - id: core/component/multi-cli-compiler
+    name: Multi-provider configuration compiler
+    kind: engine
+    root: scripts/multi-cli-compiler
+    capability_roots:
+      - path: .
+        kind: script
+        entry: compile.ts
+    exclusions:
+      - "**/node_modules/**"
+      - "**/dist/**"

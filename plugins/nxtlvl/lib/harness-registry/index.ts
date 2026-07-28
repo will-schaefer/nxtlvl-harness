@@ -4,6 +4,7 @@ export {
   COMPONENT_KINDS,
   validateCatalogFragment,
 } from './catalog.ts';
+export { loadCatalogFragment } from './catalog-file.ts';
 export { buildSnapshot } from './snapshot.ts';
 export { readRegistry, readSnapshot, writeRegistry, writeSnapshot } from './store.ts';
 export type {
