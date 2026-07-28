@@ -1,0 +1,33 @@
+{
+  "generatedAt": "2026-07-28T12:00:00.000Z",
+  "repositories": [
+    {
+      "source": "core-fixture",
+      "repositoryRoot": "repo",
+      "catalog": {
+        "schema_version": 1,
+        "owner": "core",
+        "components": [
+          {
+            "id": "core/component/nxtlvl-plugin",
+            "name": "nxtlvl",
+            "kind": "plugin",
+            "root": "plugins/nxtlvl",
+            "capability_roots": [
+              {
+                "path": "skills",
+                "kind": "skill",
+                "entry": "SKILL.md"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "source": "wiki-fixture",
+      "repositoryRoot": "repo",
+      "catalog": null
+    }
+  ]
+}

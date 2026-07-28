@@ -18,6 +18,7 @@ import {
   isSafeRoot,
   resolveStorageRoot,
   ensureDir,
+  harnessLayout,
   layout,
 } from './paths.ts';
 
@@ -165,4 +166,25 @@ test('layout() defaults env/home from process/os when omitted', () => {
   const l = layout('abc123');
   assert.equal(l.root, storageRoot());
   assert.ok(l.projectDir.endsWith(path.join('projects', 'abc123')));
+});
+
+test('harnessLayout() resolves every registry path under the guarded state root', () => {
+  const root = mkTmp();
+  const harness = harnessLayout({ XDG_STATE_HOME: root }, '/home/u');
+
+  assert.deepEqual(harness, {
+    root: path.join(root, 'nxtlvl', 'harness'),
+    registryFile: path.join(root, 'nxtlvl', 'harness', 'registry.json'),
+    snapshotFile: path.join(root, 'nxtlvl', 'harness', 'snapshot.json'),
+    eventsFile: path.join(root, 'nxtlvl', 'harness', 'events.jsonl'),
+    parityDir: path.join(root, 'nxtlvl', 'harness', 'parity'),
+  });
+  assert.equal(fs.existsSync(path.join(root, 'nxtlvl')), false);
+});
+
+test('harnessLayout() rejects an unsafe injected state root', () => {
+  assert.throws(
+    () => harnessLayout({ XDG_STATE_HOME: '/home/u/Dropbox/state' }, '/home/u'),
+    /unsafe storage root:/,
+  );
 });

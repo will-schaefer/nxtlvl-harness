@@ -28,6 +28,14 @@ export interface Layout {
   livenessLog: string;
 }
 
+export interface HarnessLayout {
+  root: string;
+  registryFile: string;
+  snapshotFile: string;
+  eventsFile: string;
+  parityDir: string;
+}
+
 // --- Storage root -----------------------------------------------------------
 // ${XDG_STATE_HOME:-~/.local/state}/nxtlvl  (D1, locked).
 export function storageRoot(env: NodeJS.ProcessEnv = process.env, home: string = os.homedir()): string {
@@ -71,6 +79,22 @@ export function resolveStorageRoot(env: NodeJS.ProcessEnv = process.env, home: s
 export function ensureDir(dir: string): string {
   fs.mkdirSync(dir, { recursive: true });
   return dir;
+}
+
+// Registry paths share the guarded machine-local state root. This function is
+// pure so callers and tests can inject a state root without creating it.
+export function harnessLayout(
+  env: NodeJS.ProcessEnv = process.env,
+  home: string = os.homedir(),
+): HarnessLayout {
+  const root = path.join(resolveStorageRoot(env, home), 'harness');
+  return {
+    root,
+    registryFile: path.join(root, 'registry.json'),
+    snapshotFile: path.join(root, 'snapshot.json'),
+    eventsFile: path.join(root, 'events.jsonl'),
+    parityDir: path.join(root, 'parity'),
+  };
 }
 
 // --- Layout -----------------------------------------------------------------
