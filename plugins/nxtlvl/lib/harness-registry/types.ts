@@ -25,12 +25,16 @@ export interface RegistryFinding {
 
 export interface ComponentSnapshot {
   id: string;
-  owner: CatalogOwner;
+  owner: CatalogOwner | 'external';
   name: string;
   kind: ComponentKind;
   sourceRoot: string;
   availability: 'available' | 'unavailable';
   processState?: 'running' | 'stopped' | 'unknown';
+  deployment?: 'active' | 'benched' | 'drift' | 'external';
+  controlMode?: 'self' | 'parent' | 'read-only';
+  controlId?: string;
+  providers?: string[];
 }
 
 export interface CapabilitySnapshot {

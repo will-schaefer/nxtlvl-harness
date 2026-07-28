@@ -5,6 +5,12 @@ export {
   validateCatalogFragment,
 } from './catalog.ts';
 export { loadCatalogFragment } from './catalog-file.ts';
+export {
+  defaultClaudeProviderPaths,
+  defaultCodexProviderPaths,
+  readClaudeProvider,
+  readCodexProvider,
+} from './providers.ts';
 export { resolveContainedRealPath } from './discovery.ts';
 export { buildSnapshot } from './snapshot.ts';
 export { readRegistry, readSnapshot, writeRegistry, writeSnapshot } from './store.ts';
@@ -21,6 +27,14 @@ export type {
 } from './catalog.ts';
 export type { SnapshotInput, SnapshotRepositoryInput } from './snapshot.ts';
 export type { StoreOptions } from './store.ts';
+export type {
+  ClaudeProviderPaths,
+  CodexProviderPaths,
+  ProviderCapabilityObservation,
+  ProviderName,
+  ProviderObservation,
+  ProviderPluginObservation,
+} from './providers.ts';
 export type {
   CapabilitySnapshot,
   ComponentSnapshot,

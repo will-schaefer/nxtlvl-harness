@@ -3,6 +3,7 @@ import * as path from 'node:path';
 
 import { validateCatalogFragment } from './catalog.ts';
 import { discoverComponent, resolveContainedRealPath } from './discovery.ts';
+import type { ProviderObservation } from './providers.ts';
 import type { HarnessSnapshot, RegistryFinding } from './types.ts';
 
 interface TargetComponent {
@@ -22,6 +23,7 @@ export interface SnapshotRepositoryInput {
 export interface SnapshotInput {
   generatedAt: string;
   repositories: SnapshotRepositoryInput[];
+  providers?: ProviderObservation[];
 }
 
 type UnknownRecord = Record<string, unknown>;
@@ -152,6 +154,109 @@ function isolateIdentityConflicts(snapshot: HarnessSnapshot, targetComponents: T
   );
 }
 
+function externalComponentId(provider: string, key: string): string {
+  return `external/component/${provider}-${toIdentityName(key)}`;
+}
+
+function reconcileProviders(snapshot: HarnessSnapshot, providers: ProviderObservation[] | undefined): void {
+  if (providers === undefined || providers.length === 0) return;
+  const familyStates = new Map<string, Array<{ provider: string; enabled: boolean }>>();
+
+  for (const provider of providers) {
+    snapshot.findings.push(...provider.findings.map((finding) => ({
+      ...finding,
+      source: provider.provider,
+    })));
+
+    for (const plugin of provider.plugins) {
+      if (plugin.familyComponentId !== undefined) {
+        const component = snapshot.components.find((entry) => entry.id === plugin.familyComponentId);
+        if (component === undefined) {
+          snapshot.findings.push({
+            code: 'provider.family_component_missing',
+            severity: 'error',
+            message: `Provider plugin does not match a catalog component: ${plugin.key}.`,
+            source: provider.provider,
+            path: plugin.familyComponentId,
+          });
+          continue;
+        }
+        const states = familyStates.get(plugin.familyComponentId) ?? [];
+        states.push({ provider: provider.provider, enabled: plugin.enabled });
+        familyStates.set(plugin.familyComponentId, states);
+        component.providers = [...new Set([...(component.providers ?? []), provider.provider])].sort();
+        component.controlMode = 'self';
+        component.controlId = component.id;
+        continue;
+      }
+
+      const componentId = externalComponentId(provider.provider, plugin.key);
+      if (snapshot.components.some((entry) => entry.id === componentId)) continue;
+      snapshot.components.push({
+        id: componentId,
+        owner: 'external',
+        name: plugin.key,
+        kind: 'plugin',
+        sourceRoot: plugin.source ?? '',
+        availability: 'available',
+        deployment: 'external',
+        controlMode: 'read-only',
+        controlId: componentId,
+        providers: [provider.provider],
+      });
+    }
+
+    for (const capability of provider.capabilities) {
+      const component = snapshot.components.find((entry) => entry.id === capability.componentId);
+      if (component === undefined) continue;
+      if (snapshot.capabilities.some((entry) => entry.id === capability.id)) continue;
+      snapshot.capabilities.push({
+        id: capability.id,
+        componentId: capability.componentId,
+        name: capability.name,
+        kind: capability.kind,
+        entryPath: '',
+        controlMode: capability.controlMode,
+        controlId: capability.controlId,
+        controlReason: 'Provider exposes this item as an individual control.',
+        lifecycle: 'graduated',
+        deployment: capability.enabled ? 'active' : 'benched',
+        provenance: [provider.provider],
+        evidence: { evaluations: 0, tests: 0 },
+      });
+    }
+  }
+
+  for (const [componentId, states] of familyStates) {
+    const enabledValues = new Set(states.map((state) => state.enabled));
+    const deployment = enabledValues.size > 1
+      ? 'drift'
+      : states[0]?.enabled === true
+        ? 'active'
+        : 'benched';
+    const providersForComponent = states.map((state) => state.provider).sort();
+
+    for (const component of snapshot.components.filter((entry) => entry.id === componentId)) {
+      component.deployment = deployment;
+      component.controlMode = 'self';
+      component.controlId = component.id;
+      component.providers = providersForComponent;
+    }
+
+    for (const capability of snapshot.capabilities.filter((entry) => entry.componentId === componentId)) {
+      if (capability.provenance.some((source) => providersForComponent.includes(source))) continue;
+      capability.deployment = deployment;
+      capability.provenance = [...new Set([...capability.provenance, ...providersForComponent])].sort();
+      if (capability.controlMode !== 'self') {
+        capability.controlMode = 'parent';
+        capability.controlId = componentId;
+        capability.controlReason = 'Managed by the provider plugin switch.';
+      }
+    }
+  }
+  snapshot.phase = 'imported';
+}
+
 export function buildSnapshot(input: unknown): HarnessSnapshot {
   const fallbackTime = new Date(0).toISOString();
 
@@ -275,6 +380,7 @@ export function buildSnapshot(input: unknown): HarnessSnapshot {
     }
 
     isolateIdentityConflicts(snapshot, targetComponents);
+    reconcileProviders(snapshot, Array.isArray(input.providers) ? input.providers : undefined);
     snapshot.components.sort((left, right) => left.id.localeCompare(right.id));
     snapshot.capabilities.sort((left, right) => left.id.localeCompare(right.id));
     snapshot.resources.sort((left, right) => {
