@@ -5,6 +5,7 @@ export {
   validateCatalogFragment,
 } from './catalog.ts';
 export { loadCatalogFragment } from './catalog-file.ts';
+export { resolveContainedRealPath } from './discovery.ts';
 export { buildSnapshot } from './snapshot.ts';
 export { readRegistry, readSnapshot, writeRegistry, writeSnapshot } from './store.ts';
 export type {

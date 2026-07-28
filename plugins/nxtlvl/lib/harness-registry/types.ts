@@ -45,6 +45,13 @@ export interface CapabilitySnapshot {
   lifecycle: 'development' | 'graduated';
   deployment: 'active' | 'benched' | 'drift' | 'external' | 'unavailable';
   provenance: string[];
+  development?: {
+    source: string;
+    stage: string;
+    manifestPath: string;
+    cellRoot: string;
+    target?: string;
+  };
   evidence: {
     evaluations: number;
     tests: number;
@@ -55,6 +62,7 @@ export interface CapabilitySnapshot {
 export interface ResourceSnapshot {
   id: string;
   capabilityId: string;
+  source: string;
   kind: string;
   relativePath: string;
   displayName: string;
@@ -65,6 +73,7 @@ export interface HarnessSnapshot {
   schemaVersion: 1;
   generatedAt: string;
   phase: RegistryPhase;
+  parityEligible: boolean;
   components: ComponentSnapshot[];
   capabilities: CapabilitySnapshot[];
   resources: ResourceSnapshot[];

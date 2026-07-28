@@ -2,7 +2,16 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 
 import { validateCatalogFragment } from './catalog.ts';
+import { discoverComponent, resolveContainedRealPath } from './discovery.ts';
 import type { HarnessSnapshot, RegistryFinding } from './types.ts';
+
+interface TargetComponent {
+  id: string;
+  owner: 'core' | 'wiki' | 'lab';
+  kind: 'plugin' | 'application' | 'service' | 'engine' | 'subsystem';
+  repositoryRoot: string;
+  sourceRoot: string;
+}
 
 export interface SnapshotRepositoryInput {
   source: string;
@@ -26,11 +35,121 @@ function emptySnapshot(generatedAt: string, findings: RegistryFinding[]): Harnes
     schemaVersion: 1,
     generatedAt,
     phase: 'catalog-only',
+    parityEligible: findings.every((finding) => finding.severity !== 'error'),
     components: [],
     capabilities: [],
     resources: [],
     findings,
   };
+}
+
+function duplicateIdentities(entries: Array<{ id: string }>): Set<string> {
+  const counts = new Map<string, number>();
+  for (const entry of entries) counts.set(entry.id, (counts.get(entry.id) ?? 0) + 1);
+  return new Set([...counts].filter(([, count]) => count > 1).map(([id]) => id));
+}
+
+function containsPath(root: string, candidate: string): boolean {
+  const relative = path.relative(root, candidate);
+  return relative === '' || (!relative.startsWith(`..${path.sep}`) && relative !== '..' && !path.isAbsolute(relative));
+}
+
+function joinDevelopmentCells(snapshot: HarnessSnapshot, targetComponents: TargetComponent[]): void {
+  for (const capability of [...snapshot.capabilities]) {
+    const target = capability.development?.target;
+    if (target === undefined) continue;
+
+    const safeTarget = !path.isAbsolute(target)
+      && !target.split(/[\\/]/u).includes('..');
+    const matches = safeTarget
+      ? targetComponents.filter((component) =>
+        containsPath(component.sourceRoot, path.resolve(component.repositoryRoot, target)),
+      )
+      : [];
+
+    if (matches.length !== 1) {
+      snapshot.findings.push({
+        code: matches.length === 0 ? 'cell.target_unresolved' : 'cell.target_conflict',
+        severity: 'error',
+        message: matches.length === 0
+          ? `Cell target does not resolve to an owned component: ${target}.`
+          : `Cell target resolves to more than one owned component: ${target}.`,
+        source: capability.development?.source,
+        path: capability.development?.manifestPath,
+      });
+      continue;
+    }
+
+    const component = matches[0];
+    const previousId = capability.id;
+    const nextId = `${component.owner}/${capability.kind}/${toIdentityName(capability.name)}`;
+    const existing = snapshot.capabilities.find((entry) => entry !== capability && entry.id === nextId);
+    const controlId = component.kind === 'plugin' ? component.id : nextId;
+
+    capability.id = nextId;
+    capability.componentId = component.id;
+    capability.controlId = controlId;
+    capability.controlMode = controlId === nextId ? 'self' : 'parent';
+    capability.controlReason = controlId === nextId ? undefined : 'Managed by the owning plugin.';
+
+    const cellResources = snapshot.resources.filter((resource) => resource.capabilityId === previousId);
+    for (const resource of cellResources) {
+      resource.capabilityId = nextId;
+      resource.id = `${nextId}/${resource.relativePath}`;
+    }
+
+    if (existing !== undefined) {
+      existing.development = capability.development;
+      existing.lifecycle = capability.lifecycle;
+      existing.provenance = [...new Set([...existing.provenance, ...capability.provenance])];
+      existing.evidence = {
+        evaluations: existing.evidence.evaluations + capability.evidence.evaluations,
+        tests: existing.evidence.tests + capability.evidence.tests,
+      };
+      snapshot.capabilities = snapshot.capabilities.filter((entry) => entry !== capability);
+    }
+  }
+}
+
+function toIdentityName(value: string): string {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/gu, '-').replace(/^-|-$/gu, '');
+}
+
+function isolateIdentityConflicts(snapshot: HarnessSnapshot, targetComponents: TargetComponent[]): void {
+  const duplicateComponents = duplicateIdentities(snapshot.components);
+  for (const id of duplicateComponents) {
+    snapshot.findings.push({
+      code: 'catalog.duplicate_component_identity',
+      severity: 'error',
+      message: `Duplicate component identity is blocked: ${id}.`,
+      path: id,
+    });
+  }
+  snapshot.components = snapshot.components.filter((component) => !duplicateComponents.has(component.id));
+  snapshot.capabilities = snapshot.capabilities.filter(
+    (capability) => !duplicateComponents.has(capability.componentId),
+  );
+  const visibleTargetComponents = targetComponents.filter(
+    (component) => !duplicateComponents.has(component.id),
+  );
+  joinDevelopmentCells(snapshot, visibleTargetComponents);
+
+  const duplicateCapabilities = duplicateIdentities(snapshot.capabilities);
+  for (const id of duplicateCapabilities) {
+    snapshot.findings.push({
+      code: 'catalog.duplicate_capability_identity',
+      severity: 'error',
+      message: `Duplicate capability identity is blocked: ${id}.`,
+      path: id,
+    });
+  }
+  snapshot.capabilities = snapshot.capabilities.filter(
+    (capability) => !duplicateCapabilities.has(capability.id),
+  );
+  const visibleCapabilityIds = new Set(snapshot.capabilities.map((capability) => capability.id));
+  snapshot.resources = snapshot.resources.filter(
+    (resource) => visibleCapabilityIds.has(resource.capabilityId),
+  );
 }
 
 export function buildSnapshot(input: unknown): HarnessSnapshot {
@@ -66,6 +185,7 @@ export function buildSnapshot(input: unknown): HarnessSnapshot {
     }
 
     const snapshot = emptySnapshot(generatedAt, inputFindings);
+    const targetComponents: TargetComponent[] = [];
 
     for (const [index, repository] of input.repositories.entries()) {
       const repositoryPath = `$.repositories[${index}]`;
@@ -96,32 +216,79 @@ export function buildSnapshot(input: unknown): HarnessSnapshot {
 
       for (const component of validation.value.components) {
         const sourceRoot = path.resolve(repository.repositoryRoot, component.root);
-        const available = fs.existsSync(sourceRoot);
+        const containedRoot = fs.existsSync(sourceRoot)
+          ? resolveContainedRealPath(repository.repositoryRoot, sourceRoot)
+          : null;
+        const available = containedRoot !== null;
         snapshot.components.push({
           id: component.id,
           owner: validation.value.owner,
           name: component.name,
           kind: component.kind,
-          sourceRoot,
+          sourceRoot: containedRoot ?? sourceRoot,
           availability: available ? 'available' : 'unavailable',
         });
         if (!available) {
           snapshot.findings.push({
-            code: 'component.source_missing',
+            code: fs.existsSync(sourceRoot) ? 'component.source_unsafe' : 'component.source_missing',
             severity: 'error',
-            message: `Component source path does not exist: ${sourceRoot}.`,
+            message: fs.existsSync(sourceRoot)
+              ? `Component source path resolves outside its repository: ${sourceRoot}.`
+              : `Component source path does not exist: ${sourceRoot}.`,
             source: repository.source,
             path: sourceRoot,
           });
+          continue;
         }
+
+        let discovery;
+        try {
+          discovery = discoverComponent({
+            owner: validation.value.owner,
+            source: repository.source,
+            repositoryRoot: fs.realpathSync(repository.repositoryRoot),
+            component,
+            componentRoot: containedRoot,
+          });
+        } catch (error) {
+          const message = error instanceof Error ? error.message : 'Unknown discovery error.';
+          snapshot.findings.push({
+            code: 'component.discovery_failed',
+            severity: 'error',
+            message: `Component discovery failed safely: ${message}`,
+            source: repository.source,
+            path: component.id,
+          });
+          continue;
+        }
+        snapshot.capabilities.push(...discovery.capabilities);
+        snapshot.resources.push(...discovery.resources);
+        snapshot.findings.push(...discovery.findings);
+        targetComponents.push({
+          id: component.id,
+          owner: validation.value.owner,
+          kind: component.kind,
+          repositoryRoot: fs.realpathSync(repository.repositoryRoot),
+          sourceRoot: containedRoot,
+        });
       }
     }
 
+    isolateIdentityConflicts(snapshot, targetComponents);
     snapshot.components.sort((left, right) => left.id.localeCompare(right.id));
+    snapshot.capabilities.sort((left, right) => left.id.localeCompare(right.id));
+    snapshot.resources.sort((left, right) => {
+      const capabilityOrder = left.capabilityId.localeCompare(right.capabilityId);
+      if (capabilityOrder !== 0) return capabilityOrder;
+      if (left.kind === 'entry-file' && right.kind !== 'entry-file') return -1;
+      if (right.kind === 'entry-file' && left.kind !== 'entry-file') return 1;
+      return left.relativePath.localeCompare(right.relativePath);
+    });
     snapshot.findings.sort((left, right) => {
       const sourceOrder = (left.source ?? '').localeCompare(right.source ?? '');
       return sourceOrder || left.code.localeCompare(right.code) || (left.path ?? '').localeCompare(right.path ?? '');
     });
+    snapshot.parityEligible = snapshot.findings.every((finding) => finding.severity !== 'error');
     return snapshot;
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown snapshot error.';
