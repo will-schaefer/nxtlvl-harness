@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -29,6 +30,41 @@ function write(filePath: string, contents: string): void {
 function writeIn(root: string, relativePath: string, contents: string): void {
   write(path.join(root, relativePath), contents);
 }
+
+function fileHash(filePath: string): string {
+  return createHash('sha256').update(fs.readFileSync(filePath)).digest('hex');
+}
+
+function hashesFor(paths: string[]): Record<string, string> {
+  return Object.fromEntries(paths.map((filePath) => [filePath, fileHash(filePath)]));
+}
+
+test('provider scanners leave Claude and Codex files byte-identical (pre/post hashes)', () => {
+  const root = makeDirectory();
+  const settingsPath = path.join(root, 'settings.json');
+  const marketplacesPath = path.join(root, 'known_marketplaces.json');
+  const configPath = path.join(root, 'config.toml');
+  write(settingsPath, JSON.stringify({
+    enabledPlugins: { 'nxtlvl@nxtlvl-dev': true },
+    env: { SECRET: 'must-not-mutate-file' },
+  }, null, 2));
+  write(marketplacesPath, JSON.stringify({
+    'nxtlvl-dev': { source: { source: 'file', path: '/private/sanitized/local/path' } },
+  }, null, 2));
+  write(configPath, [
+    '[plugins."nxtlvl@nxtlvl-dev"]',
+    'enabled = true',
+    '',
+  ].join('\n'));
+
+  const watched = [settingsPath, marketplacesPath, configPath];
+  const before = hashesFor(watched);
+
+  readClaudeProvider({ settingsPath, marketplacesPath });
+  readCodexProvider({ configPath });
+
+  assert.deepEqual(hashesFor(watched), before);
+});
 
 test('readClaudeProvider imports enabled plugins from sanitized fixtures', () => {
   const root = makeDirectory();
