@@ -11,11 +11,13 @@ Run the deterministic **`lib/evolve`** clustering engine to surface graduation c
 
 ## What this does
 
-Strong instincts that share a normalized trigger cluster automatically. The clustering engine partitions each cluster into exactly one type:
+Strong instincts that share a **domain topic** cluster automatically — the key is the first two words of an instinct's `domain` label, so `multi-cli compiler / codex config re-serialization` and `multi-cli compiler / apply directory handling` land in the same cluster while `multi-cli review / …` stays its own. The clustering engine partitions each cluster into exactly one type:
 
 - **AGENT** — 3+ strong instincts, avgConfidence ≥ 0.75 → a multi-instinct specialist agent.
 - **SKILL** — 2+ strong instincts below the agent threshold → a reusable playbook skill.
 - **COMMAND** — 1 strong singleton instinct whose domain is `workflow` → a single workflow command.
+
+"Strong" reads the **raw** stored confidence (default bar 0.8), not the time-decayed value. Decay governs *recall* — which instincts load into a session — but an established habit stays eligible to graduate however long it has been since you last exercised it.
 
 This is deterministic — no LLM, no file writes — so the dry run is completely safe to run at any time. The evolver agent does the authoring; the command is cheap orchestration.
 
@@ -32,7 +34,7 @@ const pid=projectIdentity(process.cwd()).key;
 const out=E.evolve({projectId:pid},undefined,undefined);
 const byId={};
 for(const x of I.list({projectId:pid},undefined,undefined)){byId[x.id]=x;}
-const cands=out.candidates.map(function(c){return {type:c.type,triggerKey:c.triggerKey,size:c.size,avgConfidence:Number(c.avgConfidence.toFixed(3)),domains:c.domains,members:c.instinctIds.map(function(id){const m=byId[id]||{};return {id:m.id,trigger:m.trigger,domain:m.domain,action:m.action,evidence:m.evidence,scope:m.scope};})};});
+const cands=out.candidates.map(function(c){return {type:c.type,clusterKey:c.clusterKey,size:c.size,avgConfidence:Number(c.avgConfidence.toFixed(3)),domains:c.domains,members:c.instinctIds.map(function(id){const m=byId[id]||{};return {id:m.id,trigger:m.trigger,domain:m.domain,action:m.action,evidence:m.evidence,scope:m.scope};})};});
 console.log(JSON.stringify({considered:out.considered,total:out.total,candidates:cands},null,2));'
 ```
 
@@ -44,7 +46,7 @@ Parse the JSON (`{ considered, total, candidates }`).
 
 Present a readable summary of the candidates. For each candidate, show:
 
-- **Type** (`AGENT` / `SKILL` / `COMMAND`), the `triggerKey`, cluster size, and `avgConfidence`.
+- **Type** (`AGENT` / `SKILL` / `COMMAND`), the `clusterKey`, cluster size, and `avgConfidence`.
 - **Member instincts** — each member's `id` and `trigger`.
 
 If `candidates` is empty, say so clearly — for example:
@@ -63,7 +65,7 @@ For **each** candidate in `candidates`, dispatch **`nxtlvl:evolver`** using the 
 subagent_type: "nxtlvl:evolver"
 ```
 
-Pass the candidate's enriched JSON object verbatim in the dispatch prompt — include the `type`, `triggerKey`, `size`, `avgConfidence`, `domains`, and the full `members` array (each with `id`, `trigger`, `domain`, `action`, `evidence`, `scope`). Also pass the current project root path.
+Pass the candidate's enriched JSON object verbatim in the dispatch prompt — include the `type`, `clusterKey`, `size`, `avgConfidence`, `domains`, and the full `members` array (each with `id`, `trigger`, `domain`, `action`, `evidence`, `scope`). Also pass the current project root path.
 
 **Do not author anything in this command.** The command is cheap orchestration; the evolver does the writing.
 
