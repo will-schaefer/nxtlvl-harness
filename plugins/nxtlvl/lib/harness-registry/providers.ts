@@ -44,7 +44,8 @@ export interface CodexProviderPaths {
   configPath: string;
 }
 
-const FAMILY_PLUGIN_COMPONENTS: Record<string, string> = {
+/** Family plugin keys the registry may manage, mapped to catalog component ids. */
+export const FAMILY_PLUGIN_COMPONENTS: Record<string, string> = {
   'nxtlvl@nxtlvl-dev': 'core/component/nxtlvl-plugin',
   'nxtlvl@nxtlvl-marketplace': 'core/component/nxtlvl-plugin',
   'nxtlvl-wiki@nxtlvl-dev': 'wiki/component/nxtlvl-wiki-plugin',

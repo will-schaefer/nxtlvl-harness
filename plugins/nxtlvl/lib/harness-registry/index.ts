@@ -6,8 +6,33 @@ export {
 } from './catalog.ts';
 export { loadCatalogFragment } from './catalog-file.ts';
 export {
+  activate,
+  bench,
+  checkParity,
+  cutover,
+  defaultParityDir,
+  exitCodeFor,
+  importObserved,
+  loadRegistry,
+  reconcile,
+  registryExists,
+} from './authority.ts';
+export { runParity } from './parity.ts';
+export {
+  applyClaudeProjection,
+  applyCodexProjection,
+  fileSha256,
+  fingerprintManaged,
+  isExternalOrReadOnlyId,
+  isFamilyManagedComponentId,
+  managedFromDesired,
+  projectClaudeCandidate,
+  projectCodexCandidate,
+} from './projectors.ts';
+export {
   defaultClaudeProviderPaths,
   defaultCodexProviderPaths,
+  FAMILY_PLUGIN_COMPONENTS,
   readClaudeProvider,
   readCodexProvider,
 } from './providers.ts';
@@ -36,10 +61,21 @@ export type {
   ProviderPluginObservation,
 } from './providers.ts';
 export type {
+  ApplyResult,
+  ClaudeProjection,
+  CodexProjection,
+  ProjectorFinding,
+} from './projectors.ts';
+export type { AuthorityOptions } from './authority.ts';
+export type { ParityOptions, ParityRunResult } from './parity.ts';
+export type {
   CapabilitySnapshot,
   ComponentSnapshot,
   DesiredDeploymentState,
   HarnessSnapshot,
+  OperationOutcome,
+  OperationResult,
+  ParityReport,
   RegistryFinding,
   RegistryPhase,
   RegistryState,

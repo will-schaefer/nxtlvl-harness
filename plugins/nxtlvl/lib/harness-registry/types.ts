@@ -83,3 +83,34 @@ export interface HarnessSnapshot {
   resources: ResourceSnapshot[];
   findings: RegistryFinding[];
 }
+
+export interface ParityReport {
+  schemaVersion: 1;
+  provider: 'claude' | 'codex';
+  generatedAt: string;
+  passed: boolean;
+  managed: Record<string, boolean>;
+  observed: Record<string, boolean>;
+  mismatches: Array<{ key: string; managed: boolean; observed: boolean }>;
+  findings: Array<{
+    code: string;
+    severity: 'error' | 'warning';
+    message: string;
+    path?: string;
+  }>;
+  fingerprint?: string;
+}
+
+export type OperationOutcome = 'passed' | 'blocked' | 'drift' | 'usage-error' | 'error';
+
+export interface OperationResult {
+  ok: boolean;
+  operation: string;
+  phase: RegistryPhase;
+  outcome?: OperationOutcome;
+  message?: string;
+  findings?: RegistryFinding[];
+  parity?: { claude?: boolean; codex?: boolean };
+  deployment?: 'active' | 'benched' | 'drift';
+  id?: string;
+}
