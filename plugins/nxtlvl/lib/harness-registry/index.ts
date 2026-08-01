@@ -39,6 +39,13 @@ export {
 export { resolveContainedRealPath } from './discovery.ts';
 export { buildSnapshot } from './snapshot.ts';
 export { readRegistry, readSnapshot, writeRegistry, writeSnapshot } from './store.ts';
+export {
+  appendEvent,
+  deriveRuns,
+  normalizeEvent,
+  readEvents,
+  recordingBoundary,
+} from './journal.ts';
 export type {
   CapabilityKind,
   CatalogCapabilityRoot,
@@ -52,6 +59,7 @@ export type {
 } from './catalog.ts';
 export type { SnapshotInput, SnapshotRepositoryInput } from './snapshot.ts';
 export type { StoreOptions } from './store.ts';
+export type { AppendEventResult, JournalOptions, ReadEventsResult } from './journal.ts';
 export type {
   ClaudeProviderPaths,
   CodexProviderPaths,
@@ -73,6 +81,13 @@ export type {
   ComponentSnapshot,
   DesiredDeploymentState,
   HarnessSnapshot,
+  JournalEvent,
+  JournalEventType,
+  JournalFinding,
+  JournalRunKind,
+  JournalRunResult,
+  JournalSourceRepository,
+  JournalSourceSurface,
   OperationOutcome,
   OperationResult,
   ParityReport,
@@ -80,4 +95,6 @@ export type {
   RegistryPhase,
   RegistryState,
   ResourceSnapshot,
+  RunRecord,
+  RunStatus,
 } from './types.ts';

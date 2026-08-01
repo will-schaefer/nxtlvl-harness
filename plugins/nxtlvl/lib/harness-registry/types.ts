@@ -114,3 +114,74 @@ export interface OperationResult {
   deployment?: 'active' | 'benched' | 'drift';
   id?: string;
 }
+
+// --- Append-only family run journal (spec §4.8) ------------------------------
+
+export type JournalEventType = 'run-start' | 'run-finish' | 'registry-op';
+
+export type JournalSourceRepository = 'core' | 'wiki' | 'lab';
+
+export type JournalSourceSurface = 'cli' | 'server' | 'bridge' | 'unknown';
+
+export type JournalRunKind =
+  | 'evaluation'
+  | 'test'
+  | 'agentic-evaluation'
+  | 'pressure-test'
+  | 'graduation'
+  | 'other';
+
+export type JournalRunResult = 'passed' | 'failed' | 'error' | 'cancelled';
+
+export type RunStatus =
+  | 'in-progress'
+  | 'interrupted'
+  | 'unknown'
+  | JournalRunResult;
+
+export interface JournalFinding {
+  code: string;
+  severity: 'error' | 'warning';
+  message: string;
+}
+
+/** One physical JSONL line under harness/events.jsonl. */
+export interface JournalEvent {
+  schemaVersion: 1;
+  eventId: string;
+  timestamp: string;
+  eventType: JournalEventType;
+  sourceRepository: JournalSourceRepository;
+  sourceSurface: JournalSourceSurface;
+  capabilityId?: string;
+  runId?: string;
+  runKind?: JournalRunKind;
+  processId?: number;
+  /** Bounded plain-text summary; never secrets, env dumps, or full stdout. */
+  summary?: string;
+  result?: JournalRunResult;
+  durationMs?: number;
+  /** Relative paths only. */
+  artifactRefs?: string[];
+  findings?: JournalFinding[];
+}
+
+/** Derived view: start/finish pairing by runId. Never invents a finish event. */
+export interface RunRecord {
+  runId: string;
+  status: RunStatus;
+  startedAt: string;
+  finishedAt?: string;
+  sourceRepository: JournalSourceRepository;
+  sourceSurface: JournalSourceSurface;
+  capabilityId?: string;
+  runKind?: JournalRunKind;
+  processId?: number;
+  summary?: string;
+  result?: JournalRunResult;
+  durationMs?: number;
+  artifactRefs?: string[];
+  findings?: JournalFinding[];
+  startEventId: string;
+  finishEventId?: string;
+}
