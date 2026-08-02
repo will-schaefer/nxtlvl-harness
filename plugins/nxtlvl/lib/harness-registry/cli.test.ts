@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { after, test } from 'node:test';
 
+import { harnessLayout } from '../paths.ts';
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const script = path.resolve(here, '../../scripts/harness-registry.ts');
 const fixture = path.join(here, 'fixtures', 'snapshot-input.json');
@@ -57,6 +59,45 @@ test('snapshot command emits normalized JSON from a fixture without writing stat
     ],
   );
   assert.equal(fs.existsSync(stateRoot), false);
+});
+
+test('snapshot with no arguments assembles live, caches snapshot.json, and reports the registry phase', () => {
+  const root = makeDirectory();
+  const stateRoot = path.join(root, 'state');
+  const home = path.join(root, 'home');
+  const wikiRoot = path.join(root, 'wiki');
+  const labRoot = path.join(root, 'lab');
+  write(path.join(wikiRoot, 'nxtlvl.catalog.yaml'), 'schema_version: 1\nowner: wiki\ncomponents: []\n');
+  write(path.join(labRoot, 'nxtlvl.catalog.yaml'), 'schema_version: 1\nowner: lab\ncomponents: []\n');
+  write(path.join(home, '.claude', 'settings.json'), JSON.stringify({
+    enabledPlugins: { 'nxtlvl@nxtlvl-dev': true },
+  }));
+  write(path.join(home, '.codex', 'config.toml'), '[plugins."nxtlvl@nxtlvl-dev"]\nenabled = true\n');
+  const env = {
+    XDG_STATE_HOME: stateRoot,
+    HOME: home,
+    NXTLVL_WIKI_ROOT: wikiRoot,
+    NXTLVL_LAB_ROOT: labRoot,
+  };
+
+  const first = run(['snapshot'], env);
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(first.stderr, '');
+  const snapshot = JSON.parse(first.stdout) as { schemaVersion: number; phase: string };
+  assert.equal(snapshot.schemaVersion, 1);
+  assert.equal(snapshot.phase, 'catalog-only');
+
+  const snapshotFile = harnessLayout(env, home).snapshotFile;
+  const cached = JSON.parse(fs.readFileSync(snapshotFile, 'utf8')) as Record<string, unknown>;
+  assert.deepEqual(cached, JSON.parse(first.stdout));
+
+  const importResult = run(['import'], env);
+  assert.equal(importResult.status, 0, importResult.stderr + importResult.stdout);
+
+  const second = run(['snapshot'], env);
+  assert.equal(second.status, 0, second.stderr);
+  const refreshed = JSON.parse(second.stdout) as { phase: string };
+  assert.equal(refreshed.phase, 'imported');
 });
 
 test('unknown command reports usage on stderr and exits 1', () => {

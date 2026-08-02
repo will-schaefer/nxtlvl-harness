@@ -12,10 +12,11 @@ import {
   reconcile,
   type AuthorityOptions,
 } from '../lib/harness-registry/authority.ts';
+import { assembleFamilySnapshot } from '../lib/harness-registry/family.ts';
 import { appendEvent } from '../lib/harness-registry/journal.ts';
 import type { ClaudeProviderPaths, CodexProviderPaths } from '../lib/harness-registry/providers.ts';
 import { buildSnapshot } from '../lib/harness-registry/snapshot.ts';
-import { readSnapshot } from '../lib/harness-registry/store.ts';
+import { writeSnapshot } from '../lib/harness-registry/store.ts';
 import type {
   JournalRunKind,
   JournalRunResult,
@@ -157,14 +158,18 @@ function emitOperation(opResult: OperationResult, io: CommandIo): number {
 
 function dispatchSnapshot(argv: string[], io: CommandIo): number {
   if (argv.length === 0) {
+    // Assemble catalog, scan providers, reconcile, emit normalized JSON
+    // (spec §4.6). snapshot.json is only a replaceable cache of this output,
+    // so a failed write degrades to a warning, never a failed command.
+    const snapshot = assembleFamilySnapshot({ env: process.env });
     try {
-      printJson(readSnapshot(), io);
-      return 0;
+      writeSnapshot(snapshot);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      io.stderr.write(`Could not read snapshot: ${message}\n`);
-      return 1;
+      io.stderr.write(`Could not cache snapshot: ${message}\n`);
     }
+    printJson(snapshot, io);
+    return 0;
   }
 
   const { rest, flags } = parseFlags(argv);
