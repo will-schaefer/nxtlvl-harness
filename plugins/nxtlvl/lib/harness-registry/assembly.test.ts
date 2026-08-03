@@ -93,6 +93,46 @@ test('assembles a skill bundle while isolating an invalid repository fragment', 
   assert.ok(snapshot.findings.some((finding) => finding.code === 'catalog.invalid_type'));
 });
 
+test('assembles workflow bundles with diagram resources', () => {
+  const coreRoot = makeRepository('core');
+  write(coreRoot, 'plugins/nxtlvl/workflows/eval-loop/workflow.md', '# Evaluation loop\n');
+  write(coreRoot, 'plugins/nxtlvl/workflows/eval-loop/diagrams/eval-loop.md', [
+    '```mermaid',
+    'flowchart LR',
+    '  A[Draft eval] --> B[Run pack]',
+    '  B --> C[Review scorecard]',
+    '```',
+    '',
+  ].join('\n'));
+
+  const snapshot = buildSnapshot({
+    generatedAt: '2026-07-28T12:00:00.000Z',
+    repositories: [{
+      source: 'core-fixture',
+      repositoryRoot: coreRoot,
+      catalog: {
+        schema_version: 1,
+        owner: 'core',
+        components: [{
+          id: 'core/component/nxtlvl-plugin',
+          name: 'nxtlvl plugin',
+          kind: 'plugin',
+          root: 'plugins/nxtlvl',
+          capability_roots: [{ path: 'workflows', kind: 'workflow', entry: 'workflow.md' }],
+        }],
+      },
+    }],
+  });
+
+  assert.deepEqual(snapshot.capabilities.map((capability) => [capability.id, capability.kind]), [
+    ['core/workflow/eval-loop', 'workflow'],
+  ]);
+  assert.deepEqual(snapshot.resources.map((resource) => [resource.kind, resource.relativePath]), [
+    ['entry-file', 'plugins/nxtlvl/workflows/eval-loop/workflow.md'],
+    ['diagram', 'plugins/nxtlvl/workflows/eval-loop/diagrams/eval-loop.md'],
+  ]);
+});
+
 test('blocks only duplicate component and capability identities', () => {
   const firstRoot = makeRepository('core');
   const secondRoot = makeRepository('core');

@@ -20,6 +20,7 @@ export const CAPABILITY_KINDS = [
   'mcp-server',
   'script',
   'configuration-module',
+  'workflow',
 ] as const;
 export type CapabilityKind = (typeof CAPABILITY_KINDS)[number];
 

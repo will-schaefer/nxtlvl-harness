@@ -26,6 +26,23 @@ test('validateCatalogFragment returns a normalized value for a valid catalog', (
   });
 });
 
+test('validateCatalogFragment accepts workflow capability roots', () => {
+  const catalog = {
+    ...validCatalog,
+    components: [{
+      ...validCatalog.components[0],
+      capability_roots: [
+        { path: 'workflows', kind: 'workflow', entry: 'workflow.md' },
+      ],
+    }],
+  };
+
+  assert.deepEqual(validateCatalogFragment(catalog), {
+    value: catalog,
+    findings: [],
+  });
+});
+
 test('validateCatalogFragment returns structured findings instead of throwing', () => {
   assert.deepEqual(validateCatalogFragment(null), {
     value: null,
