@@ -51,6 +51,7 @@ const RESOURCE_DIRECTORIES: Record<string, string> = {
   assets: 'asset',
   evals: 'evaluation',
   evaluations: 'evaluation',
+  diagrams: 'diagram',
   references: 'reference',
   scripts: 'helper-script',
   tests: 'test',
