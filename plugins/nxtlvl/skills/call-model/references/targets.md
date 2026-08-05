@@ -11,6 +11,7 @@ Verified against common installs (Codex 0.144.x, Grok 0.2.x, Gemini 0.49.x, Devi
 | **gemini** | `which gemini` | `gemini --version` is **not** enough (free tier can still error on real prompts) | `gemini --approval-mode plan -p "" < prompt` | Avoid for task unless user insists; `--approval-mode auto_edit` / yolo is write-capable |
 | **devin** | `which devin` | `devin version` | `devin -p --prompt-file <f> --permission-mode auto` (auto ≈ auto-approve read-only tools) | `--permission-mode accept-edits` or higher only with auth |
 | **claude** | `which claude` | `claude --version` | `claude -p "" --disallowedTools Write Edit NotebookEdit Bash < prompt` (cwd via `cd`) | `claude -p "" --permission-mode acceptEdits < prompt` (no edit/Bash disallow). Override mode via `CALL_MODEL_CLAUDE_PERMISSION_MODE`. Requires `--write` + user auth. |
+| **antigravity** | `which agy` | `agy --version` | `agy -p "<prompt>" --mode plan [--model <m>]` — prompt travels as the argv value (no stdin); companion enforces a 200KB cap | `agy -p "<prompt>" --mode accept-edits` — only via `task --write` + user auth |
 
 ## Codex transport order
 
@@ -31,6 +32,18 @@ Companion discovery (in order):
 ### Gemini free tier
 
 `gemini --version` can pass while real prompts fail with `IneligibleTierError`. The companion’s `setup --target gemini` should note this; a real smoke is the only proof.
+
+### Antigravity (Google) — the working Gemini path
+
+The `agy` binary (Google Antigravity command-line interface) is currently the reliable way
+to reach Gemini models (`agy models` lists e.g. `gemini-3.1-pro-high`,
+`gemini-3.6-flash-low`), since the standalone `gemini` CLI lost individual free-tier access
+(June 2026). Notes: prompt must be passed as the `--print`/`-p` argument — there is no stdin
+path — so the companion reads the prompt file and passes it as one argv element (spawned
+without a shell; injection-safe; capped at 200KB). `--model` selects the model per call. The
+CLI needs to write `~/.gemini/antigravity-cli/` logs and bind a localhost port, so it fails
+inside restrictive parent sandboxes (see "Host sandbox vs callee CLI" below). Smoke-verified
+2026-07-26 (`consult` → expected reply, plan mode).
 
 ### Grok typed JSON
 

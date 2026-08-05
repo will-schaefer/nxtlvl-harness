@@ -42,7 +42,7 @@ Task arrives
     ├── Need a spec, a plan, or both (design layer)? → ◆ show-me
     │
     ├── Implementing, stakes high / unfamiliar? ──→ ◆ doubt-driven-development
-    ├── Need another model (Codex/Grok/Gemini/Devin second opinion, cross-model consult)? → ◆ call-model
+    ├── Need another model (Codex/Grok/Gemini/Devin second opinion, cross-model consult; auto-routes by task class)? → ◆ call-model
     ├── Reviewing a diff before merge? ───────────→ ◆ review
     ├── Committing / branching / PR → merge? ─────→ ◆ github-workflow
     ├── Writing docs / recording a decision? ─────→ ◆ documentation-and-adrs
@@ -115,7 +115,7 @@ These hold across every skill the router dispatches to — and across natively-h
 | Ideate (sub-skills) | interview-me · grill-me · idea-refine | ‡ interim (body upstream, pending ◆) |
 | Contract + plan | **show-me** | ◆ nxtlvl (spec → plan, with visuals) |
 | Build (in-flight) | **doubt-driven-development** — adversarial review of non-trivial decisions | ◆ nxtlvl |
-| Cross-model | **call-model** — invoke Codex / Grok / Gemini / Devin / Claude headless | ◆ nxtlvl |
+| Cross-model | **call-model** — invoke Codex / Grok / Gemini / Devin / Claude headless; routing policy picks the target by task class | ◆ nxtlvl |
 | Build (everything else) | *implementation, testing, debugging, …* | native — nxtlvl owns no skill yet |
 | Review | **review** — five-axis review, refined for my conventions | ◆ nxtlvl |
 | Ship (git) | **github-workflow** — standardized GitHub loop (exec: `nxtlvl:git-workflow-runner` / `/git-workflow`) | ◆ nxtlvl |

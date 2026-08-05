@@ -3,12 +3,13 @@
  * call-model.mjs — nxtlvl multi-target companion for cross-model CLI invocation.
  *
  * Usage:
- *   node call-model.mjs <mode> --target <codex|grok|gemini|devin|claude> [options]
+ *   node call-model.mjs <mode> --target <codex|grok|gemini|devin|claude|antigravity> [options]
  *
  * Modes: setup | consult | adversarial | review | task
  * Options:
  *   --cwd <dir>           Working directory (default: process.cwd())
  *   --prompt-file <path>  Prompt file (required for consult/adversarial/task)
+ *   --model <name>        Model override (antigravity only, e.g. gemini-3.1-pro-high)
  *   --write               Allow writes (task mode only)
  *   --base <ref>          Review base ref (Codex compose review)
  *   --json                Machine-readable setup output
@@ -30,13 +31,23 @@ import process from "node:process";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const VALID_TARGETS = new Set(["codex", "grok", "gemini", "devin", "claude"]);
+const VALID_TARGETS = new Set([
+  "codex",
+  "grok",
+  "gemini",
+  "devin",
+  "claude",
+  "antigravity",
+]);
+// Targets whose binary name differs from the target name.
+const BINARY_FOR = { antigravity: "agy" };
+const binaryFor = (target) => BINARY_FOR[target] || target;
 const VALID_MODES = new Set(["setup", "consult", "adversarial", "review", "task"]);
 const DEFAULT_TIMEOUT_MS = Number(process.env.CALL_MODEL_TIMEOUT_MS || 600_000);
 
 function usage(exitCode = 1) {
   const text = `Usage:
-  node call-model.mjs <mode> --target <codex|grok|gemini|devin|claude> [options]
+  node call-model.mjs <mode> --target <codex|grok|gemini|devin|claude|antigravity> [options]
 
 Modes:
   setup         Preflight binary + transport (no prompt)
@@ -48,6 +59,7 @@ Modes:
 Options:
   --cwd <dir>                 Working directory (default: cwd)
   --prompt-file <path>        Prompt file (consult/adversarial/task)
+  --model <name>              Model override (antigravity only)
   --write                     Allow writes (task only)
   --base <ref>                Branch base for Codex compose review
   --json                      JSON setup report
@@ -64,6 +76,7 @@ function parseArgs(argv) {
     target: null,
     cwd: process.cwd(),
     promptFile: null,
+    model: null,
     write: false,
     base: null,
     json: false,
@@ -79,6 +92,7 @@ function parseArgs(argv) {
     if (a === "--target") out.target = args[++i];
     else if (a === "--cwd") out.cwd = path.resolve(args[++i] ?? "");
     else if (a === "--prompt-file") out.promptFile = path.resolve(args[++i] ?? "");
+    else if (a === "--model") out.model = args[++i];
     else if (a === "--write") out.write = true;
     else if (a === "--base") out.base = args[++i];
     else if (a === "--json") out.json = true;
@@ -261,7 +275,7 @@ function versionOf(bin, pathToBin) {
 }
 
 function setupReport(target, opts) {
-  const bin = which(target === "claude" ? "claude" : target);
+  const bin = which(binaryFor(target));
   const companion = target === "codex" ? findCodexCompanion() : null;
   const forcePortable = process.env.CODEX_COMPANION === "0";
   let transport = "missing";
@@ -272,11 +286,17 @@ function setupReport(target, opts) {
       transport = "portable-cli";
     }
   }
-  const version = bin ? versionOf(target === "claude" ? "claude" : target, bin) : null;
+  const version = bin ? versionOf(binaryFor(target), bin) : null;
   const caveats = [];
   if (target === "gemini") {
     caveats.push(
       "gemini --version can pass while real prompts fail (free-tier / IneligibleTierError); run a real smoke before relying on it",
+    );
+  }
+  if (target === "antigravity") {
+    caveats.push(
+      "binary is `agy`; prompt travels as the --print argument (no stdin), so very large artifacts are rejected",
+      "needs to write its log dir (~/.gemini/antigravity-cli) and bind a local port — fails inside restrictive sandboxes",
     );
   }
   if (target === "codex" && forcePortable) {
@@ -452,6 +472,28 @@ async function invokeClaude(mode, opts) {
   });
 }
 
+async function invokeAntigravity(mode, opts) {
+  requirePromptFile(opts);
+  const prompt = fs.readFileSync(opts.promptFile, "utf8");
+  // agy takes the prompt as the --print argument (no stdin path). We spawn
+  // without a shell, so argv is injection-safe; argv size is OS-limited.
+  if (Buffer.byteLength(prompt, "utf8") > 200_000) {
+    die("prompt file too large for antigravity (>200KB travels via argv); trim the artifact");
+  }
+  const write = Boolean(opts.write && mode === "task");
+  const agyMode = write ? "accept-edits" : "plan";
+  const args = ["-p", prompt, "--mode", agyMode];
+  if (opts.model) args.push("--model", opts.model);
+  process.stderr.write(
+    `call-model: transport=portable-cli antigravity mode=${agyMode}${opts.model ? ` model=${opts.model}` : ""}\n`,
+  );
+  const r = await runStreaming("agy", args, {
+    cwd: opts.cwd,
+    timeoutMs: DEFAULT_TIMEOUT_MS,
+  });
+  return r.status;
+}
+
 async function main() {
   const opts = parseArgs(process.argv);
   if (!VALID_MODES.has(opts.mode)) {
@@ -462,6 +504,9 @@ async function main() {
   }
   if (opts.write && opts.mode !== "task") {
     die("--write is only valid with mode=task");
+  }
+  if (opts.model && opts.target !== "antigravity") {
+    die("--model is currently supported only for --target antigravity");
   }
   if (opts.mode === "task" && !opts.write) {
     process.stderr.write(
@@ -477,7 +522,7 @@ async function main() {
     process.exit(setupReport(opts.target, opts));
   }
 
-  const binName = opts.target === "claude" ? "claude" : opts.target;
+  const binName = binaryFor(opts.target);
   if (!which(binName)) {
     die(`${binName} not found in PATH — run: call-model.mjs setup --target ${opts.target}`);
   }
@@ -507,6 +552,9 @@ async function main() {
       break;
     case "claude":
       status = await invokeClaude(opts.mode, opts);
+      break;
+    case "antigravity":
+      status = await invokeAntigravity(opts.mode, opts);
       break;
     default:
       die(`unsupported target: ${opts.target}`);

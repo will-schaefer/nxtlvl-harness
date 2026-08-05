@@ -114,9 +114,11 @@ A single-model reviewer shares blind spots with the original author; a colder, d
 
 **Transport lives in `nxtlvl:call-model`** — do not invent per-CLI flag recipes here. That skill owns companion invocation, portable adapters (Codex / Grok / Gemini / Devin / Claude), read-only defaults, and result-handling.
 
-**Interactive sessions: always offer, never silently skip.** After the single-model review, before RECONCILE, ask:
+**Interactive sessions: always offer, never silently skip.** After the single-model review, before RECONCILE, resolve the suggested target from `call-model`'s routing policy (`call-model/references/routing-policy.md`, class *deep reasoning / adversarial doubt* — prefer a callee ≠ host family) and lead with it:
 
-> *"Single-model review complete. Want a cross-model second opinion? Options: Codex, Grok, Gemini, Devin, Claude headless, manual external review, or skip."*
+> *"Single-model review complete. Want a cross-model second opinion? Suggested: `<policy default>` (adversarial — `<row provenance, date>`). Or: Codex, Grok, Gemini, Devin, Claude headless, manual external review, skip."*
+
+The policy suggests; the user still picks and each invocation keeps its own authorization. If the policy row is stale or its CLI chain is unavailable, say so and fall back to the flat menu.
 
 If the user picks a target:
 
