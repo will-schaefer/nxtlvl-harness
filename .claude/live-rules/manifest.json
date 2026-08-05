@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "path": "rules/001.md",
+      "hash": "83ff85c9ed6648e69021ee888fc694533cefd7c848d6b368fb30ddbddfc18158",
+      "description": "House git discipline (nxtlvl conventions, not the generic defaults)",
+      "globs": [],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/002.md",
+      "hash": "624baeb25a6ce91f10d542cc000c43f36216ab501313afa751d0ef6c9c8fe437",
+      "description": "Surgical, simple, honest",
+      "globs": [],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/003.md",
+      "hash": "ae3a52c4fc94fbe8810435cb0c05c9bbf14b1779400b27387bd4bb61f47804e5",
+      "description": "Verify behavior deterministically",
+      "globs": [],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/004.md",
+      "hash": "7dd0f819e889052cca7baa37569c7d157b5e8616ffe206f71f0a8cfc55793034",
+      "description": "Harness source — deploy boundary and hook safety",
+      "globs": [
+        "**/plugins/**",
+        "**/hooks/**",
+        "**/config/claude/**",
+        "**/sandbox/**"
+      ],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/005.md",
+      "hash": "08d1a73722a31c1eb06071089435b23344b4b4c92540fcfe0f2831dd40fcfcd5",
+      "description": "TypeScript — Node-native type-stripping, no build step",
+      "globs": [
+        "**/*.ts",
+        "**/tsconfig.json",
+        "**/package.json"
+      ],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/006.md",
+      "hash": "39aa8309ec6cd95488fd69fd7f035f4b66e00c629b8f85581b1e01d34da53ac3",
+      "description": "House code conventions",
+      "globs": [
+        "**/*.ts",
+        "**/*.js"
+      ],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    },
+    {
+      "path": "rules/007.md",
+      "hash": "b710cba5648a0e9986ed2ae0b4e38f91bf8154e9bf7665053618e4c0704e9287",
+      "description": "Refactoring discipline (Fowler)",
+      "globs": [],
+      "dirs": [],
+      "prompt": [
+        "refactor",
+        "refactoring",
+        "clean up",
+        "cleanup",
+        "tidy",
+        "restructure"
+      ],
+      "enabled": true
+    },
+    {
+      "path": "rules/008.md",
+      "hash": "2cb550a4323941dce4de826fbca57433964ceace0126bf2f9eb29949429a7244",
+      "description": "Self-improvement — turn friction into a fix that sticks",
+      "globs": [],
+      "dirs": [],
+      "prompt": [],
+      "enabled": true
+    }
+  ]
+}
