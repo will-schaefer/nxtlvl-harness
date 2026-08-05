@@ -24,12 +24,24 @@ reports back. Several can run at the same time.
 - **Quality outranks parallelism.** Fanning out is the default because it is usually both faster
   and better. Where it would be faster but *worse*, it is the wrong call — the point is a good
   result, not a busy one. Say which case applies and work sequentially.
+- **Where quality is equal, speed wins.** Being faster is a sufficient reason to fan out on its
+  own — it needs no further justification. Two independent tasks that each take real time go to
+  two agents, even though doing them one after the other would also have worked.
+
+**The decision, in order:**
+
+1. **Would splitting make the result worse?** If yes, stay sequential and say which case applies.
+2. **Otherwise, would splitting finish sooner?** If yes, fan out. That is the whole test.
+3. If neither — no quality cost, no time saved — it does not matter. Do it inline.
 
 ## When not to fan out
 
-Two different reasons to stay sequential. The first group is waste; the second is damage.
+Two different reasons to stay sequential, matching the two tests above. The second group is
+damage — it fails test 1 and is a genuine veto. The first group is simply where there is no
+time to save, so test 2 comes back negative; it is **not** a licence to work sequentially
+whenever splitting feels like effort.
 
-### Fanning out would not help
+### There is no time to save
 
 - **Real dependency** — the second task consumes the first task's output. Chain them.
 - **Nothing to split** — one file, one function, one question. Partitioning it invents seams
@@ -84,4 +96,7 @@ Two different reasons to stay sequential. The first group is waste; the second i
   output dressed up as more effort.
 - Equally, don't reach for these exceptions to avoid the work of partitioning. If tasks are
   genuinely independent, split them — "it felt easier to do it myself" is not one of the cases
-  above.
+  above. Where quality is untouched, the only remaining question is whether it finishes sooner;
+  if it does, fan out.
+- Don't stay sequential merely because the tasks are each doable inline. Doable is not the test —
+  faster is.

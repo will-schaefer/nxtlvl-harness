@@ -16,8 +16,9 @@ giving any reply that lists more than a couple of steps — **follow the plannin
 those out to **up to 6 parallel subagents** dispatched in a single message — *and* when not to:
 where splitting would merely waste effort (dependencies, nothing to split, too small to brief)
 and where it would actively **hurt the result** (work needing one coherent voice, work resting
-on this conversation's context, underspecified work, debugging, same-file writes). Quality
-outranks parallelism. A one-step answer: just proceed.
+on this conversation's context, underspecified work, debugging, same-file writes). The order:
+would splitting make it worse? If yes, don't. Otherwise, would it finish sooner? If yes, do —
+**speed alone is reason enough**. A one-step answer: just proceed.
 
 ## Context assembly
 
