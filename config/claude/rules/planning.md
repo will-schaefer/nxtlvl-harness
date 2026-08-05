@@ -21,17 +21,44 @@ reports back. Several can run at the same time.
   The shape of the work is visible before any of it starts.
 - **Justify every sequential step.** Choosing to run something on the main thread instead of
   fanning it out is a decision the reader can disagree with, so state the reason.
+- **Quality outranks parallelism.** Fanning out is the default because it is usually both faster
+  and better. Where it would be faster but *worse*, it is the wrong call — the point is a good
+  result, not a busy one. Say which case applies and work sequentially.
 
-## When sequential is correct (the exceptions)
+## When not to fan out
+
+Two different reasons to stay sequential. The first group is waste; the second is damage.
+
+### Fanning out would not help
 
 - **Real dependency** — the second task consumes the first task's output. Chain them.
-- **Same-file writes** — two tasks editing one file will collide. Either serialize them, or give
-  each agent its own git worktree so they cannot overwrite each other.
+- **Nothing to split** — one file, one function, one question. Partitioning it invents seams
+  that are not there.
 - **Too small to brief** — a subagent starts with none of the session's context. When explaining
   the task would cost more than doing it, do it inline.
+- **Reassembly costs more than the split saves** — if reconciling several partial answers into
+  one coherent result is the bulk of the work, doing it once in one pass is cheaper.
+- **Explicitly declined** — the person asked for it to be done directly.
+
+### Fanning out would hurt the result
+
+- **Coherence work** — anything that must speak with one voice or one design sensibility: an
+  interface being designed, a document being written, a schema, a naming scheme, a refactor
+  applying a single idiom. Split six ways it comes back in six dialects, and stitching them
+  together loses more than the parallelism gained. One head, one pass.
+- **Context-heavy work** — the task depends on nuance accumulated over this conversation.
+  A subagent starts blank, the re-brief is lossy, and it will fill the gaps confidently rather
+  than ask. Where the context *is* the work, keep it where the context lives.
+- **Underspecified work** — while real questions are open, an agent guesses instead of asking,
+  and returns something plausible and wrong. Resolve the ambiguity first; then fan out.
+- **Tight iteration** — debugging and diagnosis, where each result reframes the next question.
+  Parallel guesses are not a substitute for a feedback loop.
+- **Output you cannot cheaply verify** — more agents then means more unchecked claims, not more
+  progress. Fan out where you can tell good work from bad on return.
+- **Same-file writes** — two tasks editing one file will collide and corrupt each other. Either
+  serialize them, or give each agent its own git worktree.
 - **Needs human judgment** — anything requiring a decision from the person stays on the main
   thread. Subagents do work; they do not choose direction.
-- **Explicitly declined** — the person asked for it to be done directly.
 
 ## Triggers
 
@@ -50,5 +77,11 @@ reports back. Several can run at the same time.
 - Don't fan out work that only *looks* independent — check for shared files first.
 - Don't spawn an agent for a single file read or one search; that is slower than doing it.
 - Don't bury the parallel structure in prose. It is the most useful part of the plan.
-- Don't let "parallel by default" become "parallel regardless" — the exceptions above are part
-  of the rule, not loopholes.
+- Don't let "parallel by default" become "parallel regardless" — the cases above are part of the
+  rule, not loopholes in it. A plan that fans out work needing one coherent pass has not
+  followed this rule; it has broken it.
+- Don't fan out to look thorough. Six agents on a job that wanted one careful pass is worse
+  output dressed up as more effort.
+- Equally, don't reach for these exceptions to avoid the work of partitioning. If tasks are
+  genuinely independent, split them — "it felt easier to do it myself" is not one of the cases
+  above.

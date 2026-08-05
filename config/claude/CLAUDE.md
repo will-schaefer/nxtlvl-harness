@@ -12,10 +12,12 @@ easily-reversible choices: just proceed — that tier isn't covered yet.
 
 When you are about to **lay out a plan** — entering plan mode, writing a plan document, or
 giving any reply that lists more than a couple of steps — **follow the planning rule: read
-`~/.claude/rules/planning.md`.** It covers partitioning work into independent tasks, fanning
-those out to **up to 6 parallel subagents** dispatched in a single message, and the exceptions
-where sequential is correct (real dependencies, same-file writes, work too small to brief).
-A one-step answer: just proceed.
+`~/.claude/rules/planning.md`.** It covers partitioning work into independent tasks and fanning
+those out to **up to 6 parallel subagents** dispatched in a single message — *and* when not to:
+where splitting would merely waste effort (dependencies, nothing to split, too small to brief)
+and where it would actively **hurt the result** (work needing one coherent voice, work resting
+on this conversation's context, underspecified work, debugging, same-file writes). Quality
+outranks parallelism. A one-step answer: just proceed.
 
 ## Context assembly
 
