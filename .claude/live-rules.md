@@ -102,3 +102,15 @@ that friction cheaper or impossible next time by improving the workspace itself.
   (architecture decision record) per `~/.claude/rules/decisions.md`.
 Keep it small — one improvement, not a rewrite, as its own commit. If nothing was off, skip it
 silently; don't manufacture busywork. For a deeper periodic pass, run `retro`.
+
+---
+description: Decision-record status changes are two edits, never one
+globs: ["docs/decisions/**"]
+priority: 60
+---
+Changing an architecture decision record's status is **two edits, not one**: update the record's
+frontmatter `status:` field, then immediately update its row in `docs/decisions/README.md` so the
+index stays in sync. Verify with `grep -n 'ADR-NNN' docs/decisions/README.md` before you commit —
+an index that disagrees with the records is worse than no index, because it is still trusted.
+Format, the record-worthy threshold, superseded-record lifecycle, and domain grain all live in
+`~/.claude/rules/decisions.md` — read it rather than reconstructing them here.
