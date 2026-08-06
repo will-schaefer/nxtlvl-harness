@@ -8,6 +8,19 @@ the exception and must be justified out loud.
 A *subagent* is a separate agent instance with its own fresh context that does one task and
 reports back. Several can run at the same time.
 
+## Pointers
+
+- **Which shape to fan out into** — the workflow-pattern catalogue at
+  `~/Developer/nxtlvl/nxtlvl-wiki/master-workflow-pattern-list.md`. This rule decides *whether*
+  to parallelize; the catalogue names the *shape*. Without it a plan splits work six ways and
+  gives every agent the same generic brief.
+- Straight to the fan-out question: **B6 parallel dispatch, isolation and merge**, **B3
+  delegation — teams versus subagents**, **B4 worker and judge architectures**, **B1
+  coordination shapes**. Where the answer is *don't split*, Part A carries the single-agent
+  shapes and Part C the human-in-the-loop gates.
+- Every row links the wiki page holding the full treatment plus the raw source note it cites —
+  follow those rather than planning off a one-line summary.
+
 ## The rule
 
 - **Partition first.** Before writing the steps, split the work into tasks and mark which ones
