@@ -114,3 +114,19 @@ index stays in sync. Verify with `grep -n 'ADR-NNN' docs/decisions/README.md` be
 an index that disagrees with the records is worse than no index, because it is still trusted.
 Format, the record-worthy threshold, superseded-record lifecycle, and domain grain all live in
 `~/.claude/rules/decisions.md` — read it rather than reconstructing them here.
+
+---
+description: Planning — partition and fan out before listing steps
+priority: 88
+---
+Before writing any plan — plan mode, a plan document, or a reply listing more than a couple of
+steps — partition the work and mark which tasks are independent, then dispatch the independent
+ones to **parallel subagents**, up to 6, as multiple tool calls in a **single** message (spread
+across messages they run one after another, defeating the point). Show the partition in the plan
+and state a reason for every sequential step.
+The order: **would splitting make the result worse?** — one coherent voice, context-heavy work,
+underspecified work, tight debugging, output you can't verify, same-file writes. If yes, don't,
+and say which case applies. **Otherwise, would it finish sooner?** If yes, fan out — speed alone
+is reason enough. Neither? Do it inline.
+Full rule, plus the pointer to the workflow-pattern catalogue that names *which shape* to fan out
+into: `~/.claude/rules/planning.md`.
