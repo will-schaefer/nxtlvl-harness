@@ -68,6 +68,13 @@
         ],
         "description": "C&M read path: at session start, inject a \"where you left off\" briefing on top of CLAUDE.md/MEMORY.md — fresh git line, newest bookmark (with a staleness flag when the observation log is newer), and quality-gated strong instincts (naming any that didn't fit the ceiling → /evolve). additionalContext channel; absolute fail-open; skips the observer/subagents. Kill switch: NXTLVL_CM_BRIEFING=off.",
         "id": "session:cm-briefing"
+      },
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/hooks/multi-cli-sync.js", "timeout": 25 }
+        ],
+        "description": "Multi-CLI config compiler (A+B): SessionStart runs compile.ts --check (global + default family repos). On drift, injects a warning + write command; with NXTLVL_COMPILER_AUTOWRITE=1 applies --write then re-checks. Silent when in sync. Absolute fail-open; never blocks the session. Kill switch: NXTLVL_MULTI_CLI_SYNC=off. Path overrides: NXTLVL_CORE_ROOT / NXTLVL_COMPILER_SCRIPT; repos: NXTLVL_COMPILER_REPOS.",
+        "id": "session:multi-cli-sync"
       }
     ],
     "SessionEnd": [

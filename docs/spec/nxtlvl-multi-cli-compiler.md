@@ -26,8 +26,11 @@ Build CLI) consume the Claude Code config as their single source of truth — by
 the mechanical residue** ADR-028 allows: format conversions, per-CLI supplements, and config
 keys the native compat paths cannot supply. Never filtered instruction copies.
 
-**Consumers:** the user (manual runs after config changes) and, later, a drift check in CI or a
-session hook (informational only, per the hook-safety rule).
+**Consumers:** the user (manual runs after config changes) and the **SessionStart hook**
+`plugins/nxtlvl/hooks/multi-cli-sync.js` (Layer A+B): always `--check` at session start;
+inject a drift warning when dirty; optionally `--write` when `NXTLVL_COMPILER_AUTOWRITE` is
+on. The hook is fail-open and never blocks the session (hook-safety rule). CI drift gate
+remains a later option.
 
 **Success criteria (testable):**
 
