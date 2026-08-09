@@ -75,6 +75,13 @@
         ],
         "description": "Multi-CLI config compiler (A+B): SessionStart runs compile.ts --check (global + default family repos). On drift, injects a warning + write command; with NXTLVL_COMPILER_AUTOWRITE=1 applies --write then re-checks. Silent when in sync. Absolute fail-open; never blocks the session. Kill switch: NXTLVL_MULTI_CLI_SYNC=off. Path overrides: NXTLVL_CORE_ROOT / NXTLVL_COMPILER_SCRIPT; repos: NXTLVL_COMPILER_REPOS.",
         "id": "session:multi-cli-sync"
+      },
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}\"/hooks/agent-tool-drift.js", "timeout": 10 }
+        ],
+        "description": "Agent tool-name drift guard: at session start, scan every authored agent source across the family repos and warn when a `tools:` line carries another agent's vocabulary (view_file, run_command, write_to_file, …) instead of Claude Code names. Deny-list only, so mcp__* and future Claude tools pass; compiler-output trees (.agents/.codex/.devin/.gemini), vendor/, build/, staging/ and archives are excluded. Silent when clean. Absolute fail-open; never blocks the session. Kill switch: NXTLVL_AGENT_TOOL_DRIFT=off. Path overrides: NXTLVL_CORE_ROOT; repos: NXTLVL_AGENT_DRIFT_REPOS.",
+        "id": "session:agent-tool-drift"
       }
     ],
     "SessionEnd": [
