@@ -39,6 +39,7 @@
 'use strict';
 
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 
 const MAX_STDIN = 4 * 1024 * 1024;
@@ -183,23 +184,42 @@ function scan(repoRoots) {
   return findings;
 }
 
-function resolveCoreRoot(env = process.env) {
-  if (env.NXTLVL_CORE_ROOT) return env.NXTLVL_CORE_ROOT;
-  // hooks/ -> nxtlvl/ -> plugins/ -> nxtlvl-core/
-  return path.resolve(__dirname, '..', '..', '..');
+/** Family repo checkouts directly under a candidate workbench directory. */
+function familyReposUnder(workbench) {
+  return DEFAULT_FAMILY_REPO_NAMES
+    .map((name) => path.join(workbench, name))
+    .filter((p) => {
+      try { return fs.existsSync(path.join(p, '.git')); } catch { return false; }
+    });
+}
+
+/**
+ * Workbench directories to try, in order.
+ *
+ * The relative walk only works when this file is run from its place in the
+ * nxtlvl-core checkout. Installed as a plugin it lives under
+ * ~/.claude/plugins/cache/, where the walk lands nowhere near the repos — hence
+ * the explicit home-directory fallback, matching multi-cli-sync.js.
+ */
+function candidateWorkbenches(env = process.env) {
+  const out = [];
+  const core = env.NXTLVL_CORE_ROOT && String(env.NXTLVL_CORE_ROOT).trim();
+  if (core) out.push(path.dirname(path.resolve(core)));
+  // hooks/ -> nxtlvl/ -> plugins/ -> nxtlvl-core/ -> workbench
+  out.push(path.resolve(__dirname, '..', '..', '..', '..'));
+  out.push(path.join(os.homedir(), 'Developer', 'nxtlvl'));
+  return out;
 }
 
 function resolveRepoRoots(env = process.env) {
   if (env.NXTLVL_AGENT_DRIFT_REPOS) {
     return env.NXTLVL_AGENT_DRIFT_REPOS.split(':').filter(Boolean);
   }
-  const coreRoot = resolveCoreRoot(env);
-  const workbench = path.dirname(coreRoot);
-  return DEFAULT_FAMILY_REPO_NAMES
-    .map((name) => path.join(workbench, name))
-    .filter((p) => {
-      try { return fs.statSync(p).isDirectory(); } catch { return false; }
-    });
+  for (const workbench of candidateWorkbenches(env)) {
+    const repos = familyReposUnder(workbench);
+    if (repos.length > 0) return repos;
+  }
+  return [];
 }
 
 function renderContext(findings) {
@@ -288,7 +308,8 @@ module.exports = {
   isExcluded,
   parseToolsLine,
   findAgentFiles,
-  resolveCoreRoot,
+  familyReposUnder,
+  candidateWorkbenches,
   resolveRepoRoots,
   renderContext,
   FOREIGN_TOOL_NAMES,
