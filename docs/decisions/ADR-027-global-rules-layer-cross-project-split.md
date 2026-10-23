@@ -144,3 +144,18 @@ a session. Neither is useful without the other.
 - Cross-links: [ADR-002](ADR-002-reference-corpus-nxtlvl-wiki.md) (the one Accepted ADR the
   retained project-level `CLAUDE.md` content points at); ADR-007, ADR-008, ADR-010, ADR-017
   (provisional sources this ADR does not decide — see above).
+
+## Amendment (2026-10-23): the global file leaves this repo
+
+Will decided the machine-global `~/.claude/CLAUDE.md` should be a standalone, project-neutral file
+that this repo no longer owns, and that nxtlvl-core keeps its own `CLAUDE.md`. Changes to
+Decision §2:
+
+- `config/claude/CLAUDE.md` is deleted, and `config/claude/link.sh` no longer links it.
+  `~/.claude/CLAUDE.md` is a plain file outside version control carrying only generic
+  conventions with no nxtlvl paths.
+- The seven trigger sections moved to the project-root `CLAUDE.md` under "Rule triggers", pointing
+  at `config/claude/rules/` by repo path. They are ambient only in sessions that load that file.
+- Not changed: `config/claude/rules/` is still linked as `~/.claude/rules/`, and Claude Code loads
+  every file in that folder in every session whether or not a trigger names it. The rule files
+  therefore still reach other repos; moving them is a separate decision.

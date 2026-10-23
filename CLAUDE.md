@@ -57,3 +57,22 @@ workflow, visual design docs) carries only cross-project conventions. These are 
 - **Coverage check:** periodically compare the harness against the `nxtlvl-wiki` production bar
   ([ADR-002](docs/decisions/ADR-002-reference-corpus-nxtlvl-wiki.md)) — only meaningful while
   working on nxtlvl itself.
+
+## Rule triggers
+Until 2026-10-23 these triggers lived in the machine-global `~/.claude/CLAUDE.md`; that file is
+now a standalone, project-neutral file outside this repo (amendment to
+[ADR-027](docs/decisions/ADR-027-global-rules-layer-cross-project-split.md)). Each rule file is
+in [`config/claude/rules/`](config/claude/rules/). Read the one that matches before acting; when
+none matches, just proceed.
+
+- **Architectural, expensive-to-reverse decision** → `decisions.md` (when an ADR is warranted,
+  the interview → stress-test → spec → plan → record pipeline, the ADR format).
+- **Laying out a plan** (plan mode, a plan document, or a reply listing more than a couple of
+  steps) → `planning.md` (partition first, fan independent work out to up to 6 parallel
+  subagents in one message, and the cases where splitting hurts the result).
+- **Adding always-on context** (a `CLAUDE.md`, memory, hook injection) → `memory.md`.
+- **Writing or modifying a hook** → `hooks.md` (fail-open by default).
+- **Work that will land on GitHub** → `git-workflow.md`.
+- **Writing anything that persists** → `plain-language.md` and its allow-list
+  `approved-acronyms.md`.
+- **Authoring or revising design documentation** → `visual-docs.md`.

@@ -3,7 +3,6 @@
 set -euo pipefail
 DEST="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE="$HOME/.claude"
-ln -sfn "$DEST/CLAUDE.md"     "$CLAUDE/CLAUDE.md"
 ln -sfn "$DEST/settings.json" "$CLAUDE/settings.json"
 ln -sfn "$DEST/statusline-command.sh" "$CLAUDE/statusline-command.sh"
 ln -sfn "$DEST/rules"         "$CLAUDE/rules"
