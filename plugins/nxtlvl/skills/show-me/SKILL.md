@@ -32,9 +32,9 @@ implementation with an unchanged contract.
 
 ## Cross-cutting rules (compose, don't restate)
 
-- **Visual-docs rule** — `~/.claude/rules/visual-docs.md`: at least one structural visual per
+- **Visual-docs rule** — `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/visual-docs.md`: at least one structural visual per
   design doc; mermaid preferred in markdown; `docs/diagrams/` for durable interactive artifacts.
-- **Decision rule** — `~/.claude/rules/decisions.md`: facts → spec; sequencing → plan;
+- **Decision rule** — `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/decisions.md`: facts → spec; sequencing → plan;
   architectural + expensive-to-reverse → ADR via `◆ documentation-and-adrs`.
 - **Pointers over content** — link `docs/intent/`, related specs/plans, and `docs/diagrams/`
   artifacts; don't paste large blocks.

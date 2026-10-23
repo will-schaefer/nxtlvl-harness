@@ -28,7 +28,7 @@ applied is not, until it is pushed and the plugin updated.
 |---|---|---|
 | Live plugin skills/agents/commands/hooks | `plugins/nxtlvl/{skills,agents,commands,hooks}/` | on the harness discovery path |
 | Work-in-progress harness items | `sandbox/{skills,agents,commands}/` | mirrors the plugin shape, deliberately **off** the discovery path |
-| Machine-global rules | `config/claude/rules/` | symlinked live into `~/.claude/rules/` |
+| nxtlvl rules | `config/claude/rules/` | read by repo path; no longer linked into `~/.claude/` (2026-10-23) |
 | Machine-global skills, memory, output styles | `config/claude/{skills,memory,output-styles}/` | same symlink mechanism (`config/claude/link.sh`) |
 | Architecture decision records | `docs/decisions/` | sequential `ADR-NNN-slug.md` plus a `README.md` index table |
 | Specs, plans, intent, ideas | `docs/{spec,plan,intent,ideas}/` | design documentation; require at least one structural visual |

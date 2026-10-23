@@ -1,7 +1,7 @@
 # `docs/diagrams/` — standalone visual artifacts
 
 > House convention for the **Diagram** doc type. Agents-only audience. Governed by
-> `◆ show-me` and `~/.claude/rules/visual-docs.md`.
+> `◆ show-me` and `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/visual-docs.md`.
 
 ## Purpose
 

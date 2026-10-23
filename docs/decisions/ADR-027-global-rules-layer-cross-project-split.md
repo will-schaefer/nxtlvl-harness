@@ -156,6 +156,11 @@ Decision §2:
   conventions with no nxtlvl paths.
 - The seven trigger sections moved to the project-root `CLAUDE.md` under "Rule triggers", pointing
   at `config/claude/rules/` by repo path. They are ambient only in sessions that load that file.
-- Not changed: `config/claude/rules/` is still linked as `~/.claude/rules/`, and Claude Code loads
-  every file in that folder in every session whether or not a trigger names it. The rule files
-  therefore still reach other repos; moving them is a separate decision.
+- `config/claude/rules/` is no longer linked as `~/.claude/rules/` (Claude Code loaded every file
+  in that folder in every session, so the link kept nxtlvl rules ambient in unrelated repos).
+  `link.sh` drops that link too. Live references now use the repo path: `config/claude/rules/…`
+  inside this repo, and `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/…` in plugin skills
+  that run elsewhere. Older ADRs, plans and specs keep the `~/.claude/rules/` paths as history.
+- Decision §1 (the global layer holds only cross-project conventions) no longer applies: there is
+  no nxtlvl-owned global layer. The generic conventions worth keeping everywhere live in the
+  standalone `~/.claude/CLAUDE.md`.

@@ -121,7 +121,7 @@ These are the composition points. Each is a skill that already owns its job; bra
 - **Intent → `interview-me` / `grill-me`.** When the idea is underspecified or high-stakes, extract and stress-test intent there, then return to approach-exploration with a sharp brief.
 - **Variants → `idea-refine`.** When the concept itself is unfixed and you want divergent options before converging, that's the refine loop.
 - **Contract + plan → `◆ show-me`.** The approved design is the input; the skill writes the spec to `docs/spec/` then the plan to `docs/plan/` with mandatory structural visuals. Brainstorming writes no duplicate design doc — the spec *is* the artifact.
-- **Decision → the decision rule → `◆ documentation-and-adrs`.** If the design settles a decision that is *both* architectural and expensive to reverse, record it (see `~/.claude/rules/decisions.md`). Don't dilute the ADR set with facts (those go in the spec) or sequencing (that goes in the plan).
+- **Decision → the decision rule → `◆ documentation-and-adrs`.** If the design settles a decision that is *both* architectural and expensive to reverse, record it (see `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/decisions.md`). Don't dilute the ADR set with facts (those go in the spec) or sequencing (that goes in the plan).
 
 ## Showing, not just telling — native visuals
 

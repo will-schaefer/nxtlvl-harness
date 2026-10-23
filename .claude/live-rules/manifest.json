@@ -3,7 +3,7 @@
   "rules": [
     {
       "path": "rules/001.md",
-      "hash": "83ff85c9ed6648e69021ee888fc694533cefd7c848d6b368fb30ddbddfc18158",
+      "hash": "affbdf3372d39bd45fd6deffc344efa9f42b04369cee92062e457f1526aeaf0b",
       "description": "House git discipline (nxtlvl conventions, not the generic defaults)",
       "globs": [],
       "dirs": [],
@@ -12,7 +12,7 @@
     },
     {
       "path": "rules/002.md",
-      "hash": "624baeb25a6ce91f10d542cc000c43f36216ab501313afa751d0ef6c9c8fe437",
+      "hash": "8a812593ade3ba919a6d40d355dd0c439817758c77472fbde8d726912edca6b1",
       "description": "Surgical, simple, honest",
       "globs": [],
       "dirs": [],
@@ -30,7 +30,7 @@
     },
     {
       "path": "rules/004.md",
-      "hash": "7dd0f819e889052cca7baa37569c7d157b5e8616ffe206f71f0a8cfc55793034",
+      "hash": "50dfda2c8feac7dfaa9866ae3cf6cad7507b8257ac55103867f626cc201fc43e",
       "description": "Harness source — deploy boundary and hook safety",
       "globs": [
         "**/plugins/**",
@@ -85,7 +85,7 @@
     },
     {
       "path": "rules/008.md",
-      "hash": "2cb550a4323941dce4de826fbca57433964ceace0126bf2f9eb29949429a7244",
+      "hash": "62de7ce051a1e41439c365a49a66c9e574669eac196e39f697df8840d0a4e27d",
       "description": "Self-improvement — turn friction into a fix that sticks",
       "globs": [],
       "dirs": [],

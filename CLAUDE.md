@@ -29,7 +29,7 @@ It mirrors the plugin's shape (`sandbox/{skills,agents,commands}/`); promote whe
 
 ## ADR lifecycle
 This repo follows the global decision rule's keep-never-delete lifecycle
-(`~/.claude/rules/decisions.md` §3): a superseded ADR is **kept** as `status: Superseded` with a
+(`config/claude/rules/decisions.md` §3): a superseded ADR is **kept** as `status: Superseded` with a
 `superseded-by:` pointer — never deleted — and its replacement may reference it. A project
 override (e.g. delete-and-rewrite) remains available under §4 if a real need arises, but none is
 in effect. The rest of the global ADR format applies — frontmatter, the
@@ -42,8 +42,8 @@ split: skill design → [ADR-030](docs/decisions/ADR-030-skill-design-and-canoni
 agent creation → [ADR-032](docs/decisions/ADR-032-agent-creation-process.md).
 
 ## nxtlvl-build conventions (project-specific, not global rules)
-The global rules layer (`~/.claude/rules/` — decisions, context assembly, hook safety, git
-workflow, visual design docs) carries only cross-project conventions. These are nxtlvl-build-specific and live here
+The rules layer (`config/claude/rules/` — decisions, context assembly, hook safety, git
+workflow, visual design docs) carries the conventions shared across the nxtlvl family. These are nxtlvl-build-specific and live here
 (design: [`docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md`](docs/superpowers/specs/2026-06-30-nxtlvl-rules-design.md)):
 
 - **Skill/agent authoring:** run the nxtlvl **brainstorming** skill before code, then the
@@ -59,11 +59,11 @@ workflow, visual design docs) carries only cross-project conventions. These are 
   working on nxtlvl itself.
 
 ## Rule triggers
-Until 2026-10-23 these triggers lived in the machine-global `~/.claude/CLAUDE.md`; that file is
-now a standalone, project-neutral file outside this repo (amendment to
-[ADR-027](docs/decisions/ADR-027-global-rules-layer-cross-project-split.md)). Each rule file is
-in [`config/claude/rules/`](config/claude/rules/). Read the one that matches before acting; when
-none matches, just proceed.
+Until 2026-10-23 these triggers lived in the machine-global `~/.claude/CLAUDE.md` and the rule
+files were linked into every session as `~/.claude/rules/`. Both are now confined to this repo
+(amendment to [ADR-027](docs/decisions/ADR-027-global-rules-layer-cross-project-split.md)). Each
+rule file is in [`config/claude/rules/`](config/claude/rules/). Read the one that matches before
+acting; when none matches, just proceed.
 
 - **Architectural, expensive-to-reverse decision** → `decisions.md` (when an ADR is warranted,
   the interview → stress-test → spec → plan → record pipeline, the ADR format).

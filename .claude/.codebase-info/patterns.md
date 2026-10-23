@@ -57,7 +57,7 @@ stated in a comment. Examples: recall bar 0.7, strong bar 0.8, half-life 30 days
 
 ## Decision records
 
-`docs/decisions/` — 39 records, format governed by `~/.claude/rules/decisions.md`.
+`docs/decisions/` — 39 records, format governed by `config/claude/rules/decisions.md`.
 
 - **Numbering:** take the next number from the union of committed *and* working-tree files. Two
   parallel sessions otherwise mint the same number.

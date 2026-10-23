@@ -17,7 +17,7 @@ thread; don't delegate spec/plan writing to an agent.
 1. **Classify the ask** — spec only, plan only (requires an existing spec), or both in sequence.
 2. **Invoke `show-me`** with `$ARGUMENTS` as the topic, target paths, or phase hint.
 3. **Run the house format** — headers, intent links, required architecture/dependency visuals,
-   pointers over pasted blocks. Follow `~/.claude/rules/visual-docs.md`.
+   pointers over pasted blocks. Follow `~/Developer/nxtlvl/nxtlvl-core/config/claude/rules/visual-docs.md`.
 4. **Route ADRs out** — architectural + expensive-to-reverse decisions go to the decision rule →
    `documentation-and-adrs`, not buried in the spec body.
 5. **Stop at plan** — terminal for ideation; do not jump to implementation.

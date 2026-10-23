@@ -19,7 +19,7 @@ priority: 95
 - Two hats: a commit either *adds behavior* (ships with its test) or *refactors*
   (behavior-preserving) — never both in one commit.
 - Solo repos commit directly to main; don't push unless asked.
-- Full conventions: `~/.claude/rules/git-workflow.md`.
+- Full conventions: `config/claude/rules/git-workflow.md`.
 
 ---
 description: Surgical, simple, honest
@@ -30,7 +30,7 @@ priority: 90
 - Minimum code that solves it — no speculative abstractions. Every changed line traces to the
   request; don't "improve" adjacent code.
 - Plain language in everything persisted: no invented shorthand, acronyms spelled out on first
-  use per document (`~/.claude/rules/plain-language.md`).
+  use per document (`config/claude/rules/plain-language.md`).
 
 ---
 description: Verify behavior deterministically
@@ -55,7 +55,7 @@ priority: 65
 - `sandbox/` is off the harness discovery path on purpose. Promote with
   `git mv sandbox/<kind>/<name> plugins/nxtlvl/<kind>/<name>` — the move is the activation.
 - Hooks **inform, they don't force**: fail-open is the default failure mode; blocking gates are
-  rare whitelisted exceptions with a kill switch (`~/.claude/rules/hooks.md`).
+  rare whitelisted exceptions with a kill switch (`config/claude/rules/hooks.md`).
 
 ---
 description: TypeScript — Node-native type-stripping, no build step
@@ -99,7 +99,7 @@ that friction cheaper or impossible next time by improving the workspace itself.
 - Stale or missing project knowledge → update the **codebase map** (`.claude/.codebase-info/`).
 - A repeatable multi-step task you did by hand → propose a **skill** (via skill-creator).
 - A durable project fact → CLAUDE.md or a map doc; an architectural decision → an ADR
-  (architecture decision record) per `~/.claude/rules/decisions.md`.
+  (architecture decision record) per `config/claude/rules/decisions.md`.
 Keep it small — one improvement, not a rewrite, as its own commit. If nothing was off, skip it
 silently; don't manufacture busywork. For a deeper periodic pass, run `retro`.
 
@@ -113,7 +113,7 @@ frontmatter `status:` field, then immediately update its row in `docs/decisions/
 index stays in sync. Verify with `grep -n 'ADR-NNN' docs/decisions/README.md` before you commit —
 an index that disagrees with the records is worse than no index, because it is still trusted.
 Format, the record-worthy threshold, superseded-record lifecycle, and domain grain all live in
-`~/.claude/rules/decisions.md` — read it rather than reconstructing them here.
+`config/claude/rules/decisions.md` — read it rather than reconstructing them here.
 
 ---
 description: Planning — partition and fan out before listing steps
@@ -129,4 +129,4 @@ underspecified work, tight debugging, output you can't verify, same-file writes.
 and say which case applies. **Otherwise, would it finish sooner?** If yes, fan out — speed alone
 is reason enough. Neither? Do it inline.
 Full rule, plus the pointer to the workflow-pattern catalogue that names *which shape* to fan out
-into: `~/.claude/rules/planning.md`.
+into: `config/claude/rules/planning.md`.
